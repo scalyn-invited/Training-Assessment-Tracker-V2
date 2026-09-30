@@ -1,0 +1,12 @@
+{
+  "command": [
+    "C:\\Users\\Admin\\AppData\\Local\\hermes\\node\\node.exe",
+    "C:/Users/Admin/.codex/skills/archify/bin/archify.mjs",
+    "visual-check",
+    "D02/diagram.html",
+    "--json"
+  ],
+  "cwd": "C:\\Users\\Admin\\Downloads\\Archify_Upskilling_Run\\Archify_Upskilling_Pack\\output\\archify-upskilling-20260929-181205",
+  "exitCode": 1,
+  "stderr": ""
+}

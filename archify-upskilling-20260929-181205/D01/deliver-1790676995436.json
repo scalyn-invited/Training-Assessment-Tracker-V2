@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "deliver",
+  "type": "architecture",
+  "input": "C:\\Users\\Admin\\Downloads\\Archify_Upskilling_Run\\Archify_Upskilling_Pack\\output\\archify-upskilling-20260929-181205\\D01\\candidate.json",
+  "output": "C:\\Users\\Admin\\Downloads\\Archify_Upskilling_Run\\Archify_Upskilling_Pack\\output\\archify-upskilling-20260929-181205\\D01\\diagram.html",
+  "specification": {
+    "sha256": "4d133ca0eecca853aad16c7d2361428cb2496a3c57391b672a17fe3707fac77b",
+    "bytes": 4855
+  },
+  "artifact": {
+    "sha256": "167ce3c262c70d443eb8270387c65606c811b1283eb7842439f5dc1e1725f14d",
+    "bytes": 715673
+  },
+  "validation": {
+    "checksPassed": 9,
+    "checkCount": 9,
+    "compositionProfile": "showcase",
+    "compositionStatus": "pass",
+    "errors": 0,
+    "warnings": 0
+  }
+}

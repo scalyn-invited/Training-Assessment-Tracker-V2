@@ -1,0 +1,277 @@
+{
+  "applicationDefinitions": [
+    {
+      "name": "ResourceRef",
+      "required": [
+        "resource_id",
+        "title",
+        "verified",
+        "access_notes"
+      ],
+      "fields": [
+        "resource_id",
+        "title",
+        "verified",
+        "access_notes"
+      ]
+    },
+    {
+      "name": "RubricCriterion",
+      "required": [
+        "criterion_id",
+        "competency_id",
+        "description",
+        "weight",
+        "max_points",
+        "evidence_expectation"
+      ],
+      "fields": [
+        "criterion_id",
+        "competency_id",
+        "description",
+        "weight",
+        "max_points",
+        "evidence_expectation"
+      ]
+    },
+    {
+      "name": "Task",
+      "required": [
+        "task_id",
+        "kind",
+        "title",
+        "objective",
+        "content_markdown",
+        "completion_criteria",
+        "planned_minutes",
+        "resource_ids",
+        "competency_ids",
+        "rubric_id"
+      ],
+      "fields": [
+        "task_id",
+        "kind",
+        "title",
+        "objective",
+        "content_markdown",
+        "completion_criteria",
+        "planned_minutes",
+        "resource_ids",
+        "competency_ids",
+        "rubric_id"
+      ]
+    },
+    {
+      "name": "Day",
+      "required": [
+        "day_id",
+        "scheduled_date",
+        "capacity_minutes",
+        "tasks"
+      ],
+      "fields": [
+        "day_id",
+        "scheduled_date",
+        "capacity_minutes",
+        "tasks"
+      ]
+    },
+    {
+      "name": "Week",
+      "required": [
+        "week_number",
+        "objectives",
+        "prerequisite_competency_ids",
+        "days"
+      ],
+      "fields": [
+        "week_number",
+        "objectives",
+        "prerequisite_competency_ids",
+        "days"
+      ]
+    },
+    {
+      "name": "ProgrammeDraft",
+      "required": [
+        "schema_version",
+        "programme_id",
+        "input_snapshot_id",
+        "duration_weeks",
+        "timezone",
+        "target_role",
+        "target_competency_ids",
+        "weeks",
+        "resources",
+        "rubrics"
+      ],
+      "fields": [
+        "schema_version",
+        "programme_id",
+        "input_snapshot_id",
+        "duration_weeks",
+        "timezone",
+        "target_role",
+        "target_competency_ids",
+        "weeks",
+        "resources",
+        "rubrics"
+      ]
+    },
+    {
+      "name": "CriterionScore",
+      "required": [
+        "criterion_id",
+        "points",
+        "evidence_ids",
+        "feedback",
+        "insufficient_evidence"
+      ],
+      "fields": [
+        "criterion_id",
+        "points",
+        "evidence_ids",
+        "feedback",
+        "insufficient_evidence"
+      ]
+    },
+    {
+      "name": "ProvisionalGrade",
+      "required": [
+        "schema_version",
+        "submission_id",
+        "grading_attempt_id",
+        "rubric_id",
+        "rubric_version",
+        "status",
+        "criterion_scores",
+        "strengths",
+        "next_actions",
+        "flags",
+        "model_config_version"
+      ],
+      "fields": [
+        "schema_version",
+        "submission_id",
+        "grading_attempt_id",
+        "rubric_id",
+        "rubric_version",
+        "status",
+        "criterion_scores",
+        "strengths",
+        "next_actions",
+        "flags",
+        "model_config_version"
+      ]
+    },
+    {
+      "name": "AdaptationProposal",
+      "required": [
+        "schema_version",
+        "proposal_id",
+        "enrolment_id",
+        "evidence_week",
+        "target_week",
+        "base_week_version",
+        "approved_grade_ids",
+        "calendar_version",
+        "policy_version",
+        "reason",
+        "replacement_week",
+        "status"
+      ],
+      "fields": [
+        "schema_version",
+        "proposal_id",
+        "enrolment_id",
+        "evidence_week",
+        "target_week",
+        "base_week_version",
+        "approved_grade_ids",
+        "calendar_version",
+        "policy_version",
+        "reason",
+        "replacement_week",
+        "status"
+      ]
+    },
+    {
+      "name": "DirectoryEvent",
+      "required": [
+        "schema_version",
+        "event_id",
+        "occurred_at",
+        "source",
+        "environment",
+        "event_type",
+        "entity_id",
+        "entity_version",
+        "payload"
+      ],
+      "fields": [
+        "schema_version",
+        "event_id",
+        "occurred_at",
+        "source",
+        "environment",
+        "event_type",
+        "entity_id",
+        "entity_version",
+        "payload"
+      ]
+    },
+    {
+      "name": "ApprovedTrainingEvent",
+      "required": [
+        "schema_version",
+        "event_id",
+        "occurred_at",
+        "source",
+        "environment",
+        "event_type",
+        "entity_id",
+        "entity_version",
+        "external_person_id",
+        "approval_id",
+        "data_as_of"
+      ],
+      "fields": [
+        "schema_version",
+        "event_id",
+        "occurred_at",
+        "source",
+        "environment",
+        "event_type",
+        "entity_id",
+        "entity_version",
+        "external_person_id",
+        "approval_id",
+        "data_as_of"
+      ]
+    }
+  ],
+  "fixtureScenarioIds": [
+    "T07",
+    "T08",
+    "T09",
+    "T04",
+    "T05",
+    "T01",
+    "T14",
+    "T11"
+  ],
+  "proposedOperationIds": [
+    "getOwnTraining",
+    "getMemberSummary",
+    "getGroupProgress",
+    "getApprovedChanges",
+    "receiveDirectoryEvent",
+    "getOwnJob",
+    "reviewProgramme",
+    "submitAttempt",
+    "reviewGrade",
+    "reviewAdaptation",
+    "requestPromotion"
+  ],
+  "scope": "Source inventory only; interfaces unimplemented"
+}

@@ -1,0 +1,802 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:upskilling:application-schemas:1.0",
+  "title": "Proposed application payload contracts not Archify IR",
+  "$defs": {
+    "ResourceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "resource_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "verified": {
+          "const": true
+        },
+        "access_notes": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "resource_id",
+        "title",
+        "verified",
+        "access_notes"
+      ]
+    },
+    "RubricCriterion": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "criterion_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "competency_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "weight": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 1
+        },
+        "max_points": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "evidence_expectation": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "criterion_id",
+        "competency_id",
+        "description",
+        "weight",
+        "max_points",
+        "evidence_expectation"
+      ]
+    },
+    "Task": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "task_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "lesson",
+            "practice",
+            "quiz",
+            "assessment",
+            "revision"
+          ]
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "objective": {
+          "type": "string",
+          "minLength": 1
+        },
+        "content_markdown": {
+          "type": "string",
+          "minLength": 1
+        },
+        "completion_criteria": {
+          "type": "string",
+          "minLength": 1
+        },
+        "planned_minutes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 120
+        },
+        "resource_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "competency_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "rubric_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "task_id",
+        "kind",
+        "title",
+        "objective",
+        "content_markdown",
+        "completion_criteria",
+        "planned_minutes",
+        "resource_ids",
+        "competency_ids",
+        "rubric_id"
+      ]
+    },
+    "Day": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "day_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "scheduled_date": {
+          "type": "string",
+          "format": "date"
+        },
+        "capacity_minutes": {
+          "type": "integer",
+          "minimum": 15,
+          "maximum": 120
+        },
+        "tasks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Task"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "day_id",
+        "scheduled_date",
+        "capacity_minutes",
+        "tasks"
+      ]
+    },
+    "Week": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "week_number": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 12
+        },
+        "objectives": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "prerequisite_competency_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "days": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Day"
+          },
+          "minItems": 1,
+          "maxItems": 7
+        }
+      },
+      "required": [
+        "week_number",
+        "objectives",
+        "prerequisite_competency_ids",
+        "days"
+      ]
+    },
+    "ProgrammeDraft": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0"
+        },
+        "programme_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "input_snapshot_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "duration_weeks": {
+          "type": "integer",
+          "enum": [
+            4,
+            6,
+            8,
+            10,
+            12
+          ]
+        },
+        "timezone": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target_role": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target_competency_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "weeks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Week"
+          },
+          "minItems": 4,
+          "maxItems": 12
+        },
+        "resources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ResourceRef"
+          }
+        },
+        "rubrics": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "rubric_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "version": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "criteria": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/RubricCriterion"
+                },
+                "minItems": 1
+              }
+            },
+            "required": [
+              "rubric_id",
+              "version",
+              "criteria"
+            ]
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "schema_version",
+        "programme_id",
+        "input_snapshot_id",
+        "duration_weeks",
+        "timezone",
+        "target_role",
+        "target_competency_ids",
+        "weeks",
+        "resources",
+        "rubrics"
+      ]
+    },
+    "CriterionScore": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "criterion_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "points": {
+          "type": "number",
+          "minimum": 0
+        },
+        "evidence_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "feedback": {
+          "type": "string",
+          "minLength": 1
+        },
+        "insufficient_evidence": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "criterion_id",
+        "points",
+        "evidence_ids",
+        "feedback",
+        "insufficient_evidence"
+      ]
+    },
+    "ProvisionalGrade": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0"
+        },
+        "submission_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "grading_attempt_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "rubric_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rubric_version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "status": {
+          "const": "provisional"
+        },
+        "criterion_scores": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CriterionScore"
+          },
+          "minItems": 1
+        },
+        "strengths": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "next_actions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "maxItems": 3
+        },
+        "flags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "missing_evidence",
+              "ambiguous_rubric",
+              "unreadable_file",
+              "possible_prompt_injection",
+              "requires_demonstration"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "model_config_version": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "schema_version",
+        "submission_id",
+        "grading_attempt_id",
+        "rubric_id",
+        "rubric_version",
+        "status",
+        "criterion_scores",
+        "strengths",
+        "next_actions",
+        "flags",
+        "model_config_version"
+      ]
+    },
+    "AdaptationProposal": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0"
+        },
+        "proposal_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "enrolment_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "evidence_week": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 12
+        },
+        "target_week": {
+          "type": "integer",
+          "minimum": 3,
+          "maximum": 12
+        },
+        "base_week_version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "approved_grade_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "calendar_version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "policy_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "replacement_week": {
+          "$ref": "#/$defs/Week"
+        },
+        "status": {
+          "const": "needs_review"
+        }
+      },
+      "required": [
+        "schema_version",
+        "proposal_id",
+        "enrolment_id",
+        "evidence_week",
+        "target_week",
+        "base_week_version",
+        "approved_grade_ids",
+        "calendar_version",
+        "policy_version",
+        "reason",
+        "replacement_week",
+        "status"
+      ]
+    },
+    "DirectoryEvent": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0"
+        },
+        "event_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "occurred_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "source": {
+          "const": "primary-platform"
+        },
+        "environment": {
+          "type": "string",
+          "enum": [
+            "production",
+            "test"
+          ]
+        },
+        "event_type": {
+          "type": "string",
+          "enum": [
+            "person.upserted",
+            "person.deactivated",
+            "group.upserted",
+            "membership.changed"
+          ]
+        },
+        "entity_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "entity_version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "payload": {
+          "type": "object",
+          "description": "Proposed canonical payload; primary adapter maps the actual source API into these shapes."
+        }
+      },
+      "required": [
+        "schema_version",
+        "event_id",
+        "occurred_at",
+        "source",
+        "environment",
+        "event_type",
+        "entity_id",
+        "entity_version",
+        "payload"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "event_type": {
+                "const": "person.upserted"
+              }
+            },
+            "required": [
+              "event_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "payload": {
+                "type": "object",
+                "properties": {
+                  "display_name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "role_title": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "active": {
+                    "type": "boolean"
+                  },
+                  "organisation_source_id": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "display_name",
+                  "active",
+                  "organisation_source_id"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "event_type": {
+                "const": "person.deactivated"
+              }
+            },
+            "required": [
+              "event_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "payload": {
+                "type": "object",
+                "properties": {
+                  "reason": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "effective_at": {
+                    "type": "string",
+                    "format": "date-time"
+                  }
+                },
+                "required": [
+                  "reason",
+                  "effective_at"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "event_type": {
+                "const": "group.upserted"
+              }
+            },
+            "required": [
+              "event_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "payload": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "active": {
+                    "type": "boolean"
+                  },
+                  "organisation_source_id": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "name",
+                  "active",
+                  "organisation_source_id"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "event_type": {
+                "const": "membership.changed"
+              }
+            },
+            "required": [
+              "event_type"
+            ]
+          },
+          "then": {
+            "properties": {
+              "payload": {
+                "type": "object",
+                "properties": {
+                  "person_source_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "group_source_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "active": {
+                    "type": "boolean"
+                  },
+                  "effective_at": {
+                    "type": "string",
+                    "format": "date-time"
+                  }
+                },
+                "required": [
+                  "person_source_id",
+                  "group_source_id",
+                  "active",
+                  "effective_at"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ApprovedTrainingEvent": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schema_version": {
+          "const": "1.0"
+        },
+        "event_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "occurred_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "source": {
+          "const": "training-platform"
+        },
+        "environment": {
+          "const": "production"
+        },
+        "event_type": {
+          "type": "string",
+          "enum": [
+            "programme.approved",
+            "grade.approved",
+            "week.revised",
+            "kpi.snapshot.approved",
+            "member.deactivated"
+          ]
+        },
+        "entity_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "entity_version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "external_person_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "approval_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "uuid"
+        },
+        "data_as_of": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "schema_version",
+        "event_id",
+        "occurred_at",
+        "source",
+        "environment",
+        "event_type",
+        "entity_id",
+        "entity_version",
+        "external_person_id",
+        "approval_id",
+        "data_as_of"
+      ]
+    }
+  }
+}

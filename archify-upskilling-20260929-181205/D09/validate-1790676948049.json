@@ -1,0 +1,328 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "validate",
+  "stage": "render",
+  "type": "lifecycle",
+  "input": "C:\\Users\\Admin\\Downloads\\Archify_Upskilling_Run\\Archify_Upskilling_Pack\\output\\archify-upskilling-20260929-181205\\D09\\candidate.json",
+  "error": "Lifecycle layout validation failed:\n- [clean-flow/edge-through-node] lifecycle transitions[5] id \"review-pending-to-changes-requested\" \"review-pending\" -> \"changes-requested\" crosses state \"grading\" (unrelated to this relationship) on segment 0 [652, 158] -> [556, 158] (2px clearance) — adjust fromSide/toSide, set route/via or channelX/channelY, or move the state with col/yOffset.\n- [clean-flow/edge-through-node] lifecycle transitions[7] id \"technical-failure-to-grading\" \"technical-failure\" -> \"grading\" crosses state \"review-pending\" (unrelated to this relationship) on segment 1 [655, 410] -> [655, 158] (2px clearance) — adjust fromSide/toSide, set route/via or channelX/channelY, or move the state with col/yOffset.\n- [clean-flow/edge-through-node] lifecycle transitions[7] id \"technical-failure-to-grading\" \"technical-failure\" -> \"grading\" crosses state \"approved\" (unrelated to this relationship) on segment 1 [655, 410] -> [655, 158] (2px clearance) — adjust fromSide/toSide, set route/via or channelX/channelY, or move the state with col/yOffset.\n- [clean-flow/edge-through-node] lifecycle transitions[8] id \"queued-to-withdrawn\" \"queued\" -> \"withdrawn\" crosses state \"changes-requested\" (unrelated to this relationship) on segment 0 [402, 190] -> [402, 450] (2px clearance) — adjust fromSide/toSide, set route/via or channelX/channelY, or move the state with col/yOffset.\n- [composition/ambiguous-corridor] showcase lifecycle transitions[5] id \"review-pending-to-changes-requested\" \"review-pending\" -> \"changes-requested\" shares a 120px corridor with transitions[6] id \"grading-to-technical-failure\" \"grading\" -> \"technical-failure\" at [556, 190] -> [556, 310] (segments 1 and 0; minimum 8px) — adjust route/via or channelX/channelY so unrelated transitions do not visually merge.\n- [composition/ambiguous-corridor] showcase lifecycle transitions[5] id \"review-pending-to-changes-requested\" \"review-pending\" -> \"changes-requested\" shares a 38px corridor with transitions[7] id \"technical-failure-to-grading\" \"technical-failure\" -> \"grading\" at [614, 158] -> [652, 158] (segments 0 and 2; minimum 8px) — adjust route/via or channelX/channelY so unrelated transitions do not visually merge.\n- Label \"Retry budget\" overlaps state \"approved\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [615, 329, 71, 16]\n  state \"approved\" rect: [652, 278, 116, 64]\n  Suggested fix: labelAt [650, 356] or labelDy +16 (below); or labelAt [650, 274] or labelDy -66 (above)\n- [composition/label-route-clearance] showcase lifecycle label \"More evidence\" on transitions[5] id \"review-pending-to-changes-requested\" \"review-pending\" -> \"changes-requested\" label \"More evidence\" is 0px from transitions[6] id \"grading-to-technical-failure\" \"grading\" -> \"technical-failure\" label \"Job failure\" segment 0 [556, 190] -> [556, 378] (label rect [518, 213, 76, 16]; minimum 4px) — adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel.\n- [composition/label-route-clearance] showcase lifecycle label \"Job failure\" on transitions[6] id \"grading-to-technical-failure\" \"grading\" -> \"technical-failure\" label \"Job failure\" is 0px from transitions[5] id \"review-pending-to-changes-requested\" \"review-pending\" -> \"changes-requested\" label \"More evidence\" segment 1 [556, 158] -> [556, 310] (label rect [523, 234, 66, 16]; minimum 4px) — adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel.",
+  "diagnostics": [
+    {
+      "code": "clean-flow/edge-through-node",
+      "severity": "error",
+      "message": "[clean-flow/edge-through-node] lifecycle transitions[5] id \"review-pending-to-changes-requested\" \"review-pending\" -> \"changes-requested\" crosses state \"grading\" (unrelated to this relationship) on segment 0 [652, 158] -> [556, 158] (2px clearance) — adjust fromSide/toSide, set route/via or channelX/channelY, or move the state with col/yOffset.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 5,
+        "id": "review-pending-to-changes-requested",
+        "from": "review-pending",
+        "to": "changes-requested"
+      },
+      "evidence": {
+        "obstacleKind": "state",
+        "obstacleId": "grading",
+        "segmentIndex": 0,
+        "from": [
+          652,
+          158
+        ],
+        "to": [
+          556,
+          158
+        ],
+        "clearancePx": 2
+      },
+      "supportedFixes": [
+        "adjust fromSide/toSide, set route/via or channelX/channelY, or move the state with col/yOffset"
+      ]
+    },
+    {
+      "code": "clean-flow/edge-through-node",
+      "severity": "error",
+      "message": "[clean-flow/edge-through-node] lifecycle transitions[7] id \"technical-failure-to-grading\" \"technical-failure\" -> \"grading\" crosses state \"review-pending\" (unrelated to this relationship) on segment 1 [655, 410] -> [655, 158] (2px clearance) — adjust fromSide/toSide, set route/via or channelX/channelY, or move the state with col/yOffset.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 7,
+        "id": "technical-failure-to-grading",
+        "from": "technical-failure",
+        "to": "grading"
+      },
+      "evidence": {
+        "obstacleKind": "state",
+        "obstacleId": "review-pending",
+        "segmentIndex": 1,
+        "from": [
+          655,
+          410
+        ],
+        "to": [
+          655,
+          158
+        ],
+        "clearancePx": 2
+      },
+      "supportedFixes": [
+        "adjust fromSide/toSide, set route/via or channelX/channelY, or move the state with col/yOffset"
+      ]
+    },
+    {
+      "code": "clean-flow/edge-through-node",
+      "severity": "error",
+      "message": "[clean-flow/edge-through-node] lifecycle transitions[7] id \"technical-failure-to-grading\" \"technical-failure\" -> \"grading\" crosses state \"approved\" (unrelated to this relationship) on segment 1 [655, 410] -> [655, 158] (2px clearance) — adjust fromSide/toSide, set route/via or channelX/channelY, or move the state with col/yOffset.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 7,
+        "id": "technical-failure-to-grading",
+        "from": "technical-failure",
+        "to": "grading"
+      },
+      "evidence": {
+        "obstacleKind": "state",
+        "obstacleId": "approved",
+        "segmentIndex": 1,
+        "from": [
+          655,
+          410
+        ],
+        "to": [
+          655,
+          158
+        ],
+        "clearancePx": 2
+      },
+      "supportedFixes": [
+        "adjust fromSide/toSide, set route/via or channelX/channelY, or move the state with col/yOffset"
+      ]
+    },
+    {
+      "code": "clean-flow/edge-through-node",
+      "severity": "error",
+      "message": "[clean-flow/edge-through-node] lifecycle transitions[8] id \"queued-to-withdrawn\" \"queued\" -> \"withdrawn\" crosses state \"changes-requested\" (unrelated to this relationship) on segment 0 [402, 190] -> [402, 450] (2px clearance) — adjust fromSide/toSide, set route/via or channelX/channelY, or move the state with col/yOffset.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 8,
+        "id": "queued-to-withdrawn",
+        "from": "queued",
+        "to": "withdrawn"
+      },
+      "evidence": {
+        "obstacleKind": "state",
+        "obstacleId": "changes-requested",
+        "segmentIndex": 0,
+        "from": [
+          402,
+          190
+        ],
+        "to": [
+          402,
+          450
+        ],
+        "clearancePx": 2
+      },
+      "supportedFixes": [
+        "adjust fromSide/toSide, set route/via or channelX/channelY, or move the state with col/yOffset"
+      ]
+    },
+    {
+      "code": "composition/ambiguous-corridor",
+      "severity": "error",
+      "message": "[composition/ambiguous-corridor] showcase lifecycle transitions[5] id \"review-pending-to-changes-requested\" \"review-pending\" -> \"changes-requested\" shares a 120px corridor with transitions[6] id \"grading-to-technical-failure\" \"grading\" -> \"technical-failure\" at [556, 190] -> [556, 310] (segments 1 and 0; minimum 8px) — adjust route/via or channelX/channelY so unrelated transitions do not visually merge.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 5,
+        "id": "review-pending-to-changes-requested",
+        "from": "review-pending",
+        "to": "changes-requested"
+      },
+      "evidence": {
+        "otherRelationship": {
+          "diagramType": "lifecycle",
+          "collection": "transitions",
+          "index": 6,
+          "id": "grading-to-technical-failure",
+          "from": "grading",
+          "to": "technical-failure"
+        },
+        "overlapLengthPx": 120,
+        "minimumPx": 8,
+        "from": [
+          556,
+          190
+        ],
+        "to": [
+          556,
+          310
+        ],
+        "segmentIndex": 1,
+        "otherSegmentIndex": 0
+      },
+      "supportedFixes": [
+        "adjust route/via or channelX/channelY so unrelated transitions do not visually merge"
+      ]
+    },
+    {
+      "code": "composition/ambiguous-corridor",
+      "severity": "error",
+      "message": "[composition/ambiguous-corridor] showcase lifecycle transitions[5] id \"review-pending-to-changes-requested\" \"review-pending\" -> \"changes-requested\" shares a 38px corridor with transitions[7] id \"technical-failure-to-grading\" \"technical-failure\" -> \"grading\" at [614, 158] -> [652, 158] (segments 0 and 2; minimum 8px) — adjust route/via or channelX/channelY so unrelated transitions do not visually merge.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 5,
+        "id": "review-pending-to-changes-requested",
+        "from": "review-pending",
+        "to": "changes-requested"
+      },
+      "evidence": {
+        "otherRelationship": {
+          "diagramType": "lifecycle",
+          "collection": "transitions",
+          "index": 7,
+          "id": "technical-failure-to-grading",
+          "from": "technical-failure",
+          "to": "grading"
+        },
+        "overlapLengthPx": 38,
+        "minimumPx": 8,
+        "from": [
+          614,
+          158
+        ],
+        "to": [
+          652,
+          158
+        ],
+        "segmentIndex": 0,
+        "otherSegmentIndex": 2
+      },
+      "supportedFixes": [
+        "adjust route/via or channelX/channelY so unrelated transitions do not visually merge"
+      ]
+    },
+    {
+      "code": "composition/label-route-clearance",
+      "severity": "error",
+      "message": "[composition/label-route-clearance] showcase lifecycle label \"More evidence\" on transitions[5] id \"review-pending-to-changes-requested\" \"review-pending\" -> \"changes-requested\" label \"More evidence\" is 0px from transitions[6] id \"grading-to-technical-failure\" \"grading\" -> \"technical-failure\" label \"Job failure\" segment 0 [556, 190] -> [556, 378] (label rect [518, 213, 76, 16]; minimum 4px) — adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 5,
+        "id": "review-pending-to-changes-requested",
+        "from": "review-pending",
+        "to": "changes-requested"
+      },
+      "evidence": {
+        "label": "More evidence",
+        "otherRelationship": {
+          "diagramType": "lifecycle",
+          "collection": "transitions",
+          "index": 6,
+          "id": "grading-to-technical-failure",
+          "from": "grading",
+          "to": "technical-failure"
+        },
+        "segmentIndex": 0,
+        "clearancePx": 0,
+        "minimumPx": 4,
+        "labelRect": {
+          "relation": {
+            "id": "review-pending-to-changes-requested",
+            "from": "review-pending",
+            "to": "changes-requested",
+            "label": "More evidence",
+            "variant": "default"
+          },
+          "relationIndex": 5,
+          "label": "More evidence",
+          "x": 518.15,
+          "y": 213,
+          "width": 75.7,
+          "height": 16,
+          "lx": 556,
+          "ly": 224
+        },
+        "from": [
+          556,
+          190
+        ],
+        "to": [
+          556,
+          378
+        ]
+      },
+      "supportedFixes": [
+        "adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel"
+      ]
+    },
+    {
+      "code": "composition/label-route-clearance",
+      "severity": "error",
+      "message": "[composition/label-route-clearance] showcase lifecycle label \"Job failure\" on transitions[6] id \"grading-to-technical-failure\" \"grading\" -> \"technical-failure\" label \"Job failure\" is 0px from transitions[5] id \"review-pending-to-changes-requested\" \"review-pending\" -> \"changes-requested\" label \"More evidence\" segment 1 [556, 158] -> [556, 310] (label rect [523, 234, 66, 16]; minimum 4px) — adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 6,
+        "id": "grading-to-technical-failure",
+        "from": "grading",
+        "to": "technical-failure"
+      },
+      "evidence": {
+        "label": "Job failure",
+        "otherRelationship": {
+          "diagramType": "lifecycle",
+          "collection": "transitions",
+          "index": 5,
+          "id": "review-pending-to-changes-requested",
+          "from": "review-pending",
+          "to": "changes-requested"
+        },
+        "segmentIndex": 1,
+        "clearancePx": 0,
+        "minimumPx": 4,
+        "labelRect": {
+          "relation": {
+            "id": "grading-to-technical-failure",
+            "from": "grading",
+            "to": "technical-failure",
+            "label": "Job failure",
+            "variant": "default",
+            "labelDy": 65
+          },
+          "relationIndex": 6,
+          "label": "Job failure",
+          "x": 523.05,
+          "y": 234,
+          "width": 65.9,
+          "height": 16,
+          "lx": 556,
+          "ly": 245
+        },
+        "from": [
+          556,
+          158
+        ],
+        "to": [
+          556,
+          310
+        ]
+      },
+      "supportedFixes": [
+        "adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel"
+      ]
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Retry budget\" overlaps state \"approved\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [615, 329, 71, 16]\n  state \"approved\" rect: [652, 278, 116, 64]\n  Suggested fix: labelAt [650, 356] or labelDy +16 (below); or labelAt [650, 274] or labelDy -66 (above)",
+      "subject": {
+        "diagramType": "lifecycle"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "command": [
+    "C:\\Users\\Admin\\AppData\\Local\\hermes\\node\\node.exe",
+    "C:/Users/Admin/.codex/skills/archify/bin/archify.mjs",
+    "validate",
+    "dataflow",
+    "D07/candidate.json",
+    "--quality",
+    "showcase",
+    "--json"
+  ],
+  "cwd": "C:\\Users\\Admin\\Downloads\\Archify_Upskilling_Run\\Archify_Upskilling_Pack\\output\\archify-upskilling-20260929-181205",
+  "exitCode": 0,
+  "stderr": ""
+}

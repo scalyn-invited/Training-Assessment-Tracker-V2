@@ -1,0 +1,261 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "D10 · Weekly adaptation and freeze cutoff",
+    "output": "D10/diagram.html",
+    "quality_profile": "showcase",
+    "animation": "none",
+    "locale": "en"
+  },
+  "lanes": [
+    {
+      "id": "policy",
+      "label": "Deterministic application policy"
+    },
+    {
+      "id": "draft",
+      "label": "AI proposal / coordinator"
+    },
+    {
+      "id": "fallback",
+      "label": "Baseline fallback / calendar"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "evidence",
+      "lane": "policy",
+      "col": 0,
+      "type": "database",
+      "label": "Approved Week N",
+      "sublabel": "Snapshot grade / KPI versions",
+      "width": 170,
+      "height": 64
+    },
+    {
+      "id": "target",
+      "lane": "policy",
+      "col": 1,
+      "type": "backend",
+      "label": "Select N+2",
+      "sublabel": "Within programme duration",
+      "width": 170,
+      "height": 64
+    },
+    {
+      "id": "eligible",
+      "lane": "policy",
+      "col": 2,
+      "type": "security",
+      "label": "Eligible target?",
+      "sublabel": "Before cutoff · no activity",
+      "width": 170,
+      "height": 64
+    },
+    {
+      "id": "proposal",
+      "lane": "draft",
+      "col": 2,
+      "type": "messagebus",
+      "label": "AI proposal",
+      "sublabel": "Within capacity / target",
+      "width": 170,
+      "height": 64
+    },
+    {
+      "id": "validate",
+      "lane": "draft",
+      "col": 3,
+      "type": "security",
+      "label": "Validate proposal",
+      "sublabel": "Calendar / schema / prerequisites",
+      "width": 170,
+      "height": 64
+    },
+    {
+      "id": "review",
+      "lane": "draft",
+      "col": 4,
+      "type": "security",
+      "label": "Coordinator review",
+      "sublabel": "Diff + reason + evidence",
+      "width": 170,
+      "height": 64
+    },
+    {
+      "id": "publish",
+      "lane": "policy",
+      "col": 4,
+      "type": "database",
+      "label": "Recheck + publish",
+      "sublabel": "Atomic version / access check",
+      "width": 170,
+      "height": 64
+    },
+    {
+      "id": "notify",
+      "lane": "policy",
+      "col": 5,
+      "type": "frontend",
+      "label": "Notify member",
+      "sublabel": "Keep old version / event",
+      "width": 170,
+      "height": 64
+    },
+    {
+      "id": "later",
+      "lane": "fallback",
+      "col": 2,
+      "type": "backend",
+      "label": "Keep baseline",
+      "sublabel": "Select later eligible target",
+      "width": 170,
+      "height": 64
+    },
+    {
+      "id": "support",
+      "lane": "fallback",
+      "col": 3,
+      "type": "frontend",
+      "label": "Final support",
+      "sublabel": "No target → follow-on proposal",
+      "width": 170,
+      "height": 64
+    },
+    {
+      "id": "rebase",
+      "lane": "fallback",
+      "col": 1,
+      "type": "backend",
+      "label": "Leave / rebase",
+      "sublabel": "Version future calendar",
+      "width": 170,
+      "height": 64
+    }
+  ],
+  "edges": [
+    {
+      "id": "evidence-to-target",
+      "from": "evidence",
+      "to": "target",
+      "label": "Evidence block + 2",
+      "variant": "default"
+    },
+    {
+      "id": "target-to-eligible",
+      "from": "target",
+      "to": "eligible",
+      "label": "Candidate block",
+      "variant": "default"
+    },
+    {
+      "id": "eligible-to-proposal",
+      "from": "eligible",
+      "to": "proposal",
+      "label": "Eligible",
+      "variant": "dashed"
+    },
+    {
+      "id": "proposal-to-validate",
+      "from": "proposal",
+      "to": "validate",
+      "label": "Draft replacement",
+      "variant": "default"
+    },
+    {
+      "id": "validate-to-review",
+      "from": "validate",
+      "to": "review",
+      "label": "Valid",
+      "variant": "default"
+    },
+    {
+      "id": "review-to-publish",
+      "from": "review",
+      "to": "publish",
+      "label": "Approve exact diff",
+      "variant": "default"
+    },
+    {
+      "id": "publish-to-notify",
+      "from": "publish",
+      "to": "notify",
+      "label": "Commit + event",
+      "variant": "default"
+    },
+    {
+      "id": "eligible-to-later",
+      "from": "eligible",
+      "to": "later",
+      "label": "Locked / started",
+      "variant": "default"
+    },
+    {
+      "id": "publish-to-later",
+      "from": "publish",
+      "to": "later",
+      "label": "Late / stale conflict",
+      "variant": "default",
+      "route": "bottom-channel"
+    },
+    {
+      "id": "later-to-support",
+      "from": "later",
+      "to": "support",
+      "label": "None remains",
+      "variant": "default"
+    },
+    {
+      "id": "later-to-target",
+      "from": "later",
+      "to": "target",
+      "label": "Try later block",
+      "variant": "default",
+      "role": "return"
+    },
+    {
+      "id": "rebase-to-target",
+      "from": "rebase",
+      "to": "target",
+      "label": "Recompute cutoff",
+      "variant": "default"
+    }
+  ],
+  "mainPath": [
+    "evidence",
+    "target",
+    "eligible",
+    "proposal",
+    "validate",
+    "review",
+    "publish",
+    "notify"
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Worked calendar · Asia/Manila",
+      "items": [
+        "W1 starts 5 Oct 2026; Friday evidence reviewed Monday W2. W3 starts 19 Oct; freeze Thursday 15 Oct at 17:00. Approval 14 Oct revises W3; W2 stays unchanged.",
+        "Use evidence N+2, never current_week+2. Late approval 16 Oct keeps W3 baseline and tries W4. Final two blocks route to support, never Week 5 of a four-week plan."
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "Readiness is not permanent freeze",
+      "items": [
+        "Whole-programme baseline is approved before activation. Current + next are ready; future preview is revisable before cutoff with visible notice.",
+        "Freeze at second business day before start, 17:00 local, or immediately on early start/activity. Holidays shift cutoff; no immediate weekend review required."
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "Transactional recheck",
+      "items": [
+        "At approval verify evidence, calendar, policy, base version, reviewer scope, no activity and shared daily capacity. Invalid draft returns for correction; stale review retains baseline.",
+        "Targets/KPI definitions remain human-owned. Required changes need approval; emergency current-content correction needs explicit reason and member notice."
+      ]
+    }
+  ]
+}

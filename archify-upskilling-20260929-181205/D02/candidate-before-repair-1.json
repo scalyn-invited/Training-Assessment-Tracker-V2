@@ -1,0 +1,251 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "D02 · Proposed Proxmox deployment",
+    "output": "D02/diagram.html",
+    "quality_profile": "showcase",
+    "animation": "none",
+    "locale": "en",
+    "viewBox": [
+      1500,
+      840
+    ]
+  },
+  "components": [
+    {
+      "id": "browser",
+      "type": "external",
+      "label": "Staff browser",
+      "sublabel": "HTTPS ingress only",
+      "pos": [
+        40,
+        360
+      ],
+      "size": [
+        210,
+        70
+      ]
+    },
+    {
+      "id": "identity",
+      "type": "security",
+      "label": "Identity service VM",
+      "sublabel": "Shared authentik · assumed",
+      "pos": [
+        40,
+        110
+      ],
+      "size": [
+        210,
+        70
+      ]
+    },
+    {
+      "id": "training-web",
+      "type": "backend",
+      "label": "Proxy + PHP web",
+      "sublabel": "Nginx / Laravel / PHP FPM",
+      "pos": [
+        450,
+        360
+      ],
+      "size": [
+        210,
+        70
+      ]
+    },
+    {
+      "id": "evidence",
+      "type": "database",
+      "label": "Private evidence",
+      "sublabel": "Outside public root",
+      "pos": [
+        450,
+        110
+      ],
+      "size": [
+        210,
+        70
+      ]
+    },
+    {
+      "id": "database",
+      "type": "database",
+      "label": "MariaDB",
+      "sublabel": "Application + queue + locks",
+      "pos": [
+        860,
+        360
+      ],
+      "size": [
+        210,
+        70
+      ]
+    },
+    {
+      "id": "backup",
+      "type": "external",
+      "label": "Off-host backup",
+      "sublabel": "Encrypted · separate host",
+      "pos": [
+        1240,
+        360
+      ],
+      "size": [
+        210,
+        70
+      ]
+    },
+    {
+      "id": "worker",
+      "type": "backend",
+      "label": "Worker / scheduler",
+      "sublabel": "systemd · same release",
+      "pos": [
+        860,
+        630
+      ],
+      "size": [
+        210,
+        70
+      ]
+    },
+    {
+      "id": "external-services",
+      "type": "external",
+      "label": "AI APIs + SMTP",
+      "sublabel": "Outbound HTTPS / SMTP TLS",
+      "pos": [
+        450,
+        630
+      ],
+      "size": [
+        210,
+        70
+      ]
+    },
+    {
+      "id": "primary-platform",
+      "type": "external",
+      "label": "Primary platform",
+      "sublabel": "Physical location unknown",
+      "pos": [
+        1240,
+        110
+      ],
+      "size": [
+        210,
+        70
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "browser-to-training-web",
+      "from": "browser",
+      "to": "training-web",
+      "label": "HTTPS",
+      "variant": "default"
+    },
+    {
+      "id": "browser-to-identity",
+      "from": "browser",
+      "to": "identity",
+      "label": "OIDC + MFA",
+      "variant": "security"
+    },
+    {
+      "id": "training-web-to-evidence",
+      "from": "training-web",
+      "to": "evidence",
+      "label": "Private I/O",
+      "variant": "default"
+    },
+    {
+      "id": "training-web-to-database",
+      "from": "training-web",
+      "to": "database",
+      "label": "SQL / enqueue",
+      "variant": "default"
+    },
+    {
+      "id": "database-to-worker",
+      "from": "database",
+      "to": "worker",
+      "label": "DB queue",
+      "variant": "dashed"
+    },
+    {
+      "id": "worker-to-external-services",
+      "from": "worker",
+      "to": "external-services",
+      "label": "Outbound TLS",
+      "variant": "default"
+    },
+    {
+      "id": "database-to-backup",
+      "from": "database",
+      "to": "backup",
+      "label": "Backup set",
+      "variant": "dashed"
+    },
+    {
+      "id": "primary-platform-to-training-web",
+      "from": "primary-platform",
+      "to": "training-web",
+      "label": "Scoped HTTPS",
+      "variant": "default"
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "Proposed Proxmox host · infrastructure owner",
+      "wraps": [
+        "training-web",
+        "evidence",
+        "database",
+        "worker"
+      ],
+      "pad": 55
+    },
+    {
+      "kind": "security-group",
+      "label": "Training Linux VM · private services",
+      "wraps": [
+        "training-web",
+        "evidence",
+        "database",
+        "worker"
+      ],
+      "pad": 25
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Sizing and owners",
+      "items": [
+        "Training VM: 2 vCPU / 4 GB / 40–60 GB starting estimate; one VM is not high availability.",
+        "Infrastructure owner maintains VM, OS and backups; application owner maintains releases and queues."
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "Separate identity",
+      "items": [
+        "Identity service has its own vendor-managed data services and separate capacity. Identity owner maintains MFA and recovery.",
+        "Primary integration owner confirms location and private routing; database and files are never public."
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "Recovery and operations",
+      "items": [
+        "Off-host backup set includes DB, evidence, keys and IdP configuration. Proposed RPO 24h / RTO 4h needs an isolated restore drill.",
+        "Monitor queue/sync age, review backlog, spend, disk, SMTP bounces and backup freshness. Pilot: 100 members / 20 concurrent; measure p95 <500ms ordinary reads."
+      ]
+    }
+  ]
+}

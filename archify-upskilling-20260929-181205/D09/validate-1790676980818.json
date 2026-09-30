@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "validate",
+  "stage": "render",
+  "type": "lifecycle",
+  "input": "C:\\Users\\Admin\\Downloads\\Archify_Upskilling_Run\\Archify_Upskilling_Pack\\output\\archify-upskilling-20260929-181205\\D09\\candidate.json",
+  "error": "Lifecycle layout validation failed:\n- [composition/proper-crossing] showcase lifecycle transitions[2] id \"queued-to-grading\" \"queued\" -> \"grading\" crosses transitions[5] id \"review-pending-to-changes-requested\" \"review-pending\" -> \"changes-requested\" at [470, 158] (segments 0 and 2) — adjust route/via or channelX/channelY so the transitions use separate lifecycle corridors.\n- [composition/label-route-clearance] showcase lifecycle label \"Claim job\" on transitions[2] id \"queued-to-grading\" \"queued\" -> \"grading\" label \"Claim job\" is 0px from transitions[5] id \"review-pending-to-changes-requested\" \"review-pending\" -> \"changes-requested\" label \"More evidence\" segment 2 [470, 75] -> [470, 235] (label rect [451, 101, 56, 16]; minimum 4px) — adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel.",
+  "diagnostics": [
+    {
+      "code": "composition/proper-crossing",
+      "severity": "error",
+      "message": "[composition/proper-crossing] showcase lifecycle transitions[2] id \"queued-to-grading\" \"queued\" -> \"grading\" crosses transitions[5] id \"review-pending-to-changes-requested\" \"review-pending\" -> \"changes-requested\" at [470, 158] (segments 0 and 2) — adjust route/via or channelX/channelY so the transitions use separate lifecycle corridors.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 2,
+        "id": "queued-to-grading",
+        "from": "queued",
+        "to": "grading"
+      },
+      "evidence": {
+        "otherRelationship": {
+          "diagramType": "lifecycle",
+          "collection": "transitions",
+          "index": 5,
+          "id": "review-pending-to-changes-requested",
+          "from": "review-pending",
+          "to": "changes-requested"
+        },
+        "point": [
+          470,
+          158
+        ],
+        "segmentIndex": 0,
+        "otherSegmentIndex": 2
+      },
+      "supportedFixes": [
+        "adjust route/via or channelX/channelY so the transitions use separate lifecycle corridors"
+      ]
+    },
+    {
+      "code": "composition/label-route-clearance",
+      "severity": "error",
+      "message": "[composition/label-route-clearance] showcase lifecycle label \"Claim job\" on transitions[2] id \"queued-to-grading\" \"queued\" -> \"grading\" label \"Claim job\" is 0px from transitions[5] id \"review-pending-to-changes-requested\" \"review-pending\" -> \"changes-requested\" label \"More evidence\" segment 2 [470, 75] -> [470, 235] (label rect [451, 101, 56, 16]; minimum 4px) — adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 2,
+        "id": "queued-to-grading",
+        "from": "queued",
+        "to": "grading"
+      },
+      "evidence": {
+        "label": "Claim job",
+        "otherRelationship": {
+          "diagramType": "lifecycle",
+          "collection": "transitions",
+          "index": 5,
+          "id": "review-pending-to-changes-requested",
+          "from": "review-pending",
+          "to": "changes-requested"
+        },
+        "segmentIndex": 2,
+        "clearancePx": 0,
+        "minimumPx": 4,
+        "labelRect": {
+          "relation": {
+            "id": "queued-to-grading",
+            "from": "queued",
+            "to": "grading",
+            "label": "Claim job",
+            "variant": "default",
+            "labelAt": [
+              479,
+              112
+            ]
+          },
+          "relationIndex": 2,
+          "label": "Claim job",
+          "x": 450.95,
+          "y": 101,
+          "width": 56.1,
+          "height": 16,
+          "lx": 479,
+          "ly": 112
+        },
+        "from": [
+          470,
+          75
+        ],
+        "to": [
+          470,
+          235
+        ]
+      },
+      "supportedFixes": [
+        "adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "validate",
+  "stage": "render",
+  "type": "architecture",
+  "input": "C:\\Users\\Admin\\Downloads\\Archify_Upskilling_Run\\Archify_Upskilling_Pack\\output\\archify-upskilling-20260929-181205\\D01\\candidate.json",
+  "error": "Architecture layout validation failed:\n- Label \"Queued jobs\" overlaps component \"database\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [944, 410, 63, 14]\n  component \"database\" rect: [870, 360, 210, 70]\n  Suggested fix: labelAt [975, 444] or labelDy +24 (below); or labelAt [975, 356] or labelDy -64 (above)\n- [composition/label-route-clearance] showcase architecture label \"SQL / enqueue\" on connections[4] \"training-web\" -> \"database\" label \"SQL / enqueue\" is 0px from connections[3] \"primary-platform\" -> \"training-web\" label \"Delegated API / directory\" segment 1 [770, 145] -> [770, 388] (label rect [734, 382, 72, 14]; minimum 4px) — adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel.",
+  "diagnostics": [
+    {
+      "code": "composition/label-route-clearance",
+      "severity": "error",
+      "message": "[composition/label-route-clearance] showcase architecture label \"SQL / enqueue\" on connections[4] \"training-web\" -> \"database\" label \"SQL / enqueue\" is 0px from connections[3] \"primary-platform\" -> \"training-web\" label \"Delegated API / directory\" segment 1 [770, 145] -> [770, 388] (label rect [734, 382, 72, 14]; minimum 4px) — adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel.",
+      "subject": {
+        "diagramType": "architecture",
+        "collection": "connections",
+        "index": 4,
+        "from": "training-web",
+        "to": "database"
+      },
+      "evidence": {
+        "label": "SQL / enqueue",
+        "otherRelationship": {
+          "diagramType": "architecture",
+          "collection": "connections",
+          "index": 3,
+          "from": "primary-platform",
+          "to": "training-web"
+        },
+        "segmentIndex": 1,
+        "clearancePx": 0,
+        "minimumPx": 4,
+        "labelRect": {
+          "relation": {
+            "from": "training-web",
+            "to": "database",
+            "label": "SQL / enqueue"
+          },
+          "relationIndex": 4,
+          "label": "SQL / enqueue",
+          "x": 733.8,
+          "y": 382,
+          "width": 72.4,
+          "height": 14,
+          "lx": 770,
+          "ly": 392
+        },
+        "from": [
+          770,
+          145
+        ],
+        "to": [
+          770,
+          388
+        ]
+      },
+      "supportedFixes": [
+        "adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel"
+      ]
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Queued jobs\" overlaps component \"database\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [944, 410, 63, 14]\n  component \"database\" rect: [870, 360, 210, 70]\n  Suggested fix: labelAt [975, 444] or labelDy +24 (below); or labelAt [975, 356] or labelDy -64 (above)",
+      "subject": {
+        "diagramType": "architecture"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    }
+  ]
+}

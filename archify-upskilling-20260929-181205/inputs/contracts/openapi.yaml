@@ -1,0 +1,997 @@
+openapi: 3.1.0
+info:
+  title: Internal Upskilling Proposed API
+  version: 1.0.0
+  description: Design contract. Not deployed. example.invalid endpoints are placeholders.
+    Covers primary-platform integration and key review mutations; admin UI CRUD is
+    not exhaustively specified. OAuth scopes never replace record-level policies.
+    Local-only and synthetic records are excluded from external reads; app-api supports
+    permitted real local-only members. Directory payload variants are negotiated with
+    the actual primary platform.
+servers:
+- url: https://training.example.invalid
+  description: Replace only after deployment decision
+paths:
+  /api/v1/me/training:
+    get:
+      operationId: getOwnTraining
+      summary: List own linked approved training
+      security:
+      - delegatedOAuth:
+        - training.self.read
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SummaryPage'
+        '400': &id001
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401': &id002
+          description: Invalid or expired authentication
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403': &id003
+          description: Scope or policy denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404': &id004
+          description: Missing or inaccessible record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409': &id005
+          description: Version, idempotency or freeze conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429': &id006
+          description: Rate limit exceeded; Retry-After header
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+                minimum: 1
+              description: Seconds until retry
+        '503': &id007
+          description: Stale permissions or dependency unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+                minimum: 1
+              description: Seconds until retry
+      parameters: &id011
+      - &id008
+        name: cursor
+        in: query
+        schema:
+          type: string
+      - &id009
+        name: limit
+        in: query
+        schema:
+          type: integer
+          default: 50
+          minimum: 1
+          maximum: 100
+  /api/v1/members/{memberId}/summary:
+    get:
+      operationId: getMemberSummary
+      summary: List approved enrolment summaries for a permitted linked member
+      security:
+      - delegatedOAuth:
+        - training.member.read
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SummaryPage'
+        '400': *id001
+        '401': *id002
+        '403': *id003
+        '404': *id004
+        '409': *id005
+        '429': *id006
+        '503': *id007
+      parameters:
+      - name: memberId
+        in: path
+        required: true
+        schema: &id010
+          type: string
+          format: uuid
+      - *id008
+      - *id009
+  /api/v1/groups/{groupId}/progress:
+    get:
+      operationId: getGroupProgress
+      summary: Approved training for permitted group members
+      security:
+      - delegatedOAuth:
+        - training.group.read
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SummaryPage'
+        '400': *id001
+        '401': *id002
+        '403': *id003
+        '404': *id004
+        '409': *id005
+        '429': *id006
+        '503': *id007
+      parameters:
+      - name: groupId
+        in: path
+        required: true
+        schema: *id010
+      - *id008
+      - *id009
+  /api/v1/changes:
+    get:
+      operationId: getApprovedChanges
+      summary: Approved changes and tombstones for dedicated sync client
+      security:
+      - machineOAuth:
+        - training.sync.read
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChangePage'
+        '400': *id001
+        '401': *id002
+        '403': *id003
+        '404': *id004
+        '409': *id005
+        '429': *id006
+        '503': *id007
+      parameters: *id011
+  /api/v1/integrations/directory/events:
+    post:
+      operationId: receiveDirectoryEvent
+      summary: Validate and durably queue a directory event
+      security:
+      - machineOAuth:
+        - directory.write
+      responses:
+        '202':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobAccepted'
+        '400': *id001
+        '401': *id002
+        '403': *id003
+        '404': *id004
+        '409': *id005
+        '429': *id006
+        '503': *id007
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DirectoryEvent'
+      parameters:
+      - name: Idempotency-Key
+        in: header
+        required: true
+        schema:
+          type: string
+          minLength: 8
+          maxLength: 128
+        description: Unique per client and intended mutation. Same key with different
+          payload returns 409.
+  /api/v1/jobs/{jobId}:
+    get:
+      operationId: getOwnJob
+      summary: Read a job restricted to its originating authorised caller
+      security:
+      - delegatedOAuth:
+        - jobs.read
+      - machineOAuth:
+        - jobs.read
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobStatus'
+        '400': *id001
+        '401': *id002
+        '403': *id003
+        '404': *id004
+        '409': *id005
+        '429': *id006
+        '503': *id007
+      parameters:
+      - name: jobId
+        in: path
+        required: true
+        schema: *id010
+  /app-api/v1/programme-versions/{versionId}/review:
+    post:
+      operationId: reviewProgramme
+      summary: Approve exact programme version or request changes
+      security:
+      - sessionCookie: []
+        csrfHeader: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApprovalResult'
+        '400': *id001
+        '401': *id002
+        '403': *id003
+        '404': *id004
+        '409': *id005
+        '429': *id006
+        '503': *id007
+      parameters:
+      - name: versionId
+        in: path
+        required: true
+        schema: *id010
+      - name: Idempotency-Key
+        in: header
+        required: true
+        schema:
+          type: string
+          minLength: 8
+          maxLength: 128
+        description: Unique per client and intended mutation. Same key with different
+          payload returns 409.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApprovalRequest'
+  /app-api/v1/submissions:
+    post:
+      operationId: submitAttempt
+      summary: Submit immutable assignment attempt
+      security:
+      - sessionCookie: []
+        csrfHeader: []
+      responses:
+        '201':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubmissionReceipt'
+        '400': *id001
+        '401': *id002
+        '403': *id003
+        '404': *id004
+        '409': *id005
+        '429': *id006
+        '503': *id007
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubmissionCreate'
+      parameters:
+      - name: Idempotency-Key
+        in: header
+        required: true
+        schema:
+          type: string
+          minLength: 8
+          maxLength: 128
+        description: Unique per client and intended mutation. Same key with different
+          payload returns 409.
+  /app-api/v1/grading-attempts/{attemptId}/review:
+    post:
+      operationId: reviewGrade
+      summary: Approve provisional grading attempt or request changes
+      security:
+      - sessionCookie: []
+        csrfHeader: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApprovalResult'
+        '400': *id001
+        '401': *id002
+        '403': *id003
+        '404': *id004
+        '409': *id005
+        '429': *id006
+        '503': *id007
+      parameters:
+      - name: attemptId
+        in: path
+        required: true
+        schema: *id010
+      - name: Idempotency-Key
+        in: header
+        required: true
+        schema:
+          type: string
+          minLength: 8
+          maxLength: 128
+        description: Unique per client and intended mutation. Same key with different
+          payload returns 409.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GradeReviewRequest'
+  /app-api/v1/adaptations/{proposalId}/review:
+    post:
+      operationId: reviewAdaptation
+      summary: Approve eligible future revision or request changes
+      security:
+      - sessionCookie: []
+        csrfHeader: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApprovalResult'
+        '400': *id001
+        '401': *id002
+        '403': *id003
+        '404': *id004
+        '409': *id005
+        '429': *id006
+        '503': *id007
+      parameters:
+      - name: proposalId
+        in: path
+        required: true
+        schema: *id010
+      - name: Idempotency-Key
+        in: header
+        required: true
+        schema:
+          type: string
+          minLength: 8
+          maxLength: 128
+        description: Unique per client and intended mutation. Same key with different
+          payload returns 409.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApprovalRequest'
+  /app-api/v1/members/{memberId}/promotion:
+    post:
+      operationId: requestPromotion
+      summary: Request verified real member promotion; primary endpoint is adapter
+        specific
+      security:
+      - sessionCookie: []
+        csrfHeader: []
+      responses:
+        '202':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobAccepted'
+        '400': *id001
+        '401': *id002
+        '403': *id003
+        '404': *id004
+        '409': *id005
+        '429': *id006
+        '503': *id007
+      parameters:
+      - name: memberId
+        in: path
+        required: true
+        schema: *id010
+      - name: Idempotency-Key
+        in: header
+        required: true
+        schema:
+          type: string
+          minLength: 8
+          maxLength: 128
+        description: Unique per client and intended mutation. Same key with different
+          payload returns 409.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PromotionRequest'
+components:
+  securitySchemes:
+    delegatedOAuth:
+      type: oauth2
+      description: Example IdP URLs. Authorisation code with PKCE or tested on-behalf-of
+        exchange; signed actor, client and training audience required. No ID tokens
+        as API access tokens.
+      flows:
+        authorizationCode:
+          authorizationUrl: https://identity.example.invalid/application/o/authorize/
+          tokenUrl: https://identity.example.invalid/application/o/token/
+          scopes:
+            training.self.read: Read own approved training
+            training.member.read: Read permitted member summaries
+            training.group.read: Read assigned group progress
+            jobs.read: Read own authorised jobs
+    machineOAuth:
+      type: oauth2
+      description: Separate clients per integration and environment. Not usable for
+        user-question endpoints.
+      flows:
+        clientCredentials:
+          tokenUrl: https://identity.example.invalid/application/o/token/
+          scopes:
+            directory.write: Ingest directory events
+            training.sync.read: Read approved change feed
+            jobs.read: Poll originating ingestion job
+    sessionCookie:
+      type: apiKey
+      in: cookie
+      name: training_session
+      description: Server session established by OIDC with MFA; role and record policy
+        required.
+    csrfHeader:
+      type: apiKey
+      in: header
+      name: X-CSRF-TOKEN
+      description: CSRF defence paired with session cookie, not a standalone login
+        credential.
+  schemas:
+    Error:
+      type: object
+      additionalProperties: false
+      properties:
+        error:
+          type: object
+          additionalProperties: false
+          properties:
+            code: &id012
+              type: string
+              minLength: 1
+            message: *id012
+            request_id: *id010
+            details:
+              type: object
+          required:
+          - code
+          - message
+          - request_id
+          - details
+      required:
+      - error
+    JobAccepted:
+      type: object
+      additionalProperties: false
+      properties:
+        job_id: *id010
+        state:
+          const: queued
+        status_url:
+          type: string
+        request_id: *id010
+      required:
+      - job_id
+      - state
+      - status_url
+      - request_id
+    JobStatus:
+      type: object
+      additionalProperties: false
+      properties:
+        job_id: *id010
+        state:
+          type: string
+          enum:
+          - queued
+          - running
+          - succeeded
+          - failed
+        result_id:
+          type:
+          - string
+          - 'null'
+        error_code:
+          type:
+          - string
+          - 'null'
+      required:
+      - job_id
+      - state
+      - result_id
+      - error_code
+    KpiSnapshot:
+      type: object
+      additionalProperties: false
+      properties:
+        kpi_id: *id010
+        definition_version:
+          type: integer
+          minimum: 1
+        name: *id012
+        rationale: *id012
+        unit: *id012
+        value:
+          type:
+          - number
+          - 'null'
+        baseline:
+          type:
+          - number
+          - 'null'
+        target:
+          type: number
+        sample_count:
+          type: integer
+          minimum: 0
+        status:
+          type: string
+          enum:
+          - target_met
+          - on_track
+          - at_risk
+          - below_target
+          - insufficient_evidence
+        evidence_ids:
+          type: array
+          items: *id010
+        calculated_at: &id013
+          type: string
+          format: date-time
+      required:
+      - kpi_id
+      - definition_version
+      - name
+      - rationale
+      - unit
+      - value
+      - baseline
+      - target
+      - sample_count
+      - status
+      - evidence_ids
+      - calculated_at
+    TrainingSummary:
+      type: object
+      additionalProperties: false
+      properties:
+        member_id: *id010
+        external_person_id: *id012
+        enrolment_id: *id010
+        programme_version:
+          type: integer
+          minimum: 1
+        status:
+          type: string
+          enum:
+          - ready
+          - active
+          - paused
+          - completed
+          - cancelled
+        approval_status:
+          const: approved
+        current_week:
+          type: integer
+          minimum: 1
+          maximum: 12
+        duration_weeks:
+          type: integer
+          enum:
+          - 4
+          - 6
+          - 8
+          - 10
+          - 12
+        kpis:
+          type: array
+          items:
+            $ref: '#/components/schemas/KpiSnapshot'
+        updated_at: *id013
+        data_as_of: *id013
+        request_id: *id010
+      required:
+      - member_id
+      - external_person_id
+      - enrolment_id
+      - programme_version
+      - status
+      - approval_status
+      - current_week
+      - duration_weeks
+      - kpis
+      - updated_at
+      - data_as_of
+      - request_id
+    SummaryPage:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/TrainingSummary'
+        next_cursor:
+          type:
+          - string
+          - 'null'
+        data_as_of: *id013
+      required:
+      - items
+      - next_cursor
+      - data_as_of
+    Change:
+      type: object
+      additionalProperties: false
+      properties:
+        change_id: *id012
+        event_type: *id012
+        entity_id: *id010
+        version:
+          type: integer
+          minimum: 1
+        external_person_id: *id012
+        approved:
+          type: boolean
+        tombstone:
+          type: boolean
+        occurred_at: *id013
+      required:
+      - change_id
+      - event_type
+      - entity_id
+      - version
+      - external_person_id
+      - approved
+      - tombstone
+      - occurred_at
+    ChangePage:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Change'
+        next_cursor:
+          type:
+          - string
+          - 'null'
+        data_as_of: *id013
+      required:
+      - items
+      - next_cursor
+      - data_as_of
+    DirectoryEvent:
+      type: object
+      additionalProperties: false
+      properties:
+        schema_version:
+          const: '1.0'
+        event_id:
+          type: string
+          format: uuid
+        occurred_at:
+          type: string
+          format: date-time
+        source:
+          const: primary-platform
+        environment:
+          type: string
+          enum:
+          - production
+          - test
+        event_type:
+          type: string
+          enum:
+          - person.upserted
+          - person.deactivated
+          - group.upserted
+          - membership.changed
+        entity_id:
+          type: string
+          minLength: 1
+        entity_version:
+          type: integer
+          minimum: 1
+        payload:
+          type: object
+          description: Proposed canonical payload; primary adapter maps the actual
+            source API into these shapes.
+      required:
+      - schema_version
+      - event_id
+      - occurred_at
+      - source
+      - environment
+      - event_type
+      - entity_id
+      - entity_version
+      - payload
+      allOf:
+      - if:
+          properties:
+            event_type:
+              const: person.upserted
+          required:
+          - event_type
+        then:
+          properties:
+            payload:
+              type: object
+              properties:
+                display_name: &id014
+                  type: string
+                  minLength: 1
+                email:
+                  type: string
+                  format: email
+                role_title: *id014
+                active:
+                  type: boolean
+                organisation_source_id: *id014
+              required:
+              - display_name
+              - active
+              - organisation_source_id
+              additionalProperties: false
+      - if:
+          properties:
+            event_type:
+              const: person.deactivated
+          required:
+          - event_type
+        then:
+          properties:
+            payload:
+              type: object
+              properties:
+                reason: *id014
+                effective_at: &id015
+                  type: string
+                  format: date-time
+              required:
+              - reason
+              - effective_at
+              additionalProperties: false
+      - if:
+          properties:
+            event_type:
+              const: group.upserted
+          required:
+          - event_type
+        then:
+          properties:
+            payload:
+              type: object
+              properties:
+                name: *id014
+                active:
+                  type: boolean
+                organisation_source_id: *id014
+              required:
+              - name
+              - active
+              - organisation_source_id
+              additionalProperties: false
+      - if:
+          properties:
+            event_type:
+              const: membership.changed
+          required:
+          - event_type
+        then:
+          properties:
+            payload:
+              type: object
+              properties:
+                person_source_id: *id014
+                group_source_id: *id014
+                active:
+                  type: boolean
+                effective_at: *id015
+              required:
+              - person_source_id
+              - group_source_id
+              - active
+              - effective_at
+              additionalProperties: false
+    ApprovalRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        expected_version:
+          type: integer
+          minimum: 1
+        decision:
+          type: string
+          enum:
+          - approve
+          - request_changes
+        reason: *id012
+      required:
+      - expected_version
+      - decision
+      - reason
+    ApprovalResult:
+      type: object
+      additionalProperties: false
+      properties:
+        approval_id: *id010
+        entity_id: *id010
+        version:
+          type: integer
+          minimum: 1
+        status:
+          type: string
+          enum:
+          - approved
+          - changes_requested
+          - regrade_requested
+          - resubmission_requested
+        decided_at: *id013
+      required:
+      - approval_id
+      - entity_id
+      - version
+      - status
+      - decided_at
+    SubmissionCreate:
+      type: object
+      additionalProperties: false
+      properties:
+        assignment_id: *id010
+        assignment_version:
+          type: integer
+          minimum: 1
+        rubric_version:
+          type: integer
+          minimum: 1
+        response_markdown:
+          type: string
+        private_file_ids:
+          type: array
+          items: *id010
+        supersedes_submission_id:
+          type:
+          - string
+          - 'null'
+          format: uuid
+      required:
+      - assignment_id
+      - assignment_version
+      - rubric_version
+      - response_markdown
+      - private_file_ids
+      - supersedes_submission_id
+    SubmissionReceipt:
+      type: object
+      additionalProperties: false
+      properties:
+        submission_id: *id010
+        attempt_number:
+          type: integer
+          minimum: 1
+        submitted_at: *id013
+        state:
+          const: submitted
+      required:
+      - submission_id
+      - attempt_number
+      - submitted_at
+      - state
+    PromotionRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        expected_version:
+          type: integer
+          minimum: 1
+        identity_verified:
+          const: true
+        duplicate_review_reference: *id012
+        export_training_history:
+          const: false
+      required:
+      - expected_version
+      - identity_verified
+      - duplicate_review_reference
+      - export_training_history
+    GradeReviewRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - expected_version
+      - decision
+      - reason
+      properties:
+        expected_version:
+          type: integer
+          minimum: 1
+        decision:
+          type: string
+          enum:
+          - approve
+          - override
+          - request_regrade
+          - request_resubmission
+        reason:
+          type: string
+          minLength: 1
+        override_scores:
+          type: array
+          minItems: 1
+          items:
+            type: object
+            additionalProperties: false
+            required:
+            - criterion_id
+            - points
+            - evidence_ids
+            properties:
+              criterion_id:
+                type: string
+                minLength: 1
+              points:
+                type: number
+                minimum: 0
+              evidence_ids:
+                type: array
+                items:
+                  type: string
+                minItems: 1
+      allOf:
+      - if:
+          properties:
+            decision:
+              const: override
+        then:
+          required:
+          - override_scores
+        else:
+          not:
+            required:
+            - override_scores

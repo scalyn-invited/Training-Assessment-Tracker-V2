@@ -1,0 +1,133 @@
+{
+  "package_version": "2.0",
+  "checked_at": "2026-09-29",
+  "scope": "Input package only, not generated Archify diagrams or implemented software",
+  "checks": [
+    {
+      "check": "fixture_schema",
+      "subject": "ProvisionalGrade",
+      "status": "passed"
+    },
+    {
+      "check": "fixture_schema",
+      "subject": "DirectoryEvent",
+      "status": "passed"
+    },
+    {
+      "check": "fixture_schema",
+      "subject": "ProgrammeDraft",
+      "status": "passed"
+    },
+    {
+      "check": "fixture_schema",
+      "subject": "AdaptationProposal",
+      "status": "passed"
+    },
+    {
+      "check": "openapi_3_1_full_conformance",
+      "status": "passed"
+    },
+    {
+      "check": "openapi_yaml_refs_schemas_security_and_operation_ids",
+      "status": "passed",
+      "operations": 11
+    },
+    {
+      "check": "fixture_duration_minutes_rubric_and_calendar_arithmetic",
+      "status": "passed"
+    },
+    {
+      "check": "negative_fixtures_approved_ai_grade_and_invalid_duration_rejected",
+      "status": "passed"
+    },
+    {
+      "check": "requirement_diagram_acceptance_references",
+      "status": "passed",
+      "requirements": 40,
+      "diagram_briefs": 11,
+      "acceptance_scenarios": 30
+    }
+  ],
+  "docx_render": "20 pages rendered and visually inspected",
+  "not_run": [
+    "Archify rendering and native candidate/browser validation: destination-agent task",
+    "Application acceptance, load, security, restore and AI calibration tests: application not implemented"
+  ],
+  "files": [
+    {
+      "path": "00_START_HERE.md",
+      "sha256": "8149c5f098c1110d87cc26f61e4aa1cb8175099d56d05a8a834f98b8b10f7301",
+      "bytes": 3711
+    },
+    {
+      "path": "01_AUTOPILOT_PROMPT.md",
+      "sha256": "6d55f71cdad1b59d540fa693d4813ac122962ef45f7f5a57976f6f365cb38494",
+      "bytes": 9916
+    },
+    {
+      "path": "02_PRODUCT_ARCHITECTURE_SPEC.md",
+      "sha256": "3997850818e5d8d5290b16bfc04ded8b35b03eec6e15a2dfdd85d417ce08322e",
+      "bytes": 53838
+    },
+    {
+      "path": "03_DOMAIN_AND_POLICY_RULES.md",
+      "sha256": "c54f598856db82e52f30c3cbe3ec41ecd8d95eb944f749d914833b3c1c4015ad",
+      "bytes": 15459
+    },
+    {
+      "path": "06_DIAGRAM_BRIEFS.md",
+      "sha256": "18395d9231c1d7aa769735d826c85a17893784beed91c37a2ef750a751d8ac37",
+      "bytes": 7578
+    },
+    {
+      "path": "07_REQUIREMENTS_TRACEABILITY.csv",
+      "sha256": "fcca32146b6d3b3cddb5cee987ebefc54a5409aae752d93a89c84d1f640807e8",
+      "bytes": 3863
+    },
+    {
+      "path": "08_ACCEPTANCE_TESTS.md",
+      "sha256": "b533b9a07ebbf0d0860071282571599e9a2f5d3ddcd3660ca3c019bcaa066322",
+      "bytes": 6568
+    },
+    {
+      "path": "09_DELIVERY_BACKLOG.md",
+      "sha256": "9573e0396d321aa1e4af69424921b1e01ae01ce83077de667a8523649393b54b",
+      "bytes": 3349
+    },
+    {
+      "path": "10_DECISIONS_AND_DEFAULTS.md",
+      "sha256": "30a22b5bad37f723dfdd83332786cec607034238d07eb86abe7561cf6470fb28",
+      "bytes": 3529
+    },
+    {
+      "path": "11_IMPLEMENTATION_HANDOFF_PROMPT.md",
+      "sha256": "983c01da9f20e43300314d1a9f5e54442fae2c34b4b8e0443d8b782fd379d011",
+      "bytes": 2686
+    },
+    {
+      "path": "12_ARCHIFY_COMPATIBILITY.md",
+      "sha256": "6b339884d3d8b0b978e778ba430344dbc3708d4f95bc57db30772df59149d669",
+      "bytes": 3367
+    },
+    {
+      "path": "contracts/openapi.yaml",
+      "sha256": "05902f5b72977f56a092aa7f81d7a0c7b4f5e7f0e706a4cd08eadc6973ae39f4",
+      "bytes": 25657
+    },
+    {
+      "path": "contracts/application-schemas.json",
+      "sha256": "c9001eeba383f01e67eaea284fd2398d5117d183c26efdbf910f4766ca2c75ea",
+      "bytes": 18734
+    },
+    {
+      "path": "fixtures/synthetic-scenarios.json",
+      "sha256": "e2179a4e75d65f28d1dfef32ac5f3b1f72ef10c3d56f085b57b95801220bcfac",
+      "bytes": 34720
+    },
+    {
+      "path": "reference/Upskilling_Platform_Architecture_Plan.docx",
+      "sha256": "5473bacabeec253ab3e46b19ea716f253dc0e13fbe55e640237b529745720dcf",
+      "bytes": 63901
+    }
+  ]
+}

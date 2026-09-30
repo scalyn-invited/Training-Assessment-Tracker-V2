@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "validate",
+  "stage": "render",
+  "type": "workflow",
+  "input": "C:\\Users\\Admin\\Downloads\\Archify_Upskilling_Run\\Archify_Upskilling_Pack\\output\\archify-upskilling-20260929-181205\\D04\\candidate.json",
+  "error": "Workflow layout validation failed:\n- [composition/ambiguous-corridor] showcase workflow edges[0] \"activate\" -> \"learn\" shares a 124px corridor with edges[8] \"validate\" -> \"review\" at [1129, 195] -> [1129, 319] (segments 1 and 2; minimum 8px) — adjust route/via, bias, or channel coordinates so unrelated edges do not visually merge.\n- [composition/ambiguous-corridor] showcase workflow edges[1] \"correct\" -> \"generate\" shares a 214.8px corridor with edges[8] \"validate\" -> \"review\" at [723.6, 195] -> [938.4, 195] (segments 1 and 1; minimum 8px) — adjust route/via, bias, or channel coordinates so unrelated edges do not visually merge.",
+  "diagnostics": [
+    {
+      "code": "composition/ambiguous-corridor",
+      "severity": "error",
+      "message": "[composition/ambiguous-corridor] showcase workflow edges[0] \"activate\" -> \"learn\" shares a 124px corridor with edges[8] \"validate\" -> \"review\" at [1129, 195] -> [1129, 319] (segments 1 and 2; minimum 8px) — adjust route/via, bias, or channel coordinates so unrelated edges do not visually merge.",
+      "subject": {
+        "diagramType": "workflow",
+        "collection": "edges",
+        "index": 0,
+        "from": "activate",
+        "to": "learn"
+      },
+      "evidence": {
+        "otherRelationship": {
+          "diagramType": "workflow",
+          "collection": "edges",
+          "index": 8,
+          "from": "validate",
+          "to": "review"
+        },
+        "overlapLengthPx": 124,
+        "minimumPx": 8,
+        "from": [
+          1129,
+          195
+        ],
+        "to": [
+          1129,
+          319
+        ],
+        "segmentIndex": 1,
+        "otherSegmentIndex": 2
+      },
+      "supportedFixes": [
+        "adjust route/via, bias, or channel coordinates so unrelated edges do not visually merge"
+      ]
+    },
+    {
+      "code": "composition/ambiguous-corridor",
+      "severity": "error",
+      "message": "[composition/ambiguous-corridor] showcase workflow edges[1] \"correct\" -> \"generate\" shares a 214.8px corridor with edges[8] \"validate\" -> \"review\" at [723.6, 195] -> [938.4, 195] (segments 1 and 1; minimum 8px) — adjust route/via, bias, or channel coordinates so unrelated edges do not visually merge.",
+      "subject": {
+        "diagramType": "workflow",
+        "collection": "edges",
+        "index": 1,
+        "from": "correct",
+        "to": "generate"
+      },
+      "evidence": {
+        "otherRelationship": {
+          "diagramType": "workflow",
+          "collection": "edges",
+          "index": 8,
+          "from": "validate",
+          "to": "review"
+        },
+        "overlapLengthPx": 214.8,
+        "minimumPx": 8,
+        "from": [
+          723.5999999999999,
+          195
+        ],
+        "to": [
+          938.3999999999999,
+          195
+        ],
+        "segmentIndex": 1,
+        "otherSegmentIndex": 1
+      },
+      "supportedFixes": [
+        "adjust route/via, bias, or channel coordinates so unrelated edges do not visually merge"
+      ]
+    }
+  ]
+}

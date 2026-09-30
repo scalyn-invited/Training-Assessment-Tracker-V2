@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "validate",
+  "stage": "render",
+  "type": "dataflow",
+  "input": "C:\\Users\\Admin\\Downloads\\Archify_Upskilling_Run\\Archify_Upskilling_Pack\\output\\archify-upskilling-20260929-181205\\D11\\candidate.json",
+  "error": "Data-flow layout validation failed:\n- Label \"Comparable sample\" overlaps node \"normalise\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [375, 220, 95, 27]\n  node \"normalise\" rect: [244, 242, 142, 68]\n  Suggested fix: labelAt [423, 324] or labelDy +93 (below); or labelAt [423, 238] or labelDy +7 (above)\n- Label \"Comparable sample\" overlaps node \"calculate\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [375, 220, 95, 27]\n  node \"calculate\" rect: [459, 242, 142, 68]\n  Suggested fix: labelAt [423, 324] or labelDy +93 (below); or labelAt [423, 238] or labelDy +7 (above)\n- Label \"Versioned value\" overlaps node \"calculate\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [595, 220, 86, 27]\n  node \"calculate\" rect: [459, 242, 142, 68]\n  Suggested fix: labelAt [638, 324] or labelDy +93 (below); or labelAt [638, 238] or labelDy +7 (above)\n- Label \"Versioned value\" overlaps node \"snapshot\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [595, 220, 86, 27]\n  node \"snapshot\" rect: [674, 242, 142, 68]\n  Suggested fix: labelAt [638, 324] or labelDy +93 (below); or labelAt [638, 238] or labelDy +7 (above)\n- Label \"Proposed change\" overlaps node \"suggestions\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [595, 562, 86, 27]\n  node \"suggestions\" rect: [459, 584, 142, 68]\n  Suggested fix: labelAt [638, 666] or labelDy +93 (below); or labelAt [638, 580] or labelDy +7 (above)\n- Label \"Proposed change\" overlaps node \"approval\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [595, 562, 86, 27]\n  node \"approval\" rect: [674, 584, 142, 68]\n  Suggested fix: labelAt [638, 666] or labelDy +93 (below); or labelAt [638, 580] or labelDy +7 (above)\n- Label \"Human approval\" overlaps node \"approval\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [812, 562, 81, 27]\n  node \"approval\" rect: [674, 584, 142, 68]\n  Suggested fix: labelAt [853, 666] or labelDy +93 (below); or labelAt [853, 580] or labelDy +7 (above)\n- Label \"Human approval\" overlaps node \"future-work\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [812, 562, 81, 27]\n  node \"future-work\" rect: [889, 584, 142, 68]\n  Suggested fix: labelAt [853, 666] or labelDy +93 (below); or labelAt [853, 580] or labelDy +7 (above)",
+  "diagnostics": [
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Comparable sample\" overlaps node \"normalise\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [375, 220, 95, 27]\n  node \"normalise\" rect: [244, 242, 142, 68]\n  Suggested fix: labelAt [423, 324] or labelDy +93 (below); or labelAt [423, 238] or labelDy +7 (above)",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Comparable sample\" overlaps node \"calculate\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [375, 220, 95, 27]\n  node \"calculate\" rect: [459, 242, 142, 68]\n  Suggested fix: labelAt [423, 324] or labelDy +93 (below); or labelAt [423, 238] or labelDy +7 (above)",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Versioned value\" overlaps node \"calculate\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [595, 220, 86, 27]\n  node \"calculate\" rect: [459, 242, 142, 68]\n  Suggested fix: labelAt [638, 324] or labelDy +93 (below); or labelAt [638, 238] or labelDy +7 (above)",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Versioned value\" overlaps node \"snapshot\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [595, 220, 86, 27]\n  node \"snapshot\" rect: [674, 242, 142, 68]\n  Suggested fix: labelAt [638, 324] or labelDy +93 (below); or labelAt [638, 238] or labelDy +7 (above)",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Proposed change\" overlaps node \"suggestions\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [595, 562, 86, 27]\n  node \"suggestions\" rect: [459, 584, 142, 68]\n  Suggested fix: labelAt [638, 666] or labelDy +93 (below); or labelAt [638, 580] or labelDy +7 (above)",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Proposed change\" overlaps node \"approval\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [595, 562, 86, 27]\n  node \"approval\" rect: [674, 584, 142, 68]\n  Suggested fix: labelAt [638, 666] or labelDy +93 (below); or labelAt [638, 580] or labelDy +7 (above)",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Human approval\" overlaps node \"approval\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [812, 562, 81, 27]\n  node \"approval\" rect: [674, 584, 142, 68]\n  Suggested fix: labelAt [853, 666] or labelDy +93 (below); or labelAt [853, 580] or labelDy +7 (above)",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Human approval\" overlaps node \"future-work\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [812, 562, 81, 27]\n  node \"future-work\" rect: [889, 584, 142, 68]\n  Suggested fix: labelAt [853, 666] or labelDy +93 (below); or labelAt [853, 580] or labelDy +7 (above)",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    }
+  ]
+}

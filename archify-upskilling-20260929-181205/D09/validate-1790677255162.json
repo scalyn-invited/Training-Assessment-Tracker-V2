@@ -1,0 +1,146 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "validate",
+  "stage": "render",
+  "type": "lifecycle",
+  "input": "C:\\Users\\Admin\\Downloads\\Archify_Upskilling_Run\\Archify_Upskilling_Pack\\output\\archify-upskilling-20260929-181205\\D09\\candidate.json",
+  "error": "Lifecycle layout validation failed:\n- [composition/proper-crossing] showcase lifecycle transitions[5] id \"review-pending-to-changes-requested\" \"review-pending\" -> \"changes-requested\" crosses transitions[6] id \"grading-to-technical-failure\" \"grading\" -> \"technical-failure\" at [556, 365] (segments 2 and 0) — adjust route/via or channelX/channelY so the transitions use separate lifecycle corridors.\n- [composition/proper-crossing] showcase lifecycle transitions[5] id \"review-pending-to-changes-requested\" \"review-pending\" -> \"changes-requested\" crosses transitions[7] id \"technical-failure-to-grading\" \"technical-failure\" -> \"grading\" at [632, 365] (segments 2 and 1) — adjust route/via or channelX/channelY so the transitions use separate lifecycle corridors.\n- [composition/label-route-clearance] showcase lifecycle label \"Retry budget\" on transitions[7] id \"technical-failure-to-grading\" \"technical-failure\" -> \"grading\" label \"Retry budget\" is 0px from transitions[5] id \"review-pending-to-changes-requested\" \"review-pending\" -> \"changes-requested\" label \"More evidence\" segment 2 [812, 365] -> [402, 365] (label rect [593, 349, 71, 16]; minimum 4px) — adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel.",
+  "diagnostics": [
+    {
+      "code": "composition/proper-crossing",
+      "severity": "error",
+      "message": "[composition/proper-crossing] showcase lifecycle transitions[5] id \"review-pending-to-changes-requested\" \"review-pending\" -> \"changes-requested\" crosses transitions[6] id \"grading-to-technical-failure\" \"grading\" -> \"technical-failure\" at [556, 365] (segments 2 and 0) — adjust route/via or channelX/channelY so the transitions use separate lifecycle corridors.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 5,
+        "id": "review-pending-to-changes-requested",
+        "from": "review-pending",
+        "to": "changes-requested"
+      },
+      "evidence": {
+        "otherRelationship": {
+          "diagramType": "lifecycle",
+          "collection": "transitions",
+          "index": 6,
+          "id": "grading-to-technical-failure",
+          "from": "grading",
+          "to": "technical-failure"
+        },
+        "point": [
+          556,
+          365
+        ],
+        "segmentIndex": 2,
+        "otherSegmentIndex": 0
+      },
+      "supportedFixes": [
+        "adjust route/via or channelX/channelY so the transitions use separate lifecycle corridors"
+      ]
+    },
+    {
+      "code": "composition/proper-crossing",
+      "severity": "error",
+      "message": "[composition/proper-crossing] showcase lifecycle transitions[5] id \"review-pending-to-changes-requested\" \"review-pending\" -> \"changes-requested\" crosses transitions[7] id \"technical-failure-to-grading\" \"technical-failure\" -> \"grading\" at [632, 365] (segments 2 and 1) — adjust route/via or channelX/channelY so the transitions use separate lifecycle corridors.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 5,
+        "id": "review-pending-to-changes-requested",
+        "from": "review-pending",
+        "to": "changes-requested"
+      },
+      "evidence": {
+        "otherRelationship": {
+          "diagramType": "lifecycle",
+          "collection": "transitions",
+          "index": 7,
+          "id": "technical-failure-to-grading",
+          "from": "technical-failure",
+          "to": "grading"
+        },
+        "point": [
+          632,
+          365
+        ],
+        "segmentIndex": 2,
+        "otherSegmentIndex": 1
+      },
+      "supportedFixes": [
+        "adjust route/via or channelX/channelY so the transitions use separate lifecycle corridors"
+      ]
+    },
+    {
+      "code": "composition/label-route-clearance",
+      "severity": "error",
+      "message": "[composition/label-route-clearance] showcase lifecycle label \"Retry budget\" on transitions[7] id \"technical-failure-to-grading\" \"technical-failure\" -> \"grading\" label \"Retry budget\" is 0px from transitions[5] id \"review-pending-to-changes-requested\" \"review-pending\" -> \"changes-requested\" label \"More evidence\" segment 2 [812, 365] -> [402, 365] (label rect [593, 349, 71, 16]; minimum 4px) — adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 7,
+        "id": "technical-failure-to-grading",
+        "from": "technical-failure",
+        "to": "grading"
+      },
+      "evidence": {
+        "label": "Retry budget",
+        "otherRelationship": {
+          "diagramType": "lifecycle",
+          "collection": "transitions",
+          "index": 5,
+          "id": "review-pending-to-changes-requested",
+          "from": "review-pending",
+          "to": "changes-requested"
+        },
+        "segmentIndex": 2,
+        "clearancePx": 0,
+        "minimumPx": 4,
+        "labelRect": {
+          "relation": {
+            "id": "technical-failure-to-grading",
+            "from": "technical-failure",
+            "to": "grading",
+            "label": "Retry budget",
+            "variant": "default",
+            "fromSide": "right",
+            "toSide": "right",
+            "via": [
+              [
+                632,
+                410
+              ],
+              [
+                632,
+                158
+              ]
+            ],
+            "labelAt": [
+              628,
+              360
+            ]
+          },
+          "relationIndex": 7,
+          "label": "Retry budget",
+          "x": 592.6,
+          "y": 349,
+          "width": 70.80000000000001,
+          "height": 16,
+          "lx": 628,
+          "ly": 360
+        },
+        "from": [
+          812,
+          365
+        ],
+        "to": [
+          402,
+          365
+        ]
+      },
+      "supportedFixes": [
+        "adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel"
+      ]
+    }
+  ]
+}

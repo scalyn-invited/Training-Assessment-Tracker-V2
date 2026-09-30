@@ -1,0 +1,70 @@
+{
+  "scope": "Local file/inventory/fixture assertions only",
+  "checks": [
+    {
+      "name": "requirement_count",
+      "status": "passed",
+      "detail": 40
+    },
+    {
+      "name": "unique_requirement_ids",
+      "status": "passed",
+      "detail": "R01–R40"
+    },
+    {
+      "name": "eleven_native_candidates",
+      "status": "passed",
+      "detail": 11
+    },
+    {
+      "name": "all_native_deliveries_attempted",
+      "status": "passed",
+      "detail": 11
+    },
+    {
+      "name": "all_requirement_diagram_references_resolve",
+      "status": "passed",
+      "detail": "Sources exist, delivery status separate"
+    },
+    {
+      "name": "all_acceptance_references_resolve",
+      "status": "passed",
+      "detail": "Supplied scenario IDs"
+    },
+    {
+      "name": "delivery_hashes_match",
+      "status": "passed",
+      "detail": "7 native specification/artifact bindings"
+    },
+    {
+      "name": "fixture_JSON_parse",
+      "status": "passed",
+      "detail": "Syntax only; not application acceptance or comprehensive JSON Schema validation"
+    },
+    {
+      "name": "fixture_N_plus_2",
+      "status": "passed",
+      "detail": "Week 1 evidence → Week 3; Week 2 unchanged"
+    },
+    {
+      "name": "fixture_local_only_distinct_from_synthetic",
+      "status": "passed",
+      "detail": "Fixture assertions, not executed application paths"
+    },
+    {
+      "name": "fixture_freeze_calendar",
+      "status": "passed",
+      "detail": "Asia/Manila Monday 19 Oct; second prior business day Thu 15 Oct, 17:00, no holidays"
+    },
+    {
+      "name": "local_index_and_review_links",
+      "status": "passed",
+      "detail": []
+    }
+  ],
+  "applicationAcceptance": "not_run",
+  "nativeDeliveryCount": 7,
+  "expectedNativeDeliveryCount": 11,
+  "browserAcceptanceCount": 0,
+  "perceptualReviewCount": 0
+}

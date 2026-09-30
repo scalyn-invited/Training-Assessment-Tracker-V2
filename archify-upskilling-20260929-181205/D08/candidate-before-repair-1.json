@@ -1,0 +1,161 @@
+{
+  "schema_version": 1,
+  "diagram_type": "lifecycle",
+  "meta": {
+    "title": "D08 · Enrolment lifecycle",
+    "output": "D08/diagram.html",
+    "quality_profile": "showcase",
+    "animation": "none",
+    "locale": "en",
+    "viewBox": [
+      1200,
+      700
+    ]
+  },
+  "lanes": [
+    {
+      "id": "main",
+      "label": "Enrolment states"
+    },
+    {
+      "id": "pause",
+      "label": "Pause / resume"
+    },
+    {
+      "id": "terminal",
+      "label": "Terminal exit"
+    }
+  ],
+  "states": [
+    {
+      "id": "onboarding",
+      "lane": "main",
+      "col": 0,
+      "type": "start",
+      "label": "Onboarding",
+      "sublabel": "Profile and calendar",
+      "width": 158,
+      "height": 70
+    },
+    {
+      "id": "ready",
+      "lane": "main",
+      "col": 1,
+      "type": "waiting",
+      "label": "Ready",
+      "sublabel": "Baseline approved",
+      "width": 158,
+      "height": 70
+    },
+    {
+      "id": "active",
+      "lane": "main",
+      "col": 2,
+      "type": "active",
+      "label": "Active",
+      "sublabel": "Approved lessons",
+      "width": 158,
+      "height": 70
+    },
+    {
+      "id": "completed",
+      "lane": "main",
+      "col": 3,
+      "type": "success",
+      "label": "Completed",
+      "sublabel": "Human final approval",
+      "width": 158,
+      "height": 70
+    },
+    {
+      "id": "paused",
+      "lane": "pause",
+      "col": 0,
+      "type": "waiting",
+      "label": "Paused",
+      "sublabel": "Preserve attempts",
+      "width": 158,
+      "height": 70
+    },
+    {
+      "id": "cancelled",
+      "lane": "terminal",
+      "col": 0,
+      "type": "neutral",
+      "label": "Cancelled",
+      "sublabel": "Terminal · history kept",
+      "width": 158,
+      "height": 70
+    }
+  ],
+  "transitions": [
+    {
+      "id": "onboarding-to-ready",
+      "from": "onboarding",
+      "to": "ready",
+      "label": "Approve baseline",
+      "variant": "default"
+    },
+    {
+      "id": "ready-to-active",
+      "from": "ready",
+      "to": "active",
+      "label": "Activation checks",
+      "variant": "default"
+    },
+    {
+      "id": "active-to-completed",
+      "from": "active",
+      "to": "completed",
+      "label": "Evidence sufficient",
+      "variant": "default"
+    },
+    {
+      "id": "active-to-paused",
+      "from": "active",
+      "to": "paused",
+      "label": "Approved leave",
+      "variant": "default"
+    },
+    {
+      "id": "paused-to-active",
+      "from": "paused",
+      "to": "active",
+      "label": "Resume + rebase",
+      "variant": "default"
+    },
+    {
+      "id": "active-to-cancelled",
+      "from": "active",
+      "to": "cancelled",
+      "label": "Cancel",
+      "variant": "default"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Readiness and completion",
+      "items": [
+        "Reject activation until baseline content for every week is approved; current + next remain usable. Completion requires sufficient approved evidence, required tasks and coordinator confirmation.",
+        "4/6/8/10/12 blocks. Time spent never automatically proves competence or completes an enrolment."
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "Calendar changes",
+      "items": [
+        "Pause preserves active work and attempts. Resume previews shifted future dates and creates a calendar version; recompute holiday-aware cutoffs.",
+        "All programmes share one capacity calendar, 15–120 minutes per active day including assessment/revision. Do not rewrite completed history."
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "Separate programme version state",
+      "items": [
+        "Programme version: draft → generating → needs_review → approved → superseded; generation_failed returns to correction. These are not enrolment states.",
+        "Enrolment has one accountable coordinator. Permission and optimistic version checks apply to activation, pause, resume and completion."
+      ]
+    }
+  ]
+}

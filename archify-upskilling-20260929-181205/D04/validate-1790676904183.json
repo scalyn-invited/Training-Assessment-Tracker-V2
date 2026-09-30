@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "validate",
+  "stage": "render",
+  "type": "workflow",
+  "input": "C:\\Users\\Admin\\Downloads\\Archify_Upskilling_Run\\Archify_Upskilling_Pack\\output\\archify-upskilling-20260929-181205\\D04\\candidate.json",
+  "error": "Workflow layout validation failed:\n- Label \"Resumable wizard\" (~109px) is wider than node \"wizard\" (92px) — shorten the label or increase node.width.\n- Label \"Confirm evidence\" (~109px) is wider than node \"extract\" (92px) — shorten the label or increase node.width.\n- Sublabel \"Coordinator extraction review\" needs ~105px at the 6px legible minimum, but node \"extract\" provides 84px — shorten the sublabel or increase node.width.\n- Sublabel \"Queued AI · whole programme\" needs ~98px at the 6px legible minimum, but node \"generate\" provides 84px — shorten the sublabel or increase node.width.\n- Sublabel \"Resources · rubric · minutes\" needs ~101px at the 6px legible minimum, but node \"validate\" provides 84px — shorten the sublabel or increase node.width.\n- Label \"Correct / retry\" (~102px) is wider than node \"correct\" (92px) — shorten the label or increase node.width.\n- Sublabel \"Invalid input or AI failure\" needs ~98px at the 6px legible minimum, but node \"correct\" provides 84px — shorten the sublabel or increase node.width.\n- Label \"Coordinator review\" (~122px) is wider than node \"review\" (92px) — shorten the label or increase node.width.\n- Sublabel \"Edit · revise · approve version\" needs ~112px at the 6px legible minimum, but node \"review\" provides 84px — shorten the sublabel or increase node.width.\n- Label \"Activate baseline\" (~116px) is wider than node \"activate\" (92px) — shorten the label or increase node.width.\n- Label \"Member delivery\" (~102px) is wider than node \"learn\" (92px) — shorten the label or increase node.width.\n- Sublabel \"Lessons · tasks · resources\" needs ~98px at the 6px legible minimum, but node \"learn\" provides 84px — shorten the sublabel or increase node.width.",
+  "diagnostics": [
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Resumable wizard\" (~109px) is wider than node \"wizard\" (92px) — shorten the label or increase node.width.",
+      "subject": {
+        "diagramType": "workflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Confirm evidence\" (~109px) is wider than node \"extract\" (92px) — shorten the label or increase node.width.",
+      "subject": {
+        "diagramType": "workflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Sublabel \"Coordinator extraction review\" needs ~105px at the 6px legible minimum, but node \"extract\" provides 84px — shorten the sublabel or increase node.width.",
+      "subject": {
+        "diagramType": "workflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Sublabel \"Queued AI · whole programme\" needs ~98px at the 6px legible minimum, but node \"generate\" provides 84px — shorten the sublabel or increase node.width.",
+      "subject": {
+        "diagramType": "workflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Sublabel \"Resources · rubric · minutes\" needs ~101px at the 6px legible minimum, but node \"validate\" provides 84px — shorten the sublabel or increase node.width.",
+      "subject": {
+        "diagramType": "workflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Correct / retry\" (~102px) is wider than node \"correct\" (92px) — shorten the label or increase node.width.",
+      "subject": {
+        "diagramType": "workflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Sublabel \"Invalid input or AI failure\" needs ~98px at the 6px legible minimum, but node \"correct\" provides 84px — shorten the sublabel or increase node.width.",
+      "subject": {
+        "diagramType": "workflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Coordinator review\" (~122px) is wider than node \"review\" (92px) — shorten the label or increase node.width.",
+      "subject": {
+        "diagramType": "workflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Sublabel \"Edit · revise · approve version\" needs ~112px at the 6px legible minimum, but node \"review\" provides 84px — shorten the sublabel or increase node.width.",
+      "subject": {
+        "diagramType": "workflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Activate baseline\" (~116px) is wider than node \"activate\" (92px) — shorten the label or increase node.width.",
+      "subject": {
+        "diagramType": "workflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Member delivery\" (~102px) is wider than node \"learn\" (92px) — shorten the label or increase node.width.",
+      "subject": {
+        "diagramType": "workflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Sublabel \"Lessons · tasks · resources\" needs ~98px at the 6px legible minimum, but node \"learn\" provides 84px — shorten the sublabel or increase node.width.",
+      "subject": {
+        "diagramType": "workflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    }
+  ]
+}

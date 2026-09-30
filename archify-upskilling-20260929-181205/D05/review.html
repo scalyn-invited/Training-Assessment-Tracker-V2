@@ -1,0 +1,104 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>D05 · Submission and grading review</title><style>:root{color-scheme:light dark}body{font:17px/1.6 system-ui;max-width:1100px;margin:36px auto;padding:0 24px}a{color:light-dark(#1453aa,#8dbdff)}h1{line-height:1.2}table{border-collapse:collapse;width:100%}td,th{text-align:left;padding:12px;border-bottom:1px solid #8885}code,pre{white-space:pre-wrap;overflow-wrap:anywhere}details{border:1px solid #8885;padding:14px;margin:12px 0}small{opacity:.8}.status{padding:16px;border-left:5px solid #c88c32;background:#8881}</style><main><h1>D05 · Submission and grading review</h1><p><a href="../index.html">Suite index</a> · <a href="candidate.json">Editable native JSON</a></p><p class="status">BLOCKED: native Archify delivery failed. This is an interactive source review, not a rendered Archify diagram.</p><details open><summary>Nodes and ownership</summary><ul><li><strong>Draft / autosave</strong> — Recoverable work <small>(draft)</small></li><li><strong>Submit attempt</strong> — Receipt + hashes <small>(submit)</small></li><li><strong>Queued grading</strong> — Quiz / AI draft <small>(grade)</small></li><li><strong>Validate grade</strong> — Evidence checks <small>(validate)</small></li><li><strong>Review pending</strong> — Group reviewer <small>(review)</small></li><li><strong>Approve / override</strong> — Exact version + reason <small>(approve)</small></li><li><strong>Approved result</strong> — KPI / outbox <small>(publish)</small></li><li><strong>Feedback</strong> — Appeal / human review <small>(feedback)</small></li><li><strong>New attempt</strong> — New attempt IDs <small>(regrade)</small></li><li><strong>Job failure</strong> — Bounded retry <small>(failure)</small></li><li><strong>Notify reviewer</strong> — Queued SMTP <small>(notify)</small></li></ul></details><details open><summary>Directed relationships</summary><ol><li>draft → submit: Submit</li><li>submit → grade: Queue after commit</li><li>grade → validate: Provisional result</li><li>validate → review: Save</li><li>review → approve: Human decision</li><li>approve → publish: Commit</li><li>publish → feedback: Feedback</li><li>review → regrade: Request changes</li><li>regrade → grade: New grading attempt</li><li>grade → failure: Provider / job failure</li><li>failure → grade: Bounded retry</li><li>review → notify: Queue mail</li></ol></details><details><summary>Immutable and fair</summary><ul><li>Resubmission creates a NEW submission; regrade creates a new grading attempt. Member appeal keeps original approval and uses another reviewer where possible.</li><li>No self approval. Concurrent review uses optimistic versions; overrides record reason. Only approved grades update official KPIs and normal API answers.</li></ul></details><details><summary>Failure and notifications</summary><ul><li>Invalid criterion, evidence or schema returns for correction/regrade; no zero score on technical failure. Provider outage leaves approved lessons and autosave usable.</li><li>SMTP failures do not lose submission or review queue: retry/dedup, bounce alert, recheck recipient access, record ambiguous acceptance; reminders and overdue escalation.</li></ul></details><details><summary>AI policy and cost</summary><ul><li>Two adapters + mock; per-task model/capability/privacy policies. Reserve cost before enqueue; reconcile tokens, rates and ambiguous timeout charges.</li><li>90s provider / 120s job / 180s retry_after; three transient retries, capped concurrency and explicit allowlisted fallback. No model grants approval.</li></ul></details><details><summary>Native delivery diagnostics</summary><pre>[
+  {
+    &quot;code&quot;: &quot;composition/proper-crossing&quot;,
+    &quot;severity&quot;: &quot;error&quot;,
+    &quot;message&quot;: &quot;[composition/proper-crossing] showcase workflow edges[0] id \&quot;approve-to-publish\&quot; \&quot;approve\&quot; -&gt; \&quot;publish\&quot; crosses edges[10] id \&quot;submit-to-grade\&quot; \&quot;submit\&quot; -&gt; \&quot;grade\&quot; at [739.4, 291] (segments 0 and 3) — adjust route/via, bias, or channel coordinates so the edges use separate lane corridors.&quot;,
+    &quot;subject&quot;: {
+      &quot;diagramType&quot;: &quot;workflow&quot;,
+      &quot;collection&quot;: &quot;edges&quot;,
+      &quot;index&quot;: 0,
+      &quot;id&quot;: &quot;approve-to-publish&quot;,
+      &quot;from&quot;: &quot;approve&quot;,
+      &quot;to&quot;: &quot;publish&quot;
+    },
+    &quot;evidence&quot;: {
+      &quot;otherRelationship&quot;: {
+        &quot;diagramType&quot;: &quot;workflow&quot;,
+        &quot;collection&quot;: &quot;edges&quot;,
+        &quot;index&quot;: 10,
+        &quot;id&quot;: &quot;submit-to-grade&quot;,
+        &quot;from&quot;: &quot;submit&quot;,
+        &quot;to&quot;: &quot;grade&quot;
+      },
+      &quot;point&quot;: [
+        739.4000000000001,
+        291
+      ],
+      &quot;segmentIndex&quot;: 0,
+      &quot;otherSegmentIndex&quot;: 3
+    },
+    &quot;supportedFixes&quot;: [
+      &quot;adjust route/via, bias, or channel coordinates so the edges use separate lane corridors&quot;
+    ]
+  },
+  {
+    &quot;code&quot;: &quot;composition/proper-crossing&quot;,
+    &quot;severity&quot;: &quot;error&quot;,
+    &quot;message&quot;: &quot;[composition/proper-crossing] showcase workflow edges[10] id \&quot;submit-to-grade\&quot; \&quot;submit\&quot; -&gt; \&quot;grade\&quot; crosses edges[11] id \&quot;validate-to-review\&quot; \&quot;validate\&quot; -&gt; \&quot;review\&quot; at [443.2, 291] (segments 3 and 1) — adjust route/via, bias, or channel coordinates so the edges use separate lane corridors.&quot;,
+    &quot;subject&quot;: {
+      &quot;diagramType&quot;: &quot;workflow&quot;,
+      &quot;collection&quot;: &quot;edges&quot;,
+      &quot;index&quot;: 10,
+      &quot;id&quot;: &quot;submit-to-grade&quot;,
+      &quot;from&quot;: &quot;submit&quot;,
+      &quot;to&quot;: &quot;grade&quot;
+    },
+    &quot;evidence&quot;: {
+      &quot;otherRelationship&quot;: {
+        &quot;diagramType&quot;: &quot;workflow&quot;,
+        &quot;collection&quot;: &quot;edges&quot;,
+        &quot;index&quot;: 11,
+        &quot;id&quot;: &quot;validate-to-review&quot;,
+        &quot;from&quot;: &quot;validate&quot;,
+        &quot;to&quot;: &quot;review&quot;
+      },
+      &quot;point&quot;: [
+        443.20000000000016,
+        291
+      ],
+      &quot;segmentIndex&quot;: 3,
+      &quot;otherSegmentIndex&quot;: 1
+    },
+    &quot;supportedFixes&quot;: [
+      &quot;adjust route/via, bias, or channel coordinates so the edges use separate lane corridors&quot;
+    ]
+  },
+  {
+    &quot;code&quot;: &quot;composition/ambiguous-corridor&quot;,
+    &quot;severity&quot;: &quot;error&quot;,
+    &quot;message&quot;: &quot;[composition/ambiguous-corridor] showcase workflow edges[6] id \&quot;regrade-to-grade\&quot; \&quot;regrade\&quot; -&gt; \&quot;grade\&quot; shares a 53px corridor with edges[7] id \&quot;review-to-approve\&quot; \&quot;review\&quot; -&gt; \&quot;approve\&quot; at [658.4, 367] -&gt; [658.4, 420] (segments 1 and 2; minimum 8px) — adjust route/via, bias, or channel coordinates so unrelated edges do not visually merge.&quot;,
+    &quot;subject&quot;: {
+      &quot;diagramType&quot;: &quot;workflow&quot;,
+      &quot;collection&quot;: &quot;edges&quot;,
+      &quot;index&quot;: 6,
+      &quot;id&quot;: &quot;regrade-to-grade&quot;,
+      &quot;from&quot;: &quot;regrade&quot;,
+      &quot;to&quot;: &quot;grade&quot;
+    },
+    &quot;evidence&quot;: {
+      &quot;otherRelationship&quot;: {
+        &quot;diagramType&quot;: &quot;workflow&quot;,
+        &quot;collection&quot;: &quot;edges&quot;,
+        &quot;index&quot;: 7,
+        &quot;id&quot;: &quot;review-to-approve&quot;,
+        &quot;from&quot;: &quot;review&quot;,
+        &quot;to&quot;: &quot;approve&quot;
+      },
+      &quot;overlapLengthPx&quot;: 53,
+      &quot;minimumPx&quot;: 8,
+      &quot;from&quot;: [
+        658.4,
+        367
+      ],
+      &quot;to&quot;: [
+        658.4,
+        420
+      ],
+      &quot;segmentIndex&quot;: 1,
+      &quot;otherSegmentIndex&quot;: 2
+    },
+    &quot;supportedFixes&quot;: [
+      &quot;adjust route/via, bias, or channel coordinates so unrelated edges do not visually merge&quot;
+    ]
+  }
+]</pre></details><p><a href="deliver-1790677055708.json">Delivery receipt</a> · <a href="validate-1790677253496.json">Validation receipt</a></p></main></html>

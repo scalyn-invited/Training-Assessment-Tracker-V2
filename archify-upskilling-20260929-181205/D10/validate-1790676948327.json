@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "validate",
+  "stage": "render",
+  "type": "workflow",
+  "input": "C:\\Users\\Admin\\Downloads\\Archify_Upskilling_Run\\Archify_Upskilling_Pack\\output\\archify-upskilling-20260929-181205\\D10\\candidate.json",
+  "error": "Workflow edge \"publish-to-later\" cannot satisfy route preset \"bottom-channel\" under readable-v2 constraints (minimum 8px endpoint stubs, 16px interior turns, and 28px direct clearance).",
+  "diagnostics": [
+    {
+      "code": "workflow/route-preset-conflict",
+      "severity": "error",
+      "message": "Workflow edge \"publish-to-later\" cannot satisfy route preset \"bottom-channel\" under readable-v2 constraints (minimum 8px endpoint stubs, 16px interior turns, and 28px direct clearance).",
+      "subject": {
+        "diagramType": "workflow",
+        "edge": "publish-to-later",
+        "from": "publish",
+        "to": "later",
+        "route": "bottom-channel"
+      },
+      "evidence": {
+        "attemptedCandidateFamily": "bottom-channel",
+        "points": [
+          [
+            1064,
+            119
+          ],
+          [
+            1064,
+            431
+          ],
+          [
+            752.4,
+            431
+          ],
+          [
+            752.4,
+            367
+          ]
+        ],
+        "fromSide": "left",
+        "toSide": "right",
+        "requiredEndpointStubPx": 8,
+        "requiredInteriorSegmentPx": 16,
+        "requiredDirectClearancePx": 28
+      },
+      "supportedFixes": []
+    }
+  ]
+}

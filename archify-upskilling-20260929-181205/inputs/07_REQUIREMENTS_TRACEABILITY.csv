@@ -1,0 +1,41 @@
+requirement_id,requirement,origin,diagram_ids,acceptance_ids,implementation_status
+R01,Lightweight fast internal application,user,D01 D02 D03,T23 T28,specified_not_implemented
+R02,Primary administrator controls platform,user,D01 D04,T01 T02,specified_not_implemented
+R03,Proxmox and cPanel deployment decision,user,D02 D03,T22 T28,specified_not_implemented
+R04,Mandatory MFA and shared internal SSO,user,D01 D06,T02 T03,specified_not_implemented
+R05,Secure API for primary AI platform questions,user,D06,T01 T02 T03,specified_not_implemented
+R06,Coordinators assigned to groups and members,user,D01 D04 D06,T01 T03,specified_not_implemented
+R07,Import and synchronise primary platform members,user,D07,T13,specified_not_implemented
+R08,Manually create members with optional sync,user,D04 D07,T04 T14,specified_not_implemented
+R09,Isolate test members and testing integrations,user,D03 D07,T05,specified_not_implemented
+R10,Resumable role and goal onboarding wizard,user,D04,T06 T24,specified_not_implemented
+R11,Upload and interpret third party assessments,user,D04 D11,T15 T18,specified_not_implemented
+R12,Target role purpose and competency outcomes,user,D04 D11,T06 T20 T25,specified_not_implemented
+R13,AI generated personalised usable training,user,D04,T06 T15,specified_not_implemented
+R14,Switch providers and select models by task,user,D01 D05,T16 T25,specified_not_implemented
+R15,Coordinator edits notes AI feedback and approval,user,D04 D05,T06 T17,specified_not_implemented
+R16,Programmes of 4 6 8 10 or 12 weeks,user,D04 D08 D10,T09 T10,specified_not_implemented
+R17,15 to 120 minute daily commitment,user,D04 D10,T10 T11,specified_not_implemented
+R18,Member login training and submissions,user,D04 D05 D09,T17 T24,specified_not_implemented
+R19,AI grades submissions provisionally,user,D05 D09,T15 T19,specified_not_implemented
+R20,SMTP coordinator notifications,user,D01 D05,T21,specified_not_implemented
+R21,Coordinator reviews approves or requests regrade,user,D05 D09,T17 T19,specified_not_implemented
+R22,Week results improve future training,user,D10,T07 T08 T09,specified_not_implemented
+R23,Maintain two weeks ready and adapt N plus 2,user,D10,T07 T08,specified_not_implemented
+R24,Define what KPIs measure and why,user,D11,T20,specified_not_implemented
+R25,Show KPI updates against targets,user,D11,T19 T20,specified_not_implemented
+R26,Capacity-aware suggestions for KPI shortfalls,user,D10 D11,T11 T20,specified_not_implemented
+R27,Autopilot local files without approval pauses,user,all,T26 T27,specified_not_implemented
+R28,Versioned approvals evidence and audit,design,D04 D05 D09 D10,T06 T17 T30,specified_not_implemented
+R29,Idempotent events outbox and reconciliation,design,D07,T13 T14 T30,specified_not_implemented
+R30,Private file access and malicious content isolation,design,D01 D07,T01 T18,specified_not_implemented
+R31,Approved facts only to primary platform by default,design,D06 D07 D11,T19,specified_not_implemented
+R32,Privacy retention and erasure lifecycle,design,D07 D11,T29,specified_not_implemented
+R33,Provider cost controls bounded retry and fallback,design,D01 D05,T16 T30,specified_not_implemented
+R34,Capacity across programmes leave and timezone,design,D08 D10,T11 T12,specified_not_implemented
+R35,Member appeal resubmit and fair review,design,D05 D09,T17 T25,specified_not_implemented
+R36,Backup restore and operational observability,design,D02 D03,T22 T23,specified_not_implemented
+R37,Accessibility mobile autosave and receipts,design,D04 D05,T24,specified_not_implemented
+R38,Real local-only members remain in local reports,clarification,D07 D11,T04 T05,specified_not_implemented
+R39,Actual lessons not only a training outline,design,D04,T06 T15,specified_not_implemented
+R40,All eleven Archify diagrams and truthful checks,user,all,T26 T27,specified_not_implemented

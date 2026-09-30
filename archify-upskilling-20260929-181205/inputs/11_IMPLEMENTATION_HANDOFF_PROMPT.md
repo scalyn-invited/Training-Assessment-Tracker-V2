@@ -1,0 +1,13 @@
+# Optional implementation prompt
+
+This is a separate application-building task. Do not execute it as part of the Archify diagram task unless I explicitly request the implementation stage.
+
+Build the internal upskilling application defined in this package and the reviewed architecture outputs. You may create and revise local project files, migrations, configuration examples, synthetic fixtures and tests without asking for per-file approval. Preserve unrelated work. Do not deploy, send real notifications, use production credentials or push remotely without authorisation. Do not use real employee assessment data in fixtures.
+
+Read the full requirements, contracts, policy rules, traceability and acceptance tests first. Select supported PHP/Laravel/database versions and lock dependencies. Produce a lightweight Laravel modular monolith with server-rendered UI, private storage, durable database jobs, scheduler and the stated integration adapters. Implement the backlog in working increments. Use mocks for primary-platform, SMTP and AI when credentials or contracts are unavailable; label every mock clearly. Do not claim an integration is live because a mock test passes.
+
+Maintain a requirements-to-code-and-test map. Start with identity/authorisation, group boundaries, schema/versioning and outbox, then onboarding/content, provider gateway, submissions/review, KPIs/adaptation, sync/API and operations. Implement the exact calendar cutoff and separate local-only/test behaviours. Deliver usable lessons and tasks, not only a generated outline. Make all mutating UI actions recheck permissions and optimistic versions. AI has no approval authority.
+
+Use the API/schema files as proposed contracts; reconcile any incompatibility with the real primary platform in an adapter and record the decision. Add unit tests for policy/calendar/version rules, integration tests for queue/outbox/API boundaries, and meaningful browser tests for coordinator/member flows. Run the security, restore, latency and AI calibration gates appropriate to the implemented scope. No live provider calls are needed to finish local scaffolding and mocked flows; flag live calibration as pending.
+
+Deliver source code, dependency lockfiles, migrations, .env.example without secrets, reproducible local setup, test results, Proxmox deployment instructions, cPanel qualification checklist, admin/coordinator/member guides, and unresolved deployment facts. Report actual test evidence and unimplemented capabilities clearly. A complete local implementation is not a production deployment. Continue through all locally achievable work; do not stop after scaffolding or ask whether to create the next file.

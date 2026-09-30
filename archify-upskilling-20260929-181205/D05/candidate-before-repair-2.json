@@ -1,0 +1,265 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "D05 · Submission and grading review",
+    "output": "D05/diagram.html",
+    "quality_profile": "showcase",
+    "animation": "none",
+    "locale": "en"
+  },
+  "lanes": [
+    {
+      "id": "member",
+      "label": "Member"
+    },
+    {
+      "id": "app",
+      "label": "Application / worker"
+    },
+    {
+      "id": "review",
+      "label": "Coordinator"
+    },
+    {
+      "id": "recovery",
+      "label": "Recovery / notification"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "draft",
+      "lane": "member",
+      "col": 0,
+      "type": "frontend",
+      "label": "Draft / autosave",
+      "sublabel": "Recoverable work",
+      "width": 170,
+      "height": 64
+    },
+    {
+      "id": "submit",
+      "lane": "member",
+      "col": 1,
+      "type": "database",
+      "label": "Submit attempt",
+      "sublabel": "Immutable receipt + hashes",
+      "width": 170,
+      "height": 64
+    },
+    {
+      "id": "grade",
+      "lane": "app",
+      "col": 1,
+      "type": "messagebus",
+      "label": "Queued grading",
+      "sublabel": "Quiz key or provisional AI",
+      "width": 170,
+      "height": 64
+    },
+    {
+      "id": "validate",
+      "lane": "app",
+      "col": 2,
+      "type": "security",
+      "label": "Validate grade",
+      "sublabel": "Rubric / evidence / arithmetic",
+      "width": 170,
+      "height": 64
+    },
+    {
+      "id": "review",
+      "lane": "review",
+      "col": 2,
+      "type": "security",
+      "label": "Review pending",
+      "sublabel": "Assigned coordinator",
+      "width": 170,
+      "height": 64
+    },
+    {
+      "id": "approve",
+      "lane": "review",
+      "col": 3,
+      "type": "security",
+      "label": "Approve / override",
+      "sublabel": "Exact version + reason",
+      "width": 170,
+      "height": 64
+    },
+    {
+      "id": "publish",
+      "lane": "review",
+      "col": 4,
+      "type": "database",
+      "label": "Approved result",
+      "sublabel": "KPI + adaptation + outbox",
+      "width": 170,
+      "height": 64
+    },
+    {
+      "id": "feedback",
+      "lane": "member",
+      "col": 4,
+      "type": "frontend",
+      "label": "Approved feedback",
+      "sublabel": "Appeal / human review",
+      "width": 170,
+      "height": 64
+    },
+    {
+      "id": "regrade",
+      "lane": "recovery",
+      "col": 3,
+      "type": "backend",
+      "label": "Regrade / resubmit",
+      "sublabel": "Separate attempts",
+      "width": 170,
+      "height": 64
+    },
+    {
+      "id": "failure",
+      "lane": "recovery",
+      "col": 1,
+      "type": "backend",
+      "label": "Technical failure",
+      "sublabel": "Preserve attempt · bounded retry",
+      "width": 170,
+      "height": 64
+    },
+    {
+      "id": "notify",
+      "lane": "recovery",
+      "col": 2,
+      "type": "messagebus",
+      "label": "Review notification",
+      "sublabel": "SMTP after provisional save",
+      "width": 170,
+      "height": 64
+    }
+  ],
+  "edges": [
+    {
+      "id": "draft-to-submit",
+      "from": "draft",
+      "to": "submit",
+      "label": "Submit",
+      "variant": "default"
+    },
+    {
+      "id": "submit-to-grade",
+      "from": "submit",
+      "to": "grade",
+      "label": "Queue after commit",
+      "variant": "dashed"
+    },
+    {
+      "id": "grade-to-validate",
+      "from": "grade",
+      "to": "validate",
+      "label": "Provisional result",
+      "variant": "default"
+    },
+    {
+      "id": "validate-to-review",
+      "from": "validate",
+      "to": "review",
+      "label": "Persist valid result",
+      "variant": "default"
+    },
+    {
+      "id": "review-to-approve",
+      "from": "review",
+      "to": "approve",
+      "label": "Human decision",
+      "variant": "default"
+    },
+    {
+      "id": "approve-to-publish",
+      "from": "approve",
+      "to": "publish",
+      "label": "Atomic approval",
+      "variant": "default"
+    },
+    {
+      "id": "publish-to-feedback",
+      "from": "publish",
+      "to": "feedback",
+      "label": "Release feedback",
+      "variant": "default"
+    },
+    {
+      "id": "review-to-regrade",
+      "from": "review",
+      "to": "regrade",
+      "label": "Request changes",
+      "variant": "default"
+    },
+    {
+      "id": "regrade-to-grade",
+      "from": "regrade",
+      "to": "grade",
+      "label": "New grading attempt",
+      "variant": "default",
+      "role": "return"
+    },
+    {
+      "id": "grade-to-failure",
+      "from": "grade",
+      "to": "failure",
+      "label": "Provider / job failure",
+      "variant": "security"
+    },
+    {
+      "id": "failure-to-grade",
+      "from": "failure",
+      "to": "grade",
+      "label": "Bounded retry",
+      "variant": "default",
+      "role": "return"
+    },
+    {
+      "id": "review-to-notify",
+      "from": "review",
+      "to": "notify",
+      "label": "Queue mail",
+      "variant": "dashed"
+    }
+  ],
+  "mainPath": [
+    "draft",
+    "submit",
+    "grade",
+    "validate",
+    "review",
+    "approve",
+    "publish",
+    "feedback"
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Immutable and fair",
+      "items": [
+        "Resubmission creates a NEW submission; regrade creates a new grading attempt. Member appeal keeps original approval and uses another reviewer where possible.",
+        "No self approval. Concurrent review uses optimistic versions; overrides record reason. Only approved grades update official KPIs and normal API answers."
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "Failure and notifications",
+      "items": [
+        "Invalid criterion, evidence or schema returns for correction/regrade; no zero score on technical failure. Provider outage leaves approved lessons and autosave usable.",
+        "SMTP failures do not lose submission or review queue: retry/dedup, bounce alert, recheck recipient access, record ambiguous acceptance; reminders and overdue escalation."
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "AI policy and cost",
+      "items": [
+        "Two adapters + mock; per-task model/capability/privacy policies. Reserve cost before enqueue; reconcile tokens, rates and ambiguous timeout charges.",
+        "90s provider / 120s job / 180s retry_after; three transient retries, capped concurrency and explicit allowlisted fallback. No model grants approval."
+      ]
+    }
+  ]
+}

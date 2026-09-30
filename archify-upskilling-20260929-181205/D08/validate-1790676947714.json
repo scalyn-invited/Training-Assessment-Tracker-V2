@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "validate",
+  "stage": "render",
+  "type": "lifecycle",
+  "input": "C:\\Users\\Admin\\Downloads\\Archify_Upskilling_Run\\Archify_Upskilling_Pack\\output\\archify-upskilling-20260929-181205\\D08\\candidate.json",
+  "error": "Lifecycle layout validation failed:\n- [clean-flow/edge-through-node] lifecycle transitions[4] id \"paused-to-active\" \"paused\" -> \"active\" crosses state \"ready\" (unrelated to this relationship) on segment 1 [300, 310] -> [300, 158] (2px clearance) — adjust fromSide/toSide, set route/via or channelX/channelY, or move the state with col/yOffset.",
+  "diagnostics": [
+    {
+      "code": "clean-flow/edge-through-node",
+      "severity": "error",
+      "message": "[clean-flow/edge-through-node] lifecycle transitions[4] id \"paused-to-active\" \"paused\" -> \"active\" crosses state \"ready\" (unrelated to this relationship) on segment 1 [300, 310] -> [300, 158] (2px clearance) — adjust fromSide/toSide, set route/via or channelX/channelY, or move the state with col/yOffset.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 4,
+        "id": "paused-to-active",
+        "from": "paused",
+        "to": "active"
+      },
+      "evidence": {
+        "obstacleKind": "state",
+        "obstacleId": "ready",
+        "segmentIndex": 1,
+        "from": [
+          300,
+          310
+        ],
+        "to": [
+          300,
+          158
+        ],
+        "clearancePx": 2
+      },
+      "supportedFixes": [
+        "adjust fromSide/toSide, set route/via or channelX/channelY, or move the state with col/yOffset"
+      ]
+    }
+  ]
+}

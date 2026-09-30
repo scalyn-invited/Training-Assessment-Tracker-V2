@@ -1,0 +1,57 @@
+{
+  "node": "v22.23.2",
+  "nodeExecutable": "C:\\Users\\Admin\\AppData\\Local\\hermes\\node\\node.exe",
+  "archifyVersion": "2.17.0-dev.1",
+  "skillRoot": "C:/Users/Admin/.codex/skills/archify",
+  "installedGitCommit": null,
+  "commitStatus": "Installed release metadata exposes no revision; not claimed equivalent to reviewed commit.",
+  "reviewedPackCommit": "69cf672087289033af5138648d3875d3d73fc431",
+  "commandContract": "validate -> deliver -> visual-check",
+  "files": [
+    {
+      "path": "bin/archify.mjs",
+      "sha256": "b0eb73f0e4c462100cc72ebb83a2b6e7bb9596b3b9ef0fe10d68219fd3cf99d3"
+    },
+    {
+      "path": "SKILL.md",
+      "sha256": "10094272d6d1b4ad0f2c2e0880cb646fe4991454a2dc3d854aecb27e7407ee1f"
+    },
+    {
+      "path": "package.json",
+      "sha256": "7fe2a96f0d6730b2d35811d7d4f5e7e969c166a47a0c87543cdf667a221815be"
+    },
+    {
+      "path": "skill-release.json",
+      "sha256": "269772492c38663b5d19730a54e5d7ad973ef04e47eb4f75b6dfa2e249614097"
+    },
+    {
+      "path": "schemas/common.schema.json",
+      "sha256": "2630c958314eeebb92e0f6f6330475f1a2bc48f8c1b53201ba3b58889b319c80"
+    },
+    {
+      "path": "schemas/architecture.schema.json",
+      "sha256": "8c96140b6af8d93fb825a3c63e46b74176c9485185c978074ffe89e0f614576c"
+    },
+    {
+      "path": "schemas/workflow.schema.json",
+      "sha256": "2128e82afd2b971fcb7d80ada86fa836bb4a5035b504053b87d3aeefec380e3c"
+    },
+    {
+      "path": "schemas/sequence.schema.json",
+      "sha256": "c9fec3fad087f14d55c0bb2d34446246e3405f0238c292c1cb6bef28d1120fcb"
+    },
+    {
+      "path": "schemas/dataflow.schema.json",
+      "sha256": "09d238a6a18f2e074ec69c8f905f58a44d3a0b68fc6a925b8346c484a912af90"
+    },
+    {
+      "path": "schemas/lifecycle.schema.json",
+      "sha256": "05b46c0db95ee7ed44305b61496a96bb4f69342b20f9903d6534d952ebc65083"
+    }
+  ],
+  "browserAttempts": [
+    "C:/Program Files/Google/Chrome/Application/chrome.exe",
+    "C:/Users/Admin/AppData/Local/ms-playwright/chromium-1228/chrome-win64/chrome.exe"
+  ],
+  "updateNotice": "3.0.1 availability shown once and acknowledged; installed skill unchanged"
+}

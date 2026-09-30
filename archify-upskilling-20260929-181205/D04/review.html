@@ -1,0 +1,74 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>D04 · Onboarding and programme approval</title><style>:root{color-scheme:light dark}body{font:17px/1.6 system-ui;max-width:1100px;margin:36px auto;padding:0 24px}a{color:light-dark(#1453aa,#8dbdff)}h1{line-height:1.2}table{border-collapse:collapse;width:100%}td,th{text-align:left;padding:12px;border-bottom:1px solid #8885}code,pre{white-space:pre-wrap;overflow-wrap:anywhere}details{border:1px solid #8885;padding:14px;margin:12px 0}small{opacity:.8}.status{padding:16px;border-left:5px solid #c88c32;background:#8881}</style><main><h1>D04 · Onboarding and programme approval</h1><p><a href="../index.html">Suite index</a> · <a href="candidate.json">Editable native JSON</a></p><p class="status">BLOCKED: native Archify delivery failed. This is an interactive source review, not a rendered Archify diagram.</p><details open><summary>Nodes and ownership</summary><ul><li><strong>Person intake</strong> — Import or manual <small>(person)</small></li><li><strong>Wizard</strong> — Role · goal · capacity <small>(wizard)</small></li><li><strong>Confirm input</strong> — Confirm extraction <small>(extract)</small></li><li><strong>Generate draft</strong> — Whole programme <small>(generate)</small></li><li><strong>Validate draft</strong> — Content policy <small>(validate)</small></li><li><strong>Correct / retry</strong> — Correct input <small>(correct)</small></li><li><strong>Human review</strong> — Exact version <small>(review)</small></li><li><strong>Activate</strong> — All weeks approved <small>(activate)</small></li><li><strong>Lessons</strong> — Usable lessons <small>(learn)</small></li></ul></details><details open><summary>Directed relationships</summary><ol><li>person → wizard: Eligible identity</li><li>wizard → extract: Upload + goals</li><li>extract → generate: Confirmed</li><li>generate → validate: Draft ready</li><li>validate → review: Valid</li><li>validate → correct: Invalid / failed</li><li>correct → generate: Repair input</li><li>review → generate: AI revision</li><li>review → activate: Approve version</li><li>activate → learn: Deliver</li></ol></details><details><summary>People and identity</summary><ul><li>Imported person follows primary ownership; manual person defaults local_only.</li><li>Promotion: admin duplicate review → original request key → acknowledgement → verified link (D07). Identity invitation is separate.</li></ul></details><details><summary>Correction and capacity</summary><ul><li>Invalid document / missing evidence returns to wizard and extraction confirmation. Infeasible workload returns to capacity or goal correction.</li><li>4/6/8/10/12 weeks; 15–120 min per active day, including assessment and rework, shared across programmes.</li></ul></details><details><summary>Usable and accessible learning</summary><ul><li>Wizard captures role, purpose, assessments, skills, accessibility, availability, resources and KPI baseline/target.</li><li>Lessons include explanation, worked example, activity, tools, duration and completion criteria. Keyboard, mobile and screen-reader journeys required.</li></ul></details><details><summary>Native delivery diagnostics</summary><pre>[
+  {
+    &quot;code&quot;: &quot;composition/ambiguous-corridor&quot;,
+    &quot;severity&quot;: &quot;error&quot;,
+    &quot;message&quot;: &quot;[composition/ambiguous-corridor] showcase workflow edges[0] \&quot;activate\&quot; -&gt; \&quot;learn\&quot; shares a 124px corridor with edges[8] \&quot;validate\&quot; -&gt; \&quot;review\&quot; at [1129, 195] -&gt; [1129, 319] (segments 1 and 2; minimum 8px) — adjust route/via, bias, or channel coordinates so unrelated edges do not visually merge.&quot;,
+    &quot;subject&quot;: {
+      &quot;diagramType&quot;: &quot;workflow&quot;,
+      &quot;collection&quot;: &quot;edges&quot;,
+      &quot;index&quot;: 0,
+      &quot;from&quot;: &quot;activate&quot;,
+      &quot;to&quot;: &quot;learn&quot;
+    },
+    &quot;evidence&quot;: {
+      &quot;otherRelationship&quot;: {
+        &quot;diagramType&quot;: &quot;workflow&quot;,
+        &quot;collection&quot;: &quot;edges&quot;,
+        &quot;index&quot;: 8,
+        &quot;from&quot;: &quot;validate&quot;,
+        &quot;to&quot;: &quot;review&quot;
+      },
+      &quot;overlapLengthPx&quot;: 124,
+      &quot;minimumPx&quot;: 8,
+      &quot;from&quot;: [
+        1129,
+        195
+      ],
+      &quot;to&quot;: [
+        1129,
+        319
+      ],
+      &quot;segmentIndex&quot;: 1,
+      &quot;otherSegmentIndex&quot;: 2
+    },
+    &quot;supportedFixes&quot;: [
+      &quot;adjust route/via, bias, or channel coordinates so unrelated edges do not visually merge&quot;
+    ]
+  },
+  {
+    &quot;code&quot;: &quot;composition/ambiguous-corridor&quot;,
+    &quot;severity&quot;: &quot;error&quot;,
+    &quot;message&quot;: &quot;[composition/ambiguous-corridor] showcase workflow edges[1] \&quot;correct\&quot; -&gt; \&quot;generate\&quot; shares a 214.8px corridor with edges[8] \&quot;validate\&quot; -&gt; \&quot;review\&quot; at [723.6, 195] -&gt; [938.4, 195] (segments 1 and 1; minimum 8px) — adjust route/via, bias, or channel coordinates so unrelated edges do not visually merge.&quot;,
+    &quot;subject&quot;: {
+      &quot;diagramType&quot;: &quot;workflow&quot;,
+      &quot;collection&quot;: &quot;edges&quot;,
+      &quot;index&quot;: 1,
+      &quot;from&quot;: &quot;correct&quot;,
+      &quot;to&quot;: &quot;generate&quot;
+    },
+    &quot;evidence&quot;: {
+      &quot;otherRelationship&quot;: {
+        &quot;diagramType&quot;: &quot;workflow&quot;,
+        &quot;collection&quot;: &quot;edges&quot;,
+        &quot;index&quot;: 8,
+        &quot;from&quot;: &quot;validate&quot;,
+        &quot;to&quot;: &quot;review&quot;
+      },
+      &quot;overlapLengthPx&quot;: 214.8,
+      &quot;minimumPx&quot;: 8,
+      &quot;from&quot;: [
+        723.5999999999999,
+        195
+      ],
+      &quot;to&quot;: [
+        938.3999999999999,
+        195
+      ],
+      &quot;segmentIndex&quot;: 1,
+      &quot;otherSegmentIndex&quot;: 1
+    },
+    &quot;supportedFixes&quot;: [
+      &quot;adjust route/via, bias, or channel coordinates so unrelated edges do not visually merge&quot;
+    ]
+  }
+]</pre></details><p><a href="deliver-1790677055341.json">Delivery receipt</a> · <a href="validate-1790677253155.json">Validation receipt</a></p></main></html>
