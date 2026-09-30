@@ -1,0 +1,1016 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "validate",
+  "stage": "render",
+  "type": "lifecycle",
+  "input": "C:\\Users\\Admin\\Downloads\\Archify_Upskilling_Run\\Archify_Upskilling_Pack\\output\\archify-upskilling-20260929-181205\\D09\\candidate.json",
+  "error": "Lifecycle layout validation failed:\n- State \"draft\" exceeds the horizontal bounds of the diagram — reduce state.width or increase meta.viewBox[0].\n- States \"draft\" and \"submitted\" are less than 10px apart — move one to another col or separate them with yOffset (lanes other than \"main\"/\"terminal\" share one band).\n- States \"submitted\" and \"queued\" are less than 10px apart — move one to another col or separate them with yOffset (lanes other than \"main\"/\"terminal\" share one band).\n- States \"queued\" and \"grading\" are less than 10px apart — move one to another col or separate them with yOffset (lanes other than \"main\"/\"terminal\" share one band).\n- States \"grading\" and \"review-pending\" are less than 10px apart — move one to another col or separate them with yOffset (lanes other than \"main\"/\"terminal\" share one band).\n- States \"approved\" and \"changes-requested\" are less than 10px apart — move one to another col or separate them with yOffset (lanes other than \"main\"/\"terminal\" share one band).\n- States \"approved\" and \"technical-failure\" are less than 10px apart — move one to another col or separate them with yOffset (lanes other than \"main\"/\"terminal\" share one band).\n- States \"changes-requested\" and \"technical-failure\" are less than 10px apart — move one to another col or separate them with yOffset (lanes other than \"main\"/\"terminal\" share one band).\n- Transition \"Submit\" is too short (4px; minimum 32px) — route it through a channel or drop its label.\n- Transition \"Commit + enqueue\" is too short (4px; minimum 32px) — route it through a channel or drop its label.\n- Transition \"Claim job\" is too short (4px; minimum 32px) — route it through a channel or drop its label.\n- Transition \"Validated result\" is too short (8px; minimum 32px) — route it through a channel or drop its label.\n- [clean-flow/endpoint-side-direction] lifecycle transitions[0] id \"draft-to-submitted\" \"draft\" -> \"submitted\" first segment 0 [173, 161] -> [169, 161] does not honor inferred fromSide \"right\" — it must run horizontal rightward; keep automatic routing, or choose fromSide/toSide and via points whose first and final segments cross state borders perpendicularly.\n- [clean-flow/endpoint-side-direction] lifecycle transitions[0] id \"draft-to-submitted\" \"draft\" -> \"submitted\" final segment 0 [173, 161] -> [169, 161] does not honor inferred toSide \"left\" — it must run horizontal rightward from the left; keep automatic routing, or choose fromSide/toSide and via points whose first and final segments cross state borders perpendicularly.\n- [clean-flow/endpoint-side-direction] lifecycle transitions[1] id \"submitted-to-queued\" \"submitted\" -> \"queued\" first segment 0 [327, 161] -> [323, 161] does not honor inferred fromSide \"right\" — it must run horizontal rightward; keep automatic routing, or choose fromSide/toSide and via points whose first and final segments cross state borders perpendicularly.\n- [clean-flow/endpoint-side-direction] lifecycle transitions[1] id \"submitted-to-queued\" \"submitted\" -> \"queued\" final segment 0 [327, 161] -> [323, 161] does not honor inferred toSide \"left\" — it must run horizontal rightward from the left; keep automatic routing, or choose fromSide/toSide and via points whose first and final segments cross state borders perpendicularly.\n- [clean-flow/endpoint-side-direction] lifecycle transitions[2] id \"queued-to-grading\" \"queued\" -> \"grading\" first segment 0 [481, 161] -> [477, 161] does not honor inferred fromSide \"right\" — it must run horizontal rightward; keep automatic routing, or choose fromSide/toSide and via points whose first and final segments cross state borders perpendicularly.\n- [clean-flow/endpoint-side-direction] lifecycle transitions[2] id \"queued-to-grading\" \"queued\" -> \"grading\" final segment 0 [481, 161] -> [477, 161] does not honor inferred toSide \"left\" — it must run horizontal rightward from the left; keep automatic routing, or choose fromSide/toSide and via points whose first and final segments cross state borders perpendicularly.\n- [clean-flow/endpoint-side-direction] lifecycle transitions[3] id \"grading-to-review-pending\" \"grading\" -> \"review-pending\" first segment 0 [635, 161] -> [633, 161] does not honor inferred fromSide \"right\" — it must run horizontal rightward; keep automatic routing, or choose fromSide/toSide and via points whose first and final segments cross state borders perpendicularly.\n- [clean-flow/endpoint-side-direction] lifecycle transitions[3] id \"grading-to-review-pending\" \"grading\" -> \"review-pending\" final segment 2 [633, 154] -> [631, 154] does not honor inferred toSide \"left\" — it must run horizontal rightward from the left; keep automatic routing, or choose fromSide/toSide and via points whose first and final segments cross state borders perpendicularly.\n- [clean-flow/endpoint-side-direction] lifecycle transitions[5] id \"review-pending-to-changes-requested\" \"review-pending\" -> \"changes-requested\" first segment 0 [631, 168] -> [633, 168] does not honor inferred fromSide \"left\" — it must run horizontal leftward; keep automatic routing, or choose fromSide/toSide and via points whose first and final segments cross state borders perpendicularly.\n- [clean-flow/endpoint-side-direction] lifecycle transitions[5] id \"review-pending-to-changes-requested\" \"review-pending\" -> \"changes-requested\" final segment 2 [633, 313] -> [635, 313] does not honor inferred toSide \"right\" — it must run horizontal leftward from the right; keep automatic routing, or choose fromSide/toSide and via points whose first and final segments cross state borders perpendicularly.\n- [clean-flow/edge-through-node] lifecycle transitions[5] id \"review-pending-to-changes-requested\" \"review-pending\" -> \"changes-requested\" crosses state \"grading\" (unrelated to this relationship) on segment 0 [631, 168] -> [633, 168] (2px clearance) — adjust fromSide/toSide, set route/via or channelX/channelY, or move the state with col/yOffset.\n- [clean-flow/edge-through-node] lifecycle transitions[5] id \"review-pending-to-changes-requested\" \"review-pending\" -> \"changes-requested\" crosses state \"approved\" (unrelated to this relationship) on segment 1 [633, 168] -> [633, 313] (2px clearance) — adjust fromSide/toSide, set route/via or channelX/channelY, or move the state with col/yOffset.\n- [clean-flow/edge-through-node] lifecycle transitions[5] id \"review-pending-to-changes-requested\" \"review-pending\" -> \"changes-requested\" crosses state \"technical-failure\" (unrelated to this relationship) on segment 1 [633, 168] -> [633, 313] (2px clearance) — adjust fromSide/toSide, set route/via or channelX/channelY, or move the state with col/yOffset.\n- [clean-flow/edge-through-node] lifecycle transitions[6] id \"grading-to-technical-failure\" \"grading\" -> \"technical-failure\" crosses state \"changes-requested\" (unrelated to this relationship) on segment 0 [549, 196] -> [549, 278] (2px clearance) — adjust fromSide/toSide, set route/via or channelX/channelY, or move the state with col/yOffset.\n- [clean-flow/edge-through-node] lifecycle transitions[7] id \"technical-failure-to-grading\" \"technical-failure\" -> \"grading\" crosses state \"changes-requested\" (unrelated to this relationship) on segment 0 [563, 278] -> [563, 196] (2px clearance) — adjust fromSide/toSide, set route/via or channelX/channelY, or move the state with col/yOffset.\n- [composition/micro-segment] showcase lifecycle transitions[0] id \"draft-to-submitted\" \"draft\" -> \"submitted\" has a 4px source-stub segment 0 [173, 161] -> [169, 161] that is below the 8px micro-segment floor — move route/via or channel coordinates so each lifecycle turn has a readable run-up.\n- [composition/micro-segment] showcase lifecycle transitions[1] id \"submitted-to-queued\" \"submitted\" -> \"queued\" has a 4px source-stub segment 0 [327, 161] -> [323, 161] that is below the 8px micro-segment floor — move route/via or channel coordinates so each lifecycle turn has a readable run-up.\n- [composition/micro-segment] showcase lifecycle transitions[2] id \"queued-to-grading\" \"queued\" -> \"grading\" has a 4px source-stub segment 0 [481, 161] -> [477, 161] that is below the 8px micro-segment floor — move route/via or channel coordinates so each lifecycle turn has a readable run-up.\n- [composition/micro-segment] showcase lifecycle transitions[3] id \"grading-to-review-pending\" \"grading\" -> \"review-pending\" has a 2px source-stub segment 0 [635, 161] -> [633, 161] that is below the 8px micro-segment floor — move route/via or channel coordinates so each lifecycle turn has a readable run-up.\n- [composition/micro-segment] showcase lifecycle transitions[3] id \"grading-to-review-pending\" \"grading\" -> \"review-pending\" has a 7px interior segment 1 [633, 161] -> [633, 154] that is below the 8px micro-segment floor — move route/via or channel coordinates so each lifecycle turn has a readable run-up.\n- [composition/micro-segment] showcase lifecycle transitions[3] id \"grading-to-review-pending\" \"grading\" -> \"review-pending\" has a 2px target-stub segment 2 [633, 154] -> [631, 154] that is below the 8px micro-segment floor — move route/via or channel coordinates so each lifecycle turn has a readable run-up.\n- [composition/micro-segment] showcase lifecycle transitions[5] id \"review-pending-to-changes-requested\" \"review-pending\" -> \"changes-requested\" has a 2px source-stub segment 0 [631, 168] -> [633, 168] that is below the 8px micro-segment floor — move route/via or channel coordinates so each lifecycle turn has a readable run-up.\n- [composition/micro-segment] showcase lifecycle transitions[5] id \"review-pending-to-changes-requested\" \"review-pending\" -> \"changes-requested\" has a 2px target-stub segment 2 [633, 313] -> [635, 313] that is below the 8px micro-segment floor — move route/via or channel coordinates so each lifecycle turn has a readable run-up.\n- Label \"Submit\" overlaps state \"draft\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [150, 140, 41, 16]\n  state \"draft\" rect: [15, 126, 158, 70]\n  Suggested fix: labelAt [171, 210] or labelDy +59 (below); or labelAt [171, 122] or labelDy -29 (above)\n- Label \"Submit\" overlaps state \"submitted\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [150, 140, 41, 16]\n  state \"submitted\" rect: [169, 126, 158, 70]\n  Suggested fix: labelAt [171, 210] or labelDy +59 (below); or labelAt [171, 122] or labelDy -29 (above)\n- Label \"Commit + enqueue\" overlaps state \"submitted\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [280, 140, 90, 16]\n  state \"submitted\" rect: [169, 126, 158, 70]\n  Suggested fix: labelAt [325, 210] or labelDy +59 (below); or labelAt [325, 122] or labelDy -29 (above)\n- Label \"Commit + enqueue\" overlaps state \"queued\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [280, 140, 90, 16]\n  state \"queued\" rect: [323, 126, 158, 70]\n  Suggested fix: labelAt [325, 210] or labelDy +59 (below); or labelAt [325, 122] or labelDy -29 (above)\n- Label \"Claim job\" overlaps state \"queued\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [451, 140, 56, 16]\n  state \"queued\" rect: [323, 126, 158, 70]\n  Suggested fix: labelAt [479, 210] or labelDy +59 (below); or labelAt [479, 122] or labelDy -29 (above)\n- Label \"Claim job\" overlaps state \"grading\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [451, 140, 56, 16]\n  state \"grading\" rect: [477, 126, 158, 70]\n  Suggested fix: labelAt [479, 210] or labelDy +59 (below); or labelAt [479, 122] or labelDy -29 (above)\n- Label \"Validated result\" overlaps state \"grading\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [588, 137, 90, 16]\n  state \"grading\" rect: [477, 126, 158, 70]\n  Suggested fix: labelAt [633, 210] or labelDy +62 (below); or labelAt [633, 122] or labelDy -26 (above)\n- Label \"Validated result\" overlaps state \"review-pending\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [588, 137, 90, 16]\n  state \"review-pending\" rect: [631, 126, 158, 70]\n  Suggested fix: labelAt [633, 210] or labelDy +62 (below); or labelAt [633, 122] or labelDy -26 (above)\n- Label \"Human approval\" overlaps state \"review-pending\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [670, 175, 81, 16]\n  state \"review-pending\" rect: [631, 126, 158, 70]\n  Suggested fix: labelAt [710, 210] or labelDy +24 (below); or labelAt [710, 122] or labelDy -64 (above)\n- Label \"Job failure\" overlaps state \"grading\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [516, 175, 66, 16]\n  state \"grading\" rect: [477, 126, 158, 70]\n  Suggested fix: labelAt [549, 210] or labelDy +24 (below); or labelAt [549, 122] or labelDy -64 (above)\n- Label \"Allowed withdrawal\" overlaps state \"queued\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [352, 175, 100, 16]\n  state \"queued\" rect: [323, 126, 158, 70]\n  Suggested fix: labelAt [402, 210] or labelDy +24 (below); or labelAt [402, 122] or labelDy -64 (above)\n- [composition/label-route-clearance] showcase lifecycle label \"Retry budget\" on transitions[7] id \"technical-failure-to-grading\" \"technical-failure\" -> \"grading\" label \"Retry budget\" is 0px from transitions[6] id \"grading-to-technical-failure\" \"grading\" -> \"technical-failure\" label \"Job failure\" segment 0 [549, 196] -> [549, 278] (label rect [528, 257, 71, 16]; minimum 4px) — adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel.",
+  "diagnostics": [
+    {
+      "code": "clean-flow/endpoint-side-direction",
+      "severity": "error",
+      "message": "[clean-flow/endpoint-side-direction] lifecycle transitions[0] id \"draft-to-submitted\" \"draft\" -> \"submitted\" first segment 0 [173, 161] -> [169, 161] does not honor inferred fromSide \"right\" — it must run horizontal rightward; keep automatic routing, or choose fromSide/toSide and via points whose first and final segments cross state borders perpendicularly.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 0,
+        "id": "draft-to-submitted",
+        "from": "draft",
+        "to": "submitted"
+      },
+      "evidence": {
+        "endpoint": "source",
+        "authoredField": "fromSide",
+        "sideOrigin": "inferred",
+        "side": "right",
+        "segmentIndex": 0,
+        "from": [
+          173,
+          161
+        ],
+        "to": [
+          169,
+          161
+        ],
+        "expectedAxis": "horizontal",
+        "expectedDirection": "rightward"
+      },
+      "supportedFixes": [
+        "keep automatic routing, or choose fromSide/toSide and via points whose first and final segments cross state borders perpendicularly"
+      ]
+    },
+    {
+      "code": "clean-flow/endpoint-side-direction",
+      "severity": "error",
+      "message": "[clean-flow/endpoint-side-direction] lifecycle transitions[0] id \"draft-to-submitted\" \"draft\" -> \"submitted\" final segment 0 [173, 161] -> [169, 161] does not honor inferred toSide \"left\" — it must run horizontal rightward from the left; keep automatic routing, or choose fromSide/toSide and via points whose first and final segments cross state borders perpendicularly.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 0,
+        "id": "draft-to-submitted",
+        "from": "draft",
+        "to": "submitted"
+      },
+      "evidence": {
+        "endpoint": "target",
+        "authoredField": "toSide",
+        "sideOrigin": "inferred",
+        "side": "left",
+        "segmentIndex": 0,
+        "from": [
+          173,
+          161
+        ],
+        "to": [
+          169,
+          161
+        ],
+        "expectedAxis": "horizontal",
+        "expectedDirection": "rightward from the left"
+      },
+      "supportedFixes": [
+        "keep automatic routing, or choose fromSide/toSide and via points whose first and final segments cross state borders perpendicularly"
+      ]
+    },
+    {
+      "code": "clean-flow/endpoint-side-direction",
+      "severity": "error",
+      "message": "[clean-flow/endpoint-side-direction] lifecycle transitions[1] id \"submitted-to-queued\" \"submitted\" -> \"queued\" first segment 0 [327, 161] -> [323, 161] does not honor inferred fromSide \"right\" — it must run horizontal rightward; keep automatic routing, or choose fromSide/toSide and via points whose first and final segments cross state borders perpendicularly.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 1,
+        "id": "submitted-to-queued",
+        "from": "submitted",
+        "to": "queued"
+      },
+      "evidence": {
+        "endpoint": "source",
+        "authoredField": "fromSide",
+        "sideOrigin": "inferred",
+        "side": "right",
+        "segmentIndex": 0,
+        "from": [
+          327,
+          161
+        ],
+        "to": [
+          323,
+          161
+        ],
+        "expectedAxis": "horizontal",
+        "expectedDirection": "rightward"
+      },
+      "supportedFixes": [
+        "keep automatic routing, or choose fromSide/toSide and via points whose first and final segments cross state borders perpendicularly"
+      ]
+    },
+    {
+      "code": "clean-flow/endpoint-side-direction",
+      "severity": "error",
+      "message": "[clean-flow/endpoint-side-direction] lifecycle transitions[1] id \"submitted-to-queued\" \"submitted\" -> \"queued\" final segment 0 [327, 161] -> [323, 161] does not honor inferred toSide \"left\" — it must run horizontal rightward from the left; keep automatic routing, or choose fromSide/toSide and via points whose first and final segments cross state borders perpendicularly.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 1,
+        "id": "submitted-to-queued",
+        "from": "submitted",
+        "to": "queued"
+      },
+      "evidence": {
+        "endpoint": "target",
+        "authoredField": "toSide",
+        "sideOrigin": "inferred",
+        "side": "left",
+        "segmentIndex": 0,
+        "from": [
+          327,
+          161
+        ],
+        "to": [
+          323,
+          161
+        ],
+        "expectedAxis": "horizontal",
+        "expectedDirection": "rightward from the left"
+      },
+      "supportedFixes": [
+        "keep automatic routing, or choose fromSide/toSide and via points whose first and final segments cross state borders perpendicularly"
+      ]
+    },
+    {
+      "code": "clean-flow/endpoint-side-direction",
+      "severity": "error",
+      "message": "[clean-flow/endpoint-side-direction] lifecycle transitions[2] id \"queued-to-grading\" \"queued\" -> \"grading\" first segment 0 [481, 161] -> [477, 161] does not honor inferred fromSide \"right\" — it must run horizontal rightward; keep automatic routing, or choose fromSide/toSide and via points whose first and final segments cross state borders perpendicularly.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 2,
+        "id": "queued-to-grading",
+        "from": "queued",
+        "to": "grading"
+      },
+      "evidence": {
+        "endpoint": "source",
+        "authoredField": "fromSide",
+        "sideOrigin": "inferred",
+        "side": "right",
+        "segmentIndex": 0,
+        "from": [
+          481,
+          161
+        ],
+        "to": [
+          477,
+          161
+        ],
+        "expectedAxis": "horizontal",
+        "expectedDirection": "rightward"
+      },
+      "supportedFixes": [
+        "keep automatic routing, or choose fromSide/toSide and via points whose first and final segments cross state borders perpendicularly"
+      ]
+    },
+    {
+      "code": "clean-flow/endpoint-side-direction",
+      "severity": "error",
+      "message": "[clean-flow/endpoint-side-direction] lifecycle transitions[2] id \"queued-to-grading\" \"queued\" -> \"grading\" final segment 0 [481, 161] -> [477, 161] does not honor inferred toSide \"left\" — it must run horizontal rightward from the left; keep automatic routing, or choose fromSide/toSide and via points whose first and final segments cross state borders perpendicularly.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 2,
+        "id": "queued-to-grading",
+        "from": "queued",
+        "to": "grading"
+      },
+      "evidence": {
+        "endpoint": "target",
+        "authoredField": "toSide",
+        "sideOrigin": "inferred",
+        "side": "left",
+        "segmentIndex": 0,
+        "from": [
+          481,
+          161
+        ],
+        "to": [
+          477,
+          161
+        ],
+        "expectedAxis": "horizontal",
+        "expectedDirection": "rightward from the left"
+      },
+      "supportedFixes": [
+        "keep automatic routing, or choose fromSide/toSide and via points whose first and final segments cross state borders perpendicularly"
+      ]
+    },
+    {
+      "code": "clean-flow/endpoint-side-direction",
+      "severity": "error",
+      "message": "[clean-flow/endpoint-side-direction] lifecycle transitions[3] id \"grading-to-review-pending\" \"grading\" -> \"review-pending\" first segment 0 [635, 161] -> [633, 161] does not honor inferred fromSide \"right\" — it must run horizontal rightward; keep automatic routing, or choose fromSide/toSide and via points whose first and final segments cross state borders perpendicularly.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 3,
+        "id": "grading-to-review-pending",
+        "from": "grading",
+        "to": "review-pending"
+      },
+      "evidence": {
+        "endpoint": "source",
+        "authoredField": "fromSide",
+        "sideOrigin": "inferred",
+        "side": "right",
+        "segmentIndex": 0,
+        "from": [
+          635,
+          161
+        ],
+        "to": [
+          633,
+          161
+        ],
+        "expectedAxis": "horizontal",
+        "expectedDirection": "rightward"
+      },
+      "supportedFixes": [
+        "keep automatic routing, or choose fromSide/toSide and via points whose first and final segments cross state borders perpendicularly"
+      ]
+    },
+    {
+      "code": "clean-flow/endpoint-side-direction",
+      "severity": "error",
+      "message": "[clean-flow/endpoint-side-direction] lifecycle transitions[3] id \"grading-to-review-pending\" \"grading\" -> \"review-pending\" final segment 2 [633, 154] -> [631, 154] does not honor inferred toSide \"left\" — it must run horizontal rightward from the left; keep automatic routing, or choose fromSide/toSide and via points whose first and final segments cross state borders perpendicularly.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 3,
+        "id": "grading-to-review-pending",
+        "from": "grading",
+        "to": "review-pending"
+      },
+      "evidence": {
+        "endpoint": "target",
+        "authoredField": "toSide",
+        "sideOrigin": "inferred",
+        "side": "left",
+        "segmentIndex": 2,
+        "from": [
+          633,
+          154
+        ],
+        "to": [
+          631,
+          154
+        ],
+        "expectedAxis": "horizontal",
+        "expectedDirection": "rightward from the left"
+      },
+      "supportedFixes": [
+        "keep automatic routing, or choose fromSide/toSide and via points whose first and final segments cross state borders perpendicularly"
+      ]
+    },
+    {
+      "code": "clean-flow/endpoint-side-direction",
+      "severity": "error",
+      "message": "[clean-flow/endpoint-side-direction] lifecycle transitions[5] id \"review-pending-to-changes-requested\" \"review-pending\" -> \"changes-requested\" first segment 0 [631, 168] -> [633, 168] does not honor inferred fromSide \"left\" — it must run horizontal leftward; keep automatic routing, or choose fromSide/toSide and via points whose first and final segments cross state borders perpendicularly.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 5,
+        "id": "review-pending-to-changes-requested",
+        "from": "review-pending",
+        "to": "changes-requested"
+      },
+      "evidence": {
+        "endpoint": "source",
+        "authoredField": "fromSide",
+        "sideOrigin": "inferred",
+        "side": "left",
+        "segmentIndex": 0,
+        "from": [
+          631,
+          168
+        ],
+        "to": [
+          633,
+          168
+        ],
+        "expectedAxis": "horizontal",
+        "expectedDirection": "leftward"
+      },
+      "supportedFixes": [
+        "keep automatic routing, or choose fromSide/toSide and via points whose first and final segments cross state borders perpendicularly"
+      ]
+    },
+    {
+      "code": "clean-flow/endpoint-side-direction",
+      "severity": "error",
+      "message": "[clean-flow/endpoint-side-direction] lifecycle transitions[5] id \"review-pending-to-changes-requested\" \"review-pending\" -> \"changes-requested\" final segment 2 [633, 313] -> [635, 313] does not honor inferred toSide \"right\" — it must run horizontal leftward from the right; keep automatic routing, or choose fromSide/toSide and via points whose first and final segments cross state borders perpendicularly.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 5,
+        "id": "review-pending-to-changes-requested",
+        "from": "review-pending",
+        "to": "changes-requested"
+      },
+      "evidence": {
+        "endpoint": "target",
+        "authoredField": "toSide",
+        "sideOrigin": "inferred",
+        "side": "right",
+        "segmentIndex": 2,
+        "from": [
+          633,
+          313
+        ],
+        "to": [
+          635,
+          313
+        ],
+        "expectedAxis": "horizontal",
+        "expectedDirection": "leftward from the right"
+      },
+      "supportedFixes": [
+        "keep automatic routing, or choose fromSide/toSide and via points whose first and final segments cross state borders perpendicularly"
+      ]
+    },
+    {
+      "code": "clean-flow/edge-through-node",
+      "severity": "error",
+      "message": "[clean-flow/edge-through-node] lifecycle transitions[5] id \"review-pending-to-changes-requested\" \"review-pending\" -> \"changes-requested\" crosses state \"grading\" (unrelated to this relationship) on segment 0 [631, 168] -> [633, 168] (2px clearance) — adjust fromSide/toSide, set route/via or channelX/channelY, or move the state with col/yOffset.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 5,
+        "id": "review-pending-to-changes-requested",
+        "from": "review-pending",
+        "to": "changes-requested"
+      },
+      "evidence": {
+        "obstacleKind": "state",
+        "obstacleId": "grading",
+        "segmentIndex": 0,
+        "from": [
+          631,
+          168
+        ],
+        "to": [
+          633,
+          168
+        ],
+        "clearancePx": 2
+      },
+      "supportedFixes": [
+        "adjust fromSide/toSide, set route/via or channelX/channelY, or move the state with col/yOffset"
+      ]
+    },
+    {
+      "code": "clean-flow/edge-through-node",
+      "severity": "error",
+      "message": "[clean-flow/edge-through-node] lifecycle transitions[5] id \"review-pending-to-changes-requested\" \"review-pending\" -> \"changes-requested\" crosses state \"approved\" (unrelated to this relationship) on segment 1 [633, 168] -> [633, 313] (2px clearance) — adjust fromSide/toSide, set route/via or channelX/channelY, or move the state with col/yOffset.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 5,
+        "id": "review-pending-to-changes-requested",
+        "from": "review-pending",
+        "to": "changes-requested"
+      },
+      "evidence": {
+        "obstacleKind": "state",
+        "obstacleId": "approved",
+        "segmentIndex": 1,
+        "from": [
+          633,
+          168
+        ],
+        "to": [
+          633,
+          313
+        ],
+        "clearancePx": 2
+      },
+      "supportedFixes": [
+        "adjust fromSide/toSide, set route/via or channelX/channelY, or move the state with col/yOffset"
+      ]
+    },
+    {
+      "code": "clean-flow/edge-through-node",
+      "severity": "error",
+      "message": "[clean-flow/edge-through-node] lifecycle transitions[5] id \"review-pending-to-changes-requested\" \"review-pending\" -> \"changes-requested\" crosses state \"technical-failure\" (unrelated to this relationship) on segment 1 [633, 168] -> [633, 313] (2px clearance) — adjust fromSide/toSide, set route/via or channelX/channelY, or move the state with col/yOffset.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 5,
+        "id": "review-pending-to-changes-requested",
+        "from": "review-pending",
+        "to": "changes-requested"
+      },
+      "evidence": {
+        "obstacleKind": "state",
+        "obstacleId": "technical-failure",
+        "segmentIndex": 1,
+        "from": [
+          633,
+          168
+        ],
+        "to": [
+          633,
+          313
+        ],
+        "clearancePx": 2
+      },
+      "supportedFixes": [
+        "adjust fromSide/toSide, set route/via or channelX/channelY, or move the state with col/yOffset"
+      ]
+    },
+    {
+      "code": "clean-flow/edge-through-node",
+      "severity": "error",
+      "message": "[clean-flow/edge-through-node] lifecycle transitions[6] id \"grading-to-technical-failure\" \"grading\" -> \"technical-failure\" crosses state \"changes-requested\" (unrelated to this relationship) on segment 0 [549, 196] -> [549, 278] (2px clearance) — adjust fromSide/toSide, set route/via or channelX/channelY, or move the state with col/yOffset.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 6,
+        "id": "grading-to-technical-failure",
+        "from": "grading",
+        "to": "technical-failure"
+      },
+      "evidence": {
+        "obstacleKind": "state",
+        "obstacleId": "changes-requested",
+        "segmentIndex": 0,
+        "from": [
+          549,
+          196
+        ],
+        "to": [
+          549,
+          278
+        ],
+        "clearancePx": 2
+      },
+      "supportedFixes": [
+        "adjust fromSide/toSide, set route/via or channelX/channelY, or move the state with col/yOffset"
+      ]
+    },
+    {
+      "code": "clean-flow/edge-through-node",
+      "severity": "error",
+      "message": "[clean-flow/edge-through-node] lifecycle transitions[7] id \"technical-failure-to-grading\" \"technical-failure\" -> \"grading\" crosses state \"changes-requested\" (unrelated to this relationship) on segment 0 [563, 278] -> [563, 196] (2px clearance) — adjust fromSide/toSide, set route/via or channelX/channelY, or move the state with col/yOffset.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 7,
+        "id": "technical-failure-to-grading",
+        "from": "technical-failure",
+        "to": "grading"
+      },
+      "evidence": {
+        "obstacleKind": "state",
+        "obstacleId": "changes-requested",
+        "segmentIndex": 0,
+        "from": [
+          563,
+          278
+        ],
+        "to": [
+          563,
+          196
+        ],
+        "clearancePx": 2
+      },
+      "supportedFixes": [
+        "adjust fromSide/toSide, set route/via or channelX/channelY, or move the state with col/yOffset"
+      ]
+    },
+    {
+      "code": "composition/micro-segment",
+      "severity": "error",
+      "message": "[composition/micro-segment] showcase lifecycle transitions[0] id \"draft-to-submitted\" \"draft\" -> \"submitted\" has a 4px source-stub segment 0 [173, 161] -> [169, 161] that is below the 8px micro-segment floor — move route/via or channel coordinates so each lifecycle turn has a readable run-up.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 0,
+        "id": "draft-to-submitted",
+        "from": "draft",
+        "to": "submitted"
+      },
+      "evidence": {
+        "segmentIndex": 0,
+        "position": "source-stub",
+        "lengthPx": 4,
+        "minimumPx": 8,
+        "from": [
+          173,
+          161
+        ],
+        "to": [
+          169,
+          161
+        ]
+      },
+      "supportedFixes": [
+        "move route/via or channel coordinates so each lifecycle turn has a readable run-up"
+      ]
+    },
+    {
+      "code": "composition/micro-segment",
+      "severity": "error",
+      "message": "[composition/micro-segment] showcase lifecycle transitions[1] id \"submitted-to-queued\" \"submitted\" -> \"queued\" has a 4px source-stub segment 0 [327, 161] -> [323, 161] that is below the 8px micro-segment floor — move route/via or channel coordinates so each lifecycle turn has a readable run-up.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 1,
+        "id": "submitted-to-queued",
+        "from": "submitted",
+        "to": "queued"
+      },
+      "evidence": {
+        "segmentIndex": 0,
+        "position": "source-stub",
+        "lengthPx": 4,
+        "minimumPx": 8,
+        "from": [
+          327,
+          161
+        ],
+        "to": [
+          323,
+          161
+        ]
+      },
+      "supportedFixes": [
+        "move route/via or channel coordinates so each lifecycle turn has a readable run-up"
+      ]
+    },
+    {
+      "code": "composition/micro-segment",
+      "severity": "error",
+      "message": "[composition/micro-segment] showcase lifecycle transitions[2] id \"queued-to-grading\" \"queued\" -> \"grading\" has a 4px source-stub segment 0 [481, 161] -> [477, 161] that is below the 8px micro-segment floor — move route/via or channel coordinates so each lifecycle turn has a readable run-up.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 2,
+        "id": "queued-to-grading",
+        "from": "queued",
+        "to": "grading"
+      },
+      "evidence": {
+        "segmentIndex": 0,
+        "position": "source-stub",
+        "lengthPx": 4,
+        "minimumPx": 8,
+        "from": [
+          481,
+          161
+        ],
+        "to": [
+          477,
+          161
+        ]
+      },
+      "supportedFixes": [
+        "move route/via or channel coordinates so each lifecycle turn has a readable run-up"
+      ]
+    },
+    {
+      "code": "composition/micro-segment",
+      "severity": "error",
+      "message": "[composition/micro-segment] showcase lifecycle transitions[3] id \"grading-to-review-pending\" \"grading\" -> \"review-pending\" has a 2px source-stub segment 0 [635, 161] -> [633, 161] that is below the 8px micro-segment floor — move route/via or channel coordinates so each lifecycle turn has a readable run-up.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 3,
+        "id": "grading-to-review-pending",
+        "from": "grading",
+        "to": "review-pending"
+      },
+      "evidence": {
+        "segmentIndex": 0,
+        "position": "source-stub",
+        "lengthPx": 2,
+        "minimumPx": 8,
+        "from": [
+          635,
+          161
+        ],
+        "to": [
+          633,
+          161
+        ]
+      },
+      "supportedFixes": [
+        "move route/via or channel coordinates so each lifecycle turn has a readable run-up"
+      ]
+    },
+    {
+      "code": "composition/micro-segment",
+      "severity": "error",
+      "message": "[composition/micro-segment] showcase lifecycle transitions[3] id \"grading-to-review-pending\" \"grading\" -> \"review-pending\" has a 7px interior segment 1 [633, 161] -> [633, 154] that is below the 8px micro-segment floor — move route/via or channel coordinates so each lifecycle turn has a readable run-up.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 3,
+        "id": "grading-to-review-pending",
+        "from": "grading",
+        "to": "review-pending"
+      },
+      "evidence": {
+        "segmentIndex": 1,
+        "position": "interior",
+        "lengthPx": 7,
+        "minimumPx": 8,
+        "from": [
+          633,
+          161
+        ],
+        "to": [
+          633,
+          154
+        ]
+      },
+      "supportedFixes": [
+        "move route/via or channel coordinates so each lifecycle turn has a readable run-up"
+      ]
+    },
+    {
+      "code": "composition/micro-segment",
+      "severity": "error",
+      "message": "[composition/micro-segment] showcase lifecycle transitions[3] id \"grading-to-review-pending\" \"grading\" -> \"review-pending\" has a 2px target-stub segment 2 [633, 154] -> [631, 154] that is below the 8px micro-segment floor — move route/via or channel coordinates so each lifecycle turn has a readable run-up.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 3,
+        "id": "grading-to-review-pending",
+        "from": "grading",
+        "to": "review-pending"
+      },
+      "evidence": {
+        "segmentIndex": 2,
+        "position": "target-stub",
+        "lengthPx": 2,
+        "minimumPx": 8,
+        "from": [
+          633,
+          154
+        ],
+        "to": [
+          631,
+          154
+        ]
+      },
+      "supportedFixes": [
+        "move route/via or channel coordinates so each lifecycle turn has a readable run-up"
+      ]
+    },
+    {
+      "code": "composition/micro-segment",
+      "severity": "error",
+      "message": "[composition/micro-segment] showcase lifecycle transitions[5] id \"review-pending-to-changes-requested\" \"review-pending\" -> \"changes-requested\" has a 2px source-stub segment 0 [631, 168] -> [633, 168] that is below the 8px micro-segment floor — move route/via or channel coordinates so each lifecycle turn has a readable run-up.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 5,
+        "id": "review-pending-to-changes-requested",
+        "from": "review-pending",
+        "to": "changes-requested"
+      },
+      "evidence": {
+        "segmentIndex": 0,
+        "position": "source-stub",
+        "lengthPx": 2,
+        "minimumPx": 8,
+        "from": [
+          631,
+          168
+        ],
+        "to": [
+          633,
+          168
+        ]
+      },
+      "supportedFixes": [
+        "move route/via or channel coordinates so each lifecycle turn has a readable run-up"
+      ]
+    },
+    {
+      "code": "composition/micro-segment",
+      "severity": "error",
+      "message": "[composition/micro-segment] showcase lifecycle transitions[5] id \"review-pending-to-changes-requested\" \"review-pending\" -> \"changes-requested\" has a 2px target-stub segment 2 [633, 313] -> [635, 313] that is below the 8px micro-segment floor — move route/via or channel coordinates so each lifecycle turn has a readable run-up.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 5,
+        "id": "review-pending-to-changes-requested",
+        "from": "review-pending",
+        "to": "changes-requested"
+      },
+      "evidence": {
+        "segmentIndex": 2,
+        "position": "target-stub",
+        "lengthPx": 2,
+        "minimumPx": 8,
+        "from": [
+          633,
+          313
+        ],
+        "to": [
+          635,
+          313
+        ]
+      },
+      "supportedFixes": [
+        "move route/via or channel coordinates so each lifecycle turn has a readable run-up"
+      ]
+    },
+    {
+      "code": "composition/label-route-clearance",
+      "severity": "error",
+      "message": "[composition/label-route-clearance] showcase lifecycle label \"Retry budget\" on transitions[7] id \"technical-failure-to-grading\" \"technical-failure\" -> \"grading\" label \"Retry budget\" is 0px from transitions[6] id \"grading-to-technical-failure\" \"grading\" -> \"technical-failure\" label \"Job failure\" segment 0 [549, 196] -> [549, 278] (label rect [528, 257, 71, 16]; minimum 4px) — adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 7,
+        "id": "technical-failure-to-grading",
+        "from": "technical-failure",
+        "to": "grading"
+      },
+      "evidence": {
+        "label": "Retry budget",
+        "otherRelationship": {
+          "diagramType": "lifecycle",
+          "collection": "transitions",
+          "index": 6,
+          "id": "grading-to-technical-failure",
+          "from": "grading",
+          "to": "technical-failure"
+        },
+        "segmentIndex": 0,
+        "clearancePx": 0,
+        "minimumPx": 4,
+        "labelRect": {
+          "relation": {
+            "id": "technical-failure-to-grading",
+            "from": "technical-failure",
+            "to": "grading",
+            "label": "Retry budget",
+            "variant": "default"
+          },
+          "relationIndex": 7,
+          "label": "Retry budget",
+          "x": 527.6,
+          "y": 257,
+          "width": 70.80000000000001,
+          "height": 16,
+          "lx": 563,
+          "ly": 268
+        },
+        "from": [
+          549,
+          196
+        ],
+        "to": [
+          549,
+          278
+        ]
+      },
+      "supportedFixes": [
+        "adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel"
+      ]
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "State \"draft\" exceeds the horizontal bounds of the diagram — reduce state.width or increase meta.viewBox[0].",
+      "subject": {
+        "diagramType": "lifecycle"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "States \"draft\" and \"submitted\" are less than 10px apart — move one to another col or separate them with yOffset (lanes other than \"main\"/\"terminal\" share one band).",
+      "subject": {
+        "diagramType": "lifecycle"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "States \"submitted\" and \"queued\" are less than 10px apart — move one to another col or separate them with yOffset (lanes other than \"main\"/\"terminal\" share one band).",
+      "subject": {
+        "diagramType": "lifecycle"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "States \"queued\" and \"grading\" are less than 10px apart — move one to another col or separate them with yOffset (lanes other than \"main\"/\"terminal\" share one band).",
+      "subject": {
+        "diagramType": "lifecycle"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "States \"grading\" and \"review-pending\" are less than 10px apart — move one to another col or separate them with yOffset (lanes other than \"main\"/\"terminal\" share one band).",
+      "subject": {
+        "diagramType": "lifecycle"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "States \"approved\" and \"changes-requested\" are less than 10px apart — move one to another col or separate them with yOffset (lanes other than \"main\"/\"terminal\" share one band).",
+      "subject": {
+        "diagramType": "lifecycle"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "States \"approved\" and \"technical-failure\" are less than 10px apart — move one to another col or separate them with yOffset (lanes other than \"main\"/\"terminal\" share one band).",
+      "subject": {
+        "diagramType": "lifecycle"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "States \"changes-requested\" and \"technical-failure\" are less than 10px apart — move one to another col or separate them with yOffset (lanes other than \"main\"/\"terminal\" share one band).",
+      "subject": {
+        "diagramType": "lifecycle"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Transition \"Submit\" is too short (4px; minimum 32px) — route it through a channel or drop its label.",
+      "subject": {
+        "diagramType": "lifecycle"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Transition \"Commit + enqueue\" is too short (4px; minimum 32px) — route it through a channel or drop its label.",
+      "subject": {
+        "diagramType": "lifecycle"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Transition \"Claim job\" is too short (4px; minimum 32px) — route it through a channel or drop its label.",
+      "subject": {
+        "diagramType": "lifecycle"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Transition \"Validated result\" is too short (8px; minimum 32px) — route it through a channel or drop its label.",
+      "subject": {
+        "diagramType": "lifecycle"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Submit\" overlaps state \"draft\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [150, 140, 41, 16]\n  state \"draft\" rect: [15, 126, 158, 70]\n  Suggested fix: labelAt [171, 210] or labelDy +59 (below); or labelAt [171, 122] or labelDy -29 (above)",
+      "subject": {
+        "diagramType": "lifecycle"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Submit\" overlaps state \"submitted\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [150, 140, 41, 16]\n  state \"submitted\" rect: [169, 126, 158, 70]\n  Suggested fix: labelAt [171, 210] or labelDy +59 (below); or labelAt [171, 122] or labelDy -29 (above)",
+      "subject": {
+        "diagramType": "lifecycle"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Commit + enqueue\" overlaps state \"submitted\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [280, 140, 90, 16]\n  state \"submitted\" rect: [169, 126, 158, 70]\n  Suggested fix: labelAt [325, 210] or labelDy +59 (below); or labelAt [325, 122] or labelDy -29 (above)",
+      "subject": {
+        "diagramType": "lifecycle"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Commit + enqueue\" overlaps state \"queued\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [280, 140, 90, 16]\n  state \"queued\" rect: [323, 126, 158, 70]\n  Suggested fix: labelAt [325, 210] or labelDy +59 (below); or labelAt [325, 122] or labelDy -29 (above)",
+      "subject": {
+        "diagramType": "lifecycle"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Claim job\" overlaps state \"queued\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [451, 140, 56, 16]\n  state \"queued\" rect: [323, 126, 158, 70]\n  Suggested fix: labelAt [479, 210] or labelDy +59 (below); or labelAt [479, 122] or labelDy -29 (above)",
+      "subject": {
+        "diagramType": "lifecycle"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Claim job\" overlaps state \"grading\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [451, 140, 56, 16]\n  state \"grading\" rect: [477, 126, 158, 70]\n  Suggested fix: labelAt [479, 210] or labelDy +59 (below); or labelAt [479, 122] or labelDy -29 (above)",
+      "subject": {
+        "diagramType": "lifecycle"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Validated result\" overlaps state \"grading\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [588, 137, 90, 16]\n  state \"grading\" rect: [477, 126, 158, 70]\n  Suggested fix: labelAt [633, 210] or labelDy +62 (below); or labelAt [633, 122] or labelDy -26 (above)",
+      "subject": {
+        "diagramType": "lifecycle"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Validated result\" overlaps state \"review-pending\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [588, 137, 90, 16]\n  state \"review-pending\" rect: [631, 126, 158, 70]\n  Suggested fix: labelAt [633, 210] or labelDy +62 (below); or labelAt [633, 122] or labelDy -26 (above)",
+      "subject": {
+        "diagramType": "lifecycle"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Human approval\" overlaps state \"review-pending\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [670, 175, 81, 16]\n  state \"review-pending\" rect: [631, 126, 158, 70]\n  Suggested fix: labelAt [710, 210] or labelDy +24 (below); or labelAt [710, 122] or labelDy -64 (above)",
+      "subject": {
+        "diagramType": "lifecycle"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Job failure\" overlaps state \"grading\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [516, 175, 66, 16]\n  state \"grading\" rect: [477, 126, 158, 70]\n  Suggested fix: labelAt [549, 210] or labelDy +24 (below); or labelAt [549, 122] or labelDy -64 (above)",
+      "subject": {
+        "diagramType": "lifecycle"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Allowed withdrawal\" overlaps state \"queued\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [352, 175, 100, 16]\n  state \"queued\" rect: [323, 126, 158, 70]\n  Suggested fix: labelAt [402, 210] or labelDy +24 (below); or labelAt [402, 122] or labelDy -64 (above)",
+      "subject": {
+        "diagramType": "lifecycle"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    }
+  ]
+}

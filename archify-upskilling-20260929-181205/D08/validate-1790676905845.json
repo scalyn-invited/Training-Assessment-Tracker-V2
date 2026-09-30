@@ -1,0 +1,789 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "validate",
+  "stage": "render",
+  "type": "lifecycle",
+  "input": "C:\\Users\\Admin\\Downloads\\Archify_Upskilling_Run\\Archify_Upskilling_Pack\\output\\archify-upskilling-20260929-181205\\D08\\candidate.json",
+  "error": "Lifecycle layout validation failed:\n- State \"onboarding\" exceeds the horizontal bounds of the diagram — reduce state.width or increase meta.viewBox[0].\n- States \"onboarding\" and \"ready\" are less than 10px apart — move one to another col or separate them with yOffset (lanes other than \"main\"/\"terminal\" share one band).\n- States \"ready\" and \"active\" are less than 10px apart — move one to another col or separate them with yOffset (lanes other than \"main\"/\"terminal\" share one band).\n- States \"active\" and \"completed\" are less than 10px apart — move one to another col or separate them with yOffset (lanes other than \"main\"/\"terminal\" share one band).\n- Transition \"Approve baseline\" is too short (4px; minimum 32px) — route it through a channel or drop its label.\n- Transition \"Activation checks\" is too short (4px; minimum 32px) — route it through a channel or drop its label.\n- Transition \"Evidence sufficient\" is too short (4px; minimum 32px) — route it through a channel or drop its label.\n- [clean-flow/endpoint-side-direction] lifecycle transitions[0] id \"onboarding-to-ready\" \"onboarding\" -> \"ready\" first segment 0 [173, 161] -> [169, 161] does not honor inferred fromSide \"right\" — it must run horizontal rightward; keep automatic routing, or choose fromSide/toSide and via points whose first and final segments cross state borders perpendicularly.\n- [clean-flow/endpoint-side-direction] lifecycle transitions[0] id \"onboarding-to-ready\" \"onboarding\" -> \"ready\" final segment 0 [173, 161] -> [169, 161] does not honor inferred toSide \"left\" — it must run horizontal rightward from the left; keep automatic routing, or choose fromSide/toSide and via points whose first and final segments cross state borders perpendicularly.\n- [clean-flow/endpoint-side-direction] lifecycle transitions[1] id \"ready-to-active\" \"ready\" -> \"active\" first segment 0 [327, 161] -> [323, 161] does not honor inferred fromSide \"right\" — it must run horizontal rightward; keep automatic routing, or choose fromSide/toSide and via points whose first and final segments cross state borders perpendicularly.\n- [clean-flow/endpoint-side-direction] lifecycle transitions[1] id \"ready-to-active\" \"ready\" -> \"active\" final segment 0 [327, 161] -> [323, 161] does not honor inferred toSide \"left\" — it must run horizontal rightward from the left; keep automatic routing, or choose fromSide/toSide and via points whose first and final segments cross state borders perpendicularly.\n- [clean-flow/endpoint-side-direction] lifecycle transitions[2] id \"active-to-completed\" \"active\" -> \"completed\" first segment 0 [481, 161] -> [477, 161] does not honor inferred fromSide \"right\" — it must run horizontal rightward; keep automatic routing, or choose fromSide/toSide and via points whose first and final segments cross state borders perpendicularly.\n- [clean-flow/endpoint-side-direction] lifecycle transitions[2] id \"active-to-completed\" \"active\" -> \"completed\" final segment 0 [481, 161] -> [477, 161] does not honor inferred toSide \"left\" — it must run horizontal rightward from the left; keep automatic routing, or choose fromSide/toSide and via points whose first and final segments cross state borders perpendicularly.\n- [clean-flow/edge-through-node] lifecycle transitions[5] id \"active-to-cancelled\" \"active\" -> \"cancelled\" crosses state \"paused\" (unrelated to this relationship) on segment 0 [388, 196] -> [388, 323] (2px clearance) — adjust fromSide/toSide, set route/via or channelX/channelY, or move the state with col/yOffset.\n- [composition/micro-segment] showcase lifecycle transitions[0] id \"onboarding-to-ready\" \"onboarding\" -> \"ready\" has a 4px source-stub segment 0 [173, 161] -> [169, 161] that is below the 8px micro-segment floor — move route/via or channel coordinates so each lifecycle turn has a readable run-up.\n- [composition/micro-segment] showcase lifecycle transitions[1] id \"ready-to-active\" \"ready\" -> \"active\" has a 4px source-stub segment 0 [327, 161] -> [323, 161] that is below the 8px micro-segment floor — move route/via or channel coordinates so each lifecycle turn has a readable run-up.\n- [composition/micro-segment] showcase lifecycle transitions[2] id \"active-to-completed\" \"active\" -> \"completed\" has a 4px source-stub segment 0 [481, 161] -> [477, 161] that is below the 8px micro-segment floor — move route/via or channel coordinates so each lifecycle turn has a readable run-up.\n- [composition/micro-segment] showcase lifecycle transitions[3] id \"active-to-paused\" \"active\" -> \"paused\" has a 7px interior segment 1 [402, 237] -> [395, 237] that is below the 8px micro-segment floor — move route/via or channel coordinates so each lifecycle turn has a readable run-up.\n- [composition/micro-segment] showcase lifecycle transitions[4] id \"paused-to-active\" \"paused\" -> \"active\" has a 7px interior segment 1 [409, 237] -> [416, 237] that is below the 8px micro-segment floor — move route/via or channel coordinates so each lifecycle turn has a readable run-up.\n- [composition/short-interior-segment] showcase lifecycle transitions[5] id \"active-to-cancelled\" \"active\" -> \"cancelled\" has a 14px interior segment 1 [388, 323] -> [402, 323] that is below the 16px interior-segment floor — move route/via or channel coordinates so each lifecycle turn has a readable run-up.\n- Label \"Approve baseline\" overlaps state \"onboarding\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [126, 140, 90, 16]\n  state \"onboarding\" rect: [15, 126, 158, 70]\n  Suggested fix: labelAt [171, 210] or labelDy +59 (below); or labelAt [171, 122] or labelDy -29 (above)\n- Label \"Approve baseline\" overlaps state \"ready\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [126, 140, 90, 16]\n  state \"ready\" rect: [169, 126, 158, 70]\n  Suggested fix: labelAt [171, 210] or labelDy +59 (below); or labelAt [171, 122] or labelDy -29 (above)\n- Label \"Activation checks\" overlaps state \"ready\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [277, 140, 95, 16]\n  state \"ready\" rect: [169, 126, 158, 70]\n  Suggested fix: labelAt [325, 210] or labelDy +59 (below); or labelAt [325, 122] or labelDy -29 (above)\n- Label \"Activation checks\" overlaps state \"active\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [277, 140, 95, 16]\n  state \"active\" rect: [323, 126, 158, 70]\n  Suggested fix: labelAt [325, 210] or labelDy +59 (below); or labelAt [325, 122] or labelDy -29 (above)\n- Label \"Evidence sufficient\" overlaps state \"active\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [426, 140, 105, 16]\n  state \"active\" rect: [323, 126, 158, 70]\n  Suggested fix: labelAt [479, 210] or labelDy +59 (below); or labelAt [479, 122] or labelDy -29 (above)\n- Label \"Evidence sufficient\" overlaps state \"completed\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [426, 140, 105, 16]\n  state \"completed\" rect: [477, 126, 158, 70]\n  Suggested fix: labelAt [479, 210] or labelDy +59 (below); or labelAt [479, 122] or labelDy -29 (above)\n- Label \"Cancel\" overlaps state \"paused\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [374, 302, 41, 16]\n  state \"paused\" rect: [323, 278, 158, 70]\n  Suggested fix: labelAt [395, 362] or labelDy +49 (below); or labelAt [395, 274] or labelDy -39 (above)\n- Labels \"Approved leave\" and \"Resume + rebase\" overlap — adjust labelDx/labelDy.\n  \"Approved leave\" [358, 216, 81, 16]; \"Resume + rebase\" [370, 216, 86, 16]\n  Suggested fix: adjust labelDx/labelDy/labelSegment, or route one relationship through a separate corridor\n- [composition/label-route-clearance] showcase lifecycle label \"Approved leave\" on transitions[3] id \"active-to-paused\" \"active\" -> \"paused\" label \"Approved leave\" is 0px from transitions[4] id \"paused-to-active\" \"paused\" -> \"active\" label \"Resume + rebase\" segment 2 [416, 237] -> [416, 196] (label rect [358, 216, 81, 16]; minimum 4px) — adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel.\n- [composition/label-route-clearance] showcase lifecycle label \"Approved leave\" on transitions[3] id \"active-to-paused\" \"active\" -> \"paused\" label \"Approved leave\" is 0px from transitions[5] id \"active-to-cancelled\" \"active\" -> \"cancelled\" label \"Cancel\" segment 0 [388, 196] -> [388, 323] (label rect [358, 216, 81, 16]; minimum 4px) — adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel.\n- [composition/label-route-clearance] showcase lifecycle label \"Resume + rebase\" on transitions[4] id \"paused-to-active\" \"paused\" -> \"active\" label \"Resume + rebase\" is 0px from transitions[3] id \"active-to-paused\" \"active\" -> \"paused\" label \"Approved leave\" segment 0 [402, 196] -> [402, 237] (label rect [370, 216, 86, 16]; minimum 4px) — adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel.\n- [composition/label-route-clearance] showcase lifecycle label \"Resume + rebase\" on transitions[4] id \"paused-to-active\" \"paused\" -> \"active\" label \"Resume + rebase\" is 0px from transitions[5] id \"active-to-cancelled\" \"active\" -> \"cancelled\" label \"Cancel\" segment 0 [388, 196] -> [388, 323] (label rect [370, 216, 86, 16]; minimum 4px) — adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel.",
+  "diagnostics": [
+    {
+      "code": "clean-flow/endpoint-side-direction",
+      "severity": "error",
+      "message": "[clean-flow/endpoint-side-direction] lifecycle transitions[0] id \"onboarding-to-ready\" \"onboarding\" -> \"ready\" first segment 0 [173, 161] -> [169, 161] does not honor inferred fromSide \"right\" — it must run horizontal rightward; keep automatic routing, or choose fromSide/toSide and via points whose first and final segments cross state borders perpendicularly.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 0,
+        "id": "onboarding-to-ready",
+        "from": "onboarding",
+        "to": "ready"
+      },
+      "evidence": {
+        "endpoint": "source",
+        "authoredField": "fromSide",
+        "sideOrigin": "inferred",
+        "side": "right",
+        "segmentIndex": 0,
+        "from": [
+          173,
+          161
+        ],
+        "to": [
+          169,
+          161
+        ],
+        "expectedAxis": "horizontal",
+        "expectedDirection": "rightward"
+      },
+      "supportedFixes": [
+        "keep automatic routing, or choose fromSide/toSide and via points whose first and final segments cross state borders perpendicularly"
+      ]
+    },
+    {
+      "code": "clean-flow/endpoint-side-direction",
+      "severity": "error",
+      "message": "[clean-flow/endpoint-side-direction] lifecycle transitions[0] id \"onboarding-to-ready\" \"onboarding\" -> \"ready\" final segment 0 [173, 161] -> [169, 161] does not honor inferred toSide \"left\" — it must run horizontal rightward from the left; keep automatic routing, or choose fromSide/toSide and via points whose first and final segments cross state borders perpendicularly.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 0,
+        "id": "onboarding-to-ready",
+        "from": "onboarding",
+        "to": "ready"
+      },
+      "evidence": {
+        "endpoint": "target",
+        "authoredField": "toSide",
+        "sideOrigin": "inferred",
+        "side": "left",
+        "segmentIndex": 0,
+        "from": [
+          173,
+          161
+        ],
+        "to": [
+          169,
+          161
+        ],
+        "expectedAxis": "horizontal",
+        "expectedDirection": "rightward from the left"
+      },
+      "supportedFixes": [
+        "keep automatic routing, or choose fromSide/toSide and via points whose first and final segments cross state borders perpendicularly"
+      ]
+    },
+    {
+      "code": "clean-flow/endpoint-side-direction",
+      "severity": "error",
+      "message": "[clean-flow/endpoint-side-direction] lifecycle transitions[1] id \"ready-to-active\" \"ready\" -> \"active\" first segment 0 [327, 161] -> [323, 161] does not honor inferred fromSide \"right\" — it must run horizontal rightward; keep automatic routing, or choose fromSide/toSide and via points whose first and final segments cross state borders perpendicularly.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 1,
+        "id": "ready-to-active",
+        "from": "ready",
+        "to": "active"
+      },
+      "evidence": {
+        "endpoint": "source",
+        "authoredField": "fromSide",
+        "sideOrigin": "inferred",
+        "side": "right",
+        "segmentIndex": 0,
+        "from": [
+          327,
+          161
+        ],
+        "to": [
+          323,
+          161
+        ],
+        "expectedAxis": "horizontal",
+        "expectedDirection": "rightward"
+      },
+      "supportedFixes": [
+        "keep automatic routing, or choose fromSide/toSide and via points whose first and final segments cross state borders perpendicularly"
+      ]
+    },
+    {
+      "code": "clean-flow/endpoint-side-direction",
+      "severity": "error",
+      "message": "[clean-flow/endpoint-side-direction] lifecycle transitions[1] id \"ready-to-active\" \"ready\" -> \"active\" final segment 0 [327, 161] -> [323, 161] does not honor inferred toSide \"left\" — it must run horizontal rightward from the left; keep automatic routing, or choose fromSide/toSide and via points whose first and final segments cross state borders perpendicularly.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 1,
+        "id": "ready-to-active",
+        "from": "ready",
+        "to": "active"
+      },
+      "evidence": {
+        "endpoint": "target",
+        "authoredField": "toSide",
+        "sideOrigin": "inferred",
+        "side": "left",
+        "segmentIndex": 0,
+        "from": [
+          327,
+          161
+        ],
+        "to": [
+          323,
+          161
+        ],
+        "expectedAxis": "horizontal",
+        "expectedDirection": "rightward from the left"
+      },
+      "supportedFixes": [
+        "keep automatic routing, or choose fromSide/toSide and via points whose first and final segments cross state borders perpendicularly"
+      ]
+    },
+    {
+      "code": "clean-flow/endpoint-side-direction",
+      "severity": "error",
+      "message": "[clean-flow/endpoint-side-direction] lifecycle transitions[2] id \"active-to-completed\" \"active\" -> \"completed\" first segment 0 [481, 161] -> [477, 161] does not honor inferred fromSide \"right\" — it must run horizontal rightward; keep automatic routing, or choose fromSide/toSide and via points whose first and final segments cross state borders perpendicularly.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 2,
+        "id": "active-to-completed",
+        "from": "active",
+        "to": "completed"
+      },
+      "evidence": {
+        "endpoint": "source",
+        "authoredField": "fromSide",
+        "sideOrigin": "inferred",
+        "side": "right",
+        "segmentIndex": 0,
+        "from": [
+          481,
+          161
+        ],
+        "to": [
+          477,
+          161
+        ],
+        "expectedAxis": "horizontal",
+        "expectedDirection": "rightward"
+      },
+      "supportedFixes": [
+        "keep automatic routing, or choose fromSide/toSide and via points whose first and final segments cross state borders perpendicularly"
+      ]
+    },
+    {
+      "code": "clean-flow/endpoint-side-direction",
+      "severity": "error",
+      "message": "[clean-flow/endpoint-side-direction] lifecycle transitions[2] id \"active-to-completed\" \"active\" -> \"completed\" final segment 0 [481, 161] -> [477, 161] does not honor inferred toSide \"left\" — it must run horizontal rightward from the left; keep automatic routing, or choose fromSide/toSide and via points whose first and final segments cross state borders perpendicularly.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 2,
+        "id": "active-to-completed",
+        "from": "active",
+        "to": "completed"
+      },
+      "evidence": {
+        "endpoint": "target",
+        "authoredField": "toSide",
+        "sideOrigin": "inferred",
+        "side": "left",
+        "segmentIndex": 0,
+        "from": [
+          481,
+          161
+        ],
+        "to": [
+          477,
+          161
+        ],
+        "expectedAxis": "horizontal",
+        "expectedDirection": "rightward from the left"
+      },
+      "supportedFixes": [
+        "keep automatic routing, or choose fromSide/toSide and via points whose first and final segments cross state borders perpendicularly"
+      ]
+    },
+    {
+      "code": "clean-flow/edge-through-node",
+      "severity": "error",
+      "message": "[clean-flow/edge-through-node] lifecycle transitions[5] id \"active-to-cancelled\" \"active\" -> \"cancelled\" crosses state \"paused\" (unrelated to this relationship) on segment 0 [388, 196] -> [388, 323] (2px clearance) — adjust fromSide/toSide, set route/via or channelX/channelY, or move the state with col/yOffset.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 5,
+        "id": "active-to-cancelled",
+        "from": "active",
+        "to": "cancelled"
+      },
+      "evidence": {
+        "obstacleKind": "state",
+        "obstacleId": "paused",
+        "segmentIndex": 0,
+        "from": [
+          388,
+          196
+        ],
+        "to": [
+          388,
+          323
+        ],
+        "clearancePx": 2
+      },
+      "supportedFixes": [
+        "adjust fromSide/toSide, set route/via or channelX/channelY, or move the state with col/yOffset"
+      ]
+    },
+    {
+      "code": "composition/micro-segment",
+      "severity": "error",
+      "message": "[composition/micro-segment] showcase lifecycle transitions[0] id \"onboarding-to-ready\" \"onboarding\" -> \"ready\" has a 4px source-stub segment 0 [173, 161] -> [169, 161] that is below the 8px micro-segment floor — move route/via or channel coordinates so each lifecycle turn has a readable run-up.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 0,
+        "id": "onboarding-to-ready",
+        "from": "onboarding",
+        "to": "ready"
+      },
+      "evidence": {
+        "segmentIndex": 0,
+        "position": "source-stub",
+        "lengthPx": 4,
+        "minimumPx": 8,
+        "from": [
+          173,
+          161
+        ],
+        "to": [
+          169,
+          161
+        ]
+      },
+      "supportedFixes": [
+        "move route/via or channel coordinates so each lifecycle turn has a readable run-up"
+      ]
+    },
+    {
+      "code": "composition/micro-segment",
+      "severity": "error",
+      "message": "[composition/micro-segment] showcase lifecycle transitions[1] id \"ready-to-active\" \"ready\" -> \"active\" has a 4px source-stub segment 0 [327, 161] -> [323, 161] that is below the 8px micro-segment floor — move route/via or channel coordinates so each lifecycle turn has a readable run-up.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 1,
+        "id": "ready-to-active",
+        "from": "ready",
+        "to": "active"
+      },
+      "evidence": {
+        "segmentIndex": 0,
+        "position": "source-stub",
+        "lengthPx": 4,
+        "minimumPx": 8,
+        "from": [
+          327,
+          161
+        ],
+        "to": [
+          323,
+          161
+        ]
+      },
+      "supportedFixes": [
+        "move route/via or channel coordinates so each lifecycle turn has a readable run-up"
+      ]
+    },
+    {
+      "code": "composition/micro-segment",
+      "severity": "error",
+      "message": "[composition/micro-segment] showcase lifecycle transitions[2] id \"active-to-completed\" \"active\" -> \"completed\" has a 4px source-stub segment 0 [481, 161] -> [477, 161] that is below the 8px micro-segment floor — move route/via or channel coordinates so each lifecycle turn has a readable run-up.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 2,
+        "id": "active-to-completed",
+        "from": "active",
+        "to": "completed"
+      },
+      "evidence": {
+        "segmentIndex": 0,
+        "position": "source-stub",
+        "lengthPx": 4,
+        "minimumPx": 8,
+        "from": [
+          481,
+          161
+        ],
+        "to": [
+          477,
+          161
+        ]
+      },
+      "supportedFixes": [
+        "move route/via or channel coordinates so each lifecycle turn has a readable run-up"
+      ]
+    },
+    {
+      "code": "composition/micro-segment",
+      "severity": "error",
+      "message": "[composition/micro-segment] showcase lifecycle transitions[3] id \"active-to-paused\" \"active\" -> \"paused\" has a 7px interior segment 1 [402, 237] -> [395, 237] that is below the 8px micro-segment floor — move route/via or channel coordinates so each lifecycle turn has a readable run-up.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 3,
+        "id": "active-to-paused",
+        "from": "active",
+        "to": "paused"
+      },
+      "evidence": {
+        "segmentIndex": 1,
+        "position": "interior",
+        "lengthPx": 7,
+        "minimumPx": 8,
+        "from": [
+          402,
+          237
+        ],
+        "to": [
+          395,
+          237
+        ]
+      },
+      "supportedFixes": [
+        "move route/via or channel coordinates so each lifecycle turn has a readable run-up"
+      ]
+    },
+    {
+      "code": "composition/micro-segment",
+      "severity": "error",
+      "message": "[composition/micro-segment] showcase lifecycle transitions[4] id \"paused-to-active\" \"paused\" -> \"active\" has a 7px interior segment 1 [409, 237] -> [416, 237] that is below the 8px micro-segment floor — move route/via or channel coordinates so each lifecycle turn has a readable run-up.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 4,
+        "id": "paused-to-active",
+        "from": "paused",
+        "to": "active"
+      },
+      "evidence": {
+        "segmentIndex": 1,
+        "position": "interior",
+        "lengthPx": 7,
+        "minimumPx": 8,
+        "from": [
+          409,
+          237
+        ],
+        "to": [
+          416,
+          237
+        ]
+      },
+      "supportedFixes": [
+        "move route/via or channel coordinates so each lifecycle turn has a readable run-up"
+      ]
+    },
+    {
+      "code": "composition/short-interior-segment",
+      "severity": "error",
+      "message": "[composition/short-interior-segment] showcase lifecycle transitions[5] id \"active-to-cancelled\" \"active\" -> \"cancelled\" has a 14px interior segment 1 [388, 323] -> [402, 323] that is below the 16px interior-segment floor — move route/via or channel coordinates so each lifecycle turn has a readable run-up.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 5,
+        "id": "active-to-cancelled",
+        "from": "active",
+        "to": "cancelled"
+      },
+      "evidence": {
+        "segmentIndex": 1,
+        "position": "interior",
+        "lengthPx": 14,
+        "minimumPx": 16,
+        "from": [
+          388,
+          323
+        ],
+        "to": [
+          402,
+          323
+        ]
+      },
+      "supportedFixes": [
+        "move route/via or channel coordinates so each lifecycle turn has a readable run-up"
+      ]
+    },
+    {
+      "code": "composition/label-route-clearance",
+      "severity": "error",
+      "message": "[composition/label-route-clearance] showcase lifecycle label \"Approved leave\" on transitions[3] id \"active-to-paused\" \"active\" -> \"paused\" label \"Approved leave\" is 0px from transitions[4] id \"paused-to-active\" \"paused\" -> \"active\" label \"Resume + rebase\" segment 2 [416, 237] -> [416, 196] (label rect [358, 216, 81, 16]; minimum 4px) — adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 3,
+        "id": "active-to-paused",
+        "from": "active",
+        "to": "paused"
+      },
+      "evidence": {
+        "label": "Approved leave",
+        "otherRelationship": {
+          "diagramType": "lifecycle",
+          "collection": "transitions",
+          "index": 4,
+          "id": "paused-to-active",
+          "from": "paused",
+          "to": "active"
+        },
+        "segmentIndex": 2,
+        "clearancePx": 0,
+        "minimumPx": 4,
+        "labelRect": {
+          "relation": {
+            "id": "active-to-paused",
+            "from": "active",
+            "to": "paused",
+            "label": "Approved leave",
+            "variant": "default"
+          },
+          "relationIndex": 3,
+          "label": "Approved leave",
+          "x": 358.2,
+          "y": 216,
+          "width": 80.60000000000001,
+          "height": 16,
+          "lx": 398.5,
+          "ly": 227
+        },
+        "from": [
+          416,
+          237
+        ],
+        "to": [
+          416,
+          196
+        ]
+      },
+      "supportedFixes": [
+        "adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel"
+      ]
+    },
+    {
+      "code": "composition/label-route-clearance",
+      "severity": "error",
+      "message": "[composition/label-route-clearance] showcase lifecycle label \"Approved leave\" on transitions[3] id \"active-to-paused\" \"active\" -> \"paused\" label \"Approved leave\" is 0px from transitions[5] id \"active-to-cancelled\" \"active\" -> \"cancelled\" label \"Cancel\" segment 0 [388, 196] -> [388, 323] (label rect [358, 216, 81, 16]; minimum 4px) — adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 3,
+        "id": "active-to-paused",
+        "from": "active",
+        "to": "paused"
+      },
+      "evidence": {
+        "label": "Approved leave",
+        "otherRelationship": {
+          "diagramType": "lifecycle",
+          "collection": "transitions",
+          "index": 5,
+          "id": "active-to-cancelled",
+          "from": "active",
+          "to": "cancelled"
+        },
+        "segmentIndex": 0,
+        "clearancePx": 0,
+        "minimumPx": 4,
+        "labelRect": {
+          "relation": {
+            "id": "active-to-paused",
+            "from": "active",
+            "to": "paused",
+            "label": "Approved leave",
+            "variant": "default"
+          },
+          "relationIndex": 3,
+          "label": "Approved leave",
+          "x": 358.2,
+          "y": 216,
+          "width": 80.60000000000001,
+          "height": 16,
+          "lx": 398.5,
+          "ly": 227
+        },
+        "from": [
+          388,
+          196
+        ],
+        "to": [
+          388,
+          323
+        ]
+      },
+      "supportedFixes": [
+        "adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel"
+      ]
+    },
+    {
+      "code": "composition/label-route-clearance",
+      "severity": "error",
+      "message": "[composition/label-route-clearance] showcase lifecycle label \"Resume + rebase\" on transitions[4] id \"paused-to-active\" \"paused\" -> \"active\" label \"Resume + rebase\" is 0px from transitions[3] id \"active-to-paused\" \"active\" -> \"paused\" label \"Approved leave\" segment 0 [402, 196] -> [402, 237] (label rect [370, 216, 86, 16]; minimum 4px) — adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 4,
+        "id": "paused-to-active",
+        "from": "paused",
+        "to": "active"
+      },
+      "evidence": {
+        "label": "Resume + rebase",
+        "otherRelationship": {
+          "diagramType": "lifecycle",
+          "collection": "transitions",
+          "index": 3,
+          "id": "active-to-paused",
+          "from": "active",
+          "to": "paused"
+        },
+        "segmentIndex": 0,
+        "clearancePx": 0,
+        "minimumPx": 4,
+        "labelRect": {
+          "relation": {
+            "id": "paused-to-active",
+            "from": "paused",
+            "to": "active",
+            "label": "Resume + rebase",
+            "variant": "default"
+          },
+          "relationIndex": 4,
+          "label": "Resume + rebase",
+          "x": 369.75,
+          "y": 216,
+          "width": 85.5,
+          "height": 16,
+          "lx": 412.5,
+          "ly": 227
+        },
+        "from": [
+          402,
+          196
+        ],
+        "to": [
+          402,
+          237
+        ]
+      },
+      "supportedFixes": [
+        "adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel"
+      ]
+    },
+    {
+      "code": "composition/label-route-clearance",
+      "severity": "error",
+      "message": "[composition/label-route-clearance] showcase lifecycle label \"Resume + rebase\" on transitions[4] id \"paused-to-active\" \"paused\" -> \"active\" label \"Resume + rebase\" is 0px from transitions[5] id \"active-to-cancelled\" \"active\" -> \"cancelled\" label \"Cancel\" segment 0 [388, 196] -> [388, 323] (label rect [370, 216, 86, 16]; minimum 4px) — adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel.",
+      "subject": {
+        "diagramType": "lifecycle",
+        "collection": "transitions",
+        "index": 4,
+        "id": "paused-to-active",
+        "from": "paused",
+        "to": "active"
+      },
+      "evidence": {
+        "label": "Resume + rebase",
+        "otherRelationship": {
+          "diagramType": "lifecycle",
+          "collection": "transitions",
+          "index": 5,
+          "id": "active-to-cancelled",
+          "from": "active",
+          "to": "cancelled"
+        },
+        "segmentIndex": 0,
+        "clearancePx": 0,
+        "minimumPx": 4,
+        "labelRect": {
+          "relation": {
+            "id": "paused-to-active",
+            "from": "paused",
+            "to": "active",
+            "label": "Resume + rebase",
+            "variant": "default"
+          },
+          "relationIndex": 4,
+          "label": "Resume + rebase",
+          "x": 369.75,
+          "y": 216,
+          "width": 85.5,
+          "height": 16,
+          "lx": 412.5,
+          "ly": 227
+        },
+        "from": [
+          388,
+          196
+        ],
+        "to": [
+          388,
+          323
+        ]
+      },
+      "supportedFixes": [
+        "adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel"
+      ]
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "State \"onboarding\" exceeds the horizontal bounds of the diagram — reduce state.width or increase meta.viewBox[0].",
+      "subject": {
+        "diagramType": "lifecycle"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "States \"onboarding\" and \"ready\" are less than 10px apart — move one to another col or separate them with yOffset (lanes other than \"main\"/\"terminal\" share one band).",
+      "subject": {
+        "diagramType": "lifecycle"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "States \"ready\" and \"active\" are less than 10px apart — move one to another col or separate them with yOffset (lanes other than \"main\"/\"terminal\" share one band).",
+      "subject": {
+        "diagramType": "lifecycle"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "States \"active\" and \"completed\" are less than 10px apart — move one to another col or separate them with yOffset (lanes other than \"main\"/\"terminal\" share one band).",
+      "subject": {
+        "diagramType": "lifecycle"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Transition \"Approve baseline\" is too short (4px; minimum 32px) — route it through a channel or drop its label.",
+      "subject": {
+        "diagramType": "lifecycle"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Transition \"Activation checks\" is too short (4px; minimum 32px) — route it through a channel or drop its label.",
+      "subject": {
+        "diagramType": "lifecycle"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Transition \"Evidence sufficient\" is too short (4px; minimum 32px) — route it through a channel or drop its label.",
+      "subject": {
+        "diagramType": "lifecycle"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Approve baseline\" overlaps state \"onboarding\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [126, 140, 90, 16]\n  state \"onboarding\" rect: [15, 126, 158, 70]\n  Suggested fix: labelAt [171, 210] or labelDy +59 (below); or labelAt [171, 122] or labelDy -29 (above)",
+      "subject": {
+        "diagramType": "lifecycle"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Approve baseline\" overlaps state \"ready\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [126, 140, 90, 16]\n  state \"ready\" rect: [169, 126, 158, 70]\n  Suggested fix: labelAt [171, 210] or labelDy +59 (below); or labelAt [171, 122] or labelDy -29 (above)",
+      "subject": {
+        "diagramType": "lifecycle"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Activation checks\" overlaps state \"ready\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [277, 140, 95, 16]\n  state \"ready\" rect: [169, 126, 158, 70]\n  Suggested fix: labelAt [325, 210] or labelDy +59 (below); or labelAt [325, 122] or labelDy -29 (above)",
+      "subject": {
+        "diagramType": "lifecycle"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Activation checks\" overlaps state \"active\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [277, 140, 95, 16]\n  state \"active\" rect: [323, 126, 158, 70]\n  Suggested fix: labelAt [325, 210] or labelDy +59 (below); or labelAt [325, 122] or labelDy -29 (above)",
+      "subject": {
+        "diagramType": "lifecycle"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Evidence sufficient\" overlaps state \"active\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [426, 140, 105, 16]\n  state \"active\" rect: [323, 126, 158, 70]\n  Suggested fix: labelAt [479, 210] or labelDy +59 (below); or labelAt [479, 122] or labelDy -29 (above)",
+      "subject": {
+        "diagramType": "lifecycle"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Evidence sufficient\" overlaps state \"completed\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [426, 140, 105, 16]\n  state \"completed\" rect: [477, 126, 158, 70]\n  Suggested fix: labelAt [479, 210] or labelDy +59 (below); or labelAt [479, 122] or labelDy -29 (above)",
+      "subject": {
+        "diagramType": "lifecycle"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Cancel\" overlaps state \"paused\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [374, 302, 41, 16]\n  state \"paused\" rect: [323, 278, 158, 70]\n  Suggested fix: labelAt [395, 362] or labelDy +49 (below); or labelAt [395, 274] or labelDy -39 (above)",
+      "subject": {
+        "diagramType": "lifecycle"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Labels \"Approved leave\" and \"Resume + rebase\" overlap — adjust labelDx/labelDy.\n  \"Approved leave\" [358, 216, 81, 16]; \"Resume + rebase\" [370, 216, 86, 16]\n  Suggested fix: adjust labelDx/labelDy/labelSegment, or route one relationship through a separate corridor",
+      "subject": {
+        "diagramType": "lifecycle"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "validate",
+  "stage": "render",
+  "type": "architecture",
+  "input": "C:\\Users\\Admin\\Downloads\\Archify_Upskilling_Run\\Archify_Upskilling_Pack\\output\\archify-upskilling-20260929-181205\\D02\\candidate.json",
+  "error": "Architecture layout validation failed:\n- Label \"DB queue\" overlaps component \"database\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [941, 410, 48, 14]\n  component \"database\" rect: [860, 360, 210, 70]\n  Suggested fix: labelAt [965, 444] or labelDy +24 (below); or labelAt [965, 356] or labelDy -64 (above)",
+  "diagnostics": [
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"DB queue\" overlaps component \"database\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [941, 410, 48, 14]\n  component \"database\" rect: [860, 360, 210, 70]\n  Suggested fix: labelAt [965, 444] or labelDy +24 (below); or labelAt [965, 356] or labelDy -64 (above)",
+      "subject": {
+        "diagramType": "architecture"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    }
+  ]
+}

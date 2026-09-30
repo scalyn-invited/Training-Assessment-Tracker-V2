@@ -1,0 +1,189 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "D06 · Permission-scoped primary AI query",
+    "output": "D06/diagram.html",
+    "quality_profile": "showcase",
+    "animation": "none",
+    "locale": "en",
+    "viewBox": [
+      1500,
+      1020
+    ],
+    "column_fit": "spread"
+  },
+  "participants": [
+    {
+      "id": "user",
+      "type": "external",
+      "label": "Authorised user",
+      "sublabel": "Own / assigned scope"
+    },
+    {
+      "id": "primary-platform",
+      "type": "backend",
+      "label": "Primary backend",
+      "sublabel": "Permitted tool orchestration"
+    },
+    {
+      "id": "identity",
+      "type": "security",
+      "label": "Identity service",
+      "sublabel": "Assumed authentik"
+    },
+    {
+      "id": "training-api",
+      "type": "backend",
+      "label": "Training API",
+      "sublabel": "Audience + policy enforcement"
+    },
+    {
+      "id": "policy-store",
+      "type": "database",
+      "label": "Training data / policy",
+      "sublabel": "Private approved records"
+    }
+  ],
+  "segments": [
+    {
+      "from": 155,
+      "to": 335,
+      "label": "Delegation"
+    },
+    {
+      "from": 355,
+      "to": 600,
+      "label": "Allowed branch"
+    },
+    {
+      "from": 620,
+      "to": 865,
+      "label": "Denied / stale branch"
+    }
+  ],
+  "messages": [
+    {
+      "id": "message-1",
+      "from": "user",
+      "to": "primary-platform",
+      "y": 180,
+      "label": "Ask progress question",
+      "variant": "default"
+    },
+    {
+      "id": "message-2",
+      "from": "primary-platform",
+      "to": "identity",
+      "y": 230,
+      "label": "Exchange user delegation",
+      "variant": "security"
+    },
+    {
+      "id": "message-3",
+      "from": "identity",
+      "to": "primary-platform",
+      "y": 280,
+      "label": "Training audience token",
+      "variant": "return"
+    },
+    {
+      "id": "message-4",
+      "from": "primary-platform",
+      "to": "training-api",
+      "y": 380,
+      "label": "Scoped summary request",
+      "variant": "security"
+    },
+    {
+      "id": "message-5",
+      "from": "training-api",
+      "to": "policy-store",
+      "y": 430,
+      "label": "Fresh policy + approved facts",
+      "variant": "security"
+    },
+    {
+      "id": "message-6",
+      "from": "policy-store",
+      "to": "training-api",
+      "y": 480,
+      "label": "Permitted rows only",
+      "variant": "return"
+    },
+    {
+      "id": "message-7",
+      "from": "training-api",
+      "to": "primary-platform",
+      "y": 530,
+      "label": "Facts + provenance + data_as_of",
+      "variant": "return"
+    },
+    {
+      "id": "message-8",
+      "from": "primary-platform",
+      "to": "user",
+      "y": 580,
+      "label": "Answer from permitted tool result",
+      "variant": "return"
+    },
+    {
+      "id": "message-9",
+      "from": "primary-platform",
+      "to": "training-api",
+      "y": 670,
+      "label": "Invalid / stale / denied request",
+      "variant": "security"
+    },
+    {
+      "id": "message-10",
+      "from": "training-api",
+      "to": "policy-store",
+      "y": 720,
+      "label": "Check permission freshness",
+      "variant": "security"
+    },
+    {
+      "id": "message-11",
+      "from": "training-api",
+      "to": "primary-platform",
+      "y": 770,
+      "label": "401 / 403 / 404; no personal data",
+      "variant": "return"
+    },
+    {
+      "id": "message-12",
+      "from": "primary-platform",
+      "to": "user",
+      "y": 820,
+      "label": "Access unavailable; refresh needed",
+      "variant": "return"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Server-enforced scope",
+      "items": [
+        "Validate signature, issuer, audience, expiry, mapped user and caller; intersect scope, role, assignments, ownership, organisation and environment.",
+        "Filter before search, pagination and totals; exclude local_only, export_requested and synthetic records from primary retrieval."
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "Fail closed and cache safely",
+      "items": [
+        "Permission snapshot older than five minutes denies privileged/external personal retrieval. 401 invalid token; 403 missing operation scope; 404 inaccessible object.",
+        "Partition caches by identity + permission version, expire/invalidate on revocation and recheck before display."
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "Credential boundary",
+      "items": [
+        "Directory machine credentials are separate: no arbitrary user_id header or broad token fallback. OIDC + MFA login uses each app’s own client.",
+        "Frontier model gets only permitted tool results, no credentials or direct database access. Delegation integration remains unproven."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,207 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "D04 · Onboarding and programme approval",
+    "output": "D04/diagram.html",
+    "quality_profile": "showcase",
+    "animation": "none"
+  },
+  "lanes": [
+    {
+      "id": "intake",
+      "label": "Admin / integration / member"
+    },
+    {
+      "id": "application",
+      "label": "Application + AI draft"
+    },
+    {
+      "id": "review",
+      "label": "Coordinator / member"
+    }
+  ],
+  "mainPath": [
+    "person",
+    "wizard",
+    "extract",
+    "generate",
+    "validate",
+    "review",
+    "activate",
+    "learn"
+  ],
+  "nodes": [
+    {
+      "id": "person",
+      "lane": "intake",
+      "col": 0,
+      "type": "backend",
+      "label": "Person intake",
+      "sublabel": "Import or manual",
+      "width": 120,
+      "height": 64
+    },
+    {
+      "id": "wizard",
+      "lane": "intake",
+      "col": 1,
+      "type": "frontend",
+      "label": "Wizard",
+      "sublabel": "Role · goal · capacity",
+      "width": 120,
+      "height": 64
+    },
+    {
+      "id": "extract",
+      "lane": "intake",
+      "col": 2,
+      "type": "security",
+      "label": "Confirm input",
+      "sublabel": "Confirm extraction",
+      "width": 120,
+      "height": 64
+    },
+    {
+      "id": "generate",
+      "lane": "application",
+      "col": 2,
+      "type": "messagebus",
+      "label": "Generate draft",
+      "sublabel": "Whole programme",
+      "width": 120,
+      "height": 64
+    },
+    {
+      "id": "validate",
+      "lane": "application",
+      "col": 3,
+      "type": "security",
+      "label": "Validate draft",
+      "sublabel": "Content policy",
+      "width": 120,
+      "height": 64
+    },
+    {
+      "id": "correct",
+      "lane": "application",
+      "col": 4,
+      "type": "backend",
+      "label": "Correct / retry",
+      "sublabel": "Correct input",
+      "width": 120,
+      "height": 64
+    },
+    {
+      "id": "review",
+      "lane": "review",
+      "col": 3,
+      "type": "security",
+      "label": "Human review",
+      "sublabel": "Exact version",
+      "width": 120,
+      "height": 64
+    },
+    {
+      "id": "activate",
+      "lane": "review",
+      "col": 4,
+      "type": "backend",
+      "label": "Activate",
+      "sublabel": "All weeks approved",
+      "width": 120,
+      "height": 64
+    },
+    {
+      "id": "learn",
+      "lane": "intake",
+      "col": 4,
+      "type": "frontend",
+      "label": "Lessons",
+      "sublabel": "Usable lessons",
+      "width": 120,
+      "height": 64
+    }
+  ],
+  "edges": [
+    {
+      "from": "person",
+      "to": "wizard",
+      "label": "Eligible identity"
+    },
+    {
+      "from": "wizard",
+      "to": "extract",
+      "label": "Upload + goals"
+    },
+    {
+      "from": "extract",
+      "to": "generate",
+      "label": "Confirmed"
+    },
+    {
+      "from": "generate",
+      "to": "validate",
+      "label": "Draft ready"
+    },
+    {
+      "from": "validate",
+      "to": "review",
+      "label": "Valid"
+    },
+    {
+      "from": "validate",
+      "to": "correct",
+      "label": "Invalid / failed",
+      "role": "error"
+    },
+    {
+      "from": "correct",
+      "to": "generate",
+      "label": "Repair input",
+      "role": "return"
+    },
+    {
+      "from": "review",
+      "to": "generate",
+      "label": "AI revision",
+      "role": "return"
+    },
+    {
+      "from": "review",
+      "to": "activate",
+      "label": "Approve version"
+    },
+    {
+      "from": "activate",
+      "to": "learn",
+      "label": "Deliver"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "People and identity",
+      "items": [
+        "Imported person follows primary ownership; manual person defaults local_only.",
+        "Promotion: admin duplicate review → original request key → acknowledgement → verified link (D07). Identity invitation is separate."
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Correction and capacity",
+      "items": [
+        "Invalid document / missing evidence returns to wizard and extraction confirmation. Infeasible workload returns to capacity or goal correction.",
+        "4/6/8/10/12 weeks; 15–120 min per active day, including assessment and rework, shared across programmes."
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Usable and accessible learning",
+      "items": [
+        "Wizard captures role, purpose, assessments, skills, accessibility, availability, resources and KPI baseline/target.",
+        "Lessons include explanation, worked example, activity, tools, duration and completion criteria. Keyboard, mobile and screen-reader journeys required."
+      ]
+    }
+  ]
+}

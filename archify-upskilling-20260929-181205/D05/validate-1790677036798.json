@@ -1,0 +1,113 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "validate",
+  "stage": "render",
+  "type": "workflow",
+  "input": "C:\\Users\\Admin\\Downloads\\Archify_Upskilling_Run\\Archify_Upskilling_Pack\\output\\archify-upskilling-20260929-181205\\D05\\candidate.json",
+  "error": "Workflow layout validation failed:\n- [composition/proper-crossing] showcase workflow edges[0] id \"approve-to-publish\" \"approve\" -> \"publish\" crosses edges[10] id \"submit-to-grade\" \"submit\" -> \"grade\" at [739.4, 291] (segments 0 and 3) — adjust route/via, bias, or channel coordinates so the edges use separate lane corridors.\n- [composition/proper-crossing] showcase workflow edges[10] id \"submit-to-grade\" \"submit\" -> \"grade\" crosses edges[11] id \"validate-to-review\" \"validate\" -> \"review\" at [443.2, 291] (segments 3 and 1) — adjust route/via, bias, or channel coordinates so the edges use separate lane corridors.\n- [composition/ambiguous-corridor] showcase workflow edges[6] id \"regrade-to-grade\" \"regrade\" -> \"grade\" shares a 53px corridor with edges[7] id \"review-to-approve\" \"review\" -> \"approve\" at [658.4, 367] -> [658.4, 420] (segments 1 and 2; minimum 8px) — adjust route/via, bias, or channel coordinates so unrelated edges do not visually merge.",
+  "diagnostics": [
+    {
+      "code": "composition/proper-crossing",
+      "severity": "error",
+      "message": "[composition/proper-crossing] showcase workflow edges[0] id \"approve-to-publish\" \"approve\" -> \"publish\" crosses edges[10] id \"submit-to-grade\" \"submit\" -> \"grade\" at [739.4, 291] (segments 0 and 3) — adjust route/via, bias, or channel coordinates so the edges use separate lane corridors.",
+      "subject": {
+        "diagramType": "workflow",
+        "collection": "edges",
+        "index": 0,
+        "id": "approve-to-publish",
+        "from": "approve",
+        "to": "publish"
+      },
+      "evidence": {
+        "otherRelationship": {
+          "diagramType": "workflow",
+          "collection": "edges",
+          "index": 10,
+          "id": "submit-to-grade",
+          "from": "submit",
+          "to": "grade"
+        },
+        "point": [
+          739.4000000000001,
+          291
+        ],
+        "segmentIndex": 0,
+        "otherSegmentIndex": 3
+      },
+      "supportedFixes": [
+        "adjust route/via, bias, or channel coordinates so the edges use separate lane corridors"
+      ]
+    },
+    {
+      "code": "composition/proper-crossing",
+      "severity": "error",
+      "message": "[composition/proper-crossing] showcase workflow edges[10] id \"submit-to-grade\" \"submit\" -> \"grade\" crosses edges[11] id \"validate-to-review\" \"validate\" -> \"review\" at [443.2, 291] (segments 3 and 1) — adjust route/via, bias, or channel coordinates so the edges use separate lane corridors.",
+      "subject": {
+        "diagramType": "workflow",
+        "collection": "edges",
+        "index": 10,
+        "id": "submit-to-grade",
+        "from": "submit",
+        "to": "grade"
+      },
+      "evidence": {
+        "otherRelationship": {
+          "diagramType": "workflow",
+          "collection": "edges",
+          "index": 11,
+          "id": "validate-to-review",
+          "from": "validate",
+          "to": "review"
+        },
+        "point": [
+          443.20000000000016,
+          291
+        ],
+        "segmentIndex": 3,
+        "otherSegmentIndex": 1
+      },
+      "supportedFixes": [
+        "adjust route/via, bias, or channel coordinates so the edges use separate lane corridors"
+      ]
+    },
+    {
+      "code": "composition/ambiguous-corridor",
+      "severity": "error",
+      "message": "[composition/ambiguous-corridor] showcase workflow edges[6] id \"regrade-to-grade\" \"regrade\" -> \"grade\" shares a 53px corridor with edges[7] id \"review-to-approve\" \"review\" -> \"approve\" at [658.4, 367] -> [658.4, 420] (segments 1 and 2; minimum 8px) — adjust route/via, bias, or channel coordinates so unrelated edges do not visually merge.",
+      "subject": {
+        "diagramType": "workflow",
+        "collection": "edges",
+        "index": 6,
+        "id": "regrade-to-grade",
+        "from": "regrade",
+        "to": "grade"
+      },
+      "evidence": {
+        "otherRelationship": {
+          "diagramType": "workflow",
+          "collection": "edges",
+          "index": 7,
+          "id": "review-to-approve",
+          "from": "review",
+          "to": "approve"
+        },
+        "overlapLengthPx": 53,
+        "minimumPx": 8,
+        "from": [
+          658.4,
+          367
+        ],
+        "to": [
+          658.4,
+          420
+        ],
+        "segmentIndex": 1,
+        "otherSegmentIndex": 2
+      },
+      "supportedFixes": [
+        "adjust route/via, bias, or channel coordinates so unrelated edges do not visually merge"
+      ]
+    }
+  ]
+}

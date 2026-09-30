@@ -1,0 +1,246 @@
+{
+    "schema_version":  1,
+    "diagram_type":  "architecture",
+    "meta":  {
+                 "title":  "D01 · Proposed training system",
+                 "quality_profile":  "showcase",
+                 "animation":  "none",
+                 "locale":  "en",
+                 "output":  "D01/diagram.html",
+                 "viewBox":  [
+                                 1500,
+                                 840
+                             ]
+             },
+    "components":  [
+                       {
+                           "id":  "browser",
+                           "type":  "frontend",
+                           "label":  "Staff browser",
+                           "sublabel":  "Member · coordinator · admin",
+                           "pos":  [
+                                       50,
+                                       360
+                                   ],
+                           "size":  [
+                                        210,
+                                        70
+                                    ]
+                       },
+                       {
+                           "id":  "identity",
+                           "type":  "security",
+                           "label":  "Shared authentik",
+                           "sublabel":  "Assumed · OIDC + MFA",
+                           "pos":  [
+                                       50,
+                                       110
+                                   ],
+                           "size":  [
+                                        210,
+                                        70
+                                    ]
+                       },
+                       {
+                           "id":  "training-web",
+                           "type":  "backend",
+                           "label":  "Training web app",
+                           "sublabel":  "Laravel · Blade / Livewire",
+                           "pos":  [
+                                       460,
+                                       360
+                                   ],
+                           "size":  [
+                                        210,
+                                        70
+                                    ]
+                       },
+                       {
+                           "id":  "primary-platform",
+                           "type":  "external",
+                           "label":  "Primary platform",
+                           "sublabel":  "Directory + permitted answers",
+                           "pos":  [
+                                       870,
+                                       110
+                                   ],
+                           "size":  [
+                                        220,
+                                        70
+                                    ]
+                       },
+                       {
+                           "id":  "database",
+                           "type":  "database",
+                           "label":  "MariaDB + queue",
+                           "sublabel":  "Private · durable state",
+                           "pos":  [
+                                       870,
+                                       360
+                                   ],
+                           "size":  [
+                                        210,
+                                        70
+                                    ]
+                       },
+                       {
+                           "id":  "evidence",
+                           "type":  "database",
+                           "label":  "Private evidence",
+                           "sublabel":  "Authorised downloads only",
+                           "pos":  [
+                                       460,
+                                       110
+                                   ],
+                           "size":  [
+                                        210,
+                                        70
+                                    ]
+                       },
+                       {
+                           "id":  "worker",
+                           "type":  "backend",
+                           "label":  "Worker / scheduler",
+                           "sublabel":  "Same application codebase",
+                           "pos":  [
+                                       870,
+                                       640
+                                   ],
+                           "size":  [
+                                        210,
+                                        70
+                                    ]
+                       },
+                       {
+                           "id":  "ai-gateway",
+                           "type":  "backend",
+                           "label":  "AI gateway module",
+                           "sublabel":  "Task policy + provider adapters",
+                           "pos":  [
+                                       460,
+                                       640
+                                   ],
+                           "size":  [
+                                        210,
+                                        70
+                                    ]
+                       },
+                       {
+                           "id":  "ai-providers",
+                           "type":  "external",
+                           "label":  "AI providers",
+                           "sublabel":  "External model APIs",
+                           "pos":  [
+                                       50,
+                                       640
+                                   ],
+                           "size":  [
+                                        210,
+                                        70
+                                    ]
+                       },
+                       {
+                           "id":  "smtp",
+                           "type":  "external",
+                           "label":  "SMTP2GO",
+                           "sublabel":  "Generic SMTP / TLS",
+                           "pos":  [
+                                       1240,
+                                       640
+                                   ],
+                           "size":  [
+                                        200,
+                                        70
+                                    ]
+                       }
+                   ],
+    "boundaries":  [
+                       {
+                           "kind":  "security-group",
+                           "label":  "Training application trust boundary",
+                           "wraps":  [
+                                         "training-web",
+                                         "database",
+                                         "evidence",
+                                         "worker",
+                                         "ai-gateway"
+                                     ],
+                           "pad":  30
+                       }
+                   ],
+    "connections":  [
+                        {
+                            "from":  "browser",
+                            "to":  "training-web",
+                            "label":  "HTTPS"
+                        },
+                        {
+                            "from":  "browser",
+                            "to":  "identity",
+                            "label":  "OIDC login",
+                            "variant":  "security"
+                        },
+                        {
+                            "from":  "training-web",
+                            "to":  "evidence",
+                            "label":  "Private I/O"
+                        },
+                        {
+                            "from":  "primary-platform",
+                            "to":  "training-web",
+                            "label":  "Delegated API / directory"
+                        },
+                        {
+                            "from":  "training-web",
+                            "to":  "database",
+                            "label":  "SQL / enqueue"
+                        },
+                        {
+                            "from":  "database",
+                            "to":  "worker",
+                            "label":  "Queued jobs",
+                            "variant":  "dashed"
+                        },
+                        {
+                            "from":  "worker",
+                            "to":  "ai-gateway",
+                            "label":  "Task call"
+                        },
+                        {
+                            "from":  "ai-gateway",
+                            "to":  "ai-providers",
+                            "label":  "HTTPS models"
+                        },
+                        {
+                            "from":  "worker",
+                            "to":  "smtp",
+                            "label":  "TLS review mail"
+                        }
+                    ],
+    "cards":  [
+                  {
+                      "dot":  "cyan",
+                      "title":  "Application ownership",
+                      "items":  [
+                                    "Identity, groups, onboarding, programmes, submissions, reviews, KPIs and integrations.",
+                                    "Accountable coordinator per enrolment; assigned groups only. Members see own records."
+                                ]
+                  },
+                  {
+                      "dot":  "violet",
+                      "title":  "Human authority",
+                      "items":  [
+                                    "AI drafts plans, provisional grades and adaptations; coordinator approval is mandatory.",
+                                    "Gateway: two provider adapters + mock; task capabilities, privacy, budgets and allowlisted fallback."
+                                ]
+                  },
+                  {
+                      "dot":  "amber",
+                      "title":  "Proposed boundaries",
+                      "items":  [
+                                    "Primary owns imported people/groups; training owns evidence and immutable approval versions.",
+                                    "Machine directory credentials and delegated user tokens are separate; no direct primary database access."
+                                ]
+                  }
+              ]
+}

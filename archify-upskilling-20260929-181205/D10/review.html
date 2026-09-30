@@ -1,0 +1,52 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>D10 · Weekly adaptation and freeze cutoff</title><style>:root{color-scheme:light dark}body{font:17px/1.6 system-ui;max-width:1100px;margin:36px auto;padding:0 24px}a{color:light-dark(#1453aa,#8dbdff)}h1{line-height:1.2}table{border-collapse:collapse;width:100%}td,th{text-align:left;padding:12px;border-bottom:1px solid #8885}code,pre{white-space:pre-wrap;overflow-wrap:anywhere}details{border:1px solid #8885;padding:14px;margin:12px 0}small{opacity:.8}.status{padding:16px;border-left:5px solid #c88c32;background:#8881}</style><main><h1>D10 · Weekly adaptation and freeze cutoff</h1><p><a href="../index.html">Suite index</a> · <a href="candidate.json">Editable native JSON</a></p><p class="status">BLOCKED: native Archify delivery failed. This is an interactive source review, not a rendered Archify diagram.</p><details open><summary>Nodes and ownership</summary><ul><li><strong>Approved Week N</strong> — Approved versions <small>(evidence)</small></li><li><strong>Select N+2</strong> — Within duration <small>(target)</small></li><li><strong>Eligible target?</strong> — No activity <small>(eligible)</small></li><li><strong>AI proposal</strong> — Within budget <small>(proposal)</small></li><li><strong>Validate proposal</strong> — Policy checks <small>(validate)</small></li><li><strong>Human review</strong> — Review diff <small>(review)</small></li><li><strong>Recheck + publish</strong> — Atomic recheck <small>(publish)</small></li><li><strong>Notify member</strong> — Revision notice <small>(notify)</small></li><li><strong>Keep baseline</strong> — Later target <small>(later)</small></li><li><strong>Final support</strong> — Follow-on proposal <small>(support)</small></li><li><strong>Leave / rebase</strong> — Future calendar <small>(rebase)</small></li></ul></details><details open><summary>Directed relationships</summary><ol><li>evidence → target: Evidence block + 2</li><li>target → eligible: Candidate block</li><li>eligible → proposal: Eligible</li><li>proposal → validate: Draft replacement</li><li>validate → review: Valid</li><li>review → publish: Approve exact diff</li><li>publish → notify: Commit + event</li><li>eligible → later: Locked / started</li><li>publish → later: Late / stale conflict</li><li>later → support: None remains</li><li>later → target: Try later block</li><li>rebase → target: Recompute cutoff</li></ol></details><details><summary>Worked calendar · Asia/Manila</summary><ul><li>W1 starts 5 Oct 2026; Friday evidence reviewed Monday W2. W3 starts 19 Oct; freeze Thursday 15 Oct at 17:00. Approval 14 Oct revises W3; W2 stays unchanged.</li><li>Use evidence N+2, never current_week+2. Late approval 16 Oct keeps W3 baseline and tries W4. Final two blocks route to support, never Week 5 of a four-week plan.</li></ul></details><details><summary>Readiness is not permanent freeze</summary><ul><li>Whole-programme baseline is approved before activation. Current + next are ready; future preview is revisable before cutoff with visible notice.</li><li>Freeze at second business day before start, 17:00 local, or immediately on early start/activity. Holidays shift cutoff; no immediate weekend review required.</li></ul></details><details><summary>Transactional recheck</summary><ul><li>At approval verify evidence, calendar, policy, base version, reviewer scope, no activity and shared daily capacity. Invalid draft returns for correction; stale review retains baseline.</li><li>Targets/KPI definitions remain human-owned. Required changes need approval; emergency current-content correction needs explicit reason and member notice.</li></ul></details><details><summary>Native delivery diagnostics</summary><pre>[
+  {
+    &quot;code&quot;: &quot;workflow/explicit-pin-conflict&quot;,
+    &quot;severity&quot;: &quot;error&quot;,
+    &quot;message&quot;: &quot;Workflow edge \&quot;publish-to-later\&quot; has explicit geometry that violates readable route feasibility with authored endpoint sides.&quot;,
+    &quot;subject&quot;: {
+      &quot;diagramType&quot;: &quot;workflow&quot;,
+      &quot;edge&quot;: &quot;publish-to-later&quot;,
+      &quot;from&quot;: &quot;publish&quot;,
+      &quot;to&quot;: &quot;later&quot;,
+      &quot;path&quot;: &quot;/edges/8/fromSide&quot;
+    },
+    &quot;evidence&quot;: {
+      &quot;invariant&quot;: &quot;readable route feasibility with authored endpoint sides&quot;,
+      &quot;conflictingPins&quot;: [
+        {
+          &quot;edge&quot;: &quot;publish-to-later&quot;,
+          &quot;field&quot;: &quot;fromSide&quot;,
+          &quot;path&quot;: &quot;/edges/8/fromSide&quot;,
+          &quot;value&quot;: &quot;bottom&quot;
+        }
+      ],
+      &quot;actualCoordinates&quot;: {
+        &quot;sourceAnchor&quot;: [
+          962,
+          151
+        ],
+        &quot;targetAnchor&quot;: [
+          632.4,
+          384
+        ]
+      },
+      &quot;fromSide&quot;: &quot;bottom&quot;,
+      &quot;toSide&quot;: &quot;right&quot;,
+      &quot;attemptedCandidateFamilies&quot;: [
+        &quot;facing-straight&quot;,
+        &quot;horizontal-then-vertical&quot;,
+        &quot;vertical-then-horizontal&quot;,
+        &quot;lane-gap-corridor&quot;,
+        &quot;column-gap-corridor&quot;,
+        &quot;outside-left&quot;,
+        &quot;outside-right&quot;,
+        &quot;top-corridor&quot;,
+        &quot;bottom-corridor&quot;
+      ],
+      &quot;candidateCount&quot;: 9
+    },
+    &quot;supportedFixes&quot;: [
+      &quot;remove fromSide from edge \&quot;publish-to-later\&quot; so readable-v2 can replan the remaining endpoint-side pins&quot;
+    ]
+  }
+]</pre></details><p><a href="deliver-1790677056290.json">Delivery receipt</a> · <a href="validate-1790677255378.json">Validation receipt</a></p></main></html>

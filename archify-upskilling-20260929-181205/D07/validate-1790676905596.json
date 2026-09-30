@@ -1,0 +1,497 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "validate",
+  "stage": "render",
+  "type": "dataflow",
+  "input": "C:\\Users\\Admin\\Downloads\\Archify_Upskilling_Run\\Archify_Upskilling_Pack\\output\\archify-upskilling-20260929-181205\\D07\\candidate.json",
+  "error": "Data-flow layout validation failed:\n- Node \"primary-directory\" exceeds the horizontal bounds of the viewBox — reduce node.width or increase meta.viewBox[0].\n- Node \"local-person\" exceeds the horizontal bounds of the viewBox — reduce node.width or increase meta.viewBox[0].\n- Node \"approvals\" exceeds the horizontal bounds of the viewBox — reduce node.width or increase meta.viewBox[0].\n- Flow \"Directory events\" is too short (25px; minimum 34px) — route it through a channel or spread its nodes.\n- Flow \"Owned fields\" is too short (26px; minimum 34px) — route it through a channel or spread its nodes.\n- Flow \"Local access\" is too short (25px; minimum 34px) — route it through a channel or spread its nodes.\n- Flow \"Explicit export request\" is too short (26px; minimum 34px) — route it through a channel or spread its nodes.\n- Flow \"Ack + identity check\" is too short (25px; minimum 34px) — route it through a channel or spread its nodes.\n- Flow \"Approved version\" is too short (25px; minimum 34px) — route it through a channel or spread its nodes.\n- Flow \"Candidate event\" is too short (25px; minimum 34px) — route it through a channel or spread its nodes.\n- Flow \"Allowed facts\" is too short (25px; minimum 34px) — route it through a channel or spread its nodes.\n- Flow \"Signed HTTPS\" is too short (25px; minimum 34px) — route it through a channel or spread its nodes.\n- [clean-flow/edge-through-node] dataflow flows[6] id \"local-person-to-member-directory\" \"local-person\" -> \"member-directory\" crosses node \"directory-gate\" (unrelated to this relationship) on segment 1 [315, 383] -> [315, 169] (2px clearance) — adjust fromSide/toSide, set route/via or channelX/channelY, or move the node to another stage/row.\n- [clean-flow/edge-through-node] dataflow flows[6] id \"local-person-to-member-directory\" \"local-person\" -> \"member-directory\" crosses node \"promotion\" (unrelated to this relationship) on segment 0 [195, 383] -> [315, 383] (2px clearance) — adjust fromSide/toSide, set route/via or channelX/channelY, or move the node to another stage/row.\n- [composition/micro-segment] showcase dataflow flows[1] id \"directory-gate-to-member-directory\" \"directory-gate\" -> \"member-directory\" has a 7px interior segment 1 [422.5, 162] -> [422.5, 155] that is below the 8px micro-segment floor — adjust route/via or channelX/channelY so each turn uses a clear inter-stage corridor.\n- [composition/micro-segment] showcase dataflow flows[3] id \"local-person-to-promotion\" \"local-person\" -> \"promotion\" has a 7px interior segment 1 [207.5, 397] -> [207.5, 390] that is below the 8px micro-segment floor — adjust route/via or channelX/channelY so each turn uses a clear inter-stage corridor.\n- Label \"Directory events\" overlaps node \"primary-directory\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [148, 141, 120, 27]\n  node \"primary-directory\" rect: [5, 128, 190, 68]\n  Suggested fix: labelAt [208, 210] or labelDy +58 (below); or labelAt [208, 124] or labelDy -28 (above)\n- Label \"Directory events\" overlaps node \"directory-gate\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [148, 141, 120, 27]\n  node \"directory-gate\" rect: [220, 128, 190, 68]\n  Suggested fix: labelAt [208, 210] or labelDy +58 (below); or labelAt [208, 124] or labelDy -28 (above)\n- Label \"Owned fields\" overlaps node \"directory-gate\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [363, 138, 120, 27]\n  node \"directory-gate\" rect: [220, 128, 190, 68]\n  Suggested fix: labelAt [423, 210] or labelDy +61 (below); or labelAt [423, 124] or labelDy -25 (above)\n- Label \"Owned fields\" overlaps node \"member-directory\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [363, 138, 120, 27]\n  node \"member-directory\" rect: [435, 128, 190, 68]\n  Suggested fix: labelAt [423, 210] or labelDy +61 (below); or labelAt [423, 124] or labelDy -25 (above)\n- Label \"Local access\" overlaps node \"member-directory\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [578, 141, 120, 27]\n  node \"member-directory\" rect: [435, 128, 190, 68]\n  Suggested fix: labelAt [638, 210] or labelDy +58 (below); or labelAt [638, 124] or labelDy -28 (above)\n- Label \"Local access\" overlaps node \"local-learning\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [578, 141, 120, 27]\n  node \"local-learning\" rect: [650, 128, 190, 68]\n  Suggested fix: labelAt [638, 210] or labelDy +58 (below); or labelAt [638, 124] or labelDy -28 (above)\n- Label \"Explicit export request\" overlaps node \"local-person\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [145, 373, 125, 27]\n  node \"local-person\" rect: [5, 356, 190, 68]\n  Suggested fix: labelAt [208, 438] or labelDy +54 (below); or labelAt [208, 352] or labelDy -32 (above)\n- Label \"Explicit export request\" overlaps node \"promotion\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [145, 373, 125, 27]\n  node \"promotion\" rect: [220, 356, 190, 68]\n  Suggested fix: labelAt [208, 438] or labelDy +54 (below); or labelAt [208, 352] or labelDy -32 (above)\n- Label \"Ack + identity check\" overlaps node \"promotion\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [363, 369, 120, 27]\n  node \"promotion\" rect: [220, 356, 190, 68]\n  Suggested fix: labelAt [423, 438] or labelDy +58 (below); or labelAt [423, 352] or labelDy -28 (above)\n- Label \"Ack + identity check\" overlaps node \"mapping\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [363, 369, 120, 27]\n  node \"mapping\" rect: [435, 356, 190, 68]\n  Suggested fix: labelAt [423, 438] or labelDy +58 (below); or labelAt [423, 352] or labelDy -28 (above)\n- Label \"Linked identity\" overlaps node \"mapping\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [470, 335, 120, 27]\n  node \"mapping\" rect: [435, 356, 190, 68]\n  Suggested fix: labelAt [530, 438] or labelDy +92 (below); or labelAt [530, 352] or labelDy +6 (above)\n- Label \"Approved version\" overlaps node \"approvals\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [148, 597, 120, 27]\n  node \"approvals\" rect: [5, 584, 190, 68]\n  Suggested fix: labelAt [208, 666] or labelDy +58 (below); or labelAt [208, 580] or labelDy -28 (above)\n- Label \"Approved version\" overlaps node \"outbox\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [148, 597, 120, 27]\n  node \"outbox\" rect: [220, 584, 190, 68]\n  Suggested fix: labelAt [208, 666] or labelDy +58 (below); or labelAt [208, 580] or labelDy -28 (above)\n- Label \"Candidate event\" overlaps node \"outbox\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [363, 597, 120, 27]\n  node \"outbox\" rect: [220, 584, 190, 68]\n  Suggested fix: labelAt [423, 666] or labelDy +58 (below); or labelAt [423, 580] or labelDy -28 (above)\n- Label \"Candidate event\" overlaps node \"outbound-gate\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [363, 597, 120, 27]\n  node \"outbound-gate\" rect: [435, 584, 190, 68]\n  Suggested fix: labelAt [423, 666] or labelDy +58 (below); or labelAt [423, 580] or labelDy -28 (above)\n- Label \"Allowed facts\" overlaps node \"outbound-gate\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [578, 597, 120, 27]\n  node \"outbound-gate\" rect: [435, 584, 190, 68]\n  Suggested fix: labelAt [638, 666] or labelDy +58 (below); or labelAt [638, 580] or labelDy -28 (above)\n- Label \"Allowed facts\" overlaps node \"delivery\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [578, 597, 120, 27]\n  node \"delivery\" rect: [650, 584, 190, 68]\n  Suggested fix: labelAt [638, 666] or labelDy +58 (below); or labelAt [638, 580] or labelDy -28 (above)\n- Label \"Signed HTTPS\" overlaps node \"delivery\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [793, 597, 120, 27]\n  node \"delivery\" rect: [650, 584, 190, 68]\n  Suggested fix: labelAt [853, 666] or labelDy +58 (below); or labelAt [853, 580] or labelDy -28 (above)\n- Label \"Signed HTTPS\" overlaps node \"primary-facts\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [793, 597, 120, 27]\n  node \"primary-facts\" rect: [865, 584, 190, 68]\n  Suggested fix: labelAt [853, 666] or labelDy +58 (below); or labelAt [853, 580] or labelDy -28 (above)\n- [composition/label-route-clearance] showcase dataflow label \"Explicit export request\" on flows[3] id \"local-person-to-promotion\" \"local-person\" -> \"promotion\" label \"Explicit export request\" is 0px from flows[6] id \"local-person-to-member-directory\" \"local-person\" -> \"member-directory\" label \"Local profile\" segment 0 [195, 383] -> [315, 383] (label rect [145, 373, 125, 27]; minimum 4px) — adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other flow route/via/channelX/channelY.",
+  "diagnostics": [
+    {
+      "code": "clean-flow/edge-through-node",
+      "severity": "error",
+      "message": "[clean-flow/edge-through-node] dataflow flows[6] id \"local-person-to-member-directory\" \"local-person\" -> \"member-directory\" crosses node \"directory-gate\" (unrelated to this relationship) on segment 1 [315, 383] -> [315, 169] (2px clearance) — adjust fromSide/toSide, set route/via or channelX/channelY, or move the node to another stage/row.",
+      "subject": {
+        "diagramType": "dataflow",
+        "collection": "flows",
+        "index": 6,
+        "id": "local-person-to-member-directory",
+        "from": "local-person",
+        "to": "member-directory"
+      },
+      "evidence": {
+        "obstacleKind": "node",
+        "obstacleId": "directory-gate",
+        "segmentIndex": 1,
+        "from": [
+          315,
+          383
+        ],
+        "to": [
+          315,
+          169
+        ],
+        "clearancePx": 2
+      },
+      "supportedFixes": [
+        "adjust fromSide/toSide, set route/via or channelX/channelY, or move the node to another stage/row"
+      ]
+    },
+    {
+      "code": "clean-flow/edge-through-node",
+      "severity": "error",
+      "message": "[clean-flow/edge-through-node] dataflow flows[6] id \"local-person-to-member-directory\" \"local-person\" -> \"member-directory\" crosses node \"promotion\" (unrelated to this relationship) on segment 0 [195, 383] -> [315, 383] (2px clearance) — adjust fromSide/toSide, set route/via or channelX/channelY, or move the node to another stage/row.",
+      "subject": {
+        "diagramType": "dataflow",
+        "collection": "flows",
+        "index": 6,
+        "id": "local-person-to-member-directory",
+        "from": "local-person",
+        "to": "member-directory"
+      },
+      "evidence": {
+        "obstacleKind": "node",
+        "obstacleId": "promotion",
+        "segmentIndex": 0,
+        "from": [
+          195,
+          383
+        ],
+        "to": [
+          315,
+          383
+        ],
+        "clearancePx": 2
+      },
+      "supportedFixes": [
+        "adjust fromSide/toSide, set route/via or channelX/channelY, or move the node to another stage/row"
+      ]
+    },
+    {
+      "code": "composition/micro-segment",
+      "severity": "error",
+      "message": "[composition/micro-segment] showcase dataflow flows[1] id \"directory-gate-to-member-directory\" \"directory-gate\" -> \"member-directory\" has a 7px interior segment 1 [422.5, 162] -> [422.5, 155] that is below the 8px micro-segment floor — adjust route/via or channelX/channelY so each turn uses a clear inter-stage corridor.",
+      "subject": {
+        "diagramType": "dataflow",
+        "collection": "flows",
+        "index": 1,
+        "id": "directory-gate-to-member-directory",
+        "from": "directory-gate",
+        "to": "member-directory"
+      },
+      "evidence": {
+        "segmentIndex": 1,
+        "position": "interior",
+        "lengthPx": 7,
+        "minimumPx": 8,
+        "from": [
+          422.5,
+          162
+        ],
+        "to": [
+          422.5,
+          155
+        ]
+      },
+      "supportedFixes": [
+        "adjust route/via or channelX/channelY so each turn uses a clear inter-stage corridor"
+      ]
+    },
+    {
+      "code": "composition/micro-segment",
+      "severity": "error",
+      "message": "[composition/micro-segment] showcase dataflow flows[3] id \"local-person-to-promotion\" \"local-person\" -> \"promotion\" has a 7px interior segment 1 [207.5, 397] -> [207.5, 390] that is below the 8px micro-segment floor — adjust route/via or channelX/channelY so each turn uses a clear inter-stage corridor.",
+      "subject": {
+        "diagramType": "dataflow",
+        "collection": "flows",
+        "index": 3,
+        "id": "local-person-to-promotion",
+        "from": "local-person",
+        "to": "promotion"
+      },
+      "evidence": {
+        "segmentIndex": 1,
+        "position": "interior",
+        "lengthPx": 7,
+        "minimumPx": 8,
+        "from": [
+          207.5,
+          397
+        ],
+        "to": [
+          207.5,
+          390
+        ]
+      },
+      "supportedFixes": [
+        "adjust route/via or channelX/channelY so each turn uses a clear inter-stage corridor"
+      ]
+    },
+    {
+      "code": "composition/label-route-clearance",
+      "severity": "error",
+      "message": "[composition/label-route-clearance] showcase dataflow label \"Explicit export request\" on flows[3] id \"local-person-to-promotion\" \"local-person\" -> \"promotion\" label \"Explicit export request\" is 0px from flows[6] id \"local-person-to-member-directory\" \"local-person\" -> \"member-directory\" label \"Local profile\" segment 0 [195, 383] -> [315, 383] (label rect [145, 373, 125, 27]; minimum 4px) — adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other flow route/via/channelX/channelY.",
+      "subject": {
+        "diagramType": "dataflow",
+        "collection": "flows",
+        "index": 3,
+        "id": "local-person-to-promotion",
+        "from": "local-person",
+        "to": "promotion"
+      },
+      "evidence": {
+        "label": "Explicit export request",
+        "otherRelationship": {
+          "diagramType": "dataflow",
+          "collection": "flows",
+          "index": 6,
+          "id": "local-person-to-member-directory",
+          "from": "local-person",
+          "to": "member-directory"
+        },
+        "segmentIndex": 0,
+        "clearancePx": 0,
+        "minimumPx": 4,
+        "labelRect": {
+          "relation": {
+            "id": "local-person-to-promotion",
+            "from": "local-person",
+            "to": "promotion",
+            "label": "Explicit export request",
+            "variant": "security",
+            "classification": "Personal data · scoped"
+          },
+          "relationIndex": 3,
+          "label": "Explicit export request",
+          "x": 145.15,
+          "y": 372.5,
+          "width": 124.7,
+          "height": 27,
+          "lx": 207.5,
+          "ly": 383.5
+        },
+        "from": [
+          195,
+          383
+        ],
+        "to": [
+          315,
+          383
+        ]
+      },
+      "supportedFixes": [
+        "adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other flow route/via/channelX/channelY"
+      ]
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Node \"primary-directory\" exceeds the horizontal bounds of the viewBox — reduce node.width or increase meta.viewBox[0].",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Node \"local-person\" exceeds the horizontal bounds of the viewBox — reduce node.width or increase meta.viewBox[0].",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Node \"approvals\" exceeds the horizontal bounds of the viewBox — reduce node.width or increase meta.viewBox[0].",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Flow \"Directory events\" is too short (25px; minimum 34px) — route it through a channel or spread its nodes.",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Flow \"Owned fields\" is too short (26px; minimum 34px) — route it through a channel or spread its nodes.",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Flow \"Local access\" is too short (25px; minimum 34px) — route it through a channel or spread its nodes.",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Flow \"Explicit export request\" is too short (26px; minimum 34px) — route it through a channel or spread its nodes.",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Flow \"Ack + identity check\" is too short (25px; minimum 34px) — route it through a channel or spread its nodes.",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Flow \"Approved version\" is too short (25px; minimum 34px) — route it through a channel or spread its nodes.",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Flow \"Candidate event\" is too short (25px; minimum 34px) — route it through a channel or spread its nodes.",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Flow \"Allowed facts\" is too short (25px; minimum 34px) — route it through a channel or spread its nodes.",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Flow \"Signed HTTPS\" is too short (25px; minimum 34px) — route it through a channel or spread its nodes.",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Directory events\" overlaps node \"primary-directory\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [148, 141, 120, 27]\n  node \"primary-directory\" rect: [5, 128, 190, 68]\n  Suggested fix: labelAt [208, 210] or labelDy +58 (below); or labelAt [208, 124] or labelDy -28 (above)",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Directory events\" overlaps node \"directory-gate\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [148, 141, 120, 27]\n  node \"directory-gate\" rect: [220, 128, 190, 68]\n  Suggested fix: labelAt [208, 210] or labelDy +58 (below); or labelAt [208, 124] or labelDy -28 (above)",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Owned fields\" overlaps node \"directory-gate\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [363, 138, 120, 27]\n  node \"directory-gate\" rect: [220, 128, 190, 68]\n  Suggested fix: labelAt [423, 210] or labelDy +61 (below); or labelAt [423, 124] or labelDy -25 (above)",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Owned fields\" overlaps node \"member-directory\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [363, 138, 120, 27]\n  node \"member-directory\" rect: [435, 128, 190, 68]\n  Suggested fix: labelAt [423, 210] or labelDy +61 (below); or labelAt [423, 124] or labelDy -25 (above)",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Local access\" overlaps node \"member-directory\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [578, 141, 120, 27]\n  node \"member-directory\" rect: [435, 128, 190, 68]\n  Suggested fix: labelAt [638, 210] or labelDy +58 (below); or labelAt [638, 124] or labelDy -28 (above)",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Local access\" overlaps node \"local-learning\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [578, 141, 120, 27]\n  node \"local-learning\" rect: [650, 128, 190, 68]\n  Suggested fix: labelAt [638, 210] or labelDy +58 (below); or labelAt [638, 124] or labelDy -28 (above)",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Explicit export request\" overlaps node \"local-person\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [145, 373, 125, 27]\n  node \"local-person\" rect: [5, 356, 190, 68]\n  Suggested fix: labelAt [208, 438] or labelDy +54 (below); or labelAt [208, 352] or labelDy -32 (above)",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Explicit export request\" overlaps node \"promotion\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [145, 373, 125, 27]\n  node \"promotion\" rect: [220, 356, 190, 68]\n  Suggested fix: labelAt [208, 438] or labelDy +54 (below); or labelAt [208, 352] or labelDy -32 (above)",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Ack + identity check\" overlaps node \"promotion\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [363, 369, 120, 27]\n  node \"promotion\" rect: [220, 356, 190, 68]\n  Suggested fix: labelAt [423, 438] or labelDy +58 (below); or labelAt [423, 352] or labelDy -28 (above)",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Ack + identity check\" overlaps node \"mapping\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [363, 369, 120, 27]\n  node \"mapping\" rect: [435, 356, 190, 68]\n  Suggested fix: labelAt [423, 438] or labelDy +58 (below); or labelAt [423, 352] or labelDy -28 (above)",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Linked identity\" overlaps node \"mapping\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [470, 335, 120, 27]\n  node \"mapping\" rect: [435, 356, 190, 68]\n  Suggested fix: labelAt [530, 438] or labelDy +92 (below); or labelAt [530, 352] or labelDy +6 (above)",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Approved version\" overlaps node \"approvals\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [148, 597, 120, 27]\n  node \"approvals\" rect: [5, 584, 190, 68]\n  Suggested fix: labelAt [208, 666] or labelDy +58 (below); or labelAt [208, 580] or labelDy -28 (above)",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Approved version\" overlaps node \"outbox\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [148, 597, 120, 27]\n  node \"outbox\" rect: [220, 584, 190, 68]\n  Suggested fix: labelAt [208, 666] or labelDy +58 (below); or labelAt [208, 580] or labelDy -28 (above)",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Candidate event\" overlaps node \"outbox\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [363, 597, 120, 27]\n  node \"outbox\" rect: [220, 584, 190, 68]\n  Suggested fix: labelAt [423, 666] or labelDy +58 (below); or labelAt [423, 580] or labelDy -28 (above)",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Candidate event\" overlaps node \"outbound-gate\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [363, 597, 120, 27]\n  node \"outbound-gate\" rect: [435, 584, 190, 68]\n  Suggested fix: labelAt [423, 666] or labelDy +58 (below); or labelAt [423, 580] or labelDy -28 (above)",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Allowed facts\" overlaps node \"outbound-gate\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [578, 597, 120, 27]\n  node \"outbound-gate\" rect: [435, 584, 190, 68]\n  Suggested fix: labelAt [638, 666] or labelDy +58 (below); or labelAt [638, 580] or labelDy -28 (above)",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Allowed facts\" overlaps node \"delivery\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [578, 597, 120, 27]\n  node \"delivery\" rect: [650, 584, 190, 68]\n  Suggested fix: labelAt [638, 666] or labelDy +58 (below); or labelAt [638, 580] or labelDy -28 (above)",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Signed HTTPS\" overlaps node \"delivery\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [793, 597, 120, 27]\n  node \"delivery\" rect: [650, 584, 190, 68]\n  Suggested fix: labelAt [853, 666] or labelDy +58 (below); or labelAt [853, 580] or labelDy -28 (above)",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Signed HTTPS\" overlaps node \"primary-facts\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [793, 597, 120, 27]\n  node \"primary-facts\" rect: [865, 584, 190, 68]\n  Suggested fix: labelAt [853, 666] or labelDy +58 (below); or labelAt [853, 580] or labelDy -28 (above)",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    }
+  ]
+}

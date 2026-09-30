@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "validate",
+  "stage": "render",
+  "type": "lifecycle",
+  "input": "C:\\Users\\Admin\\Downloads\\Archify_Upskilling_Run\\Archify_Upskilling_Pack\\output\\archify-upskilling-20260929-181205\\D08\\candidate.json",
+  "error": "Lifecycle layout validation failed:\n- Labels \"Approved leave\" and \"Resume + rebase\" overlap — adjust labelDx/labelDy.\n  \"Approved leave\" [345, 219, 81, 16]; \"Resume + rebase\" [263, 229, 86, 16]\n  Suggested fix: adjust labelDx/labelDy/labelSegment, or route one relationship through a separate corridor",
+  "diagnostics": [
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Labels \"Approved leave\" and \"Resume + rebase\" overlap — adjust labelDx/labelDy.\n  \"Approved leave\" [345, 219, 81, 16]; \"Resume + rebase\" [263, 229, 86, 16]\n  Suggested fix: adjust labelDx/labelDy/labelSegment, or route one relationship through a separate corridor",
+      "subject": {
+        "diagramType": "lifecycle"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    }
+  ]
+}

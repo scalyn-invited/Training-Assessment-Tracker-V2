@@ -1,0 +1,269 @@
+{
+  "schema_version": 1,
+  "diagram_type": "dataflow",
+  "meta": {
+    "title": "D11 · KPI lineage and improvement suggestions",
+    "output": "D11/diagram.html",
+    "quality_profile": "showcase",
+    "animation": "none",
+    "locale": "en",
+    "viewBox": [
+      1080,
+      780
+    ]
+  },
+  "stages": [
+    {
+      "label": "Sources"
+    },
+    {
+      "label": "Validation"
+    },
+    {
+      "label": "Owned state"
+    },
+    {
+      "label": "Publication"
+    },
+    {
+      "label": "Consumers"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "assessment",
+      "stage": 0,
+      "row": 0,
+      "type": "database",
+      "label": "Source assessment",
+      "sublabel": "Original scale / provenance",
+      "width": 142,
+      "height": 68
+    },
+    {
+      "id": "observations",
+      "stage": 0,
+      "row": 2,
+      "type": "database",
+      "label": "Approved rubric",
+      "sublabel": "Criterion evidence only",
+      "width": 142,
+      "height": 68
+    },
+    {
+      "id": "normalise",
+      "stage": 1,
+      "row": 1,
+      "type": "backend",
+      "label": "Normalise + compare",
+      "sublabel": "Evidence / sample checks",
+      "width": 142,
+      "height": 68
+    },
+    {
+      "id": "definitions",
+      "stage": 1,
+      "row": 4,
+      "type": "security",
+      "label": "Human KPI definition",
+      "sublabel": "Effective-dated targets",
+      "width": 142,
+      "height": 68
+    },
+    {
+      "id": "calculate",
+      "stage": 2,
+      "row": 1,
+      "type": "backend",
+      "label": "Versioned calculation",
+      "sublabel": "Formula / evidence lineage",
+      "width": 142,
+      "height": 68
+    },
+    {
+      "id": "snapshot",
+      "stage": 3,
+      "row": 1,
+      "type": "database",
+      "label": "Approved snapshot",
+      "sublabel": "Sufficient evidence only",
+      "width": 142,
+      "height": 68
+    },
+    {
+      "id": "dashboards",
+      "stage": 4,
+      "row": 0,
+      "type": "frontend",
+      "label": "Local dashboards",
+      "sublabel": "Member / coordinator scope",
+      "width": 142,
+      "height": 68
+    },
+    {
+      "id": "primary-api",
+      "stage": 4,
+      "row": 2,
+      "type": "external",
+      "label": "Permitted primary API",
+      "sublabel": "Approved linked facts",
+      "width": 142,
+      "height": 68
+    },
+    {
+      "id": "suggestions",
+      "stage": 2,
+      "row": 4,
+      "type": "backend",
+      "label": "AI suggestions",
+      "sublabel": "Gaps / remaining capacity",
+      "width": 142,
+      "height": 68
+    },
+    {
+      "id": "approval",
+      "stage": 3,
+      "row": 4,
+      "type": "security",
+      "label": "Coordinator gate",
+      "sublabel": "Required work changes",
+      "width": 142,
+      "height": 68
+    },
+    {
+      "id": "future-work",
+      "stage": 4,
+      "row": 4,
+      "type": "frontend",
+      "label": "Feasible actions",
+      "sublabel": "Advisory / approved changes",
+      "width": 142,
+      "height": 68
+    }
+  ],
+  "flows": [
+    {
+      "id": "assessment-to-normalise",
+      "from": "assessment",
+      "to": "normalise",
+      "label": "Source scale",
+      "variant": "default",
+      "classification": "Evidence"
+    },
+    {
+      "id": "observations-to-normalise",
+      "from": "observations",
+      "to": "normalise",
+      "label": "Approved evidence",
+      "variant": "default",
+      "classification": "Evidence"
+    },
+    {
+      "id": "normalise-to-calculate",
+      "from": "normalise",
+      "to": "calculate",
+      "label": "Comparable sample",
+      "variant": "default",
+      "classification": "Evidence",
+      "labelAt": [
+        422.5,
+        231
+      ]
+    },
+    {
+      "id": "definitions-to-calculate",
+      "from": "definitions",
+      "to": "calculate",
+      "label": "Formula + target",
+      "variant": "default",
+      "classification": "Evidence"
+    },
+    {
+      "id": "calculate-to-snapshot",
+      "from": "calculate",
+      "to": "snapshot",
+      "label": "Versioned value",
+      "variant": "default",
+      "classification": "Evidence",
+      "labelAt": [
+        637.5,
+        231
+      ]
+    },
+    {
+      "id": "snapshot-to-dashboards",
+      "from": "snapshot",
+      "to": "dashboards",
+      "label": "Local scope",
+      "variant": "security",
+      "classification": "Evidence"
+    },
+    {
+      "id": "snapshot-to-primary-api",
+      "from": "snapshot",
+      "to": "primary-api",
+      "label": "Linked real only",
+      "variant": "security",
+      "classification": "Evidence"
+    },
+    {
+      "id": "calculate-to-suggestions",
+      "from": "calculate",
+      "to": "suggestions",
+      "label": "Gap + capacity",
+      "variant": "default",
+      "classification": "Evidence",
+      "labelDy": 75
+    },
+    {
+      "id": "suggestions-to-approval",
+      "from": "suggestions",
+      "to": "approval",
+      "label": "Proposed change",
+      "variant": "default",
+      "classification": "Evidence",
+      "labelAt": [
+        637.5,
+        573
+      ]
+    },
+    {
+      "id": "approval-to-future-work",
+      "from": "approval",
+      "to": "future-work",
+      "label": "Human approval",
+      "variant": "default",
+      "classification": "Evidence",
+      "labelAt": [
+        852.5,
+        573
+      ]
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Measure what and why",
+      "items": [
+        "Every KPI records owner, what/why, baseline/date, target, formula, unit/direction, evidence, cadence, sample minimum and version.",
+        "Keep participation, demonstrated competence and workplace outcome separate. Weighted criterion percentages sum with weights = 1; incomparable scales need explicit mapping."
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "Honest interpretation",
+      "items": [
+        "Insufficient samples or missing baseline → insufficient_evidence, never zero. Effective-dated target changes never rewrite old snapshots.",
+        "Local reports include genuine local-only members; primary API excludes local-only/pending/synthetic. Synthetic data stays out of all production totals."
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "Useful suggestions and privacy",
+      "items": [
+        "One to three feasible suggestions fit remaining time. Current advice adds no required work; required changes pass coordinator gate and D10 freeze policy.",
+        "Preserve provenance and calculation versions. Retention/holds/erasure extend to derived snapshots and exports. No public ranking or unsupported employment decisions."
+      ]
+    }
+  ]
+}

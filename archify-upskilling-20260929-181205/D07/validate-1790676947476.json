@@ -1,0 +1,111 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "validate",
+  "stage": "render",
+  "type": "dataflow",
+  "input": "C:\\Users\\Admin\\Downloads\\Archify_Upskilling_Run\\Archify_Upskilling_Pack\\output\\archify-upskilling-20260929-181205\\D07\\candidate.json",
+  "error": "Data-flow layout validation failed:\n- Label \"Directory events\" overlaps node \"primary-directory\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [162, 106, 90, 27]\n  node \"primary-directory\" rect: [29, 128, 142, 68]\n  Suggested fix: labelAt [208, 210] or labelDy +93 (below); or labelAt [208, 124] or labelDy +7 (above)\n- Label \"Directory events\" overlaps node \"directory-gate\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [162, 106, 90, 27]\n  node \"directory-gate\" rect: [244, 128, 142, 68]\n  Suggested fix: labelAt [208, 210] or labelDy +93 (below); or labelAt [208, 124] or labelDy +7 (above)\n- Label \"Explicit export request\" overlaps node \"local-person\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [145, 334, 125, 27]\n  node \"local-person\" rect: [29, 356, 142, 68]\n  Suggested fix: labelAt [208, 438] or labelDy +93 (below); or labelAt [208, 352] or labelDy +7 (above)\n- Label \"Explicit export request\" overlaps node \"promotion\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [145, 334, 125, 27]\n  node \"promotion\" rect: [244, 356, 142, 68]\n  Suggested fix: labelAt [208, 438] or labelDy +93 (below); or labelAt [208, 352] or labelDy +7 (above)\n- Label \"Ack + identity check\" overlaps node \"promotion\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [368, 334, 110, 27]\n  node \"promotion\" rect: [244, 356, 142, 68]\n  Suggested fix: labelAt [423, 438] or labelDy +93 (below); or labelAt [423, 352] or labelDy +7 (above)\n- Label \"Ack + identity check\" overlaps node \"mapping\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [368, 334, 110, 27]\n  node \"mapping\" rect: [459, 356, 142, 68]\n  Suggested fix: labelAt [423, 438] or labelDy +93 (below); or labelAt [423, 352] or labelDy +7 (above)\n- Label \"Approved version\" overlaps node \"approvals\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [162, 562, 90, 27]\n  node \"approvals\" rect: [29, 584, 142, 68]\n  Suggested fix: labelAt [208, 666] or labelDy +93 (below); or labelAt [208, 580] or labelDy +7 (above)\n- Label \"Approved version\" overlaps node \"outbox\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [162, 562, 90, 27]\n  node \"outbox\" rect: [244, 584, 142, 68]\n  Suggested fix: labelAt [208, 666] or labelDy +93 (below); or labelAt [208, 580] or labelDy +7 (above)\n- Label \"Candidate event\" overlaps node \"outbox\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [380, 562, 86, 27]\n  node \"outbox\" rect: [244, 584, 142, 68]\n  Suggested fix: labelAt [423, 666] or labelDy +93 (below); or labelAt [423, 580] or labelDy +7 (above)\n- Label \"Candidate event\" overlaps node \"outbound-gate\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [380, 562, 86, 27]\n  node \"outbound-gate\" rect: [459, 584, 142, 68]\n  Suggested fix: labelAt [423, 666] or labelDy +93 (below); or labelAt [423, 580] or labelDy +7 (above)",
+  "diagnostics": [
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Directory events\" overlaps node \"primary-directory\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [162, 106, 90, 27]\n  node \"primary-directory\" rect: [29, 128, 142, 68]\n  Suggested fix: labelAt [208, 210] or labelDy +93 (below); or labelAt [208, 124] or labelDy +7 (above)",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Directory events\" overlaps node \"directory-gate\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [162, 106, 90, 27]\n  node \"directory-gate\" rect: [244, 128, 142, 68]\n  Suggested fix: labelAt [208, 210] or labelDy +93 (below); or labelAt [208, 124] or labelDy +7 (above)",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Explicit export request\" overlaps node \"local-person\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [145, 334, 125, 27]\n  node \"local-person\" rect: [29, 356, 142, 68]\n  Suggested fix: labelAt [208, 438] or labelDy +93 (below); or labelAt [208, 352] or labelDy +7 (above)",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Explicit export request\" overlaps node \"promotion\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [145, 334, 125, 27]\n  node \"promotion\" rect: [244, 356, 142, 68]\n  Suggested fix: labelAt [208, 438] or labelDy +93 (below); or labelAt [208, 352] or labelDy +7 (above)",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Ack + identity check\" overlaps node \"promotion\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [368, 334, 110, 27]\n  node \"promotion\" rect: [244, 356, 142, 68]\n  Suggested fix: labelAt [423, 438] or labelDy +93 (below); or labelAt [423, 352] or labelDy +7 (above)",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Ack + identity check\" overlaps node \"mapping\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [368, 334, 110, 27]\n  node \"mapping\" rect: [459, 356, 142, 68]\n  Suggested fix: labelAt [423, 438] or labelDy +93 (below); or labelAt [423, 352] or labelDy +7 (above)",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Approved version\" overlaps node \"approvals\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [162, 562, 90, 27]\n  node \"approvals\" rect: [29, 584, 142, 68]\n  Suggested fix: labelAt [208, 666] or labelDy +93 (below); or labelAt [208, 580] or labelDy +7 (above)",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Approved version\" overlaps node \"outbox\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [162, 562, 90, 27]\n  node \"outbox\" rect: [244, 584, 142, 68]\n  Suggested fix: labelAt [208, 666] or labelDy +93 (below); or labelAt [208, 580] or labelDy +7 (above)",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Candidate event\" overlaps node \"outbox\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [380, 562, 86, 27]\n  node \"outbox\" rect: [244, 584, 142, 68]\n  Suggested fix: labelAt [423, 666] or labelDy +93 (below); or labelAt [423, 580] or labelDy +7 (above)",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Candidate event\" overlaps node \"outbound-gate\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [380, 562, 86, 27]\n  node \"outbound-gate\" rect: [459, 584, 142, 68]\n  Suggested fix: labelAt [423, 666] or labelDy +93 (below); or labelAt [423, 580] or labelDy +7 (above)",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    }
+  ]
+}

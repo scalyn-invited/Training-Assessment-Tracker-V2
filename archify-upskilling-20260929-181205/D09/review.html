@@ -1,0 +1,137 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>D09 · Submission attempt lifecycle</title><style>:root{color-scheme:light dark}body{font:17px/1.6 system-ui;max-width:1100px;margin:36px auto;padding:0 24px}a{color:light-dark(#1453aa,#8dbdff)}h1{line-height:1.2}table{border-collapse:collapse;width:100%}td,th{text-align:left;padding:12px;border-bottom:1px solid #8885}code,pre{white-space:pre-wrap;overflow-wrap:anywhere}details{border:1px solid #8885;padding:14px;margin:12px 0}small{opacity:.8}.status{padding:16px;border-left:5px solid #c88c32;background:#8881}</style><main><h1>D09 · Submission attempt lifecycle</h1><p><a href="../index.html">Suite index</a> · <a href="candidate.json">Editable native JSON</a></p><p class="status">BLOCKED: native Archify delivery failed. This is an interactive source review, not a rendered Archify diagram.</p><details open><summary>Nodes and ownership</summary><ul><li><strong>Draft</strong> — Autosave <small>(draft)</small></li><li><strong>Submitted</strong> — Immutable receipt <small>(submitted)</small></li><li><strong>Queued</strong> — Durable job <small>(queued)</small></li><li><strong>Grading</strong> — Provisional only <small>(grading)</small></li><li><strong>Review pending</strong> — Coordinator gate <small>(review-pending)</small></li><li><strong>Approved</strong> — Immutable decision <small>(approved)</small></li><li><strong>Changes requested</strong> — New submission required <small>(changes-requested)</small></li><li><strong>Technical failure</strong> — Bounded retry <small>(technical-failure)</small></li><li><strong>Withdrawn</strong> — Before approval only <small>(withdrawn)</small></li></ul></details><details open><summary>Directed relationships</summary><ol><li>draft → submitted: Submit</li><li>submitted → queued: Commit + enqueue</li><li>queued → grading: Claim job</li><li>grading → review-pending: Validated result</li><li>review-pending → approved: Human approval</li><li>review-pending → changes-requested: More evidence</li><li>grading → technical-failure: Job failure</li><li>technical-failure → grading: Retry budget</li><li>queued → withdrawn: Allowed withdrawal</li></ol></details><details><summary>Attempt identity</summary><ul><li>Resubmission starts a NEW draft/attempt linked to the old one; changes_requested never mutates an immutable submission.</li><li>Regrade from review_pending creates a new grading attempt on this submission, then returns to review_pending. Approved decisions can only be superseded with reason.</li></ul></details><details><summary>Review and appeal</summary><ul><li>Approve/override requires assigned alternate reviewer when self-enrolled; optimistic conflict prevents stale simultaneous decisions.</li><li>Appeal opens a separate review preserving the original approval. Approved and withdrawn are terminal for this decision; approved evidence drives KPIs.</li></ul></details><details><summary>Failure / withdrawal</summary><ul><li>Technical failure is not a zero score: preserve evidence and use bounded retry or human recovery. No submission data is lost when SMTP fails.</li><li>Withdrawal is policy-permitted only before approved review, including submitted, queued, grading and review_pending; cancel jobs and preserve audit.</li></ul></details><details><summary>Native delivery diagnostics</summary><pre>[
+  {
+    &quot;code&quot;: &quot;composition/proper-crossing&quot;,
+    &quot;severity&quot;: &quot;error&quot;,
+    &quot;message&quot;: &quot;[composition/proper-crossing] showcase lifecycle transitions[5] id \&quot;review-pending-to-changes-requested\&quot; \&quot;review-pending\&quot; -&gt; \&quot;changes-requested\&quot; crosses transitions[6] id \&quot;grading-to-technical-failure\&quot; \&quot;grading\&quot; -&gt; \&quot;technical-failure\&quot; at [556, 365] (segments 2 and 0) — adjust route/via or channelX/channelY so the transitions use separate lifecycle corridors.&quot;,
+    &quot;subject&quot;: {
+      &quot;diagramType&quot;: &quot;lifecycle&quot;,
+      &quot;collection&quot;: &quot;transitions&quot;,
+      &quot;index&quot;: 5,
+      &quot;id&quot;: &quot;review-pending-to-changes-requested&quot;,
+      &quot;from&quot;: &quot;review-pending&quot;,
+      &quot;to&quot;: &quot;changes-requested&quot;
+    },
+    &quot;evidence&quot;: {
+      &quot;otherRelationship&quot;: {
+        &quot;diagramType&quot;: &quot;lifecycle&quot;,
+        &quot;collection&quot;: &quot;transitions&quot;,
+        &quot;index&quot;: 6,
+        &quot;id&quot;: &quot;grading-to-technical-failure&quot;,
+        &quot;from&quot;: &quot;grading&quot;,
+        &quot;to&quot;: &quot;technical-failure&quot;
+      },
+      &quot;point&quot;: [
+        556,
+        365
+      ],
+      &quot;segmentIndex&quot;: 2,
+      &quot;otherSegmentIndex&quot;: 0
+    },
+    &quot;supportedFixes&quot;: [
+      &quot;adjust route/via or channelX/channelY so the transitions use separate lifecycle corridors&quot;
+    ]
+  },
+  {
+    &quot;code&quot;: &quot;composition/proper-crossing&quot;,
+    &quot;severity&quot;: &quot;error&quot;,
+    &quot;message&quot;: &quot;[composition/proper-crossing] showcase lifecycle transitions[5] id \&quot;review-pending-to-changes-requested\&quot; \&quot;review-pending\&quot; -&gt; \&quot;changes-requested\&quot; crosses transitions[7] id \&quot;technical-failure-to-grading\&quot; \&quot;technical-failure\&quot; -&gt; \&quot;grading\&quot; at [632, 365] (segments 2 and 1) — adjust route/via or channelX/channelY so the transitions use separate lifecycle corridors.&quot;,
+    &quot;subject&quot;: {
+      &quot;diagramType&quot;: &quot;lifecycle&quot;,
+      &quot;collection&quot;: &quot;transitions&quot;,
+      &quot;index&quot;: 5,
+      &quot;id&quot;: &quot;review-pending-to-changes-requested&quot;,
+      &quot;from&quot;: &quot;review-pending&quot;,
+      &quot;to&quot;: &quot;changes-requested&quot;
+    },
+    &quot;evidence&quot;: {
+      &quot;otherRelationship&quot;: {
+        &quot;diagramType&quot;: &quot;lifecycle&quot;,
+        &quot;collection&quot;: &quot;transitions&quot;,
+        &quot;index&quot;: 7,
+        &quot;id&quot;: &quot;technical-failure-to-grading&quot;,
+        &quot;from&quot;: &quot;technical-failure&quot;,
+        &quot;to&quot;: &quot;grading&quot;
+      },
+      &quot;point&quot;: [
+        632,
+        365
+      ],
+      &quot;segmentIndex&quot;: 2,
+      &quot;otherSegmentIndex&quot;: 1
+    },
+    &quot;supportedFixes&quot;: [
+      &quot;adjust route/via or channelX/channelY so the transitions use separate lifecycle corridors&quot;
+    ]
+  },
+  {
+    &quot;code&quot;: &quot;composition/label-route-clearance&quot;,
+    &quot;severity&quot;: &quot;error&quot;,
+    &quot;message&quot;: &quot;[composition/label-route-clearance] showcase lifecycle label \&quot;Retry budget\&quot; on transitions[7] id \&quot;technical-failure-to-grading\&quot; \&quot;technical-failure\&quot; -&gt; \&quot;grading\&quot; label \&quot;Retry budget\&quot; is 0px from transitions[5] id \&quot;review-pending-to-changes-requested\&quot; \&quot;review-pending\&quot; -&gt; \&quot;changes-requested\&quot; label \&quot;More evidence\&quot; segment 2 [812, 365] -&gt; [402, 365] (label rect [593, 349, 71, 16]; minimum 4px) — adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel.&quot;,
+    &quot;subject&quot;: {
+      &quot;diagramType&quot;: &quot;lifecycle&quot;,
+      &quot;collection&quot;: &quot;transitions&quot;,
+      &quot;index&quot;: 7,
+      &quot;id&quot;: &quot;technical-failure-to-grading&quot;,
+      &quot;from&quot;: &quot;technical-failure&quot;,
+      &quot;to&quot;: &quot;grading&quot;
+    },
+    &quot;evidence&quot;: {
+      &quot;label&quot;: &quot;Retry budget&quot;,
+      &quot;otherRelationship&quot;: {
+        &quot;diagramType&quot;: &quot;lifecycle&quot;,
+        &quot;collection&quot;: &quot;transitions&quot;,
+        &quot;index&quot;: 5,
+        &quot;id&quot;: &quot;review-pending-to-changes-requested&quot;,
+        &quot;from&quot;: &quot;review-pending&quot;,
+        &quot;to&quot;: &quot;changes-requested&quot;
+      },
+      &quot;segmentIndex&quot;: 2,
+      &quot;clearancePx&quot;: 0,
+      &quot;minimumPx&quot;: 4,
+      &quot;labelRect&quot;: {
+        &quot;relation&quot;: {
+          &quot;id&quot;: &quot;technical-failure-to-grading&quot;,
+          &quot;from&quot;: &quot;technical-failure&quot;,
+          &quot;to&quot;: &quot;grading&quot;,
+          &quot;label&quot;: &quot;Retry budget&quot;,
+          &quot;variant&quot;: &quot;default&quot;,
+          &quot;fromSide&quot;: &quot;right&quot;,
+          &quot;toSide&quot;: &quot;right&quot;,
+          &quot;via&quot;: [
+            [
+              632,
+              410
+            ],
+            [
+              632,
+              158
+            ]
+          ],
+          &quot;labelAt&quot;: [
+            628,
+            360
+          ]
+        },
+        &quot;relationIndex&quot;: 7,
+        &quot;label&quot;: &quot;Retry budget&quot;,
+        &quot;x&quot;: 592.6,
+        &quot;y&quot;: 349,
+        &quot;width&quot;: 70.80000000000001,
+        &quot;height&quot;: 16,
+        &quot;lx&quot;: 628,
+        &quot;ly&quot;: 360
+      },
+      &quot;from&quot;: [
+        812,
+        365
+      ],
+      &quot;to&quot;: [
+        402,
+        365
+      ]
+    },
+    &quot;supportedFixes&quot;: [
+      &quot;adjust labelAt, labelDx, labelDy, or labelSegment; otherwise adjust the other relationship route/via/channel&quot;
+    ]
+  }
+]</pre></details><p><a href="deliver-1790677056063.json">Delivery receipt</a> · <a href="validate-1790677255162.json">Validation receipt</a></p></main></html>

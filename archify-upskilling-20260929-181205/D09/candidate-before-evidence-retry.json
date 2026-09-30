@@ -1,0 +1,292 @@
+{
+  "schema_version": 1,
+  "diagram_type": "lifecycle",
+  "meta": {
+    "title": "D09 · Submission attempt lifecycle",
+    "output": "D09/diagram.html",
+    "quality_profile": "showcase",
+    "animation": "none",
+    "locale": "en",
+    "viewBox": [
+      880,
+      700
+    ]
+  },
+  "lanes": [
+    {
+      "id": "main",
+      "label": "Attempt progression"
+    },
+    {
+      "id": "review",
+      "label": "Review outcomes"
+    },
+    {
+      "id": "failure",
+      "label": "Recoverable failure"
+    },
+    {
+      "id": "terminal",
+      "label": "Terminal withdrawal"
+    }
+  ],
+  "states": [
+    {
+      "id": "draft",
+      "lane": "main",
+      "col": 0,
+      "type": "start",
+      "label": "Draft",
+      "sublabel": "Autosave",
+      "width": 116,
+      "height": 64
+    },
+    {
+      "id": "submitted",
+      "lane": "main",
+      "col": 1,
+      "type": "active",
+      "label": "Submitted",
+      "sublabel": "Immutable receipt",
+      "width": 116,
+      "height": 64
+    },
+    {
+      "id": "queued",
+      "lane": "main",
+      "col": 2,
+      "type": "active",
+      "label": "Queued",
+      "sublabel": "Durable job",
+      "width": 116,
+      "height": 64
+    },
+    {
+      "id": "grading",
+      "lane": "main",
+      "col": 3,
+      "type": "active",
+      "label": "Grading",
+      "sublabel": "Provisional only",
+      "width": 116,
+      "height": 64
+    },
+    {
+      "id": "review-pending",
+      "lane": "main",
+      "col": 4,
+      "type": "decision",
+      "label": "Review pending",
+      "sublabel": "Coordinator gate",
+      "width": 116,
+      "height": 64
+    },
+    {
+      "id": "approved",
+      "lane": "review",
+      "col": 2,
+      "type": "success",
+      "label": "Approved",
+      "sublabel": "Immutable decision",
+      "width": 116,
+      "height": 64
+    },
+    {
+      "id": "changes-requested",
+      "lane": "review",
+      "col": 0,
+      "type": "waiting",
+      "label": "Changes requested",
+      "sublabel": "New submission required",
+      "width": 116,
+      "height": 64
+    },
+    {
+      "id": "technical-failure",
+      "lane": "failure",
+      "col": 1,
+      "type": "failure",
+      "label": "Technical failure",
+      "sublabel": "Bounded retry",
+      "width": 116,
+      "height": 64,
+      "yOffset": 100
+    },
+    {
+      "id": "withdrawn",
+      "lane": "terminal",
+      "col": 0,
+      "type": "neutral",
+      "label": "Withdrawn",
+      "sublabel": "Before approval only",
+      "width": 116,
+      "height": 64
+    }
+  ],
+  "transitions": [
+    {
+      "id": "draft-to-submitted",
+      "from": "draft",
+      "to": "submitted",
+      "label": "Submit",
+      "variant": "default",
+      "labelAt": [
+        171,
+        112
+      ]
+    },
+    {
+      "id": "submitted-to-queued",
+      "from": "submitted",
+      "to": "queued",
+      "label": "Commit + enqueue",
+      "variant": "default",
+      "labelAt": [
+        325,
+        112
+      ]
+    },
+    {
+      "id": "queued-to-grading",
+      "from": "queued",
+      "to": "grading",
+      "label": "Claim job",
+      "variant": "default",
+      "labelAt": [
+        479,
+        112
+      ]
+    },
+    {
+      "id": "grading-to-review-pending",
+      "from": "grading",
+      "to": "review-pending",
+      "label": "Validated result",
+      "variant": "default",
+      "labelAt": [
+        633,
+        112
+      ]
+    },
+    {
+      "id": "review-pending-to-approved",
+      "from": "review-pending",
+      "to": "approved",
+      "label": "Human approval",
+      "variant": "default",
+      "labelDy": 40
+    },
+    {
+      "id": "review-pending-to-changes-requested",
+      "from": "review-pending",
+      "to": "changes-requested",
+      "label": "More evidence",
+      "variant": "default",
+      "fromSide": "top",
+      "toSide": "top",
+      "via": [
+        [
+          710,
+          75
+        ],
+        [
+          470,
+          75
+        ],
+        [
+          470,
+          235
+        ],
+        [
+          402,
+          235
+        ]
+      ],
+      "labelAt": [
+        500,
+        63
+      ]
+    },
+    {
+      "id": "grading-to-technical-failure",
+      "from": "grading",
+      "to": "technical-failure",
+      "label": "Job failure",
+      "variant": "default",
+      "labelDy": 65
+    },
+    {
+      "id": "technical-failure-to-grading",
+      "from": "technical-failure",
+      "to": "grading",
+      "label": "Retry budget",
+      "variant": "default",
+      "fromSide": "right",
+      "toSide": "right",
+      "via": [
+        [
+          632,
+          410
+        ],
+        [
+          632,
+          158
+        ]
+      ],
+      "labelAt": [
+        628,
+        360
+      ]
+    },
+    {
+      "id": "queued-to-withdrawn",
+      "from": "queued",
+      "to": "withdrawn",
+      "label": "Allowed withdrawal",
+      "variant": "default",
+      "labelDy": 40,
+      "fromSide": "left",
+      "toSide": "left",
+      "via": [
+        [
+          320,
+          158
+        ],
+        [
+          320,
+          482
+        ]
+      ],
+      "labelAt": [
+        302,
+        380
+      ]
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Attempt identity",
+      "items": [
+        "Resubmission starts a NEW draft/attempt linked to the old one; changes_requested never mutates an immutable submission.",
+        "Regrade from review_pending creates a new grading attempt on this submission, then returns to review_pending. Approved decisions can only be superseded with reason."
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "Review and appeal",
+      "items": [
+        "Approve/override requires assigned alternate reviewer when self-enrolled; optimistic conflict prevents stale simultaneous decisions.",
+        "Appeal opens a separate review preserving the original approval. Approved and withdrawn are terminal for this decision; approved evidence drives KPIs."
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "Failure / withdrawal",
+      "items": [
+        "Technical failure is not a zero score: preserve evidence and use bounded retry or human recovery. No submission data is lost when SMTP fails.",
+        "Withdrawal is policy-permitted only before approved review, including submitted, queued, grading and review_pending; cancel jobs and preserve audit."
+      ]
+    }
+  ]
+}

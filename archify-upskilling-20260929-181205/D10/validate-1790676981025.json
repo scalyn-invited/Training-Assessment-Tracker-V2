@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "validate",
+  "stage": "render",
+  "type": "workflow",
+  "input": "C:\\Users\\Admin\\Downloads\\Archify_Upskilling_Run\\Archify_Upskilling_Pack\\output\\archify-upskilling-20260929-181205\\D10\\candidate.json",
+  "error": "Workflow layout validation failed:\n- [composition/ambiguous-corridor] showcase workflow edges[6] id \"publish-to-later\" \"publish\" -> \"later\" shares a 53px corridor with edges[10] id \"target-to-eligible\" \"target\" -> \"eligible\" at [486.4, 119] -> [486.4, 172] (segments 2 and 2; minimum 8px) — adjust route/via, bias, or channel coordinates so unrelated edges do not visually merge.",
+  "diagnostics": [
+    {
+      "code": "composition/ambiguous-corridor",
+      "severity": "error",
+      "message": "[composition/ambiguous-corridor] showcase workflow edges[6] id \"publish-to-later\" \"publish\" -> \"later\" shares a 53px corridor with edges[10] id \"target-to-eligible\" \"target\" -> \"eligible\" at [486.4, 119] -> [486.4, 172] (segments 2 and 2; minimum 8px) — adjust route/via, bias, or channel coordinates so unrelated edges do not visually merge.",
+      "subject": {
+        "diagramType": "workflow",
+        "collection": "edges",
+        "index": 6,
+        "id": "publish-to-later",
+        "from": "publish",
+        "to": "later"
+      },
+      "evidence": {
+        "otherRelationship": {
+          "diagramType": "workflow",
+          "collection": "edges",
+          "index": 10,
+          "id": "target-to-eligible",
+          "from": "target",
+          "to": "eligible"
+        },
+        "overlapLengthPx": 53,
+        "minimumPx": 8,
+        "from": [
+          486.4,
+          119
+        ],
+        "to": [
+          486.4,
+          172
+        ],
+        "segmentIndex": 2,
+        "otherSegmentIndex": 2
+      },
+      "supportedFixes": [
+        "adjust route/via, bias, or channel coordinates so unrelated edges do not visually merge"
+      ]
+    }
+  ]
+}

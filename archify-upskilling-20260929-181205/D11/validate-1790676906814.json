@@ -1,0 +1,191 @@
+{
+  "schemaVersion": 1,
+  "ok": false,
+  "command": "validate",
+  "stage": "render",
+  "type": "dataflow",
+  "input": "C:\\Users\\Admin\\Downloads\\Archify_Upskilling_Run\\Archify_Upskilling_Pack\\output\\archify-upskilling-20260929-181205\\D11\\candidate.json",
+  "error": "Data-flow layout validation failed:\n- Node \"assessment\" exceeds the horizontal bounds of the viewBox — reduce node.width or increase meta.viewBox[0].\n- Node \"observations\" exceeds the horizontal bounds of the viewBox — reduce node.width or increase meta.viewBox[0].\n- Flow \"Comparable sample\" is too short (26px; minimum 34px) — route it through a channel or spread its nodes.\n- Flow \"Versioned value\" is too short (25px; minimum 34px) — route it through a channel or spread its nodes.\n- Flow \"Proposed change\" is too short (25px; minimum 34px) — route it through a channel or spread its nodes.\n- Flow \"Human approval\" is too short (25px; minimum 34px) — route it through a channel or spread its nodes.\n- [composition/micro-segment] showcase dataflow flows[2] id \"normalise-to-calculate\" \"normalise\" -> \"calculate\" has a 7px interior segment 1 [422.5, 276] -> [422.5, 269] that is below the 8px micro-segment floor — adjust route/via or channelX/channelY so each turn uses a clear inter-stage corridor.\n- Label \"Comparable sample\" overlaps node \"normalise\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [353, 252, 139, 27]\n  node \"normalise\" rect: [220, 242, 190, 68]\n  Suggested fix: labelAt [423, 324] or labelDy +61 (below); or labelAt [423, 238] or labelDy -25 (above)\n- Label \"Comparable sample\" overlaps node \"calculate\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [353, 252, 139, 27]\n  node \"calculate\" rect: [435, 242, 190, 68]\n  Suggested fix: labelAt [423, 324] or labelDy +61 (below); or labelAt [423, 238] or labelDy -25 (above)\n- Label \"Versioned value\" overlaps node \"calculate\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [568, 255, 139, 27]\n  node \"calculate\" rect: [435, 242, 190, 68]\n  Suggested fix: labelAt [638, 324] or labelDy +58 (below); or labelAt [638, 238] or labelDy -28 (above)\n- Label \"Versioned value\" overlaps node \"snapshot\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [568, 255, 139, 27]\n  node \"snapshot\" rect: [650, 242, 190, 68]\n  Suggested fix: labelAt [638, 324] or labelDy +58 (below); or labelAt [638, 238] or labelDy -28 (above)\n- Label \"Gap + capacity\" overlaps node \"calculate\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [460, 289, 139, 27]\n  node \"calculate\" rect: [435, 242, 190, 68]\n  Suggested fix: labelAt [530, 324] or labelDy +24 (below); or labelAt [530, 238] or labelDy -62 (above)\n- Label \"Proposed change\" overlaps node \"suggestions\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [568, 597, 139, 27]\n  node \"suggestions\" rect: [435, 584, 190, 68]\n  Suggested fix: labelAt [638, 666] or labelDy +58 (below); or labelAt [638, 580] or labelDy -28 (above)\n- Label \"Proposed change\" overlaps node \"approval\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [568, 597, 139, 27]\n  node \"approval\" rect: [650, 584, 190, 68]\n  Suggested fix: labelAt [638, 666] or labelDy +58 (below); or labelAt [638, 580] or labelDy -28 (above)\n- Label \"Human approval\" overlaps node \"approval\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [783, 597, 139, 27]\n  node \"approval\" rect: [650, 584, 190, 68]\n  Suggested fix: labelAt [853, 666] or labelDy +58 (below); or labelAt [853, 580] or labelDy -28 (above)\n- Label \"Human approval\" overlaps node \"future-work\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [783, 597, 139, 27]\n  node \"future-work\" rect: [865, 584, 190, 68]\n  Suggested fix: labelAt [853, 666] or labelDy +58 (below); or labelAt [853, 580] or labelDy -28 (above)",
+  "diagnostics": [
+    {
+      "code": "composition/micro-segment",
+      "severity": "error",
+      "message": "[composition/micro-segment] showcase dataflow flows[2] id \"normalise-to-calculate\" \"normalise\" -> \"calculate\" has a 7px interior segment 1 [422.5, 276] -> [422.5, 269] that is below the 8px micro-segment floor — adjust route/via or channelX/channelY so each turn uses a clear inter-stage corridor.",
+      "subject": {
+        "diagramType": "dataflow",
+        "collection": "flows",
+        "index": 2,
+        "id": "normalise-to-calculate",
+        "from": "normalise",
+        "to": "calculate"
+      },
+      "evidence": {
+        "segmentIndex": 1,
+        "position": "interior",
+        "lengthPx": 7,
+        "minimumPx": 8,
+        "from": [
+          422.5,
+          276
+        ],
+        "to": [
+          422.5,
+          269
+        ]
+      },
+      "supportedFixes": [
+        "adjust route/via or channelX/channelY so each turn uses a clear inter-stage corridor"
+      ]
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Node \"assessment\" exceeds the horizontal bounds of the viewBox — reduce node.width or increase meta.viewBox[0].",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Node \"observations\" exceeds the horizontal bounds of the viewBox — reduce node.width or increase meta.viewBox[0].",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Flow \"Comparable sample\" is too short (26px; minimum 34px) — route it through a channel or spread its nodes.",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Flow \"Versioned value\" is too short (25px; minimum 34px) — route it through a channel or spread its nodes.",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Flow \"Proposed change\" is too short (25px; minimum 34px) — route it through a channel or spread its nodes.",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Flow \"Human approval\" is too short (25px; minimum 34px) — route it through a channel or spread its nodes.",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Comparable sample\" overlaps node \"normalise\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [353, 252, 139, 27]\n  node \"normalise\" rect: [220, 242, 190, 68]\n  Suggested fix: labelAt [423, 324] or labelDy +61 (below); or labelAt [423, 238] or labelDy -25 (above)",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Comparable sample\" overlaps node \"calculate\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [353, 252, 139, 27]\n  node \"calculate\" rect: [435, 242, 190, 68]\n  Suggested fix: labelAt [423, 324] or labelDy +61 (below); or labelAt [423, 238] or labelDy -25 (above)",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Versioned value\" overlaps node \"calculate\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [568, 255, 139, 27]\n  node \"calculate\" rect: [435, 242, 190, 68]\n  Suggested fix: labelAt [638, 324] or labelDy +58 (below); or labelAt [638, 238] or labelDy -28 (above)",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Versioned value\" overlaps node \"snapshot\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [568, 255, 139, 27]\n  node \"snapshot\" rect: [650, 242, 190, 68]\n  Suggested fix: labelAt [638, 324] or labelDy +58 (below); or labelAt [638, 238] or labelDy -28 (above)",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Gap + capacity\" overlaps node \"calculate\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [460, 289, 139, 27]\n  node \"calculate\" rect: [435, 242, 190, 68]\n  Suggested fix: labelAt [530, 324] or labelDy +24 (below); or labelAt [530, 238] or labelDy -62 (above)",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Proposed change\" overlaps node \"suggestions\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [568, 597, 139, 27]\n  node \"suggestions\" rect: [435, 584, 190, 68]\n  Suggested fix: labelAt [638, 666] or labelDy +58 (below); or labelAt [638, 580] or labelDy -28 (above)",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Proposed change\" overlaps node \"approval\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [568, 597, 139, 27]\n  node \"approval\" rect: [650, 584, 190, 68]\n  Suggested fix: labelAt [638, 666] or labelDy +58 (below); or labelAt [638, 580] or labelDy -28 (above)",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Human approval\" overlaps node \"approval\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [783, 597, 139, 27]\n  node \"approval\" rect: [650, 584, 190, 68]\n  Suggested fix: labelAt [853, 666] or labelDy +58 (below); or labelAt [853, 580] or labelDy -28 (above)",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    },
+    {
+      "code": "layout/constraint",
+      "severity": "error",
+      "message": "Label \"Human approval\" overlaps node \"future-work\" — adjust labelDx/labelDy/labelSegment or set labelAt.\n  label rect: [783, 597, 139, 27]\n  node \"future-work\" rect: [865, 584, 190, 68]\n  Suggested fix: labelAt [853, 666] or labelDy +58 (below); or labelAt [853, 580] or labelDy -28 (above)",
+      "subject": {
+        "diagramType": "dataflow"
+      },
+      "evidence": {},
+      "supportedFixes": []
+    }
+  ]
+}

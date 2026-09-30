@@ -1,0 +1,242 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "D03 · cPanel alternative · NOT QUALIFIED",
+    "output": "D03/diagram.html",
+    "quality_profile": "showcase",
+    "animation": "none",
+    "locale": "en",
+    "viewBox": [
+      1100,
+      840
+    ]
+  },
+  "components": [
+    {
+      "id": "browser",
+      "type": "external",
+      "label": "Staff browser",
+      "sublabel": "HTTPS ingress",
+      "pos": [
+        29.2,
+        350
+      ],
+      "size": [
+        155,
+        70
+      ]
+    },
+    {
+      "id": "identity",
+      "type": "security",
+      "label": "External authentik",
+      "sublabel": "OIDC + MFA",
+      "pos": [
+        29.2,
+        100
+      ],
+      "size": [
+        155,
+        70
+      ]
+    },
+    {
+      "id": "training-web",
+      "type": "backend",
+      "label": "Public root",
+      "sublabel": "Only Laravel public/",
+      "pos": [
+        335.8,
+        350
+      ],
+      "size": [
+        155,
+        70
+      ]
+    },
+    {
+      "id": "private-app",
+      "type": "backend",
+      "label": "Private app + config",
+      "sublabel": "Code / secrets / evidence",
+      "pos": [
+        335.8,
+        100
+      ],
+      "size": [
+        155,
+        70
+      ]
+    },
+    {
+      "id": "database",
+      "type": "database",
+      "label": "MariaDB",
+      "sublabel": "Private queue / locks / state",
+      "pos": [
+        635.1,
+        350
+      ],
+      "size": [
+        155,
+        70
+      ]
+    },
+    {
+      "id": "cron",
+      "type": "messagebus",
+      "label": "Per-minute cron",
+      "sublabel": "Scheduler + overlap lock",
+      "pos": [
+        905.1999999999999,
+        350
+      ],
+      "size": [
+        155,
+        70
+      ]
+    },
+    {
+      "id": "worker",
+      "type": "backend",
+      "label": "Bounded CLI worker",
+      "sublabel": "Finite runtime",
+      "pos": [
+        635.1,
+        630
+      ],
+      "size": [
+        155,
+        70
+      ]
+    },
+    {
+      "id": "external-services",
+      "type": "external",
+      "label": "Integrations",
+      "sublabel": "AI / primary / SMTP",
+      "pos": [
+        335.8,
+        630
+      ],
+      "size": [
+        155,
+        70
+      ]
+    },
+    {
+      "id": "proxmox",
+      "type": "cloud",
+      "label": "Proxmox move",
+      "sublabel": "If capability gates fail",
+      "pos": [
+        905.1999999999999,
+        100
+      ],
+      "size": [
+        155,
+        70
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "browser-to-identity",
+      "from": "browser",
+      "to": "identity",
+      "label": "OIDC",
+      "variant": "security"
+    },
+    {
+      "id": "browser-to-training-web",
+      "from": "browser",
+      "to": "training-web",
+      "label": "HTTPS",
+      "variant": "default"
+    },
+    {
+      "id": "training-web-to-private-app",
+      "from": "training-web",
+      "to": "private-app",
+      "label": "Private I/O",
+      "variant": "default"
+    },
+    {
+      "id": "training-web-to-database",
+      "from": "training-web",
+      "to": "database",
+      "label": "SQL / enqueue",
+      "variant": "default"
+    },
+    {
+      "id": "cron-to-worker",
+      "from": "cron",
+      "to": "worker",
+      "label": "CLI start",
+      "variant": "dashed"
+    },
+    {
+      "id": "database-to-worker",
+      "from": "database",
+      "to": "worker",
+      "label": "DB jobs",
+      "variant": "dashed",
+      "labelDy": 70
+    },
+    {
+      "id": "worker-to-external-services",
+      "from": "worker",
+      "to": "external-services",
+      "label": "HTTPS / SMTP",
+      "variant": "default"
+    },
+    {
+      "id": "cron-to-proxmox",
+      "from": "cron",
+      "to": "proxmox",
+      "label": "Gate failure",
+      "variant": "security"
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "Conditional cPanel account · host capabilities unverified",
+      "wraps": [
+        "training-web",
+        "private-app",
+        "database",
+        "worker",
+        "cron"
+      ],
+      "pad": 28
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Qualification gates",
+      "items": [
+        "Verify PHP/CLI/extensions, Composer builds, per-minute cron, shared locks, private storage, quotas and outbound HTTPS / SMTP TLS.",
+        "Provider timeout 90s < job timeout 120s < retry_after 180s; finite worker must finish one whole job. Verify extraction utilities and process limits."
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "Failure decision",
+      "items": [
+        "Unsupported runtime or utilities → move the whole application to Proxmox. No assumed hybrid worker dependency.",
+        "Prebuild assets. No Docker, Redis, root access, Node server or local identity service required."
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "Environment and operations",
+      "items": [
+        "Separate test DB, credentials, files, endpoints and SMTP sink. Synthetic data never enters production reports/export/mail.",
+        "Host capability owner verifies quotas and backups; application owner monitors queue lag, failures and restores before release."
+      ]
+    }
+  ]
+}

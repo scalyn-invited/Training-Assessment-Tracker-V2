@@ -1,0 +1,113 @@
+name: Foundation CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: foundation-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    working-directory: platform
+
+jobs:
+  sqlite:
+    name: PHP and SQLite
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: shivammathur/setup-php@b604ade2a87db23f8871b7182e69ec5e75effb45 # v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, pdo_sqlite
+          coverage: none
+          tools: composer:v2
+      - run: composer validate --strict --no-check-publish
+      - run: composer install --no-interaction --prefer-dist --no-progress
+      - name: Configure isolated application
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+      - run: php vendor/bin/pint --test
+      - run: php artisan test --compact
+      - run: php artisan view:cache
+
+  mariadb:
+    name: MariaDB and concurrent workers
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    services:
+      mariadb:
+        image: mariadb:11.4.13
+        env:
+          MARIADB_ROOT_PASSWORD: ci-only-password
+          MARIADB_DATABASE: training_foundation_test
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="healthcheck.sh --connect --innodb_initialized"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+    env:
+      DB_HOST: 127.0.0.1
+      DB_PORT: '3306'
+      DB_USERNAME: root
+      DB_PASSWORD: ci-only-password
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: shivammathur/setup-php@b604ade2a87db23f8871b7182e69ec5e75effb45 # v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, pdo_mysql, pdo_sqlite
+          coverage: none
+          tools: composer:v2
+      - run: composer install --no-interaction --prefer-dist --no-progress
+      - name: Configure isolated application
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+      - run: php vendor/bin/phpunit -c phpunit.mariadb.xml --testdox
+
+  browser:
+    name: Browser and accessibility
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: shivammathur/setup-php@b604ade2a87db23f8871b7182e69ec5e75effb45 # v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, pdo_sqlite
+          coverage: none
+          tools: composer:v2
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: platform/package-lock.json
+      - run: composer install --no-interaction --prefer-dist --no-progress
+      - name: Configure isolated application
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+      - run: npm ci
+      - run: npx playwright install --with-deps chrome
+      - run: npm run test:browser
+      - name: Upload browser results
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: browser-results
+          path: |
+            platform/playwright-report/
+            platform/test-results/
+          retention-days: 7

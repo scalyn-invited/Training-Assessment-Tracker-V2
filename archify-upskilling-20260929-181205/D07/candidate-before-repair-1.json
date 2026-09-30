@@ -1,0 +1,270 @@
+{
+  "schema_version": 1,
+  "diagram_type": "dataflow",
+  "meta": {
+    "title": "D07 · Directory sync and approved facts",
+    "output": "D07/diagram.html",
+    "quality_profile": "showcase",
+    "animation": "none",
+    "locale": "en",
+    "viewBox": [
+      1500,
+      850
+    ]
+  },
+  "stages": [
+    {
+      "label": "Sources"
+    },
+    {
+      "label": "Validation"
+    },
+    {
+      "label": "Owned state"
+    },
+    {
+      "label": "Publication"
+    },
+    {
+      "label": "Consumers"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "primary-directory",
+      "stage": 0,
+      "row": 0,
+      "type": "external",
+      "label": "Primary directory",
+      "sublabel": "People / groups owner",
+      "width": 190,
+      "height": 68
+    },
+    {
+      "id": "directory-gate",
+      "stage": 1,
+      "row": 0,
+      "type": "security",
+      "label": "Validate + dedup",
+      "sublabel": "Signature / version / ownership",
+      "width": 190,
+      "height": 68
+    },
+    {
+      "id": "member-directory",
+      "stage": 2,
+      "row": 0,
+      "type": "database",
+      "label": "Member directory",
+      "sublabel": "Verified ID + sync ledger",
+      "width": 190,
+      "height": 68
+    },
+    {
+      "id": "local-learning",
+      "stage": 3,
+      "row": 0,
+      "type": "frontend",
+      "label": "Local learning",
+      "sublabel": "Real local-only included",
+      "width": 190,
+      "height": 68
+    },
+    {
+      "id": "local-person",
+      "stage": 0,
+      "row": 2,
+      "type": "frontend",
+      "label": "Manual profile",
+      "sublabel": "local_only by default",
+      "width": 190,
+      "height": 68
+    },
+    {
+      "id": "promotion",
+      "stage": 1,
+      "row": 2,
+      "type": "security",
+      "label": "Promotion review",
+      "sublabel": "Duplicate check + request key",
+      "width": 190,
+      "height": 68
+    },
+    {
+      "id": "mapping",
+      "stage": 2,
+      "row": 2,
+      "type": "backend",
+      "label": "Verify mapping",
+      "sublabel": "Primary acknowledgement",
+      "width": 190,
+      "height": 68
+    },
+    {
+      "id": "approvals",
+      "stage": 0,
+      "row": 4,
+      "type": "database",
+      "label": "Training approvals",
+      "sublabel": "Application-owned facts",
+      "width": 190,
+      "height": 68
+    },
+    {
+      "id": "outbox",
+      "stage": 1,
+      "row": 4,
+      "type": "messagebus",
+      "label": "Transactional outbox",
+      "sublabel": "Version + event identity",
+      "width": 190,
+      "height": 68
+    },
+    {
+      "id": "outbound-gate",
+      "stage": 2,
+      "row": 4,
+      "type": "security",
+      "label": "Outbound policy",
+      "sublabel": "Linked · real · approved",
+      "width": 190,
+      "height": 68
+    },
+    {
+      "id": "delivery",
+      "stage": 3,
+      "row": 4,
+      "type": "messagebus",
+      "label": "Retry + reconcile",
+      "sublabel": "At-least-once + dead letter",
+      "width": 190,
+      "height": 68
+    },
+    {
+      "id": "primary-facts",
+      "stage": 4,
+      "row": 4,
+      "type": "external",
+      "label": "Primary facts",
+      "sublabel": "Consolidated approved view",
+      "width": 190,
+      "height": 68
+    }
+  ],
+  "flows": [
+    {
+      "id": "primary-directory-to-directory-gate",
+      "from": "primary-directory",
+      "to": "directory-gate",
+      "label": "Directory events",
+      "variant": "security",
+      "classification": "Personal data · scoped"
+    },
+    {
+      "id": "directory-gate-to-member-directory",
+      "from": "directory-gate",
+      "to": "member-directory",
+      "label": "Owned fields",
+      "variant": "default",
+      "classification": "Personal data · scoped"
+    },
+    {
+      "id": "member-directory-to-local-learning",
+      "from": "member-directory",
+      "to": "local-learning",
+      "label": "Local access",
+      "variant": "default",
+      "classification": "Personal data · scoped"
+    },
+    {
+      "id": "local-person-to-promotion",
+      "from": "local-person",
+      "to": "promotion",
+      "label": "Explicit export request",
+      "variant": "security",
+      "classification": "Personal data · scoped"
+    },
+    {
+      "id": "promotion-to-mapping",
+      "from": "promotion",
+      "to": "mapping",
+      "label": "Ack + identity check",
+      "variant": "default",
+      "classification": "Personal data · scoped"
+    },
+    {
+      "id": "mapping-to-member-directory",
+      "from": "mapping",
+      "to": "member-directory",
+      "label": "Linked identity",
+      "variant": "default",
+      "classification": "Personal data · scoped"
+    },
+    {
+      "id": "local-person-to-member-directory",
+      "from": "local-person",
+      "to": "member-directory",
+      "label": "Local profile",
+      "variant": "default",
+      "classification": "Personal data · scoped"
+    },
+    {
+      "id": "approvals-to-outbox",
+      "from": "approvals",
+      "to": "outbox",
+      "label": "Approved version",
+      "variant": "dashed",
+      "classification": "Personal data · scoped"
+    },
+    {
+      "id": "outbox-to-outbound-gate",
+      "from": "outbox",
+      "to": "outbound-gate",
+      "label": "Candidate event",
+      "variant": "default",
+      "classification": "Personal data · scoped"
+    },
+    {
+      "id": "outbound-gate-to-delivery",
+      "from": "outbound-gate",
+      "to": "delivery",
+      "label": "Allowed facts",
+      "variant": "security",
+      "classification": "Personal data · scoped"
+    },
+    {
+      "id": "delivery-to-primary-facts",
+      "from": "delivery",
+      "to": "primary-facts",
+      "label": "Signed HTTPS",
+      "variant": "dashed",
+      "classification": "Personal data · scoped"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Ownership and rejection",
+      "items": [
+        "Primary owns imported people/groups; local cohorts and coordinator assignments remain app-owned. Training owns evidence and approval history.",
+        "Duplicate/stale events rejected; conflict queue handles incompatible versions. Suspension/tombstones revoke access and invalidate cache; freshness target five minutes."
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "Promotion is explicit",
+      "items": [
+        "Real local-only people train and appear in authorised local reports; no primary query/export. Synthetic records never cross production report, mail or integration boundaries.",
+        "Promotion timeout → reconcile original key. Ack plus verified mapping required before linked. Duplicate review returns to correction; history export is a separate action."
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "Reliable and private",
+      "items": [
+        "Outbox shares business transaction. Reconcile stable pages; cursor advances only after persistence. Every outbound retry rechecks linked/production/non-synthetic policy.",
+        "Private evidence: scan/quarantine, authorised download, no unrestricted URLs. Retention/erasure covers files, caches, exports and traces; holds and deletion ledger survive restore."
+      ]
+    }
+  ]
+}
