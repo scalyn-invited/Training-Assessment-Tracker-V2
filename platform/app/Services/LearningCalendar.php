@@ -24,7 +24,7 @@ class LearningCalendar
         // Business holidays move the cutoff; a learner's leave does not change business days.
         while ($remaining > 0) {
             $date = $date->subDay();
-            if (in_array($date->dayOfWeekIso, $calendar->weekdays) && ! in_array($date->toDateString(), $calendar->holidays)) {
+            if (in_array($date->dayOfWeekIso, $calendar->business_weekdays ?? [1, 2, 3, 4, 5]) && ! in_array($date->toDateString(), $calendar->holidays)) {
                 $remaining--;
             }
         }

@@ -110,6 +110,9 @@ class LearningTest extends TestCase
         $calendar = new MemberCalendar(['timezone' => 'Asia/Manila', 'weekdays' => [1, 2, 3, 4, 5], 'holidays' => [], 'absences' => []]);
         $service = app(LearningCalendar::class);
         $this->assertSame('2027-01-07T09:00:00+00:00', $service->freeze($calendar, '2027-01-11'));
+        $calendar->weekdays = [1];
+        $this->assertSame('2027-01-07T09:00:00+00:00', $service->freeze($calendar, '2027-01-11'));
+        $calendar->weekdays = [1, 2, 3, 4, 5];
         $calendar->holidays = ['2027-01-08'];
         $calendar->absences = ['2027-01-12'];
         $this->assertSame('2027-01-06T09:00:00+00:00', $service->freeze($calendar, '2027-01-11'));

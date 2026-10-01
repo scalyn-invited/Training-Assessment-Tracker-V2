@@ -24,6 +24,7 @@
 @endforeach
 @elseif($step === 'schedule')
 <p>Propose a plan budget and a shared daily capacity across all programmes. Only the coordinator can confirm the shared calendar at the review step.</p>
+<p class="subtle">Business days for review cutoffs default to Monday–Friday, excluding business holidays. Your selected training days and absence dates do not change those business weekdays.</p>
 <div class="form-grid">
 <div><label for="duration">Learning blocks</label><select id="duration" name="data[duration]">@foreach([4,6,8,10,12] as $weeks)<option value="{{ $weeks }}" @selected(($data['schedule']['duration'] ?? 4) == $weeks)>{{ $weeks }} blocks</option>@endforeach</select></div>
 <label>Minutes per day for this plan<input name="data[daily_minutes]" type="number" min="15" max="120" value="{{ $data['schedule']['daily_minutes'] ?? 30 }}"></label>

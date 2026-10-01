@@ -17,7 +17,8 @@ document.querySelectorAll('form[data-autosave], form[data-preserve-input]').forE
         const data = new FormData(form);
         if (submitter?.name) data.set(submitter.name, submitter.value);
         try {
-            const response = await fetch(form.action, { method: 'POST', body: data, headers: { Accept: 'application/json' } });
+            // A named "action" input shadows the form.action DOM property.
+            const response = await fetch(form.getAttribute('action'), { method: 'POST', body: data, headers: { Accept: 'application/json' } });
             if (response.redirected) throw new Error('Your session may have expired. Copy your unsaved input before signing in again.');
             const result = await response.json();
             if (!response.ok) {

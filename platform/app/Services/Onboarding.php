@@ -143,6 +143,7 @@ class Onboarding
             $calendar = new MemberCalendar([
                 'member_id' => $enrolment->member_id, 'organisation_id' => $enrolment->organisation_id, 'environment' => $enrolment->environment,
                 'version' => $expected + 1, 'timezone' => $data['timezone'], 'daily_minutes' => $data['capacity_minutes'],
+                'business_weekdays' => $old?->business_weekdays ?? [1, 2, 3, 4, 5],
                 'weekdays' => array_map('intval', $data['weekdays']), 'holidays' => $data['holidays'] ?? [], 'absences' => $data['absences'] ?? [],
                 'reason' => $reason, 'actor_id' => $actor->id,
             ]);

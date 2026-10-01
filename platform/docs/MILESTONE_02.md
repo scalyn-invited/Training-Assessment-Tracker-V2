@@ -23,6 +23,7 @@ This increment implements the local B03 learning setup journey. AI generation, l
 - An absence/holiday/capacity change that conflicts with an approved reservation is rejected. To reschedule a ready enrolment, first propose a later start using its existing confirmed calendar, create a refreshed draft, review copied lessons and approve the replacement. Then confirm the additional absence dates. No dates shift silently.
 - A timezone change with reservations is blocked; coordinated timezone migration and pause/resume of active work remain later lifecycle work.
 - The freeze timestamp is 17:00 local time on the second preceding business day, excluding business holidays, stored as UTC in the plan snapshot. Learner absence does not redefine business-day cutoffs.
+- Business weekdays are snapshotted separately from scheduled training weekdays, defaulting to Monday–Friday. Selecting Monday-only training still yields a Thursday cutoff for a normal Monday block start.
 - Changes to either onboarding or the shared calendar invalidate pending plan edits/approval until a refreshed draft is created.
 - New learning mutations reject active/completed/cancelled enrolments; completed work cannot be rewritten by these setup routes.
 

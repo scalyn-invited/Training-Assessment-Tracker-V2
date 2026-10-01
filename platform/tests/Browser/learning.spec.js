@@ -106,6 +106,8 @@ test('coordinator completes onboarding, writes every block and approves the exac
 
     for (let block = 0; block < 4; block++) {
         if (block) await page.getByRole('navigation', { name: 'Learning blocks' }).getByRole('link', { name: new RegExp('Block ' + (block + 1) + ' ·') }).click();
+        await expect(page.locator('form[data-preserve-input]').first()).toHaveAttribute('data-ready', 'true');
+        const versionBeforeEdit = Number(await page.locator('form[data-preserve-input]').first().locator('[name=expected_version]').inputValue());
         await page.getByLabel('Learning objective', { exact: true }).fill('Write a procedure with testable outcomes');
         await page.getByLabel('Prerequisites and sequence', { exact: true }).fill('Basic writing; review the preceding block before proceeding');
         await page.getByLabel('Criterion one and evidence expectations').fill('Complete ordered steps with inputs and outcomes');
@@ -122,9 +124,12 @@ test('coordinator completes onboarding, writes every block and approves the exac
         await page.getByLabel('Reason for this version', { exact: true }).fill('Add reviewed lesson content for block ' + (block + 1));
         await page.getByRole('button', { name: 'Save new draft version' }).click();
         await expect(page.getByText('New draft version saved; review must be requested again.', { exact: true })).toBeVisible();
+        await expect(page.locator('form[data-preserve-input]').first().locator('[name=expected_version]')).toHaveValue(String(versionBeforeEdit + 1));
     }
+    await expect(page.locator('form[data-preserve-input]').last()).toHaveAttribute('data-ready', 'true');
     await page.getByRole('button', { name: 'Validate all blocks and request review' }).click();
     await expect(page.getByLabel('Approval rationale')).toBeVisible();
+    await expect(page.locator('form[data-preserve-input]').last()).toHaveAttribute('data-ready', 'true');
     await page.getByLabel('Approval rationale').fill('All lessons, resource access, rubric weights and shared capacity reviewed.');
     await page.getByRole('button', { name: /Approve exact version/ }).click();
     await expect(page.getByText('Exact plan version approved. Enrolment is ready; training has not started.', { exact: true })).toBeVisible();
