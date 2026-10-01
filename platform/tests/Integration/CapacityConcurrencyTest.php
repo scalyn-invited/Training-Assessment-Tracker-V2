@@ -52,6 +52,6 @@ class CapacityConcurrencyTest extends TestCase
         $this->assertSame([0, 2], $codes);
         $this->assertDatabaseCount('programme_approvals', 1);
         $this->assertSame(4, DB::table('capacity_allocations')->where('active', true)->count());
-        $this->assertSame(120, (int) DB::table('capacity_allocations')->where('active',true)->sum('minutes'));
+        $this->assertSame(120, (int) DB::table('capacity_allocations')->where('active', true)->sum('minutes'));
     }
 }

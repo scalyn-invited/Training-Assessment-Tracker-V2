@@ -102,6 +102,12 @@ jobs:
       - run: npm ci
       - run: npx playwright install --with-deps chrome
       - run: npm run test:browser
+      - name: Diagnose browser server failures
+        if: failure()
+        run: |
+          if [ -f storage/logs/laravel.log ]; then
+            tail -n 100 storage/logs/laravel.log
+          fi
       - name: Upload browser results
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
