@@ -129,6 +129,24 @@ class LearningPlans
             409, 'Onboarding or the shared calendar changed. Create a refreshed draft from the reviewed inputs first.');
     }
 
+    public function generated(User $actor, Enrolment $enrolment, ProgrammeVersion $base, array $blocks, string $runId): ProgrammeVersion
+    {
+        return $this->onboarding->locked($actor, $enrolment, function ($actor, $enrolment) use ($base, $blocks, $runId) {
+            $this->onboarding->coordinator($actor, $enrolment);
+            $this->current($enrolment, $base->version);
+            $candidate = clone $base;
+            $content = $base->content;
+            foreach ($blocks as $index => $block) {
+                $content['blocks'][$index] = array_merge($content['blocks'][$index], $block);
+            }
+            $content['generation_run_id'] = $runId;
+            $candidate->content = $content;
+            $this->validate($candidate, $enrolment);
+
+            return $this->snapshot($actor, $enrolment, $base->onboarding, $base->member_calendar_id, $content, 'AI draft '.$runId.'; coordinator review required.', $base);
+        });
+    }
+
     public function validate(ProgrammeVersion $plan, Enrolment $enrolment): array
     {
         $this->fresh($plan, $enrolment);

@@ -13,6 +13,7 @@
     <a class="brand" href="{{ route('dashboard') }}"><span class="brand-mark">T</span> Training Tracker <span class="version">V2</span></a>
     @auth
     <nav aria-label="Main navigation">
+        @if(auth()->user()->role === 'admin')<a href="{{ route('ai.settings') }}">AI settings</a>@endif
         <a href="{{ route('dashboard') }}" @if(request()->routeIs('dashboard')) aria-current="page" @endif>Workspace</a>
         @if(auth()->user()->role === 'admin')<a href="{{ route('people') }}">People</a>@endif
         <form method="post" action="{{ route('logout') }}">@csrf<button class="quiet">Sign out</button></form>
