@@ -2,8 +2,14 @@
 @section('title', $enrolment->title)
 @section('content')
 <a class="back" href="{{ route('dashboard') }}">← Workspace</a>
+<div class="form-actions">
+@if(auth()->id() === $enrolment->member_id || (auth()->user()->role === 'coordinator' && auth()->user()->sensitive_access))
+<a class="primary" href="{{ route('onboarding.show', $enrolment->id) }}">Onboarding and plan setup</a>
+@endif
+@if(App\Models\ProgrammeVersion::where('enrolment_id', $enrolment->id)->exists())<a href="{{ route('plans.show', $enrolment->id) }}">View curriculum and versions</a>@endif
+</div>
 <div class="page-heading"><div><p class="eyebrow">{{ $enrolment->group->name }}</p><h1>{{ $enrolment->title }}</h1><p class="lead">{{ $enrolment->member->name }} · Coordinator: {{ $enrolment->coordinator->name }}</p></div><span class="badge">{{ ucfirst($enrolment->status) }}</span></div>
-<div class="detail-grid"><section class="panel"><h2>Plan foundation</h2><dl><div><dt>Duration</dt><dd>{{ $enrolment->duration_weeks }} weeks</dd></div><div><dt>Daily capacity</dt><dd>{{ $enrolment->daily_minutes }} minutes</dd></div><div><dt>Calendar timezone</dt><dd>{{ $enrolment->timezone }}</dd></div><div><dt>Version</dt><dd>{{ $enrolment->version }}</dd></div><div><dt>Primary-platform sync</dt><dd>{{ str_replace('_', ' ', $enrolment->member->sync_policy) }}</dd></div></dl><div class="notice">This is a synthetic enrolment shell. Lessons and programme approval will be added in the next milestone.</div>
+<div class="detail-grid"><section class="panel"><h2>Plan foundation</h2><dl><div><dt>Duration</dt><dd>{{ $enrolment->duration_weeks }} weeks</dd></div><div><dt>Daily capacity</dt><dd>{{ $enrolment->daily_minutes }} minutes</dd></div><div><dt>Calendar timezone</dt><dd>{{ $enrolment->timezone }}</dd></div><div><dt>Version</dt><dd>{{ $enrolment->version }}</dd></div><div><dt>Primary-platform sync</dt><dd>{{ str_replace('_', ' ', $enrolment->member->sync_policy) }}</dd></div></dl><div class="notice">This synthetic workspace supports onboarding and reviewed curriculum drafts. Training activation and submissions are not yet available.</div>
 <h3>Check background processing</h3><p>Queue a local check to verify that your access is rechecked before a receipt is recorded. No email is sent.</p>
 <form method="post" action="{{ route('enrolments.check', $enrolment->id) }}">@csrf<input type="hidden" name="expected_version" value="{{ $enrolment->version }}"><input type="hidden" name="idempotency_key" value="{{ Illuminate\Support\Str::uuid() }}"><button class="primary">Queue foundation check</button></form>
 </section>

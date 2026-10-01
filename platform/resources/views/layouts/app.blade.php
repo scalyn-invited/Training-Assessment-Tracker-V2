@@ -25,7 +25,7 @@
     @if($errors->any())<div class="notice error" role="alert"><strong>Please check your input.</strong><ul>@foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul></div>@endif
     @yield('content')
 </main>
-<footer>Training Assessment Tracker · Foundation milestone <span>Human decisions. Traceable progress.</span></footer>
+<footer>Training Assessment Tracker · Learning workspace <span>Human decisions. Traceable progress.</span></footer>
 @livewireScripts
 </body>
 </html>

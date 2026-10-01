@@ -14,7 +14,7 @@ export default defineConfig({
     timeout: 60000,
     workers: 1,
     reporter: [['list'], ['html', { open: 'never' }]],
-    use: { baseURL: 'http://127.0.0.1:8123', channel: 'chrome', trace: 'retain-on-failure' },
+    use: { baseURL: 'http://127.0.0.1:8123', channel: 'chrome', trace: 'retain-on-failure', screenshot: 'only-on-failure', actionTimeout: 15000 },
     webServer: {
         command: 'php -S 127.0.0.1:8123 -t public scripts/browser-router.php',
         url: 'http://127.0.0.1:8123/login',

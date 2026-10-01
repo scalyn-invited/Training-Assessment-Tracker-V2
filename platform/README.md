@@ -2,6 +2,8 @@
 
 B01/B02 local foundation: scoped Blade/Livewire workspaces, synthetic identity/delegation and directory harnesses, private files, audit records, database queue and transactional outbox. Live OIDC/MFA, primary integration and scanning remain pending.
 
+B03 learning setup adds a resumable onboarding wizard, manual assessment confirmation, shared member calendars, versioned curriculum editing and exact-version coordinator approval. Open an enrolment and choose **Onboarding and plan setup**. See the [Milestone 02 guide](docs/MILESTONE_02.md) for the complete workflow and limits.
+
 ## Local setup
 
 Requirements: PHP 8.2+ with PDO SQLite (or PDO MySQL for MariaDB), mbstring, OpenSSL, fileinfo, DOM/XML and cURL; Composer. Node is only needed for browser tests.
@@ -37,7 +39,7 @@ npm.cmd ci
 npm.cmd run test:browser
 ```
 
-On non-Windows systems use npm instead of npm.cmd. Browser tests require installed Google Chrome, use an isolated .runtime/browser.sqlite file and a temporary web server on 127.0.0.1:8123. MariaDB tests require an isolated training_foundation_test database; read the operations guide before running them. Never supply production database credentials.
+On non-Windows systems use npm instead of npm.cmd. Browser tests require installed Google Chrome, reset only the isolated .runtime/browser.sqlite fixture and use a temporary web server on 127.0.0.1:8123. MariaDB tests require an isolated training_foundation_test database; read the operations guide before running them. Never supply production database credentials.
 
 - [Milestone verification](docs/MILESTONE_01.md)
 - [Identity and directory trust contract](docs/IDENTITY_AND_DIRECTORY_CONTRACT.md)
