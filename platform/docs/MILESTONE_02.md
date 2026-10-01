@@ -29,7 +29,7 @@ This increment implements the local B03 learning setup journey. AI generation, l
 
 ## Verification
 
-Local verification on 1 October 2026: SQLite 42 tests / 203 assertions; MariaDB 44 tests / 221 assertions; all five Chrome browser tests passed (3.3 minutes). Pint, Composer validation, Blade compilation and a non-destructive local setup run passed. Screenshots were visually reviewed: [mobile draft recovery](evidence/onboarding-mobile.png), [approved curriculum editor](evidence/curriculum-approved.png). GitHub checks on the PR provide the clean-checkout result.
+Local verification on 1 October 2026: SQLite 42 tests; MariaDB 44 tests; all five Chrome browser tests passed. The final two onboarding/editor browser tests passed again after the submission and business-day fixes. Pint, Composer validation, Blade compilation and a non-destructive local setup run passed. Screenshots were visually reviewed: [mobile draft recovery](evidence/onboarding-mobile.png), [approved curriculum editor](evidence/curriculum-approved.png). GitHub checks on the PR provide the clean-checkout result.
 
 Executable coverage lives in:
 - `tests/Feature/LearningTest.php`: persistence, stale-save conflicts, role/scope/confirmation boundaries, all duration and minute limits, holiday/timezone cutoffs, lesson/rubric validation, exact approvals, immutable history, overlapping plans, calendar conflicts and revocation/self-approval rejection.
