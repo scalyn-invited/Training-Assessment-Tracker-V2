@@ -21,7 +21,7 @@
 <label for="objective">Learning objective</label><textarea id="objective" name="data[objective]" rows="3" maxlength="4000">{{ $block['objective'] }}</textarea>
 <label for="prerequisites">Prerequisites and sequence</label><textarea id="prerequisites" name="data[prerequisites]" rows="2" maxlength="4000">{{ $block['prerequisites'] }}</textarea>
 <label>Target competency number<input type="number" name="data[competency]" min="1" value="{{ $block['competency'] }}"></label>
-<fieldset class="lesson"><legend>Assessment rubric</legend><p>Stable criteria: block-{{ $blockIndex+1 }}-one and block-{{ $blockIndex+1 }}-two. Score range 0–100; weights must total 1. Criteria reference this block’s selected competency and the evidence required by lesson completion criteria.</p>
+<fieldset class="lesson"><legend>Assessment rubric</legend><p>Score range 0–100; weights must total 1. Criteria reference this block’s selected competency and the evidence required by lesson completion criteria.</p>
 <div class="form-grid">@foreach(['one','two'] as $key)<label>Criterion {{ $key }} and evidence expectations<textarea name="data[criterion_{{ $key }}]" rows="3" maxlength="2000">{{ $block['criterion_'.$key] }}</textarea></label><label>Weight {{ $key }}<input type="number" step="0.01" min="0" max="1" name="data[weight_{{ $key }}]" value="{{ $block['weight_'.$key] }}"></label>@endforeach</div></fieldset>
 @foreach($block['lessons'] as $i=>$lesson)
 <details class="lesson" @if($loop->first) open @endif><summary>Day {{ $i+1 }} · {{ $lesson['date'] }} · {{ $lesson['title'] ?? 'Lesson content needed' }}</summary>

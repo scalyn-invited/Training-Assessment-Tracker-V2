@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\ProgrammeVersion;
 use App\Services\Access;
+use App\Services\LearningCalendar;
 use App\Services\LearningPlans;
 use App\Services\Onboarding;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class LearningController
 {
@@ -22,8 +24,19 @@ class LearningController
         $coordinator = $request->user()->role === 'coordinator' && $request->user()->id !== $enrolment->member_id;
         $editable = $coordinator || in_array($step, ['profile', 'assessment', 'schedule']);
         $plan = app(LearningPlans::class)->latest($enrolment);
+        $preview = null;
+        $schedule = $data['schedule'] ?? [];
+        if (isset($schedule['duration'], $schedule['daily_minutes'], $schedule['start_date']) && $calendar) {
+            try {
+                $blocks = app(LearningCalendar::class)->blocks($calendar, $schedule['start_date'], (int) $schedule['duration']);
+                $days = array_sum(array_map(fn ($block) => count($block['days']), $blocks));
+                $preview = ['days' => $days, 'minutes' => $days * (int) $schedule['daily_minutes']];
+            } catch (ValidationException) {
+                // An incomplete or unavailable schedule stays editable; creation reports precise errors.
+            }
+        }
 
-        return view('learning.onboarding', compact('enrolment', 'draft', 'calendar', 'step', 'data', 'coordinator', 'editable', 'plan'));
+        return view('learning.onboarding', compact('enrolment', 'draft', 'calendar', 'step', 'data', 'coordinator', 'editable', 'plan', 'preview'));
     }
 
     public function save(Request $request, string $id, string $step, Onboarding $service, Access $access)

@@ -44,7 +44,8 @@
 @if($editable)<div class="form-actions"><button class="primary">Save draft</button>@if($step === 'assessment' && $coordinator)<button class="secondary" name="confirm_assessment" value="1">Confirm assessment findings</button>@endif</div><p class="save-status" role="status" aria-live="polite">Changes save automatically after a short pause. Keep this page open until “Draft saved” appears.</p>@endif
 </form></section>
 @else
-<section class="panel"><h2>Review the saved inputs</h2><p>No data is sent to AI. This milestone creates a manual curriculum draft, which needs usable content and exact-version approval before it is ready.</p>
+<section class="panel"><h2>Review the saved inputs</h2><p>No data is sent to AI. Create a manual curriculum draft, then complete every lesson and approve its exact version before the plan is ready.</p>
+@if($preview)<p class="notice">Budget estimate using the confirmed shared calendar: {{ $preview['days'] }} scheduled days · {{ $preview['minutes'] }} minutes ({{ number_format($preview['minutes']/60, 1) }} hours). All reading, practice, assessment and revision must fit within this budget. Creation checks that your saved availability matches the confirmed calendar.</p>@endif
 @foreach(App\Services\Onboarding::STEPS as $key=>$label)<details class="review-section"><summary>{{ $label }} · {{ isset($data[$key]) ? 'saved, review completeness below' : 'not saved' }}</summary>
 @if(isset($data[$key]))<dl>@foreach($data[$key] as $field=>$value)@continue(in_array($field,['confirmed_by','confirmed_at']))
 <div><dt>{{ str_replace('_',' ',ucfirst($field)) }}</dt><dd>@if(is_array($value))@foreach($value as $entry)@if(is_array($entry))<p>{{ implode(' · ', $entry) }}</p>@else{{ $entry }}{{ !$loop->last ? ', ' : '' }}@endif@endforeach @else{{ $value }}@endif</dd></div>@endforeach</dl>@endif</details>@endforeach
