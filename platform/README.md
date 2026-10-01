@@ -4,6 +4,8 @@ B01/B02 local foundation: scoped Blade/Livewire workspaces, synthetic identity/d
 
 B03 learning setup adds a resumable onboarding wizard, manual assessment confirmation, shared member calendars, versioned curriculum editing and exact-version coordinator approval. Open an enrolment and choose **Onboarding and plan setup**. See the [Milestone 02 guide](docs/MILESTONE_02.md) for the complete workflow and limits.
 
+B04 adds queued block generation, draft revision notes, a deterministic synthetic mock, Anthropic/Gemini HTTP adapters, administrator task routing, cost reservations and failure reconciliation. See [Milestone 03](docs/MILESTONE_03.md). Real providers are disabled; HTTP contract tests do not establish live calibration.
+
 ## Local setup
 
 Requirements: PHP 8.2+ with PDO SQLite (or PDO MySQL for MariaDB), mbstring, OpenSSL, fileinfo, DOM/XML and cURL; Composer. Node is only needed for browser tests.
@@ -22,10 +24,11 @@ In separate terminals:
 
 ```powershell
 php artisan queue:work --queue=notifications --tries=3 --timeout=120
+php artisan queue:work --queue=ai_generation --tries=1 --timeout=120
 php artisan schedule:work
 ```
 
-The first processes local notification receipts. The second recovers committed outbox work if initial queue dispatch was lost. Neither sends email. Static CSS is checked in; Livewire serves its own JavaScript, so the application has no Node runtime/build dependency.
+Run these as separate processes. The notification worker processes local receipts; the AI worker processes one bounded block per job. The scheduler recovers dispatch gaps, flags interrupted provider calls and removes old temporary AI traces. Local defaults make no AI network calls and send no email. Static CSS is checked in; Livewire serves its own JavaScript, so the application has no Node runtime/build dependency.
 
 ## Verification
 

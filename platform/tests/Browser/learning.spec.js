@@ -1,5 +1,7 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+import { spawnSync } from 'node:child_process';
+import { browserEnv } from '../../playwright.config.js';
 
 async function login(page, name) {
     await page.goto('/login');
@@ -138,4 +140,37 @@ test('coordinator completes onboarding, writes every block and approves the exac
     await page.screenshot({ path: 'test-results/curriculum-approved.png', fullPage: true });
     await page.setViewportSize({ width: 390, height: 844 });
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+
+    await page.getByText('Generate or revise with AI', { exact: true }).click();
+    await page.getByLabel('Revision notes (optional)').fill('Synthetic generation demonstration; keep the approved baseline available.');
+    await page.getByRole('button', { name: 'Queue curriculum generation' }).click();
+    await expect(page).toHaveURL(/generation\//);
+    await expect(page.locator('#generation-progress')).toContainText('0 of 4 blocks complete');
+    const worker = spawnSync('php', ['artisan', 'queue:work', '--queue=ai_generation', '--stop-when-empty', '--tries=1', '--timeout=120'], { env: browserEnv, encoding: 'utf8', timeout: 45000 });
+    expect(worker.status, worker.stderr + worker.stdout).toBe(0);
+    await expect(page.locator('#generation-progress')).toContainText('4 of 4 blocks complete', { timeout: 15000 });
+    await expect(page.locator('#generation-cost')).toContainText('Reserved: 0');
+    await expect(page.locator('#generation-attempts li')).toHaveCount(4);
+    await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(244, 247, 245)');
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    expect((await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze()).violations).toEqual([]);
+    await page.screenshot({ path: 'test-results/generation-complete-mobile.png', fullPage: true });
+    await page.getByRole('link', { name: 'Review generated draft' }).click();
+    await expect(page.getByLabel('Learning objective', { exact: true })).toHaveValue(/Synthetic block 1/);
+    await expect(page.locator('.badge').first()).toHaveText('Draft');
+    await expect(page.getByRole('button', { name: 'Validate all blocks and request review' })).toBeVisible();
+    await page.screenshot({ path: 'test-results/generated-draft.png', fullPage: true });
+});
+
+test('administrator versions task routing without exposing credentials', async ({ page }) => {
+    await page.goto('/login');
+    await page.getByRole('button', { name: /Alex/ }).click();
+    await page.getByRole('link', { name: 'AI settings' }).click();
+    await expect(page.getByRole('heading', { name: 'AI provider settings' })).toBeVisible();
+    await page.getByRole('button', { name: 'Save generate programme route', exact: true }).click();
+    await expect(page.getByText('New routing version saved. Existing runs retain their pinned configuration.')).toBeVisible();
+    await page.setViewportSize({ width: 390, height: 844 });
+    await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(244, 247, 245)');
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    expect((await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze()).violations).toEqual([]);
 });

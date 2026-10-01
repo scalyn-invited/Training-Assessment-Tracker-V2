@@ -29,6 +29,8 @@ The nested `archify-upskilling-20260929-181205/archify-upskilling-20260929-18120
 
 The B03 implementation and limits are recorded in `platform/docs/MILESTONE_02.md`. Learning mutations serialize on the member row, retain onboarding/calendar/content revisions, and bind approval to exact input versions. Preserve these rules when extending active learning, AI generation or adaptation.
 
+B04 generation is documented in `platform/docs/MILESTONE_03.md`. Reserve spend under the organisation lock before queue admission. Treat `ai_blocks` as a durable dispatch ledger, recheck permission/input/provider policy before calls, and keep provider I/O outside database transactions. Ambiguous calls never auto-retry or release their reservations. Generated blocks can create only a validated draft; the existing exact-version human approval gate remains mandatory. Provider contract tests use HTTP fakes, not live credentials.
+
 - Use a Laravel modular monolith with Blade and small Livewire components, MariaDB, database-backed queues, locks and sessions, private storage, and a separate worker/scheduler running the same application code.
 - Keep domain policies and state transitions in application services/policies, not only UI checks or model prompts. Enforce invariants in every applicable HTTP, job, integration and download path.
 - Verify and pin supported PHP/Laravel/dependency versions at build time. Commit dependency lockfiles and document reproducible setup and actual test commands once available.

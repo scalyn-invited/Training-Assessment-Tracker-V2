@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AiController;
 use App\Http\Controllers\LearningController;
 use App\Http\Controllers\SandboxApiController;
 use App\Http\Controllers\SessionController;
@@ -12,6 +13,11 @@ Route::get('/login', [SessionController::class, 'create'])->name('login');
 Route::post('/login', [SessionController::class, 'store'])->middleware('throttle:10,1')->name('login.store');
 Route::post('/logout', [SessionController::class, 'destroy'])->name('logout');
 Route::middleware(TrainingSession::class)->group(function () {
+    Route::get('/settings/ai', [AiController::class, 'settings'])->name('ai.settings');
+    Route::post('/settings/ai', [AiController::class, 'policy'])->name('ai.policy');
+    Route::post('/settings/ai/{id}/reconcile', [AiController::class, 'reconcile'])->name('ai.reconcile');
+    Route::post('/enrolments/{id}/generation', [AiController::class, 'request'])->middleware('throttle:10,1')->name('ai.request');
+    Route::get('/generation/{id}', [AiController::class, 'show'])->name('ai.show');
     Route::get('/enrolments/{id}/onboarding', [LearningController::class, 'onboarding'])->name('onboarding.show');
     Route::post('/enrolments/{id}/onboarding/calendar', [LearningController::class, 'calendar'])->name('onboarding.calendar');
     Route::post('/enrolments/{id}/onboarding/{step}', [LearningController::class, 'save'])->name('onboarding.save');
