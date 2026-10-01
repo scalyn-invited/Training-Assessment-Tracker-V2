@@ -29,6 +29,7 @@ jobs:
           php-version: '8.2'
           extensions: mbstring, pdo_sqlite
           coverage: none
+          ini-values: opcache.jit=off, opcache.jit_buffer_size=0
           tools: composer:v2
       - run: composer validate --strict --no-check-publish
       - run: composer install --no-interaction --prefer-dist --no-progress
@@ -69,6 +70,7 @@ jobs:
           php-version: '8.2'
           extensions: mbstring, pdo_mysql, pdo_sqlite
           coverage: none
+          ini-values: opcache.jit=off, opcache.jit_buffer_size=0
           tools: composer:v2
       - run: composer install --no-interaction --prefer-dist --no-progress
       - name: Configure isolated application
@@ -88,6 +90,7 @@ jobs:
           php-version: '8.2'
           extensions: mbstring, pdo_sqlite
           coverage: none
+          ini-values: opcache.jit=off, opcache.jit_buffer_size=0
           tools: composer:v2
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:

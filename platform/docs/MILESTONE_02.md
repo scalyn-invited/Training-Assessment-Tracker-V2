@@ -37,6 +37,8 @@ Executable coverage lives in:
 
 Run the existing SQLite, MariaDB and browser commands in the application README. Browser setup resets only the fixed ignored `.runtime/browser.sqlite` fixture; normal application setup remains non-destructive.
 
+CI explicitly disables PHP JIT while leaving OPcache available. The runner reproduced a Carbon type error in Laravel session-cookie date arithmetic after calendar requests; the same JIT-related failure is tracked in [Laravel issue 51360](https://github.com/laravel/framework/issues/51360). Host qualification must verify PHP settings and the complete browser journey; CI does not qualify an arbitrary JIT configuration.
+
 ## Scope boundaries
 
 - Manual confirmation and manual content editing are implemented. Document extraction, AI interpretation, asynchronous generation/revision and provider gateways remain B04/integration work.

@@ -55,6 +55,7 @@ test('onboarding autosaves, survives reload, and retains input after network fai
     await page.getByLabel('Current role', { exact: true }).fill('Keep my conflicting draft');
     await expect(page.locator('.save-status')).toContainText('changed in another window');
     await expect(page.getByLabel('Current role', { exact: true })).toHaveValue('Keep my conflicting draft');
+    await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(244, 247, 245)');
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     expect((await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze()).violations).toEqual([]);
     await page.screenshot({ path: 'test-results/onboarding-mobile.png', fullPage: true });
@@ -127,6 +128,7 @@ test('coordinator completes onboarding, writes every block and approves the exac
     await page.getByLabel('Approval rationale').fill('All lessons, resource access, rubric weights and shared capacity reviewed.');
     await page.getByRole('button', { name: /Approve exact version/ }).click();
     await expect(page.getByText('Exact plan version approved. Enrolment is ready; training has not started.', { exact: true })).toBeVisible();
+    await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(244, 247, 245)');
     expect((await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze()).violations).toEqual([]);
     await page.screenshot({ path: 'test-results/curriculum-approved.png', fullPage: true });
     await page.setViewportSize({ width: 390, height: 844 });
