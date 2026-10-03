@@ -2,6 +2,9 @@ import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { spawnSync } from 'node:child_process';
 import { browserEnv } from '../../playwright.config.js';
+import { resetScenarioCache } from './isolated-cache.js';
+
+test.beforeEach(resetScenarioCache);
 
 async function login(page, name) {
     await page.goto('/login');

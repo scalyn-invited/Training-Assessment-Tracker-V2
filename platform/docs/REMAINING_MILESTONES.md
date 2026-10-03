@@ -1,6 +1,6 @@
 # Remaining milestones — implementation ledger
 
-Started 3 October 2026 from merged Milestone 3. Work in progress; this file is not a completion claim.
+Started 3 October 2026 from merged Milestone 3. Local implementation is available for review; production gates remain open.
 
 Order: B05 learner delivery/review; B06 versioned KPIs and N+2 adaptation; B07 scoped source-platform integration; B08 deployment/operations/restore; B09 isolated pilot harness and human calibration gates.
 
@@ -34,9 +34,9 @@ See [local workflows](LOCAL_WORKFLOWS.md), [deployment preparation](DEPLOYMENT_P
 
 ## Final local verification, 3 October 2026
 
-- SQLite: **92 tests / 467 assertions passed**.
+- SQLite: **93 tests / 508 assertions passed**, including the login-rate-limit regression check.
 - MariaDB 11.4.13: **96 tests / 500 assertions passed**, including concurrency scenarios.
 - Chrome: **6 browser tests passed**, including mobile receipt/progress accessibility and the complete generation-to-reviewed-feedback journey.
 - Pint, Composer strict validation, Blade compilation and JavaScript syntax checks passed.
 - Latest isolated restore rehearsal passed in **4.014 seconds**; [restore report](evidence/restore-drill-2026-10-03.json). [Load report](evidence/load-rehearsal-2026-10-03.json) retains its limitations and measured p95.
-- Hosted PR/CI evidence will be recorded after publication. No production-readiness claim follows from these local checks.
+- [PR #4](https://github.com/scalyn-invited/Training-Assessment-Tracker-V2/pull/4) contains the local implementation. Its first hosted run passed SQLite and MariaDB; the browser artifact confirmed HTTP 429 after independent scenarios shared a login budget. The browser fixture now clears only its isolated cache before each scenario, with an application regression test preserving the real login limit. Refer to the PR checks for the latest hosted result. No production-readiness claim follows from these checks.

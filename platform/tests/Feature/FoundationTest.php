@@ -235,6 +235,16 @@ class FoundationTest extends TestCase
         $this->post('/enrolments/'.$e->id.'/files', ['evidence' => UploadedFile::fake()->create('huge.pdf', 20481, 'application/pdf')])->assertSessionHasErrors('evidence');
     }
 
+    public function test_login_throttle_remains_enforced_across_fresh_sessions(): void
+    {
+        $identity = Identity::where('user_id', $this->user()->id)->firstOrFail();
+        for ($attempt = 0; $attempt < 10; $attempt++) {
+            $this->post('/login', ['identity_id' => $identity->id])->assertRedirect('/dashboard');
+            $this->post('/logout')->assertRedirect('/login');
+        }
+        $this->post('/login', ['identity_id' => $identity->id])->assertStatus(429);
+    }
+
     public function test_outbox_and_audit_commit_atomically_and_replay_deduplicates(): void
     {
         $actor = $this->user();
