@@ -1,0 +1,21 @@
+{
+    "kind": "isolated SQLite synthetic restore",
+    "passed": true,
+    "counts": {
+        "users": 5,
+        "enrolments": 2,
+        "identities": 5,
+        "evidence_files": 2,
+        "outbox_events": 1
+    },
+    "private_file_hashes": "matched",
+    "authenticated_encryption": "round trip and tamper rejection passed",
+    "deletion_ledger": "post-backup deletion reapplied",
+    "outbox": "duplicate replay produced one sink receipt",
+    "seconds": 4.014,
+    "limitations": [
+        "Not a MariaDB server restore",
+        "Uses a synthetic application key and mock IdP fixture",
+        "No production key, IdP, offsite storage, RPO or RTO qualification"
+    ]
+}

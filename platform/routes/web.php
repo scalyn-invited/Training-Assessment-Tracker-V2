@@ -1,7 +1,11 @@
 <?php
 
+use App\Http\Controllers\AdministrationController;
 use App\Http\Controllers\AiController;
+use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\LearningController;
+use App\Http\Controllers\NotificationsController;
+use App\Http\Controllers\ProgressionController;
 use App\Http\Controllers\SandboxApiController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\WorkspaceController;
@@ -13,6 +17,23 @@ Route::get('/login', [SessionController::class, 'create'])->name('login');
 Route::post('/login', [SessionController::class, 'store'])->middleware('throttle:10,1')->name('login.store');
 Route::post('/logout', [SessionController::class, 'destroy'])->name('logout');
 Route::middleware(TrainingSession::class)->group(function () {
+    Route::get('/reviews', [DeliveryController::class, 'reviews'])->name('reviews.show');
+    Route::get('/notifications', [NotificationsController::class, 'show'])->name('notifications.show');
+    Route::post('/notifications', [NotificationsController::class, 'preference'])->name('notifications.preference');
+    Route::get('/administration', [AdministrationController::class, 'show'])->name('administration.show');
+    Route::post('/administration', [AdministrationController::class, 'act'])->name('administration.act');
+    Route::get('/enrolments/{id}/progress', [ProgressionController::class, 'show'])->name('progress.show');
+    Route::post('/enrolments/{id}/progress', [ProgressionController::class, 'act'])->name('progress.act');
+    Route::get('/enrolments/{id}/learn', [DeliveryController::class, 'show'])->name('delivery.show');
+    Route::post('/enrolments/{id}/activate', [DeliveryController::class, 'activate'])->name('delivery.activate');
+    Route::post('/enrolments/{id}/lifecycle', [DeliveryController::class, 'lifecycle'])->name('delivery.lifecycle');
+    Route::get('/lessons/{id}/{index}', [DeliveryController::class, 'lesson'])->whereNumber('index')->name('delivery.lesson');
+    Route::post('/lessons/{id}/{index}/save', [DeliveryController::class, 'save'])->whereNumber('index')->name('delivery.save');
+    Route::post('/lessons/{id}/{index}/quiz', [DeliveryController::class, 'quiz'])->whereNumber('index')->name('delivery.quiz');
+    Route::post('/lessons/{id}/{index}/submit', [DeliveryController::class, 'submit'])->whereNumber('index')->name('delivery.submit');
+    Route::post('/blocks/{id}/early-start', [DeliveryController::class, 'early'])->name('delivery.early');
+    Route::get('/submissions/{id}', [DeliveryController::class, 'receipt'])->name('submission.show');
+    Route::post('/submissions/{id}/review', [DeliveryController::class, 'review'])->name('submission.review');
     Route::get('/settings/ai', [AiController::class, 'settings'])->name('ai.settings');
     Route::post('/settings/ai', [AiController::class, 'policy'])->name('ai.policy');
     Route::post('/settings/ai/{id}/reconcile', [AiController::class, 'reconcile'])->name('ai.reconcile');
@@ -35,4 +56,5 @@ Route::middleware(TrainingSession::class)->group(function () {
 });
 // Read-only sandbox contract proof. Live delegated identity is deliberately not advertised as implemented.
 Route::get('/api/v1/me/training', [SandboxApiController::class, 'summary'])->middleware('throttle:60,1');
+Route::get('/api/v1/training/changes', [SandboxApiController::class, 'changes'])->middleware('throttle:60,1');
 Route::get('/api/v1/members/{memberId}/summary', [SandboxApiController::class, 'summary'])->middleware('throttle:60,1');

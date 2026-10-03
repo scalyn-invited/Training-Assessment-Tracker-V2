@@ -1,11 +1,16 @@
 <?php
 
 use App\Jobs\DeliverOutbox;
+use App\Jobs\WorkerHeartbeat;
 use App\Models\Organisation;
 use App\Models\OutboxEvent;
 use App\Models\User;
 use App\Services\Ai\Generation;
+use App\Services\FileScanning;
+use App\Services\LearningNotices;
 use App\Services\MockIdentity;
+use App\Services\Operations;
+use App\Services\Promotions;
 use App\Services\SandboxDirectory;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schedule;
@@ -21,6 +26,37 @@ Artisan::command('training:outbox', function () {
     $this->info("Dispatched {$count} pending event(s). Duplicate deliveries are safe.");
 })->purpose('Recover committed outbox events, including dispatch gaps after a crash');
 Schedule::command('training:outbox')->everyMinute()->withoutOverlapping();
+
+Artisan::command('training:notices', function () {
+    app(LearningNotices::class)->recover();
+    $this->info('Pending learning notices dispatched; uncertain sends remain held.');
+});
+Schedule::command('training:notices')->everyMinute()->withoutOverlapping();
+Artisan::command('training:promotions', function () {
+    app(Promotions::class)->recover();
+});
+Schedule::command('training:promotions')->everyMinute()->withoutOverlapping();
+Artisan::command('training:scan-recover', function () {
+    app(FileScanning::class)->recover();
+});
+Schedule::command('training:scan-recover')->everyFiveMinutes()->withoutOverlapping();
+Artisan::command('training:health', function () {
+    $report = app(Operations::class)->report();
+    $this->line(json_encode($report, JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR));
+
+    return count($report['stale_components']) || $report['failed_jobs'] ? 1 : 0;
+})->purpose('Emit operational metadata without assessment bodies or secrets');
+Artisan::command('training:heartbeat', function () {
+    app(Operations::class)->heartbeat('scheduler');
+    WorkerHeartbeat::dispatch();
+});
+Schedule::command('training:heartbeat')->everyMinute()->withoutOverlapping();
+Artisan::command('training:retention {--apply}', function () {
+    $this->line(json_encode(app(Operations::class)->retain((bool) $this->option('apply')), JSON_THROW_ON_ERROR));
+})->purpose('Dry-run evidence retention; --apply also requires an approved configured policy');
+Artisan::command('training:reapply-deletions', function () {
+    $this->info('Private objects removed: '.app(Operations::class)->reapplyDeletions());
+})->purpose('Reapply the durable deletion ledger before making a restored system available');
 
 Artisan::command('training:ai-recover', function () {
     $count = app(Generation::class)->recover();

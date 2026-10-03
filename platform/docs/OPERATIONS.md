@@ -1,5 +1,7 @@
 # Foundation operations
 
+Historical B01/B02 notes below. For the current local release candidate, use [Deployment preparation](DEPLOYMENT_PREPARATION.md), [Local workflows](LOCAL_WORKFLOWS.md), and the [verification ledger](REMAINING_MILESTONES.md). Later implementations supersede the feature-status statements in this foundation record.
+
 ## Runtime
 
 The locked local build uses Laravel 12.69.3, Livewire 3.8.10 and PHP 8.2-compatible dependencies. The workstation PHP 8.2.12 is a local development runtime; choose a current patched supported PHP runtime before deployment. Laravel 12 was selected to match this machine and its security support ends 24 February 2027: https://laravel.com/framework/docs/12.x/releases. Plan the PHP/Laravel upgrade before that boundary.

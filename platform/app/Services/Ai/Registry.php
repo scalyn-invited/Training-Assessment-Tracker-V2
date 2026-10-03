@@ -60,9 +60,9 @@ class Registry
         ]));
     }
 
-    public function snapshot(Enrolment $enrolment): array
+    public function snapshot(Enrolment $enrolment, string $task = 'generate_programme'): array
     {
-        $task = 'generate_programme';
+        abort_unless(in_array($task, self::TASKS), 422);
         $policy = $this->policy($enrolment->organisation_id, $enrolment->environment, $task);
         $profiles = [];
         foreach ($policy?->routing ?? ['mock'] as $id) {
