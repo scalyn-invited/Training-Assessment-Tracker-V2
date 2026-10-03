@@ -230,6 +230,7 @@ class LearningPlans
                 'timezone' => $plan->calendar->timezone, 'duration_weeks' => $plan->onboarding->data['schedule']['duration'],
                 'daily_minutes' => $plan->onboarding->data['schedule']['daily_minutes']]);
             Audit::record($actor, 'programme.approved', $plan->id, ['version' => $plan->version]);
+            app(ApprovedFeed::class)->record($enrolment, $plan->id, $plan->version, 'programme.approved', ['title' => $enrolment->title, 'programme_version_id' => $plan->id, 'status' => 'approved']);
 
             return $plan;
         });

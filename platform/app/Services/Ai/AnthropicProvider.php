@@ -8,7 +8,7 @@ class AnthropicProvider implements Provider
     {
         $response = app(Transport::class)->send($configuration, ['x-api-key' => config($configuration['secret_reference']), 'anthropic-version' => '2023-06-01'], [
             'model' => $configuration['model'], 'max_tokens' => $configuration['max_output_tokens'],
-            'system' => BlockContract::PROMPT,
+            'system' => $configuration['prompt'] ?? BlockContract::PROMPT,
             'messages' => [['role' => 'user', 'content' => json_encode($input, JSON_THROW_ON_ERROR)]],
         ]);
         $body = $response->json();

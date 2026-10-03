@@ -27,6 +27,10 @@ The nested `archify-upskilling-20260929-181205/archify-upskilling-20260929-18120
 
 ## Architecture and repository practices
 
+The remaining-milestones branch implements delivery, reviewed evidence/KPIs, future adaptation, integration boundaries and operational readiness in sequence. Live credentials and pilot acceptance are separate gates. Never substitute fixed mock scores for calibrated grading, publish provisional results, or mark deployment/restore/pilot work complete without execution evidence. Keep a running verification and live-dependency ledger in `platform/docs/REMAINING_MILESTONES.md`.
+
+The user confirmed no live services are ready; complete local workflows and deployment preparation. Preserve the distinction between local contract tests and implemented live identity/delegation. Submitted snapshots pin rubric and private objective answer keys; members receive only their selected answers and human-approved feedback. A member's own clean supporting-evidence upload is accessible to that member; sensitive third-party assessments still require the separate capability. Retention is dry-run by default, legal holds exclude evidence objects, and deletion ledgers must be reapplied before restored data is exposed.
+
 The B03 implementation and limits are recorded in `platform/docs/MILESTONE_02.md`. Learning mutations serialize on the member row, retain onboarding/calendar/content revisions, and bind approval to exact input versions. Preserve these rules when extending active learning, AI generation or adaptation.
 
 B04 generation is documented in `platform/docs/MILESTONE_03.md`. Reserve spend under the organisation lock before queue admission. Treat `ai_blocks` as a durable dispatch ledger, recheck permission/input/provider policy before calls, and keep provider I/O outside database transactions. Ambiguous calls never auto-retry or release their reservations. Generated blocks can create only a validated draft; the existing exact-version human approval gate remains mandatory. Provider contract tests use HTTP fakes, not live credentials.

@@ -7,7 +7,7 @@ class GeminiProvider implements Provider
     public function generate(array $configuration, array $input): ProviderResult
     {
         $response = app(Transport::class)->send($configuration, ['x-goog-api-key' => config($configuration['secret_reference'])], [
-            'systemInstruction' => ['parts' => [['text' => BlockContract::PROMPT]]],
+            'systemInstruction' => ['parts' => [['text' => $configuration['prompt'] ?? BlockContract::PROMPT]]],
             'contents' => [['role' => 'user', 'parts' => [['text' => json_encode($input, JSON_THROW_ON_ERROR)]]]],
             'generationConfig' => ['maxOutputTokens' => $configuration['max_output_tokens'], 'responseMimeType' => 'application/json'],
         ]);

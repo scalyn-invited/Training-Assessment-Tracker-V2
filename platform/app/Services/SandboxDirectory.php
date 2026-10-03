@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Enrolment;
 use App\Models\Organisation;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -11,6 +12,22 @@ use Illuminate\Support\Str;
 // Canonical directory contract proof using synthetic local data. No external HTTP is performed.
 class SandboxDirectory
 {
+    public function page(Organisation $organisation, ?string $expectedCursor, string $nextCursor, array $events): void
+    {
+        app(MockIdentity::class)->assertEnabled();
+        abort_unless(strlen($nextCursor) <= 255 && count($events) <= 100, 422);
+        DB::transaction(function () use ($organisation, $expectedCursor, $nextCursor, $events) {
+            Organisation::whereKey($organisation->id)->lockForUpdate()->firstOrFail();
+            $scope = ['organisation_id' => $organisation->id, 'environment' => 'test', 'stream' => 'directory'];
+            $cursor = DB::table('integration_cursors')->where($scope)->first();
+            abort_unless(($cursor?->cursor ?? null) === $expectedCursor, 409, 'Directory cursor changed. Reconcile before continuing.');
+            foreach ($events as $event) {
+                $this->apply($organisation, $event);
+            }
+            DB::table('integration_cursors')->updateOrInsert($scope, ['id' => $cursor?->id ?? (string) Str::uuid(), 'cursor' => $nextCursor, 'last_success_at' => now(), 'updated_at' => now(), 'created_at' => $cursor?->created_at ?? now()]);
+        });
+    }
+
     public function apply(Organisation $organisation, array $event): string
     {
         app(MockIdentity::class)->assertEnabled();
@@ -73,6 +90,9 @@ class SandboxDirectory
                     } else {
                         abort_unless($user && $user->is_synthetic && $user->origin === 'primary_import' && $user->sync_policy === 'linked', 422, 'Unknown linked synthetic person.');
                         $user->update(['active' => false]);
+                        foreach (Enrolment::where('member_id', $user->id)->get() as $enrolment) {
+                            app(ApprovedFeed::class)->record($enrolment, $user->id, $event['entity_version'], 'person.tombstone', ['removed' => true]);
+                        }
                     }
                     $user->update(['directory_version' => $event['entity_version'], 'permissions_synced_at' => now(), 'permission_version' => $user->permission_version + 1]);
                     DB::table('sessions')->where('user_id', $user->id)->delete();

@@ -1,4 +1,4 @@
-name: Foundation CI
+name: Training Platform CI
 
 on:
   pull_request:
@@ -40,6 +40,7 @@ jobs:
       - run: php vendor/bin/pint --test
       - run: php artisan test --compact
       - run: php artisan view:cache
+      - run: php scripts/restore-drill.php
 
   mariadb:
     name: MariaDB and concurrent workers

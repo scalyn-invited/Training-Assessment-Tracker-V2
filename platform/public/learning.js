@@ -33,7 +33,9 @@ document.querySelectorAll('form[data-autosave], form[data-preserve-input]').forE
             }
             form.elements.expected_version.value = result.version;
             dirty = generation !== sentGeneration;
+            form.dataset.dirty = String(dirty);
             status.textContent = result.message + (dirty ? ' Newer edits are waiting to save.' : '');
+            form.dispatchEvent(new CustomEvent('draft:saved', { detail: { version: result.version, dirty } }));
             const confirmation = document.getElementById('assessment-confirmation');
             if (confirmation) confirmation.textContent = result.confirmed ? 'Confirmed by coordinator for the saved assessment.' : 'Assessment confirmation pending.';
         } catch (error) {
@@ -47,6 +49,7 @@ document.querySelectorAll('form[data-autosave], form[data-preserve-input]').forE
     }
     form.addEventListener('input', () => {
         dirty = true;
+        form.dataset.dirty = 'true';
         generation++;
         status.textContent = 'Unsaved changes.';
         if (form.hasAttribute('data-autosave') && !conflicted) {

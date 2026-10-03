@@ -1,0 +1,16 @@
+{
+  "kind": "local HTTP rehearsal",
+  "members": 100,
+  "concurrent_clients": 20,
+  "requests": 200,
+  "failures": 0,
+  "p50_ms": 6805,
+  "p95_ms": 8467,
+  "limitations": [
+    "PHP development server and SQLite; not deployment qualification",
+    "One synthetic authenticated administrator session",
+    "Client response timing includes queueing, rendering and body transfer; not isolated server p95",
+    "No production network, device, IdP, SMTP or live AI"
+  ],
+  "measured_at": "2026-10-03T01:06:05.039Z"
+}

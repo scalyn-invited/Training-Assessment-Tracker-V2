@@ -36,10 +36,11 @@ class Onboarding
         return MemberCalendar::where('member_id', $enrolment->member_id)->orderByDesc('version')->first();
     }
 
-    public function authorise(User $actor, Enrolment $enrolment): void
+    public function authorise(User $actor, Enrolment $enrolment, bool $alternateReview = false): void
     {
         abort_unless(app(Access::class)->canView($actor, $enrolment), 404);
         abort_unless($actor->id === $enrolment->member_id || ($actor->role === 'coordinator' && $actor->sensitive_access), 403);
+        abort_if($actor->role === 'coordinator' && $actor->id !== $enrolment->coordinator_id && ! $alternateReview, 403);
     }
 
     public function coordinator(User $actor, Enrolment $enrolment): void

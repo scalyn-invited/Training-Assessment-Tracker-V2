@@ -6,6 +6,8 @@ B03 learning setup adds a resumable onboarding wizard, manual assessment confirm
 
 B04 adds queued block generation, draft revision notes, a deterministic synthetic mock, Anthropic/Gemini HTTP adapters, administrator task routing, cost reservations and failure reconciliation. See [Milestone 03](docs/MILESTONE_03.md). Real providers are disabled; HTTP contract tests do not establish live calibration.
 
+B05–B09 local implementation adds lesson delivery, recoverable drafts, immutable submissions, deterministic quizzes, provisional grading and human decisions, appeals, KPI lineage, N+2 adaptation, pause/resume previews, completion, administration, promotion/feed contract boundaries, notifications and operational rehearsals. See the [delivery guide](docs/LOCAL_WORKFLOWS.md), [verification ledger](docs/REMAINING_MILESTONES.md) and [deployment preparation](docs/DEPLOYMENT_PREPARATION.md). Live services are not configured; this is a local release candidate, not an authorised production launch.
+
 ## Local setup
 
 Requirements: PHP 8.2+ with PDO SQLite (or PDO MySQL for MariaDB), mbstring, OpenSSL, fileinfo, DOM/XML and cURL; Composer. Node is only needed for browser tests.
@@ -25,6 +27,7 @@ In separate terminals:
 ```powershell
 php artisan queue:work --queue=notifications --tries=3 --timeout=120
 php artisan queue:work --queue=ai_generation --tries=1 --timeout=120
+php artisan queue:work --queue=ai_grading,extraction,integration --tries=1 --timeout=120
 php artisan schedule:work
 ```
 
@@ -40,6 +43,8 @@ php vendor/bin/phpunit -c phpunit.mariadb.xml
 php vendor/bin/pint --test
 npm.cmd ci
 npm.cmd run test:browser
+php scripts/restore-drill.php
+node scripts/load-rehearsal.mjs
 ```
 
 On non-Windows systems use npm instead of npm.cmd. Browser tests require installed Google Chrome, reset only the isolated .runtime/browser.sqlite fixture and use a temporary web server on 127.0.0.1:8123. MariaDB tests require an isolated training_foundation_test database; read the operations guide before running them. Never supply production database credentials.

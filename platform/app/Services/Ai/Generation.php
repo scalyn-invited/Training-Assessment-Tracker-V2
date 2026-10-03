@@ -230,9 +230,11 @@ class Generation
 
     public function prune(): int
     {
-        $ids = AiRun::whereNotIn('status', ['queued', 'running'])->where('updated_at', '<', now()->subDays(30))->pluck('id');
+        $ids = AiRun::whereNotIn('status', ['queued', 'running', 'ambiguous'])
+            ->whereNotIn('enrolment_id', DB::table('legal_holds')->whereNull('released_at')->select('enrolment_id'))
+            ->where('updated_at', '<', now()->subDays(30))->pluck('id');
         AiBlock::whereIn('ai_run_id', $ids)->update(['output' => null]);
-        AiRun::whereIn('id', $ids)->update(['feedback' => null]);
+        AiRun::whereIn('id', $ids)->update(['feedback' => null, 'task_input' => null]);
 
         return $ids->count();
     }
@@ -243,13 +245,19 @@ class Generation
             $this->locked($id, function ($run, $block) {
                 if ($block->status === 'running' && $block->started_at->lte(now()->subSeconds(180))) {
                     AiAttempt::where('ai_block_id', $block->id)->where('status', 'running')->update(['status' => 'ambiguous']);
+                    if ($run->configuration['task'] !== 'generate_programme') {
+                        app(TaskGateway::class)->fail($run, $block, 'ambiguous');
+
+                        return;
+                    }
                     $this->stop($run, $block, 'ambiguous', 'Worker stopped during a provider attempt. Reservation retained; reconcile before retrying.');
                 }
             });
         }
         $ids = AiBlock::where('status', 'queued')->where(fn ($query) => $query->whereNull('available_at')->orWhere('available_at', '<=', now()))->pluck('id');
         foreach ($ids as $id) {
-            GenerateBlock::dispatch($id);
+            $run = AiRun::findOrFail(AiBlock::findOrFail($id)->ai_run_id);
+            GenerateBlock::dispatch($id, $run->configuration['task'] === 'grade_submission' ? 'ai_grading' : 'ai_generation');
         }
 
         return $ids->count();

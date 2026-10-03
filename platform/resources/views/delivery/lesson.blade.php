@@ -1,0 +1,24 @@
+@extends('layouts.app')
+@section('title', $lesson['title'])
+@section('content')
+<a class="back" href="{{ route('delivery.show',$enrolment->id) }}">Back to learning plan</a>
+<p class="eyebrow">Block {{ $block->number }} · Version {{ $block->version }} · {{ $lesson['date'] }}</p><h1>{{ $lesson['title'] }}</h1>
+<section class="panel"><h2>Learning objective</h2><p>{{ $block->content['objective'] }}</p><p>Prerequisites: {{ $block->content['prerequisites'] }}</p>
+@foreach(['explanation'=>'Learn','example'=>'Worked example','activity'=>'Your activity','tools'=>'Permitted tools','completion'=>'Completion evidence'] as $key=>$label)<h2>{{ $label }}</h2><p class="preserve-lines">{{ $lesson[$key] }}</p>@endforeach
+<p>Time: reading {{ $lesson['reading'] }}, practice {{ $lesson['practice'] }}, assessment {{ $lesson['assessment'] }}, revision {{ $lesson['revision'] }} minutes.</p>
+<h2>Assessment criteria</h2><ul>@foreach($block->rubric['criteria'] as $criterion)<li>{{ $criterion['label'] }} · {{ $criterion['weight']*100 }}%</li>@endforeach</ul>
+@php($resource=\App\Models\ProgrammeVersion::find($block->programme_version_id)->onboarding->data['resources'])
+<h2>Approved resource</h2><p>{{ $resource['title'] }} · {{ $resource['reference'] }}</p><p>{{ $resource['access'] }}</p></section>
+@if(!$editable)<p class="notice">Preview only. Work opens on the scheduled date while your programme is active, or after coordinator-authorised early start.</p>@else
+<section class="panel"><h2>Your work</h2><form method="post" action="{{ route('delivery.save',[$block->id,$index]) }}" data-autosave>@csrf<input type="hidden" name="expected_version" value="{{ $draft?->version ?? 0 }}"><label for="work-body">Your response</label><textarea id="work-body" name="body" rows="10" maxlength="30000">{{ $draft?->body }}</textarea>
+@if($files->isNotEmpty())<fieldset><legend>Attach clean evidence</legend>@foreach($files as $file)<label><input type="checkbox" name="files[]" value="{{ $file->id }}" @checked(in_array($file->id,$draft?->files ?? []))>{{ $file->original_name }}</label>@endforeach</fieldset>@endif
+@if($quiz)<fieldset><legend>Objective questions</legend>@foreach($quiz->questions as $question)<label>{{ $question['prompt'] }}<select name="answers[{{ $question['id'] }}]"><option value="">Choose an answer</option>@foreach($question['options'] as $answerIndex=>$option)<option value="{{ $answerIndex }}" @selected(isset($draft?->answers[$question['id']]) && (string)$draft->answers[$question['id']]===(string)$answerIndex)>{{ $option }}</option>@endforeach</select></label>@endforeach</fieldset>@endif
+<button class="secondary">Save work</button><p class="save-status" role="status">Saving a draft does not submit it.</p></form>
+<p>Wait for “Draft saved”, then submit the saved work. Submission creates an immutable receipt.</p>
+<form method="post" data-submit-work action="{{ route('delivery.submit',[$block->id,$index]) }}">@csrf<input type="hidden" name="expected_version" value="{{ $draft?->version ?? 0 }}"><input type="hidden" name="idempotency_key" value="{{ Illuminate\Support\Str::uuid() }}"><button class="primary" @disabled(!$draft)>Submit saved work for review</button></form>
+</section><script src="{{ asset('learning.js') }}" defer></script><script src="{{ asset('work.js') }}" defer></script>@endif
+<section class="panel"><h2>Attempt history</h2><ul>@forelse($attempts as $attempt)<li><a href="{{ route('submission.show',$attempt->id) }}">Attempt {{ $attempt->attempt }} · {{ str_replace('_',' ',$attempt->status) }}</a></li>@empty<li>No submitted attempts. Your draft is private work in progress.</li>@endforelse</ul></section>
+@if($canConfigureQuiz)<section class="panel"><details><summary>Publish an objective quiz for this lesson</summary><p>Only use objectively verifiable questions. Each question maps to one rubric criterion. Publishing is final for this block version and closes once work starts or the block freezes.</p><form method="post" action="{{ route('delivery.quiz',[$block->id,$index]) }}">@csrf
+@foreach($block->rubric['criteria'] as $questionIndex=>$criterion)<fieldset><legend>{{ $criterion['label'] }}</legend><label>Question {{ $questionIndex+1 }}<textarea name="questions[{{ $questionIndex }}][prompt]" minlength="10" required></textarea></label><label>Answer options (2–4 lines)<textarea name="questions[{{ $questionIndex }}][options]" required></textarea></label><label>Correct option<select name="questions[{{ $questionIndex }}][correct]"><option value="0">First</option><option value="1">Second</option><option value="2">Third</option><option value="3">Fourth</option></select></label></fieldset>@endforeach
+<label>Review and publication reason<input name="reason" minlength="8" required></label><button class="primary">Publish reviewed quiz</button></form></details></section>@endif
+@endsection
