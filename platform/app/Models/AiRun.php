@@ -6,6 +6,6 @@ class AiRun extends Record
 {
     protected function casts(): array
     {
-        return ['configuration' => 'array', 'reserved' => 'integer', 'spent' => 'integer'];
+        return ['configuration' => 'array', 'task_input' => 'array', 'reserved' => 'integer', 'spent' => 'integer'];
     }
 }

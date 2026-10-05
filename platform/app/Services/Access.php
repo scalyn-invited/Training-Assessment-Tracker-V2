@@ -2,9 +2,11 @@
 
 namespace App\Services;
 
+use App\Models\Appeal;
 use App\Models\Enrolment;
 use App\Models\EvidenceFile;
 use App\Models\Identity;
+use App\Models\SubmissionAttempt;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
@@ -47,7 +49,12 @@ class Access
             return $q->where('member_id', $user->id)->whereIn('group_id', $this->effectiveGroups($user, 'memberships'));
         }
         if ($user->role === 'coordinator') {
-            return $q->where('coordinator_id', $user->id)->whereIn('group_id', $this->effectiveGroups($user, 'coordinator_assignments'));
+            return $q->where(function ($scope) use ($user) {
+                $scope->where('coordinator_id', $user->id)->orWhereExists(function ($appeal) use ($user) {
+                    $appeal->selectRaw('1')->from('appeals')->join('submission_attempts', 'submission_attempts.id', '=', 'appeals.submission_attempt_id')
+                        ->whereColumn('submission_attempts.enrolment_id', 'enrolments.id')->where('appeals.reviewer_id', $user->id)->where('appeals.status', 'open');
+                });
+            })->whereIn('group_id', $this->effectiveGroups($user, 'coordinator_assignments'));
         }
 
         return $q->whereRaw('1 = 0');
@@ -67,9 +74,17 @@ class Access
 
     public function canFile(User $user, EvidenceFile $file): bool
     {
+        if ($user->role === 'coordinator' && $file->enrolment && $file->enrolment->coordinator_id !== $user->id) {
+            $appealed = SubmissionAttempt::where('enrolment_id', $file->enrolment_id)->whereJsonContains('files', $file->id)
+                ->whereIn('id', Appeal::where('reviewer_id', $user->id)->where('status', 'open')->select('submission_attempt_id'))->exists();
+            if (! $appealed) {
+                return false;
+            }
+        }
+
         return $file->organisation_id === $user->organisation_id && $file->environment === $user->environment
             && $file->enrolment && $this->canView($user, $file->enrolment)
-            && (! $file->sensitive || $user->sensitive_access);
+            && (! $file->sensitive || $user->sensitive_access || ($file->purpose === 'evidence' && $file->uploaded_by === $user->id && $file->enrolment->member_id === $user->id));
     }
 
     public function externalEnrolments(User $user): Builder

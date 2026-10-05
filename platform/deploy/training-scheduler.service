@@ -1,0 +1,9 @@
+[Unit]
+Description=Training scheduler tick
+[Service]
+Type=oneshot
+User=training
+Group=training
+WorkingDirectory=/srv/training/current/platform
+ExecStart=/usr/bin/php artisan schedule:run
+UMask=0077

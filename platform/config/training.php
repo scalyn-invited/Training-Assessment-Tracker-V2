@@ -1,6 +1,9 @@
 <?php
 
 return [
+    'clamscan_binary' => env('TRAINING_CLAMSCAN_BINARY'),
+    'smtp_enabled' => (bool) env('TRAINING_SMTP_ENABLED', false),
+    'retention_approved' => (bool) env('TRAINING_RETENTION_APPROVED', false),
     'environment' => env('TRAINING_ENVIRONMENT', 'test'),
     'mock_identity' => (bool) env('MOCK_IDENTITY_ENABLED', false),
     'permission_freshness_seconds' => 300,

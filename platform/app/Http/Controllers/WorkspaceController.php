@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\ScanEvidence;
 use App\Models\Enrolment;
 use App\Models\EvidenceFile;
 use App\Models\OutboxEvent;
 use App\Models\User;
 use App\Services\Access;
 use App\Services\Audit;
+use App\Services\FileScanning;
 use App\Services\Outbox;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -73,9 +75,9 @@ class WorkspaceController
     {
         $enrolment = $access->enrolments($request->user())->findOrFail($id);
         abort_unless($request->user()->id === $enrolment->member_id || ($request->user()->role === 'coordinator' && $request->user()->sensitive_access), 403);
-        // Launch foundation accepts PDF/PNG/JPEG only. DOCX/extraction/scanner integration remains pending.
-        $request->validate(['evidence' => 'required|file|max:20480|mimes:pdf,png,jpg,jpeg|extensions:pdf,png,jpg,jpeg']);
+        $request->validate(['evidence' => 'required|file|max:20480|mimes:pdf,png,jpg,jpeg,txt,docx|extensions:pdf,png,jpg,jpeg,txt,docx', 'purpose' => 'nullable|in:assessment,evidence']);
         $upload = $request->file('evidence');
+        app(FileScanning::class)->validateDocument($upload->getRealPath(), strtolower($upload->getClientOriginalExtension()));
         $key = 'quarantine/'.Str::uuid();
         Storage::disk('local')->put($key, file_get_contents($upload->getRealPath()));
         try {
@@ -86,11 +88,14 @@ class WorkspaceController
                 $file = EvidenceFile::create(['organisation_id' => $enrolment->organisation_id, 'environment' => $enrolment->environment,
                     'enrolment_id' => $enrolment->id, 'storage_key' => $key, 'original_name' => Str::limit(basename($upload->getClientOriginalName()), 180, ''),
                     'mime' => $upload->getMimeType(), 'bytes' => $upload->getSize(), 'sha256' => hash_file('sha256', $upload->getRealPath()),
-                    'scan_status' => 'quarantined', 'sensitive' => true]);
+                    'scan_status' => 'quarantined', 'sensitive' => true, 'uploaded_by' => $actor->id, 'purpose' => $request->input('purpose', 'assessment')]);
                 Audit::record($actor, 'evidence.quarantined', $file->id);
+                ScanEvidence::dispatch($file->id)->afterCommit();
             });
         } catch (\Throwable $error) {
-            Storage::disk('local')->delete($key);
+            if (! EvidenceFile::where('storage_key', $key)->exists()) {
+                Storage::disk('local')->delete($key);
+            }
             throw $error;
         }
 

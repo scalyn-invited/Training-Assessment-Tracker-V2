@@ -3,11 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Services\Access;
+use App\Services\ApprovedFeed;
 use App\Services\MockIdentity;
 use Illuminate\Http\Request;
 
 class SandboxApiController
 {
+    public function changes(Request $request, MockIdentity $mock, ApprovedFeed $feed)
+    {
+        $user = $mock->verify($request->bearerToken() ?? '', 'training.changes.read');
+        $input = $request->validate(['after' => 'nullable|integer|min:0', 'limit' => 'nullable|integer|between:1,100']);
+
+        return response()->json($feed->read($user, (int) ($input['after'] ?? 0), (int) ($input['limit'] ?? 50)))->header('Cache-Control', 'no-store');
+    }
+
     public function summary(Request $request, MockIdentity $mock, Access $access, ?string $memberId = null)
     {
         $user = $mock->verify($request->bearerToken() ?? '', $memberId ? 'training.member.read' : 'training.self.read');

@@ -2,6 +2,9 @@ import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { spawnSync } from 'node:child_process';
 import { browserEnv } from '../../playwright.config.js';
+import { resetScenarioCache } from './isolated-cache.js';
+
+test.beforeEach(resetScenarioCache);
 
 async function login(page, name) {
     await page.goto('/login');
@@ -160,6 +163,56 @@ test('coordinator completes onboarding, writes every block and approves the exac
     await expect(page.locator('.badge').first()).toHaveText('Draft');
     await expect(page.getByRole('button', { name: 'Validate all blocks and request review' })).toBeVisible();
     await page.screenshot({ path: 'test-results/generated-draft.png', fullPage: true });
+
+    await page.getByRole('button', { name: 'Validate all blocks and request review' }).click();
+    await page.getByLabel('Approval rationale').fill('Review generated baseline before learner delivery.');
+    await page.getByRole('button', { name: /Approve exact version/ }).click();
+    await expect(page.getByText('Exact plan version approved. Enrolment is ready; training has not started.', { exact: true })).toBeVisible();
+    const learnUrl = page.url().replace(/\/curriculum.*$/, '/learn');
+    await page.goto(learnUrl);
+    await page.getByLabel('Activation reason').fill('Activate complete synthetic baseline for browser rehearsal.');
+    await page.getByRole('button', { name: 'Activate programme' }).click();
+    const firstBlock = page.locator('section.panel').filter({ has: page.getByRole('heading', { name: /^Block 1/ }) });
+    await firstBlock.getByText('Authorise early start', { exact: true }).click();
+    await firstBlock.getByLabel('Early-start reason').fill('Authorise early synthetic practice for this learner.');
+    await firstBlock.getByRole('button', { name: 'Authorise and lock block' }).click();
+    const lessonUrl = await page.getByRole('link', { name: /Synthetic practice 1.*block 1/ }).getAttribute('href');
+    await page.getByRole('button', { name: 'Sign out' }).click();
+    await page.getByRole('button', { name: /Sam/ }).click();
+    await page.goto(lessonUrl);
+    await expect(page.locator('form[data-autosave]')).toHaveAttribute('data-ready', 'true');
+    await page.getByLabel('Your response', { exact: true }).fill('Synthetic work: I checked the inputs, recorded each ordered step and observable result, then asked a peer to verify the completed checklist.');
+    await expect(page.locator('.save-status')).toHaveText('Draft saved. Your work has not been submitted.');
+    await page.reload();
+    await expect(page.getByLabel('Your response', { exact: true })).toHaveValue(/Synthetic work/);
+    await page.getByRole('button', { name: 'Submit saved work for review' }).click();
+    await expect(page.getByRole('heading', { name: 'Submission receipt' })).toBeVisible();
+    const receiptUrl = page.url();
+    await expect(page.getByText('Awaiting review.', { exact: false })).toBeVisible();
+    await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(244, 247, 245)');
+    expect((await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze()).violations).toEqual([]);
+    await page.getByRole('button', { name: 'Sign out' }).click();
+    await page.getByRole('button', { name: /Casey/ }).click();
+    await page.goto(receiptUrl);
+    await page.getByLabel('Grading or regrading notes').fill('Review the evidence against the pinned rubric.');
+    await page.getByRole('button', { name: 'Request provisional grading' }).click();
+    const grader = spawnSync('php', ['artisan', 'queue:work', '--queue=ai_grading', '--stop-when-empty', '--tries=1', '--timeout=120'], { env: browserEnv, encoding: 'utf8', timeout: 45000 });
+    expect(grader.status, grader.stderr + grader.stdout).toBe(0);
+    await page.reload();
+    await page.getByLabel('Review rationale', { exact: true }).fill('Synthetic independent review supports the provisional evidence.');
+    await page.getByRole('button', { name: 'Approve grade', exact: true }).click();
+    await expect(page.getByRole('heading', { name: 'Approved feedback' })).toBeVisible();
+    await page.goto(learnUrl.replace(/\/learn$/, '/progress'));
+    await expect(page.getByRole('heading', { name: 'Progress and evidence' })).toBeVisible();
+    await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(244, 247, 245)');
+    expect((await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze()).violations).toEqual([]);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    await page.screenshot({ path: 'test-results/progress-mobile.png', fullPage: true });
+    await page.getByRole('button', { name: 'Sign out' }).click();
+    await page.getByRole('button', { name: /Sam/ }).click();
+    await page.goto(receiptUrl);
+    await expect(page.getByRole('heading', { name: 'Approved feedback' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Grading attempts' })).toHaveCount(0);
 });
 
 test('administrator versions task routing without exposing credentials', async ({ page }) => {
