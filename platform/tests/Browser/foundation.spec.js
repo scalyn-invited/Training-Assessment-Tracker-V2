@@ -30,7 +30,8 @@ test('learner cannot open a peer plan; private download and queued receipt work'
     await page.getByRole('link', { name: 'Download' }).click();
     expect((await downloaded).suggestedFilename()).toBe('synthetic-evidence.txt');
     await page.getByRole('button', { name: 'Queue foundation check' }).click();
-    await expect(page.getByText('Check queued.', { exact: false })).toBeVisible();
+    // The durable pending receipt survives concurrent Livewire polling consuming a flash message.
+    await expect(page.getByRole('region', { name: 'Background check receipts' }).getByText('Pending', { exact: true }).first()).toBeVisible({ timeout: 15000 });
     const worker = spawnSync('php', ['artisan', 'queue:work', '--queue=notifications', '--stop-when-empty', '--tries=3'], { env: browserEnv, encoding: 'utf8', timeout: 30000 });
     expect(worker.status, worker.stderr + worker.stdout).toBe(0);
     await page.getByRole('region', { name: 'Background check receipts' }).scrollIntoViewIfNeeded();

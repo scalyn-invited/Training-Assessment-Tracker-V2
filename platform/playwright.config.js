@@ -13,6 +13,7 @@ export default defineConfig({
     testDir: './tests/Browser',
     fullyParallel: false,
     timeout: 60000,
+    expect: { timeout: 15000 },
     workers: 1,
     reporter: [['list'], ['html', { open: 'never' }]],
     use: { baseURL: 'http://127.0.0.1:8123', channel: 'chrome', trace: 'retain-on-failure', screenshot: 'only-on-failure', actionTimeout: 15000 },

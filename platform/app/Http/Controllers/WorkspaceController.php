@@ -74,7 +74,7 @@ class WorkspaceController
     public function upload(Request $request, string $id, Access $access)
     {
         $enrolment = $access->enrolments($request->user())->findOrFail($id);
-        abort_unless($request->user()->id === $enrolment->member_id || ($request->user()->role === 'coordinator' && $request->user()->sensitive_access), 403);
+        abort_unless($request->user()->id === $enrolment->member_id || ($request->user()->role === 'coordinator' && $request->user()->id === $enrolment->coordinator_id && $request->user()->sensitive_access), 403);
         $request->validate(['evidence' => 'required|file|max:20480|mimes:pdf,png,jpg,jpeg,txt,docx|extensions:pdf,png,jpg,jpeg,txt,docx', 'purpose' => 'nullable|in:assessment,evidence']);
         $upload = $request->file('evidence');
         app(FileScanning::class)->validateDocument($upload->getRealPath(), strtolower($upload->getClientOriginalExtension()));
@@ -85,6 +85,7 @@ class WorkspaceController
                 $actor = User::whereKey($request->user()->id)->lockForUpdate()->firstOrFail();
                 $current = Enrolment::whereKey($enrolment->id)->lockForUpdate()->firstOrFail();
                 abort_unless($access->canView($actor, $current), 404);
+                abort_unless($actor->id === $current->member_id || ($actor->role === 'coordinator' && $actor->id === $current->coordinator_id && $actor->sensitive_access), 403);
                 $file = EvidenceFile::create(['organisation_id' => $enrolment->organisation_id, 'environment' => $enrolment->environment,
                     'enrolment_id' => $enrolment->id, 'storage_key' => $key, 'original_name' => Str::limit(basename($upload->getClientOriginalName()), 180, ''),
                     'mime' => $upload->getMimeType(), 'bytes' => $upload->getSize(), 'sha256' => hash_file('sha256', $upload->getRealPath()),
@@ -99,6 +100,6 @@ class WorkspaceController
             throw $error;
         }
 
-        return back()->with('status', 'Upload stored privately in quarantine. Downloads remain blocked until a real scanner is connected.');
+        return back()->with('status', 'Upload stored privately in quarantine. Downloads and extraction remain blocked until scanning succeeds.');
     }
 }
