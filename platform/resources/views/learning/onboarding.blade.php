@@ -10,8 +10,8 @@
 <section class="panel">
 <h2>{{ App\Services\Onboarding::STEPS[$step] }}</h2>
 @if(!$editable)<p class="notice">Your coordinator owns these inputs. You can review the saved information here.</p>@endif
-@if($step === 'assessment')<p class="notice">Enter a manual summary with source attribution. Uploaded files remain quarantined; automated extraction is not available. Assessment findings require explicit coordinator confirmation after every edit.</p>
-<p id="assessment-confirmation" class="subtle">{{ !empty($data['assessment']['confirmed_by']) ? 'Confirmed by coordinator for the saved assessment.' : 'Assessment confirmation pending.' }}</p>@endif
+@if($step === 'assessment')<p class="notice">Enter a manual summary, or have the coordinator extract and review an uploaded assessment. Files stay quarantined until scanning succeeds. Every edit requires coordinator confirmation.</p>
+@if($coordinator)<p><a href="{{ route('enrolments.show',$enrolment->id) }}">Upload or select a private assessment for extraction</a></p>@endif<p id="assessment-confirmation" class="subtle">{{ !empty($data['assessment']['confirmed_by']) ? 'Confirmed by coordinator for the saved assessment.' : 'Assessment confirmation pending.' }}</p>@endif
 <form method="post" action="{{ route('onboarding.save', ['id' => $enrolment->id, 'step' => $step]) }}" @if($editable) data-autosave @endif>
 @csrf<input type="hidden" name="expected_version" value="{{ $draft?->version ?? 0 }}">
 <fieldset @disabled(!$editable)><legend class="sr-only">{{ App\Services\Onboarding::STEPS[$step] }} inputs</legend>

@@ -54,3 +54,5 @@ On non-Windows systems use npm instead of npm.cmd. Browser tests require install
 - [Operations, rollback boundaries and user guide](docs/OPERATIONS.md)
 - [Requirements-to-code-and-test map](docs/REQUIREMENTS.csv)
 - [Project implementation rules](../AGENT.md)
+
+Document extraction, OCR and coordinator review: [setup and workflow](docs/DOCUMENT_PROCESSING.md). Realistic manual test inputs: [mock data pack](docs/REAL_WORLD_MOCK_TEST_DATA.md).

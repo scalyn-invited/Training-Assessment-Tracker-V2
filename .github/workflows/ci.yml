@@ -27,7 +27,7 @@ jobs:
       - uses: shivammathur/setup-php@b604ade2a87db23f8871b7182e69ec5e75effb45 # v2
         with:
           php-version: '8.2'
-          extensions: mbstring, pdo_sqlite
+          extensions: mbstring, pdo_sqlite, zip
           coverage: none
           ini-values: opcache.jit=off, opcache.jit_buffer_size=0
           tools: composer:v2
@@ -121,3 +121,26 @@ jobs:
             platform/playwright-report/
             platform/test-results/
           retention-days: 7
+
+  documents:
+    name: Document parsing and OCR utilities
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      DOCUMENT_REQUIRE_TOOLS: '1'
+      DOCUMENT_PDFINFO: /usr/bin/pdfinfo
+      DOCUMENT_PDFTOTEXT: /usr/bin/pdftotext
+      DOCUMENT_PDFTOPPM: /usr/bin/pdftoppm
+      DOCUMENT_TESSERACT: /usr/bin/tesseract
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: shivammathur/setup-php@b604ade2a87db23f8871b7182e69ec5e75effb45
+        with:
+          php-version: '8.2'
+          extensions: mbstring, pdo_sqlite, zip
+          coverage: none
+          tools: composer:v2
+      - run: sudo apt-get update && sudo apt-get install -y poppler-utils tesseract-ocr tesseract-ocr-eng clamav
+      - run: composer install --no-interaction --prefer-dist --no-progress
+      - run: cp .env.example .env && php artisan key:generate
+      - run: php vendor/bin/phpunit --filter='DocumentParserTest|DocumentExtractionTest|DocumentScannerTest' --testdox

@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdministrationController;
 use App\Http\Controllers\AiController;
 use App\Http\Controllers\DeliveryController;
+use App\Http\Controllers\DocumentExtractionController;
 use App\Http\Controllers\LearningController;
 use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\ProgressionController;
@@ -17,6 +18,9 @@ Route::get('/login', [SessionController::class, 'create'])->name('login');
 Route::post('/login', [SessionController::class, 'store'])->middleware('throttle:10,1')->name('login.store');
 Route::post('/logout', [SessionController::class, 'destroy'])->name('logout');
 Route::middleware(TrainingSession::class)->group(function () {
+    Route::get('/files/{id}/extraction', [DocumentExtractionController::class, 'show'])->name('documents.show');
+    Route::post('/files/{id}/extraction', [DocumentExtractionController::class, 'request'])->middleware('throttle:10,1')->name('documents.request');
+    Route::post('/extractions/{id}/review', [DocumentExtractionController::class, 'review'])->name('documents.review');
     Route::get('/reviews', [DeliveryController::class, 'reviews'])->name('reviews.show');
     Route::get('/notifications', [NotificationsController::class, 'show'])->name('notifications.show');
     Route::post('/notifications', [NotificationsController::class, 'preference'])->name('notifications.preference');

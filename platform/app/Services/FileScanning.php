@@ -52,8 +52,13 @@ class FileScanning
 
     protected function scan(string $binary, string $path): int
     {
-        $process = new Process([$binary, '--no-summary', '--alert-exceeds-max', '--alert-encrypted', '--max-filesize=20M', '--max-scansize=100M', '--max-recursion=10', '--', $path]);
+        $arguments = [$binary, '--no-summary', '--alert-exceeds-max', '--alert-encrypted', '--max-filesize=20M', '--max-scansize=100M', '--max-recursion=10'];
+        if ($database = config('training.clamav_database')) {
+            $arguments[] = '--database='.$database;
+        }
+        $process = new Process([...$arguments, '--', $path]);
         $process->setTimeout(90);
+        $process->disableOutput();
         try {
             $process->run();
 

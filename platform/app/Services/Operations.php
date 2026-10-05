@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\AiRun;
+use App\Models\DocumentExtraction;
 use App\Models\Enrolment;
 use App\Models\EvidenceFile;
 use App\Models\LearningNotification;
@@ -29,6 +30,8 @@ class Operations
             'stale_components' => array_values(array_filter(['scheduler', 'worker'], fn ($component) => ! isset($heartbeats[$component]) || CarbonImmutable::parse($heartbeats[$component])->lt(now()->subMinutes(5)))),
             'queued_jobs' => DB::table('jobs')->count(), 'oldest_job_epoch' => DB::table('jobs')->min('created_at'), 'failed_jobs' => DB::table('failed_jobs')->count(),
             'pending_reviews' => SubmissionAttempt::whereIn('status', ['submitted', 'review_pending', 'technical_failure'])->count(),
+            'extractions_waiting_scan' => DocumentExtraction::where('status', 'waiting_scan')->count(),
+            'extractions_failed' => DocumentExtraction::where('status', 'failed')->count(),
             'ambiguous_ai_runs' => AiRun::where('status', 'ambiguous')->count(), 'ai_spent_micro_usd' => (int) AiRun::sum('spent'),
             'ambiguous_smtp' => LearningNotification::where('status', 'ambiguous')->count(), 'pending_notifications' => LearningNotification::where('status', 'pending')->count(),
             'disk_free_bytes' => disk_free_space(storage_path()), 'retention_policy_approved' => (bool) config('training.retention_approved'),
@@ -85,6 +88,7 @@ class Operations
                 $count++;
             }
             $file->update(['scan_status' => 'deleted', 'original_name' => '[removed under retention policy]', 'bytes' => 0]);
+            DocumentExtraction::where('evidence_file_id', $file->id)->update(['status' => 'purged', 'extracted_text' => null, 'review_data' => null, 'warnings' => null]);
         }
 
         return $count;

@@ -6,6 +6,7 @@ use App\Models\Organisation;
 use App\Models\OutboxEvent;
 use App\Models\User;
 use App\Services\Ai\Generation;
+use App\Services\DocumentExtractionService;
 use App\Services\FileScanning;
 use App\Services\LearningNotices;
 use App\Services\MockIdentity;
@@ -40,6 +41,10 @@ Artisan::command('training:scan-recover', function () {
     app(FileScanning::class)->recover();
 });
 Schedule::command('training:scan-recover')->everyFiveMinutes()->withoutOverlapping();
+Artisan::command('training:extract-recover', function () {
+    app(DocumentExtractionService::class)->recover();
+})->purpose('Recover extraction dispatch gaps and mark interrupted local parsing for explicit retry');
+Schedule::command('training:extract-recover')->everyMinute()->withoutOverlapping();
 Artisan::command('training:health', function () {
     $report = app(Operations::class)->report();
     $this->line(json_encode($report, JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR));

@@ -2,6 +2,7 @@
 
 return [
     'clamscan_binary' => env('TRAINING_CLAMSCAN_BINARY'),
+    'clamav_database' => env('TRAINING_CLAMAV_DATABASE'),
     'smtp_enabled' => (bool) env('TRAINING_SMTP_ENABLED', false),
     'retention_approved' => (bool) env('TRAINING_RETENTION_APPROVED', false),
     'environment' => env('TRAINING_ENVIRONMENT', 'test'),
