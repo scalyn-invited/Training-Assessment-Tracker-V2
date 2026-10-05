@@ -9,7 +9,7 @@ This milestone adds local document parsing and a coordinator review workflow. Ex
 3. Quarantined/scanning files show **waiting scan**. Only the configured scanner may mark them clean. Rejected/deleted files cannot be processed. No UI switch bypasses scanning.
 4. The `extraction` queue processes clean files. Refresh the status page. Read the warnings and compare the read-only extraction with the original private download.
 5. Enter the provider/observer, assessment date, scoring scale, evidence type and a corrected summary of the relevant findings (up to 4,000 characters). **Save review draft** preserves edits without changing onboarding. The source text stays unchanged.
-6. **Confirm reviewed findings** creates a new confirmed onboarding version with file hash, extraction ID/revision and coordinator attribution. A stale extraction or onboarding version conflicts rather than overwriting newer work. Review/refesh the curriculum against the changed inputs before approval.
+6. **Confirm reviewed findings** creates a new confirmed onboarding version with file hash, extraction ID/revision and coordinator attribution. A stale extraction or onboarding version conflicts rather than overwriting newer work. Review/refresh the curriculum against the changed inputs before approval.
 7. If parsing fails, use **Retry extraction** after fixing the cause or **Use manual assessment entry**. A new attempt preserves failure metadata. Do not open a rejected file to work around quarantine.
 
 Members, unrelated coordinators and administrators without accountable coordinator authority cannot read raw extraction/review pages. Confirmed assessment findings follow the existing onboarding permissions. Active programme onboarding cannot be replaced through this workflow.

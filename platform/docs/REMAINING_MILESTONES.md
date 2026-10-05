@@ -40,3 +40,15 @@ See [local workflows](LOCAL_WORKFLOWS.md), [deployment preparation](DEPLOYMENT_P
 - Pint, Composer strict validation, Blade compilation and JavaScript syntax checks passed.
 - Latest isolated restore rehearsal passed in **4.014 seconds**; [restore report](evidence/restore-drill-2026-10-03.json). [Load report](evidence/load-rehearsal-2026-10-03.json) retains its limitations and measured p95.
 - [PR #4](https://github.com/scalyn-invited/Training-Assessment-Tracker-V2/pull/4) contains the local implementation. Its first hosted run passed SQLite and MariaDB; the browser artifact confirmed HTTP 429 after independent scenarios shared a login budget. The browser fixture now clears only its isolated cache before each scenario, with an application regression test preserving the real login limit. Refer to the PR checks for the latest hosted result. No production-readiness claim follows from these checks.
+
+## Document-processing verification, 5 October 2026
+
+[PR #5](https://github.com/scalyn-invited/Training-Assessment-Tracker-V2/pull/5) adds scan-gated extraction, PDF/image OCR, encrypted review drafts and explicit source-versioned assessment confirmation. The [implementation CI run](https://github.com/scalyn-invited/Training-Assessment-Tracker-V2/actions/runs/37277052692) passed all four jobs:
+
+- Hosted SQLite: 109 passed, 593 assertions; two real-utility tests skipped in the general job and executed in the dedicated job.
+- Hosted MariaDB/concurrency: 113 passed, 626 assertions; two utility tests skipped in that general job.
+- Dedicated actual Poppler/Tesseract/ClamAV/ZipArchive checks: 18 tests, 100 assertions, no skips. Includes text PDF, image OCR, mixed text/scanned PDF and a harmless custom-signature scanner gate.
+- Browser/accessibility: seven tests passed locally and hosted. The new mobile extraction review screen was also visually inspected.
+- Local database backed up before its additive migration; app, worker and scheduler verified, with zero failed jobs after replaying three old heartbeat failures.
+
+Local default-runtime and explicitly zip-enabled checks are separate from hosted utility proof. New uploads on this workstation still require installation/configuration of ClamAV signatures and Poppler/Tesseract, plus web/worker ZipArchive enablement. Production sandbox, resource controls, actual signature coverage and representative OCR accuracy remain qualification gates. See [document-processing setup](DOCUMENT_PROCESSING.md).
