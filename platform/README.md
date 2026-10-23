@@ -56,3 +56,7 @@ On non-Windows systems use npm instead of npm.cmd. Browser tests require install
 - [Project implementation rules](../AGENT.md)
 
 Document extraction, OCR and coordinator review: [setup and workflow](docs/DOCUMENT_PROCESSING.md). Realistic manual test inputs: [mock data pack](docs/REAL_WORLD_MOCK_TEST_DATA.md).
+
+## Cerebru UI and branding
+
+The shared UI now includes a Cerebru-style sidebar, five persistent themes, responsive navigation and configurable deployment/organisation branding. See [configuration, previews and integration limits](docs/CEREBRU_UI.md).

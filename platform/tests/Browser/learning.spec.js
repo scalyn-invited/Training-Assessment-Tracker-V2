@@ -60,7 +60,7 @@ test('onboarding autosaves, survives reload, and retains input after network fai
     await page.getByLabel('Current role', { exact: true }).fill('Keep my conflicting draft');
     await expect(page.locator('.save-status')).toContainText('changed in another window');
     await expect(page.getByLabel('Current role', { exact: true })).toHaveValue('Keep my conflicting draft');
-    await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(244, 247, 245)');
+    await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(244, 248, 251)');
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     expect((await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze()).violations).toEqual([]);
     await page.screenshot({ path: 'test-results/onboarding-mobile.png', fullPage: true });
@@ -138,7 +138,7 @@ test('coordinator completes onboarding, writes every block and approves the exac
     await page.getByLabel('Approval rationale').fill('All lessons, resource access, rubric weights and shared capacity reviewed.');
     await page.getByRole('button', { name: /Approve exact version/ }).click();
     await expect(page.getByText('Exact plan version approved. Enrolment is ready; training has not started.', { exact: true })).toBeVisible();
-    await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(244, 247, 245)');
+    await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(244, 248, 251)');
     expect((await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze()).violations).toEqual([]);
     await page.screenshot({ path: 'test-results/curriculum-approved.png', fullPage: true });
     await page.setViewportSize({ width: 390, height: 844 });
@@ -154,7 +154,7 @@ test('coordinator completes onboarding, writes every block and approves the exac
     await expect(page.locator('#generation-progress')).toContainText('4 of 4 blocks complete', { timeout: 15000 });
     await expect(page.locator('#generation-cost')).toContainText('Reserved: 0');
     await expect(page.locator('#generation-attempts li')).toHaveCount(4);
-    await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(244, 247, 245)');
+    await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(244, 248, 251)');
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     expect((await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze()).violations).toEqual([]);
     await page.screenshot({ path: 'test-results/generation-complete-mobile.png', fullPage: true });
@@ -189,7 +189,7 @@ test('coordinator completes onboarding, writes every block and approves the exac
     await expect(page.getByRole('heading', { name: 'Submission receipt' })).toBeVisible();
     const receiptUrl = page.url();
     await expect(page.getByText('Awaiting review.', { exact: false })).toBeVisible();
-    await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(244, 247, 245)');
+    await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(244, 248, 251)');
     expect((await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze()).violations).toEqual([]);
     await page.getByRole('button', { name: 'Sign out' }).click();
     await page.getByRole('button', { name: /Casey/ }).click();
@@ -204,7 +204,7 @@ test('coordinator completes onboarding, writes every block and approves the exac
     await expect(page.getByRole('heading', { name: 'Approved feedback' })).toBeVisible();
     await page.goto(learnUrl.replace(/\/learn$/, '/progress'));
     await expect(page.getByRole('heading', { name: 'Progress and evidence' })).toBeVisible();
-    await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(244, 247, 245)');
+    await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(244, 248, 251)');
     expect((await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze()).violations).toEqual([]);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     await page.screenshot({ path: 'test-results/progress-mobile.png', fullPage: true });
@@ -223,7 +223,7 @@ test('administrator versions task routing without exposing credentials', async (
     await page.getByRole('button', { name: 'Save generate programme route', exact: true }).click();
     await expect(page.getByText('New routing version saved. Existing runs retain their pinned configuration.')).toBeVisible();
     await page.setViewportSize({ width: 390, height: 844 });
-    await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(244, 247, 245)');
+    await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(244, 248, 251)');
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     expect((await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze()).violations).toEqual([]);
 });

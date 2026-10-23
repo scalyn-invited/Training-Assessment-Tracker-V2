@@ -1,35 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-brand-mode="{{ $branding['mode'] }}" data-theme="{{ $branding['default_theme'] }}" data-theme-key="{{ $branding['theme_key'] }}" data-default-theme="{{ $branding['default_theme'] }}" style="--brand-light:{{ $branding['accent_light'] }};--brand-dark:{{ $branding['accent_dark'] }}">
 <head>
     <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Workspace') · Training Tracker</title>
-    <link rel="stylesheet" href="{{ asset('app.css') }}">
+    <title>@yield('title', 'Workspace') · {{ $branding['app_name'] }}</title>
+    <link rel="icon" href="{{ $branding['favicon'] }}">
+    <script src="{{ asset('appearance.js') }}?v=2"></script>
+    <link rel="stylesheet" href="{{ asset('app.css') }}?v=scalyn-3">
     @livewireStyles
 </head>
-<body>
+<body class="@auth app-layout @else guest-layout @endauth">
 <a class="skip" href="#main">Skip to content</a>
-<header class="topbar">
-    <a class="brand" href="{{ route('dashboard') }}"><span class="brand-mark">T</span> Training Tracker <span class="version">V2</span></a>
-    @auth
-    <nav aria-label="Main navigation">
-        <a href="{{ route('notifications.show') }}">Updates</a>
-        @if(auth()->user()->role === 'coordinator' && auth()->user()->sensitive_access)<a href="{{ route('reviews.show') }}">Review queue</a>@endif
-        @if(auth()->user()->role === 'admin')<a href="{{ route('ai.settings') }}">AI settings</a>@endif
-        <a href="{{ route('dashboard') }}" @if(request()->routeIs('dashboard')) aria-current="page" @endif>Workspace</a>
-        @if(auth()->user()->role === 'admin')<a href="{{ route('people') }}">People</a>@endif
-        @if(auth()->user()->role === 'admin')<a href="{{ route('administration.show') }}">Administration</a>@endif
-        <form method="post" action="{{ route('logout') }}">@csrf<button class="quiet">Sign out</button></form>
+@auth
+<header class="mobile-bar"><button type="button" class="icon-button" id="nav-toggle" aria-controls="app-sidebar" aria-expanded="false" aria-label="Open navigation"><x-icon name="menu"/></button><span>{{ $branding['app_name'] }}</span></header>
+<div class="nav-backdrop" id="nav-backdrop" hidden></div>
+<aside class="app-sidebar" id="app-sidebar" aria-label="Application sidebar">
+    <div class="sidebar-top">
+        <a class="brand" href="{{ route('dashboard') }}" aria-label="{{ $branding['brand_name'] }} {{ $branding['app_name'] }} home">
+            <span class="brand-symbol">
+            @if($branding['logo_light'])<img class="brand-logo logo-light" src="{{ $branding['logo_light'] }}" alt="{{ $branding['brand_name'] }}"><img class="brand-logo logo-dark" src="{{ $branding['logo_dark'] }}" alt="{{ $branding['brand_name'] }}">
+            @else<img src="{{ $branding['compact_logo'] ?: '/images/training-mark.svg' }}" alt="" width="36" height="36">@endif
+            </span>
+            <span class="brand-copy"><strong>{{ $branding['brand_name'] }}</strong><span>{{ $branding['app_name'] }}</span></span>
+        </a>
+        <button type="button" class="icon-button nav-close" id="nav-close" aria-label="Close navigation"><x-icon name="close"/></button>
+    </div>
+    @if($branding['mode'] === 'co-branded')<p class="co-brand">Part of Cerebru</p>@endif
+    <p class="workspace-nav-label">Your workspace</p>
+    <nav class="sidebar-nav" aria-label="Main navigation">
+        <a href="{{ route('dashboard') }}" @if(request()->routeIs('dashboard')) aria-current="page" @endif><x-icon name="home"/><span>Overview</span></a>
+        <a href="{{ route('dashboard') }}#learning-plans" @if(request()->routeIs('enrolments.*', 'onboarding.*', 'plans.*', 'delivery.*', 'submission.*', 'progress.*', 'documents.*', 'files.*', 'jobs.*', 'ai.request', 'ai.show')) aria-current="page" @endif><x-icon name="book"/><span>Learning plans</span></a>
+        @if(auth()->user()->role === 'coordinator' && auth()->user()->sensitive_access)<a href="{{ route('reviews.show') }}" @if(request()->routeIs('reviews.*')) aria-current="page" @endif><x-icon name="check"/><span>Review queue</span></a>@endif
+        <a href="{{ route('notifications.show') }}" @if(request()->routeIs('notifications.*')) aria-current="page" @endif><x-icon name="bell"/><span>Updates</span></a>
+        <span class="nav-section">Manage</span>
+        @if(auth()->user()->role === 'admin')
+        <a href="{{ route('people') }}" @if(request()->routeIs('people')) aria-current="page" @endif><x-icon name="users"/><span>People</span></a>
+        <a href="{{ route('administration.show') }}" @if(request()->routeIs('administration.*')) aria-current="page" @endif><x-icon name="grid"/><span>Administration</span></a>
+        <a href="{{ route('ai.settings') }}" @if(request()->routeIs('ai.settings', 'ai.policy', 'ai.reconcile')) aria-current="page" @endif><x-icon name="spark"/><span>AI settings</span></a>
+        @endif
+        <a href="{{ route('appearance') }}" @if(request()->routeIs('appearance')) aria-current="page" @endif><x-icon name="settings"/><span>Appearance</span></a>
     </nav>
-    @endauth
-</header>
-<div class="sandbox"><span class="dot"></span> LOCAL SANDBOX <span>Synthetic people · Mock sign-in · No email delivery</span></div>
-<main id="main" class="container">
+    <div class="sidebar-bottom">
+        @if($branding['cerebru_url'])<a class="parent-link" href="{{ $branding['cerebru_url'] }}"><x-icon name="external"/>Back to Cerebru</a>@endif
+        <p class="sidebar-message"><span>One step at a time</span>Progress starts<br>with showing up.</p>
+        <x-theme-picker :branding="$branding"/>
+    </div>
+</aside>
+@else
+<header class="guest-header"><a class="brand" href="{{ route('login') }}"><img src="{{ $branding['logo_light'] ?: $branding['compact_logo'] ?: '/images/training-mark.svg' }}" class="brand-logo logo-light" alt=""><img src="{{ $branding['logo_dark'] ?: $branding['compact_logo'] ?: '/images/training-mark.svg' }}" class="brand-logo logo-dark" alt=""><span class="brand-copy"><strong>{{ $branding['brand_name'] }}</strong><span>{{ $branding['app_name'] }}</span></span></a><x-theme-picker :branding="$branding"/></header>
+@endauth
+<div class="app-content">
+@auth
+<header class="workspace-header"><span>{{ $branding['app_name'] }}</span><div class="profile"><span class="avatar" aria-hidden="true">{{ mb_strtoupper(mb_substr(auth()->user()->name, 0, 1)) }}</span><span class="profile-copy"><strong>{{ auth()->user()->name }}</strong><small>{{ ucfirst(auth()->user()->role) }}</small></span><form method="post" action="{{ route('logout') }}">@csrf<button class="icon-button" aria-label="Sign out" title="Sign out"><x-icon name="logout"/></button></form></div></header>
+@endauth
+@if(config('training.mock_identity') && config('training.environment') === 'test')<div class="sandbox"><span class="dot"></span><strong>LOCAL SANDBOX</strong><span>Synthetic people · Mock sign-in · No email delivery</span></div>@endif
+<main id="main" class="container" tabindex="-1">
     @if(session('status'))<div class="notice" role="status">{{ session('status') }}</div>@endif
     @if($errors->any())<div class="notice error" role="alert"><strong>Please check your input.</strong><ul>@foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul></div>@endif
     @yield('content')
 </main>
-<footer>Training Assessment Tracker · Learning workspace <span>Human decisions. Traceable progress.</span></footer>
+<footer><span>{{ $branding['app_name'] }}</span><span>{{ $branding['footer'] }}</span></footer>
+</div>
+<div class="sr-only" role="status" aria-live="polite" id="appearance-status"></div>
 @livewireScripts
 </body>
 </html>
