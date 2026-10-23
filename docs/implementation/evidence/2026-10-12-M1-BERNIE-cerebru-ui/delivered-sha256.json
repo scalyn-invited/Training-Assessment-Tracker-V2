@@ -1,0 +1,23 @@
+{
+  "platform/config/branding.php": "3bbbcaeac383226157fe1025499ba05ba568cbca0e62eb37f8dc13248f6d5a75",
+  "platform/app/Services/Branding.php": "89c1aa9b9022e81a627ecedb9fba7ede2e1fdf470e0489202de92fd198b103f1",
+  "platform/public/images/training-mark.svg": "2ab5294ebd1af529a254e7296f167b20201371209cca2b582906c125deef700e",
+  "platform/app/Providers/AppServiceProvider.php": "a7a5e5dcbda0a51a89b1c1205c818f81ba976d343549aca56298b018093faae0",
+  "platform/resources/views/components/icon.blade.php": "02fa7e23fa22b9cf40eb7cd99c70e5d90a0172bdaa77dd4b485bbca2e59512b0",
+  "platform/resources/views/components/theme-picker.blade.php": "6379879b5a4243341ee56d1fd3fde39d76a3dbbe81fe1b9574bc8c71eb5e79a6",
+  "platform/resources/views/layouts/app.blade.php": "a2810518d010e803f9394781ea314532ba6cbc746b3d5f3d551fe913201d0fef",
+  "platform/resources/views/dashboard.blade.php": "5064fc6006d538be543247cc46e321aa082dd3e56c9c073129b98ef9ed5d229d",
+  "platform/public/app.css": "214527143945419231d150573fe5cdbe4c270604c34eb9846c2d684c02b030af",
+  "platform/public/appearance.js": "d9c229f66bf1f71c23213c22ef817cb1a463c4f62079f348d22ca8504d3cc1b8",
+  "platform/resources/views/appearance.blade.php": "2cdf365b048401a4de07686a7ce36710b993f585080f0f2f9cdd2f0ef14057d6",
+  "platform/routes/web.php": "504925c960e960c0f7ea5b8599d45c61f7a4643bfd0c8e1d7bb3b507cf9609f5",
+  "platform/tests/Browser/foundation.spec.js": "17424a1e7473b74d112c670e683bfbeb4c0f7d0e49444da190a30168b5d5d1eb",
+  "platform/tests/Browser/learning.spec.js": "ed92cd98f9128066d9f4c3188e9f7410b83a2a2d1b8fe3886ae00042348ba1c5",
+  "platform/playwright.config.js": "4fe086456215742ac9b6549e3b39fd4a57ce7a6e78dbf6b90c78532b79f5dbdd",
+  "platform/tests/Feature/BrandingTest.php": "4da4567a7f292a63b5c4f8fc4e73cf19b6faba1c51b1765f61f7bf4a101123bf",
+  "platform/tests/Browser/appearance.spec.js": "541138ab189cc139ada827dca5393a2d554fa38700d9e3c45b714dffc50981bd",
+  "platform/docs/CEREBRU_UI.md": "8f29933b0160dce48ba50ddd4df1df358451421c2552e23a3e404aae8ae47d48",
+  "platform/docs/examples/branding.php": "167c9d30c186504d0bcdad8ea90f400a903fcf93f678fe0b9d602c2244b7fd63",
+  "platform/resources/views/vendor/pagination/tailwind.blade.php": "56611fb9f36f0b373baee03cafae58536d8f18dc395dbd5f1f01ff805c888a04",
+  "platform/README.md": "c551049ac138e659c5e4cb7dd22516895e48aa1130eb8fa26385f35ad516e08f"
+}

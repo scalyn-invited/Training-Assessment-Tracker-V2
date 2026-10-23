@@ -1,0 +1,170 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "C:\\Users\\cabas\\Documents\\Codex\\Projects\\Training Assessment Tracker V2\\.runtime\\cerebru-ui\\platform\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "appearance.spec.js",
+      "--grep",
+      "preferences are isolated",
+      "--config=.runtime/workspace-recheck.config.js"
+    ],
+    "configFile": "C:\\Users\\cabas\\Documents\\Codex\\Projects\\Training Assessment Tracker V2\\.runtime\\cerebru-ui\\platform\\.runtime\\workspace-recheck.config.js",
+    "rootDir": "C:/Users/cabas/Documents/Codex/Projects/Training Assessment Tracker V2/.runtime/cerebru-ui/platform/tests/Browser",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/cabas/Documents/Codex/Projects/Training Assessment Tracker V2/.runtime/cerebru-ui/platform/.runtime/workspace-recheck",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "desktop",
+        "name": "desktop",
+        "testDir": "C:/Users/cabas/Documents/Codex/Projects/Training Assessment Tracker V2/.runtime/cerebru-ui/platform/tests/Browser",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "C:\\Users\\cabas\\Documents\\Codex\\Projects\\Training Assessment Tracker V2\\.runtime\\cerebru-ui\\platform\\.runtime\\workspace-recheck.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "php -S 127.0.0.1:8142 -t public scripts/browser-router.php",
+      "url": "http://127.0.0.1:8142/login",
+      "reuseExistingServer": false,
+      "timeout": 60000,
+      "stdout": "ignore",
+      "stderr": "ignore",
+      "env": {
+        "BROWSERSLIST_IGNORE_OLD_DATA": "true",
+        "CODEX_HOME": "C:\\Users\\cabas\\.codex",
+        "GIT_CONFIG_COUNT": "2",
+        "GIT_CONFIG_KEY_0": "safe.directory",
+        "GIT_CONFIG_KEY_1": "safe.directory",
+        "GIT_CONFIG_VALUE_0": "C:\\Users\\cabas\\Documents\\Codex\\Projects\\Training Assessment Tracker V2",
+        "GIT_CONFIG_VALUE_1": "C:\\Users\\cabas\\Documents\\Codex\\Projects\\Training Assessment Tracker V2/*",
+        "GIT_PAGER": "more.com",
+        "LESS": "",
+        "LOCALAPPDATA": "C:\\Users\\cabas\\AppData\\Local",
+        "NODE_REPL_NODE_MODULE_DIRS": "C:\\Users\\cabas\\AppData\\Local\\OpenAI\\Codex\\runtimes\\cua_node\\cfb32733c877621e\\bin\\node_modules",
+        "NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S": "8e172ec9f458f2e636fc69a1b8c68c217f6bb8d10c41f70a05a0878b73863701",
+        "NODE_REPL_TRUSTED_RPC_ENABLED": "1",
+        "NODE_REPL_UNTRUSTED_ENV_ALLOWLIST": "CODEX_WINDOWS_REGISTERED_CORE",
+        "PAGER": "more.com",
+        "PATH": "C:\\Users\\cabas\\.codex\\tmp\\arg0\\codex-arg00BrbjF;C:\\Users\\cabas\\.codex\\tmp\\arg0\\codex-arg0Br5lFN;C:\\Users\\cabas\\.codex\\packages\\app-server-daemon\\releases\\0.162.1-x86_64-pc-windows-msvc\\codex-path;C:\\Users\\cabas\\.codex\\tmp\\arg0\\codex-arg0B8Ib1K;C:\\Users\\cabas\\AppData\\Roaming\\npm\\node_modules\\@openai\\codex\\node_modules\\@openai\\codex-win32-x64\\vendor\\x86_64-pc-windows-msvc\\codex-path;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files\\dotnet\\;C:\\ProgramData\\ComposerSetup\\bin;C:\\Program Files\\WireGuard\\;C:\\Program Files\\Git\\cmd;C:\\Program Files\\GitHub CLI\\;C:\\Program Files\\nodejs\\;C:\\Users\\cabas\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\cabas\\AppData\\Local\\Programs\\Microsoft VS Code\\bin;C:\\Users\\cabas\\.dotnet\\tools;C:\\xampp\\php;C:\\Users\\cabas\\AppData\\Roaming\\Composer\\vendor\\bin;C:\\Users\\cabas\\AppData\\Roaming\\npm",
+        "PATHEXT": ".COM;.EXE;.BAT;.CMD",
+        "PROGRAMFILES": "C:\\Program Files",
+        "SYSTEMDRIVE": "C:",
+        "SYSTEMROOT": "C:\\Windows",
+        "TEMP": "C:\\Users\\cabas\\AppData\\Local\\Temp",
+        "TMP": "C:\\Users\\cabas\\AppData\\Local\\Temp",
+        "TRAINING_BROWSER_PORT": "8142",
+        "USERPROFILE": "C:\\Users\\cabas",
+        "WINDIR": "C:\\WINDOWS",
+        "APP_ENV": "local",
+        "APP_DEBUG": "false",
+        "DB_CONNECTION": "sqlite",
+        "DB_DATABASE": "C:\\Users\\cabas\\Documents\\Codex\\Projects\\Training Assessment Tracker V2\\.runtime\\cerebru-ui\\platform\\.runtime\\browser.sqlite",
+        "MOCK_IDENTITY_ENABLED": "true",
+        "TRAINING_ENVIRONMENT": "test",
+        "MAIL_MAILER": "array",
+        "QUEUE_CONNECTION": "database",
+        "SESSION_DRIVER": "database",
+        "CACHE_STORE": "database",
+        "APP_URL": "http://127.0.0.1:8142",
+        "APP_CONFIG_CACHE": "C:\\Users\\cabas\\Documents\\Codex\\Projects\\Training Assessment Tracker V2\\.runtime\\cerebru-ui\\platform\\.runtime\\browser-config.php"
+      },
+      "cwd": "C:\\Users\\cabas\\Documents\\Codex\\Projects\\Training Assessment Tracker V2\\.runtime\\cerebru-ui\\platform"
+    }
+  },
+  "suites": [
+    {
+      "title": "appearance.spec.js",
+      "file": "appearance.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "preferences are isolated between identities and storage failure stays usable",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop",
+              "projectName": "desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 24911,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-13T05:44:41.583Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "276f3069232db339b930-c5d1456ff0fc5ea122e8",
+          "file": "appearance.spec.js",
+          "line": 37,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-13T05:44:39.284Z",
+    "duration": 84860.285,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

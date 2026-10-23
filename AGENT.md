@@ -2,15 +2,31 @@
 
 ## Purpose and current state
 
-Build one organisation's internal upskilling platform: personalised learning, coordinator-approved assessment, evidence-based KPIs, and controlled future programme adaptation.
+Build a multi-client, white-label training and employee-development sub-application of Cerebru: personalised learning, coordinator-approved assessment, 30-day development plans, weekly progress, evidence-based reporting, member notes and a permission-scoped training chatbot. Client, team and member isolation are foundational requirements.
 
-The initial repository contained the architecture/specification package only. The first local foundation now lives in `platform/`; see `platform/README.md` for setup and `platform/docs/MILESTONE_01.md` for actual verification and outstanding work. Live identity, primary-platform integration and production readiness remain pending. The separate design package records seven delivered native diagrams; D04, D05, D09 and D10 have blocked layouts, and its browser/perceptual checks remain incomplete. Update implementation status only from actual code and execution evidence.
+The runnable application lives in `platform/`. The historical ledger records local onboarding, generation, delivery/review, KPI/adaptation, integration boundaries, operational rehearsals and document processing; see `platform/README.md` for setup and `platform/docs/REMAINING_MILESTONES.md` for evidence and limitations. Inspect current code before reusing or changing it. Live identity, Cerebru integration and production readiness are not established by that local work. The separate design package records seven delivered native diagrams; D04, D05, D09 and D10 have blocked layouts, and its browser/perceptual checks remain incomplete. Update implementation status only from actual code and execution evidence.
 
 This file records project implementation rules. Reading it does not itself authorise starting the build or running the packaged execution prompts. Follow the user's current task scope. Once implementation is requested, complete locally achievable work without asking for routine per-file approval.
 
+## Two-developer implementation and AI entry point
+
+- **Bernie — Developer A and technical lead:** owns the core application, including client/team/member structure, authorisation, migrations, domain services, Cerebru integration, queues, operations, functional checks, regression coverage and documented technical self-review.
+- **Saturnino — Developer B, UI and Design:** owns user flows, annotated screens, interaction states, responsive/accessibility guidance and bounded Blade/Livewire/CSS UI slices after the relevant shared contract is stable. He reviews UX and accessibility; this is not independent technical approval.
+- Effective 23 October 2026, the weekly planning target is **12 project hours**: Bernie **9h 36m (80%)** comprising 8h 06m core development/checks and 1h 30m coordination/self-review; Saturnino **2h 24m (20%)** comprising 2h flexible UI design/small UI implementation and 24m coordination. Across two to three weeks this is 24–36 project hours: 20h 12m–30h 18m development/design and 3h 48m–5h 42m coordination. The provisional target remains 3–5 M0–M7 work packages reaching local acceptance per week, or about 2–3 weeks from an agreed start, with a mandatory week-one reforecast. Live integration, pilot observation, the full 30-day learning cycle and production release are excluded.
+- Start at [AI implementation workspace](docs/implementation/README.md), then read [AI workflow](docs/implementation/AI_WORKFLOW.md), [coordination rules](docs/implementation/COORDINATION.md), [status](docs/implementation/STATUS.md) and the relevant developer record. Use the milestone-specific prompt for the named developer.
+- The new delivery sequence is **M0–M7**. The older **B01–B09** increments and `platform/docs/MILESTONE_01.md` etc. describe prior work; their numbering and completion claims do not establish completion of M0–M7.
+- A request for an update or next step is read-only unless the user also asks to record status or implement work. An execution request authorises the ready, bounded work in the selected prompt, not every future milestone or a production release.
+- Do not guess whether the requester is Bernie or Saturnino. Use explicit conversation context; if absent, report both lanes for a status request and ask for identity before claiming implementation work.
+- Use a dedicated short-lived branch/worktree per independently reviewable feature or milestone task, with isolated databases and worker configuration. Deliver through a PR with required CI results and Bernie's documented technical self-review before merge; obtain Saturnino's UX/accessibility review where applicable and project-owner acceptance for locally completed milestone outcomes. Follow [coordination rules](docs/implementation/COORDINATION.md). Honour shared-file ownership and record a handoff before changing a shared contract. A local Markdown claim is not a distributed lock.
+- Never mark work complete because a prompt exists. Record revision, actual checks, limitations, technical self-review, applicable UX/accessibility review and the project-owner acceptance gate. Preserve unrelated working-tree changes.
+
 ## Authoritative sources
 
-Use `archify-upskilling-20260929-181205/inputs/` as the specification root. Read these before implementing the relevant area:
+For updated product scope, use this order: explicit current user instructions; [requirements PDF](<docs/Training Assessment Tracker V2.pdf>); recorded product decisions; [named two-developer Markdown plan](docs/implementation/IMPLEMENTATION_PLAN.md) and its milestone charters; then older architecture/domain material where it remains compatible. Actual code and execution evidence establish implementation status, not future scope. The Markdown implementation plan is based on the [original Word implementation plan](<docs/Training Assessment Tracker V2 Implementation Plan Two Developers.docx>), which remains unchanged. The separate [AI-assisted resourcing memo](docs/implementation/AI_ASSISTED_TWO_DEVELOPER_DELIVERY_PLAN.docx) records the current provisional hours and build target; keep these sources aligned when revising planning assumptions.
+
+Open choices are tracked in [decisions](docs/implementation/DECISIONS.md). Preserve existing safeguards while a decision is pending. In particular, do not equate 30 days with four weeks, or silently replace N+2 adaptation with next-week publication. Continue work that does not depend on the unresolved choice.
+
+Use `archify-upskilling-20260929-181205/inputs/` as the legacy architecture/specification reference. Read these before implementing the relevant area, subject to the updated scope and decision order above:
 
 - [Product architecture](archify-upskilling-20260929-181205/inputs/02_PRODUCT_ARCHITECTURE_SPEC.md): complete product scope and journeys.
 - [Domain and policy rules](archify-upskilling-20260929-181205/inputs/03_DOMAIN_AND_POLICY_RULES.md): exact access, calendar, grading, queue and data rules.
@@ -47,7 +63,7 @@ B04 generation is documented in `platform/docs/MILESTONE_03.md`. Reserve spend u
 
 ## Identity and authorisation
 
-- Assume authentik with OIDC and mandatory MFA pending product/instance confirmation. Use authorisation code + PKCE; validate issuer, audience, signature, expiry, state and nonce. Verify MFA evidence under the actual IdP policy.
+- Confirm Cerebru's actual identity architecture before selecting a production adapter. Authentik/OIDC is an earlier proposal, not a verified Cerebru interface. Where OIDC is supported, use authorisation code + PKCE; validate issuer, audience, signature, expiry, state and nonce. Verify mandatory MFA evidence under the actual IdP policy.
 - Identify users by immutable issuer + subject, with explicit primary-person mapping. Never link identities by an unverified email/name match.
 - Deny by default. Check active identity, organisation, environment, role, effective group assignment and record scope. Include organisation and environment on access-controlled records.
 - Members see their own records. Coordinators see only assigned groups and their authorised enrolments. Each enrolment has an accountable coordinator. Self-grade and self-programme approval require an alternate reviewer.
@@ -73,7 +89,7 @@ B04 generation is documented in `platform/docs/MILESTONE_03.md`. Reserve spend u
 ## Learning content and workload
 
 - Implement the resumable onboarding journey: profile/role, target capability, confirmed assessment extraction, capacity/calendar, KPIs, resources, and generation review.
-- Permit exactly 4, 6, 8, 10 or 12 learning blocks, with 15–120 planned minutes per scheduled day. Reading, practice, assessments and expected revision all count.
+- Preserve existing 4, 6, 8, 10 or 12 block programmes. M4 adds an explicit 30-day mode after the calendar/working-day definition is recorded in `docs/implementation/DECISIONS.md`; do not silently reinterpret legacy programmes. Preserve 15–120 planned minutes per scheduled day unless an explicit product decision changes the limit. Reading, practice, assessments and expected revision all count.
 - Concurrent programmes share one member capacity calendar. Absence reduces capacity and requires explicit rescheduling; never silently increase hours or lower success criteria.
 - Store timestamps in UTC and calculate schedules using the enrolment's IANA timezone and versioned business/holiday calendar. Proposed visible onboarding defaults: Asia/Manila and Monday–Friday.
 - Deliver usable lessons containing objectives, explanations, worked examples or approved demonstrations, practical activities, permitted tools, time estimates and completion criteria. Topic headings and links alone do not satisfy delivery.
@@ -94,6 +110,8 @@ B04 generation is documented in `platform/docs/MILESTONE_03.md`. Reserve spend u
 - Completion requires sufficient approved evidence, required work and coordinator confirmation of target capability. Time spent or model confidence alone cannot establish competence.
 
 ## Adaptation and calendar invariants
+
+The following describes the existing protected N+2 policy. The PDF proposes following-week recommendations; M0 must resolve publication timing before M4/M5 implements a policy change. Recommendations may remain provisional, but no AI may relax freeze, started-content, capacity, approval or version safeguards by assumption.
 
 1. Generate and approve baseline content for every programme block before activation. Keep the current and following blocks ready, or all remaining blocks near completion.
 2. For approved evidence from block N, start with target N+2, based on the evidence block rather than the current calendar week. Never change N+1 using N evidence.
@@ -119,7 +137,17 @@ B04 generation is documented in `platform/docs/MILESTONE_03.md`. Reserve spend u
 - Proposed timings: 90-second provider HTTP timeout, 120-second job timeout, 180-second queue `retry_after`, and three transient retries with jitter. Validate host compatibility; keep job timeout below `retry_after` and split long generation into bounded week jobs.
 - Send minimal secure review links through generic SMTP, provisionally SMTP2GO. Recheck recipient access at send time, deduplicate notification events, and distinguish relay acceptance from delivery. Email failure must not lose the in-app review queue.
 
+## Chatbot reporting and paid-service boundaries
+
+- Chatbot context, history, citations, charts, totals, report jobs and exports use the shared client/team/member authorisation services. Filter before retrieval and aggregation; never retrieve broadly and rely on model instructions or UI hiding.
+- Use only approved, member-visible training context by default. Keep private notes, answer keys, raw sensitive assessments and provisional grades out of chat context. No default coordinator/admin access to members' private conversations.
+- Recheck permission at job execution, publication, answer delivery, citation opening and export download. Partition caches by actor/client/member and permission/content version. Revocation invalidates pending access; historical authorisation is insufficient.
+- Keep the basic chatbot advisory and read-only, with bounded allowlisted retrieval and no arbitrary SQL, files, URLs or privileged actions. Chat advice cannot approve results, change plans or affect official KPIs.
+- Flag **any additional paid service, licence, subscription, infrastructure or paid AI usage** in [cost approvals](docs/implementation/COST_APPROVALS.md). Record scope, current quote, caps, terms and actual project-owner approval before committing. A vendor adapter, trial, existing-looking account or generated approval row is not approval. Do not auto-upgrade or select a paid fallback.
+
 ## Delivery sequence and verification
+
+Use [M0–M7 milestone charters](docs/implementation/README.md#milestones-and-developer-prompts) for the current two-developer backlog, responsibility split, dependencies and acceptance gates. The table below is the historical B01–B09 reference and remains useful for reuse and regression coverage; it is not the new schedule.
 
 | Increment | Implementation outcome | Main acceptance coverage |
 | --- | --- | --- |

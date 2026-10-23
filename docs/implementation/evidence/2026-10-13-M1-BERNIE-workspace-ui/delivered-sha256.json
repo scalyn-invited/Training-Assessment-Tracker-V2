@@ -1,0 +1,42 @@
+[
+  {
+    "file": "platform/resources/views/layouts/app.blade.php",
+    "before": "a2810518d010e803f9394781ea314532ba6cbc746b3d5f3d551fe913201d0fef",
+    "after": "c7d185c96319cb759dc867372c41bda94a52c7e3295b9672a91fb6e5edc25d85"
+  },
+  {
+    "file": "platform/resources/views/dashboard.blade.php",
+    "before": "5064fc6006d538be543247cc46e321aa082dd3e56c9c073129b98ef9ed5d229d",
+    "after": "9d0072abcf705b0aebc604e18afebd4ce4c9d91e0d4be4e393aaeb749eb7adc4"
+  },
+  {
+    "file": "platform/public/app.css",
+    "before": "214527143945419231d150573fe5cdbe4c270604c34eb9846c2d684c02b030af",
+    "after": "6cdac40427d5503c22269802af0bf4a5d86d59ff8c79f74bbd2e13e429dd43e7"
+  },
+  {
+    "file": "platform/config/branding.php",
+    "before": "3bbbcaeac383226157fe1025499ba05ba568cbca0e62eb37f8dc13248f6d5a75",
+    "after": "a2419baec24c1f58d71b65627e6698bdeaeabe91d463dba8a322ba6524c7e57b"
+  },
+  {
+    "file": "platform/tests/Browser/appearance.spec.js",
+    "before": "541138ab189cc139ada827dca5393a2d554fa38700d9e3c45b714dffc50981bd",
+    "after": "0afeb03fcebe5dc81a196dd3a8678639622b61e89198e4c646e622f4cacaebf3"
+  },
+  {
+    "file": "platform/tests/Browser/foundation.spec.js",
+    "before": "17424a1e7473b74d112c670e683bfbeb4c0f7d0e49444da190a30168b5d5d1eb",
+    "after": "a51927023263fe2875d40a3e9c9998ddbc871a95d5c6f0c0eef3bd818ede97a1"
+  },
+  {
+    "file": "platform/tests/Browser/learning.spec.js",
+    "before": "ed92cd98f9128066d9f4c3188e9f7410b83a2a2d1b8fe3886ae00042348ba1c5",
+    "after": "60dec53cfcdbe2b6eb27054a6b95b8c2fcd8e39882c2918edf584f3d0cd19565"
+  },
+  {
+    "file": "platform/docs/CEREBRU_UI.md",
+    "before": "8f29933b0160dce48ba50ddd4df1df358451421c2552e23a3e404aae8ae47d48",
+    "after": "fa2fc9a89045698c7b38d4b2f612bc1b2b7e65c6f57896d2f81758cffb9833ed"
+  }
+]

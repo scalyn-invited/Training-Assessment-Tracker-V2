@@ -1,0 +1,81 @@
+
+  Dropping all tables ................................................................................... 23.09ms DONE
+
+   INFO  Preparing database.  
+
+  Creating migration table .............................................................................. 34.40ms DONE
+
+   INFO  Running migrations.  
+
+  0001_01_01_000000_create_users_table .................................................................. 67.63ms DONE
+  0001_01_01_000001_create_cache_table .................................................................. 19.24ms DONE
+  0001_01_01_000002_create_jobs_table ................................................................... 37.64ms DONE
+  2026_09_30_000001_create_training_foundation ......................................................... 341.89ms DONE
+  2026_10_01_000001_create_learning_plans ............................................................... 79.61ms DONE
+  2026_10_01_000002_add_business_weekdays_to_calendars ................................................... 8.13ms DONE
+  2026_10_01_000003_create_ai_gateway ................................................................... 83.00ms DONE
+  2026_10_03_000001_create_learning_delivery ........................................................... 125.79ms DONE
+  2026_10_03_000002_extend_ai_tasks ..................................................................... 10.06ms DONE
+  2026_10_03_000003_create_progression .................................................................. 86.54ms DONE
+  2026_10_03_000004_create_integration_ledgers .......................................................... 65.81ms DONE
+  2026_10_03_000005_create_operations ................................................................... 31.12ms DONE
+  2026_10_03_000006_create_objective_quizzes ............................................................ 47.57ms DONE
+  2026_10_03_000007_record_file_uploader ................................................................ 65.69ms DONE
+  2026_10_05_000001_create_document_extractions ......................................................... 22.42ms DONE
+
+
+   INFO  Seeding database.  
+
+
+Running 10 tests using 1 worker
+
+  ok  1 [desktop] › tests\Browser\appearance.spec.js:13:1 › all five themes persist across pages and pass automated contrast checks (37.5s)
+  x   2 [desktop] › tests\Browser\appearance.spec.js:37:1 › preferences are isolated between identities and storage failure stays usable (42.1s)
+  ok  3 [desktop] › tests\Browser\appearance.spec.js:56:1 › mobile sidebar supports keyboard dismissal, navigation and narrow layouts (9.2s)
+  ok  4 [desktop] › tests\Browser\appearance.spec.js:80:1 › admin can preview co-branding and white-label without saving changes (6.0s)
+  ok  5 [desktop] › tests\Browser\foundation.spec.js:15:1 › learner cannot open a peer plan; private download and queued receipt work (18.9s)
+  ok  6 [desktop] › tests\Browser\foundation.spec.js:43:1 › coordinator and admin dashboards expose only their intended scope (10.8s)
+  ok  7 [desktop] › tests\Browser\foundation.spec.js:56:1 › mobile sign-in and learner view have no horizontal overflow or automated accessibility violations (7.5s)
+  ok  8 [desktop] › tests\Browser\learning.spec.js:33:1 › onboarding autosaves, survives reload, and retains input after network failure or stale save (18.0s)
+  ok  9 [desktop] › tests\Browser\learning.spec.js:69:1 › coordinator completes onboarding, writes every block and approves the exact curriculum version (1.9m)
+  ok 10 [desktop] › tests\Browser\learning.spec.js:218:1 › administrator versions task routing without exposing credentials (8.7s)
+
+
+  1) [desktop] › tests\Browser\appearance.spec.js:37:1 › preferences are isolated between identities and storage failure stays usable 
+
+    TimeoutError: locator.click: Timeout 15000ms exceeded.
+    Call log:
+      - waiting for getByRole('link', { name: 'Appearance', exact: true })
+        - locator resolved to <a href="http://127.0.0.1:8141/settings/appearance">…</a>
+      - attempting click action
+        - waiting for element to be visible, enabled and stable
+        - element is visible, enabled and stable
+        - scrolling into view if needed
+        - done scrolling
+        - performing click action
+        - click action done
+        - waiting for scheduled navigations to finish
+
+
+      48 |     await page.reload();
+      49 |     await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+    > 50 |     await page.getByRole('link', { name: 'Appearance', exact: true }).click();
+         |                                                                       ^
+      51 |     await page.getByRole('group', { name: 'Workspace theme' }).getByRole('button', { name: 'Light', exact: true }).click();
+      52 |     await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+      53 |     await expect(page.locator('#appearance-status')).toContainText('Browser storage is unavailable');
+        at C:\Users\cabas\Documents\Codex\Projects\Training Assessment Tracker V2\.runtime\cerebru-ui\platform\tests\Browser\appearance.spec.js:50:71
+
+    Error Context: .runtime\workspace-results\appearance-preferences-are-c6b48-torage-failure-stays-usable-desktop\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    .runtime\workspace-results\appearance-preferences-are-c6b48-torage-failure-stays-usable-desktop\trace.zip
+    Usage:
+
+        npx playwright show-trace .runtime\workspace-results\appearance-preferences-are-c6b48-torage-failure-stays-usable-desktop\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [desktop] › tests\Browser\appearance.spec.js:37:1 › preferences are isolated between identities and storage failure stays usable 
+  9 passed (6.8m)
