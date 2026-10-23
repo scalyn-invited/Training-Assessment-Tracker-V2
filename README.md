@@ -3,6 +3,8 @@
 The runnable Laravel application is in [platform/](platform/README.md). Start there for local setup, synthetic sign-in and test commands.
 
 - [Implementation rules](AGENT.md)
+- [Two-person AI workspace and prompts](docs/implementation/README.md) — Bernie (Developer A and technical lead) and Saturnino (Developer B, UI and Design)
+- [Current implementation status and next-step routing](docs/implementation/STATUS.md)
 - [First milestone status](platform/docs/MILESTONE_01.md)
 - [Onboarding and curriculum milestone](platform/docs/MILESTONE_02.md)
 - [AI gateway and generation milestone](platform/docs/MILESTONE_03.md)

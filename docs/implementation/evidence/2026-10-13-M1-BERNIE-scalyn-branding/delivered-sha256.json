@@ -1,0 +1,42 @@
+[
+  {
+    "file": "platform/config/branding.php",
+    "sha256": "547a1434c3b184f3597572d954ee4f9787e523aa3ec53a182bef5255957925f9"
+  },
+  {
+    "file": "platform/public/app.css",
+    "sha256": "532ac0533dfbd4697ae5babd429fe04a7461d271a7eb349c0a387635328be301"
+  },
+  {
+    "file": "platform/resources/views/layouts/app.blade.php",
+    "sha256": "4b14c296bcdc097b6ad9f645e2b5a7a11dcabd01411a1522f2cf04ba964399a8"
+  },
+  {
+    "file": "platform/tests/Browser/appearance.spec.js",
+    "sha256": "627b6561f565628e9988d16b70c713504c711b58b416c43851cfccc4849d5ffd"
+  },
+  {
+    "file": "platform/tests/Browser/foundation.spec.js",
+    "sha256": "19b5be7499dc92d18b2a614f5336c1352e2f7ae0591ef183da014eaf79f2d040"
+  },
+  {
+    "file": "platform/tests/Browser/learning.spec.js",
+    "sha256": "6a22f2b260af279211ba531bb39016965acdb3b96ccf42f7a1b836b8ac395586"
+  },
+  {
+    "file": "platform/tests/Feature/BrandingTest.php",
+    "sha256": "07b58d57fb70fa94bfa7a26cac6359eaaca2c6d56f53ec936d67a3c4657d3028"
+  },
+  {
+    "file": "platform/public/appearance.js",
+    "sha256": "4eb7c33168bc46595038055262b99f2be4f01e82c2dcdff88fd06934b60de513"
+  },
+  {
+    "file": "platform/public/images/scalyn-opc-logo.png",
+    "sha256": "03f9c92ddf2af8c66cdb844a9e3012aaabf4b7b6a3504da9edeed969701f5e40"
+  },
+  {
+    "file": "platform/docs/CEREBRU_UI.md",
+    "sha256": "dbc358392dd132cab64de4ef2625ca6de96e3e0c8dc5643707013f1e62a2190b"
+  }
+]

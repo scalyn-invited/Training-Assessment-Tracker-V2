@@ -1,0 +1,6 @@
+
+Running 1 test using 1 worker
+
+  ok 1 [desktop] › tests\Browser\appearance.spec.js:13:1 › all five themes persist across pages and pass automated contrast checks (54.4s)
+
+  1 passed (1.9m)

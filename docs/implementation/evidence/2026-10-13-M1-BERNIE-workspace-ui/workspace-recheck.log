@@ -1,0 +1,6 @@
+
+Running 1 test using 1 worker
+
+  ok 1 [desktop] › tests\Browser\appearance.spec.js:37:1 › preferences are isolated between identities and storage failure stays usable (24.9s)
+
+  1 passed (1.4m)

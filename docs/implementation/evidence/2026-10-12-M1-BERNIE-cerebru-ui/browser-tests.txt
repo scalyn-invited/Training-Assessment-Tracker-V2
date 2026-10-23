@@ -1,0 +1,15 @@
+
+Running 10 tests using 1 worker
+
+  ok  1 [desktop] › tests\Browser\appearance.spec.js:13:1 › all five themes persist across pages and pass automated contrast checks (31.2s)
+  ok  2 [desktop] › tests\Browser\appearance.spec.js:37:1 › preferences are isolated between identities and storage failure stays usable (27.5s)
+  ok  3 [desktop] › tests\Browser\appearance.spec.js:56:1 › mobile sidebar supports keyboard dismissal, navigation and narrow layouts (9.1s)
+  ok  4 [desktop] › tests\Browser\appearance.spec.js:80:1 › admin can preview co-branding and white-label without saving changes (10.5s)
+  ok  5 [desktop] › tests\Browser\foundation.spec.js:15:1 › learner cannot open a peer plan; private download and queued receipt work (32.2s)
+  ok  6 [desktop] › tests\Browser\foundation.spec.js:43:1 › coordinator and admin dashboards expose only their intended scope (16.6s)
+  ok  7 [desktop] › tests\Browser\foundation.spec.js:56:1 › mobile sign-in and learner view have no horizontal overflow or automated accessibility violations (9.5s)
+  ok  8 [desktop] › tests\Browser\learning.spec.js:33:1 › onboarding autosaves, survives reload, and retains input after network failure or stale save (20.6s)
+  ok  9 [desktop] › tests\Browser\learning.spec.js:69:1 › coordinator completes onboarding, writes every block and approves the exact curriculum version (2.4m)
+  ok 10 [desktop] › tests\Browser\learning.spec.js:221:1 › administrator versions task routing without exposing credentials (11.9s)
+
+  10 passed (5.3m)

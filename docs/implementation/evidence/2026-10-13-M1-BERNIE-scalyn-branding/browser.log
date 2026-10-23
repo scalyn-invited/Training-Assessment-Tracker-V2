@@ -1,0 +1,49 @@
+
+Running 2 tests using 1 worker
+
+  x  1 [desktop] › tests\Browser\appearance.spec.js:13:1 › all five themes persist across pages and pass automated contrast checks (34.7s)
+  ok 2 [desktop] › tests\Browser\appearance.spec.js:80:1 › admin can preview co-branding and white-label without saving changes (20.0s)
+
+
+  1) [desktop] › tests\Browser\appearance.spec.js:13:1 › all five themes persist across pages and pass automated contrast checks 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('html')
+    Expected: "dark"
+    Received: "light"
+    Timeout:  15000ms
+
+    Call log:
+      - Expect "toHaveAttribute" locator('html') with timeout 15000ms
+      - waiting for locator('html')
+        33 × locator resolved to <html lang="en" data-theme="light" data-default-theme="light" data-brand-mode="white-label" data-theme-key="training.appearance.e44e7bf053e31ecc094677452af6132192e5cfb96c97082db1ecd8717ca6201a">…</html>
+           - unexpected value "light"
+
+
+      19 |     for (const [id, name] of Object.entries(themes)) {
+      20 |         await page.getByRole('group', { name: 'Workspace theme' }).getByRole('button', { name, exact: true }).click();
+    > 21 |         await expect(page.locator('html')).toHaveAttribute('data-theme', id);
+         |                                            ^
+      22 |         await page.reload();
+      23 |         await expect(page.locator('html')).toHaveAttribute('data-theme', id);
+      24 |         await expect(page.getByRole('group', { name: 'Workspace theme' }).getByRole('button', { name, exact: true })).toHaveAttribute('aria-pressed', 'true');
+        at C:\Users\cabas\Documents\Codex\Projects\Training Assessment Tracker V2\.runtime\cerebru-ui\platform\tests\Browser\appearance.spec.js:21:44
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    .runtime\workspace-recheck\appearance-all-five-themes-9c097-s-automated-contrast-checks-desktop\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: .runtime\workspace-recheck\appearance-all-five-themes-9c097-s-automated-contrast-checks-desktop\error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    .runtime\workspace-recheck\appearance-all-five-themes-9c097-s-automated-contrast-checks-desktop\trace.zip
+    Usage:
+
+        npx playwright show-trace .runtime\workspace-recheck\appearance-all-five-themes-9c097-s-automated-contrast-checks-desktop\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [desktop] › tests\Browser\appearance.spec.js:13:1 › all five themes persist across pages and pass automated contrast checks 
+  1 passed (5.9m)
