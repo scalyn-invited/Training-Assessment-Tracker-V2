@@ -1,0 +1,3 @@
+PHPUnit 11.5.56 by Sebastian Bergmann and contributors.
+
+Cannot open bootstrap script "C:\Users\cabas\Documents\Codex\Projects\Training Assessment Tracker V2\.runtime\m0-bernie-20261026\platform\vendor/autoload.php"

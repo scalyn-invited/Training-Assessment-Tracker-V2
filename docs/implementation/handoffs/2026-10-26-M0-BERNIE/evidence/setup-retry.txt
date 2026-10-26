@@ -1,0 +1,2 @@
+The environment file is invalid!
+Failed to parse dotenv file. Encountered unexpected whitespace at [C:/Users/cabas/Documents/Codex/Projects/Training Assessment Tracker V2/.runtime/...].

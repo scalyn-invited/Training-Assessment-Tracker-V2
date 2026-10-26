@@ -1,0 +1,13 @@
+{
+    "base_path": "C:\\Users\\cabas\\Documents\\Codex\\Projects\\Training Assessment Tracker V2\\.runtime\\m0-bernie-20261026\\platform",
+    "storage_path": "C:\\Users\\cabas\\Documents\\Codex\\Projects\\Training Assessment Tracker V2\\.runtime\\m0-bernie-20261026\\platform\\storage",
+    "database": "database\/m0-setup.sqlite",
+    "environment": "test",
+    "mock_identity": true,
+    "mailer": "array",
+    "live_ai": false,
+    "organisations": 1,
+    "users": 5,
+    "non_synthetic_users": 0,
+    "enrolments": 2
+}
