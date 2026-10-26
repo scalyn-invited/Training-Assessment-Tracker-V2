@@ -1,0 +1,46 @@
+
+> test:browser
+> node scripts/browser-prepare.mjs && playwright test
+
+
+  Dropping all tables ................................................................................... 12.44ms DONE
+
+   INFO  Preparing database.
+
+  Creating migration table .............................................................................. 16.48ms DONE
+
+   INFO  Running migrations.
+
+  0001_01_01_000000_create_users_table .................................................................. 40.30ms DONE
+  0001_01_01_000001_create_cache_table .................................................................. 13.76ms DONE
+  0001_01_01_000002_create_jobs_table ................................................................... 30.25ms DONE
+  2026_09_30_000001_create_training_foundation ......................................................... 243.65ms DONE
+  2026_10_01_000001_create_learning_plans ............................................................... 70.52ms DONE
+  2026_10_01_000002_add_business_weekdays_to_calendars ................................................... 6.98ms DONE
+  2026_10_01_000003_create_ai_gateway ................................................................... 64.40ms DONE
+  2026_10_03_000001_create_learning_delivery ............................................................ 96.39ms DONE
+  2026_10_03_000002_extend_ai_tasks ...................................................................... 6.75ms DONE
+  2026_10_03_000003_create_progression .................................................................. 73.70ms DONE
+  2026_10_03_000004_create_integration_ledgers .......................................................... 61.79ms DONE
+  2026_10_03_000005_create_operations ................................................................... 24.79ms DONE
+  2026_10_03_000006_create_objective_quizzes ............................................................ 35.57ms DONE
+  2026_10_03_000007_record_file_uploader ................................................................ 49.27ms DONE
+  2026_10_05_000001_create_document_extractions ......................................................... 17.98ms DONE
+
+
+   INFO  Seeding database.
+
+
+Running 7 tests using 1 worker
+
+(node:29864) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [desktop] › tests\Browser\documents.spec.js:9:1 › coordinator reviews extracted text and confirms a version; member cannot open raw extraction (27.1s)
+  ok 2 [desktop] › tests\Browser\foundation.spec.js:15:1 › learner cannot open a peer plan; private download and queued receipt work (21.7s)
+  ok 3 [desktop] › tests\Browser\foundation.spec.js:43:1 › coordinator and admin dashboards expose only their intended scope (12.6s)
+  ok 4 [desktop] › tests\Browser\foundation.spec.js:56:1 › mobile sign-in and learner view have no horizontal overflow or automated accessibility violations (6.1s)
+  ok 5 [desktop] › tests\Browser\learning.spec.js:33:1 › onboarding autosaves, survives reload, and retains input after network failure or stale save (11.8s)
+  ok 6 [desktop] › tests\Browser\learning.spec.js:69:1 › coordinator completes onboarding, writes every block and approves the exact curriculum version (1.2m)
+  ok 7 [desktop] › tests\Browser\learning.spec.js:218:1 › administrator versions task routing without exposing credentials (6.3s)
+
+  7 passed (2.7m)

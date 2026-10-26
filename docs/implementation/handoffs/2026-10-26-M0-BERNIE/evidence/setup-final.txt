@@ -1,0 +1,24 @@
+
+   Illuminate\Database\QueryException
+
+  Database file at path [C:/Users/cabas/Documents/Codex/Projects/Training Assessment Tracker V2/.runtime/m0-bernie-20261026/platform/database/m0-setup.sqlite
+] does not exist. Ensure this is an absolute path to the database. (Connection: sqlite, Database: C:/Users/cabas/Documents/Codex/Projects/Training Assessment Tracker V2/.runtime/m0-bernie-20261026/platform/database/m0-setup.sqlite
+, SQL: select exists (select 1 from "main".sqlite_master where name = 'migrations' and type = 'table') as "exists")
+
+  at vendor\laravel\framework\src\Illuminate\Database\Connection.php:838
+    834▕             $exceptionType = $this->isUniqueConstraintError($e)
+    835▕                 ? UniqueConstraintViolationException::class
+    836▕                 : QueryException::class;
+    837▕
+  ➜ 838▕             throw new $exceptionType(
+    839▕                 $this->getNameWithReadWriteType(),
+    840▕                 $query,
+    841▕                 $this->prepareBindings($bindings),
+    842▕                 $e,
+
+  1   vendor\laravel\framework\src\Illuminate\Database\Connectors\SQLiteConnector.php:60
+      Illuminate\Database\SQLiteDatabaseDoesNotExistException::("Database file at path [C:/Users/cabas/Documents/Codex/Projects/Training Assessment Tracker V2/.runtime/m0-bernie-20261026/platform/database/m0-setup.sqlite
+] does not exist. Ensure this is an absolute path to the database.")
+
+  2   vendor\laravel\framework\src\Illuminate\Database\Connectors\SQLiteConnector.php:19
+      Illuminate\Database\Connectors\SQLiteConnector::parseDatabasePath()

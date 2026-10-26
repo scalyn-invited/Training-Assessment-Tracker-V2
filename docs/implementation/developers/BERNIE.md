@@ -6,20 +6,22 @@ Owner: Bernie — Developer A and technical lead. UI/design counterpart: Saturni
 The task-log estimates below are retained from the superseded baseline; they are not the current weekly resource allocation. Effective 23 October 2026, Bernie has 9h 36m per week: 8h 06m core development, technical checks and documented self-review plus 1h 30m coordination. See [the current plan](../IMPLEMENTATION_PLAN.md).
 ## Current task
 
-- Updated: 2026-10-13.
-- Task / slice: M1-BERNIE/workspace-ui, explicitly approved by user Bernie.
-- Status: ready_for_review; full M1 foundation remains pending.
-- Branch / HEAD: feat/document-extraction at de4c66197db5e6b474cf588dc427633a43a6c6c9 plus preserved local changes; pulled latest origin/main, no commit/push.
-- Isolation: .runtime/cerebru-ui, synthetic databases; eight files delivered after baseline comparison.
-- Evidence: ../handoffs/2026-10-13-M1-BERNIE-workspace-ui.md and dated evidence directory.
-- Next checkpoint: Saturnino reviews exact delivered manifest and visual/test evidence. No shared UI edits remain reserved by this session.
+- Updated: 2026-10-26.
+- Task / slice: M0-BERNIE/reconciliation; explicitly authorised by Bernie.
+- Status: ready_for_review for documentation/proposals; M0 local milestone gate partial, project-owner acceptance pending.
+- Branch / HEAD: codex/m0-bernie-reconciliation at 847ecaa (M0 documentation commit; not pushed).
+- Isolation: .runtime/m0-bernie-20261026/platform; fresh synthetic setup DB, in-memory SQLite tests, separate browser DB/storage/cache/workers; browser port 8123 released.
+- Evidence: [M0 handoff](../handoffs/2026-10-26-M0-BERNIE-reconciliation.md), with source coverage, local tickets, D01-D10 and C01-C07 proposals, discovery and verification records.
+- Checks: 107 PHP tests passed / 587 assertions, four utility skips; seven browser scenarios passed; Pint passed. MariaDB/concurrency not run without verified isolated database.
+- Coordination: Saturnino remote work unknown; shared registers and counterpart record unchanged. No shared-file lock/acknowledgement inferred.
+- Next checkpoint: Saturnino UX review of proposed client/grant/calendar journeys; actual owner decisions for dependent foundation schema; coordinated rollup, PR publication and hosted CI pending.
 - Actual hours: unknown.
 
 ## Milestone task log
 
 | Task | Estimate | Status | Evidence / reviewed revision |
 | --- | --- | --- | --- |
-| M0-BERNIE | 16h | not_started | None recorded |
+| M0-BERNIE | 16h | ready_for_review | 2026-10-26 handoff; proposals/check evidence, four utility skips, MariaDB and human gates pending. |
 | M1-BERNIE | 56h | in_progress | Cerebru UI slice ready for review; client foundation acceptance pending. |
 | M2-BERNIE | 56h | not_started | None recorded |
 | M3-BERNIE | 32h | not_started | None recorded |
@@ -79,3 +81,31 @@ For new work under the 23 October 2026 responsibility model, record Bernie's tec
 - Existing four-job Training Platform CI triggered; results pending. Unrelated root guidance/planning documents remain local and uncommitted. No merge or deployment.
 
 - PR #6 CI run 38354816274 passed all four jobs on 54a1c73: PHP/SQLite, MariaDB/concurrent workers, browser/accessibility and document parsing/OCR. Ready for peer review; not merged or deployed.
+
+## 2026-10-26 — M0-BERNIE claim
+
+- User Bernie explicitly authorised the M0 reconciliation plan. Status: in_progress.
+- Branch: codex/m0-bernie-reconciliation; baseline HEAD: 8ce63129b5985c6edd86361df863ed960c999bfc.
+- Scope: unique M0 evidence/proposal files and this developer record only. No feature changes.
+- Saturnino's remote state is unknown; no shared acknowledgement. Shared registers and Saturnino's record are held unchanged.
+- Isolation: .runtime/m0-bernie-20261026; preserve untracked public images and Word lock file.
+- Next checkpoint: source coverage, isolated technical/browser results, unfrozen proposals and technical self-review.
+- Actual hours unknown; milestone/project-owner acceptance pending.
+
+## Previous current-task snapshot (preserved 2026-10-26)
+
+- Updated: 2026-10-13.
+- Task / slice: M1-BERNIE/workspace-ui, explicitly approved by user Bernie.
+- Status: ready_for_review; full M1 foundation remains pending.
+- Branch / HEAD: feat/document-extraction at de4c66197db5e6b474cf588dc427633a43a6c6c9 plus preserved local changes; pulled latest origin/main, no commit/push.
+- Isolation: .runtime/cerebru-ui, synthetic databases; eight files delivered after baseline comparison.
+- Evidence: ../handoffs/2026-10-13-M1-BERNIE-workspace-ui.md and dated evidence directory.
+- Next checkpoint: Saturnino reviews exact delivered manifest and visual/test evidence. No shared UI edits remain reserved by this session.
+- Actual hours: unknown.
+
+## 2026-10-26 — M0-BERNIE delivery
+
+- Completed the bounded documentation/proposal lane; no feature implementation or shared-register edit. Source sections 1-37 and V2-01-V2-15 mapped, eleven local backlog tickets, ten open decision packets and seven unfrozen contract proposals prepared.
+- Fresh isolated setup, PHP suite (107 passed, four skipped, 587 assertions), seven browser scenarios and read-only Pint passed. Restricted-runner/bootstrap and environment setup failures retained; successful retries are separately identified. MariaDB/concurrency blocked; live/utility qualification remains incomplete.
+- Technical self-review recorded in the separate verification file against source HEAD and delivery manifest; commit 847ecaa. Saturnino UX review and project-owner acceptance pending; no actual hours supplied.
+- Historical branding handoff differs from present HEAD; integration remains unverified. Preserve all unrelated files and prior M1 review history.
