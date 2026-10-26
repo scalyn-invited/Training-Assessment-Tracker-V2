@@ -2,7 +2,7 @@
 
 - Date: 2026-10-26, Asia/Manila. Contributor: Bernie, technical lead.
 - Task: M0-BERNIE, scope reconciliation and isolated onboarding verification.
-- Branch: `codex/m0-bernie-reconciliation`; source revision: `8ce63129b5985c6edd86361df863ed960c999bfc`; documentation delivery commit: `847ecaa`. The commit is local and awaits PR publication/CI. No merge or deployment performed.
+- Branch: `codex/m0-bernie-reconciliation`; source revision: `8ce63129b5985c6edd86361df863ed960c999bfc`; documentation commit: `6f1dafa`, pushed to `origin/codex/m0-bernie-reconciliation`. PR creation and hosted CI await GitHub authentication. No merge or deployment performed.
 - Authority: Bernie explicitly requested execution of M0 and approved the implementation plan in this chat. Saturnino's remote activity is unknown; isolate work and hold shared registers. Actual hours unknown.
 - Baseline unrelated files: `docs/implementation/~$_ASSISTED_TWO_DEVELOPER_DELIVERY_PLAN.docx` and `platform/public/images/`; preserved. No reservation or acknowledgement from Saturnino is inferred.
 - Consumed decisions/contracts: none newly accepted; D01-D10 remain open and C01-C07 proposed v0. Existing permission, exact-version approval, quarantine, workload and N+2 safeguards remain in force.

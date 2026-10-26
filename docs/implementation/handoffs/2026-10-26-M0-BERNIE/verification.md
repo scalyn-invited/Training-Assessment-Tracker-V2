@@ -1,6 +1,6 @@
 # M0 technical verification and self-review
 
-Date: 2026-10-26, Asia/Manila. Author: Bernie's AI implementation session. Source baseline `8ce63129b5985c6edd86361df863ed960c999bfc`; branch `codex/m0-bernie-reconciliation`; local documentation commit `847ecaa`. The commit is not yet published; no hosted CI is claimed.
+Date: 2026-10-26, Asia/Manila. Author: Bernie's AI implementation session. Source baseline `8ce63129b5985c6edd86361df863ed960c999bfc`; branch `codex/m0-bernie-reconciliation`; documentation commit `6f1dafa`, pushed to origin; no PR/hosted CI is claimed yet.
 
 ## Environment and reproduction
 

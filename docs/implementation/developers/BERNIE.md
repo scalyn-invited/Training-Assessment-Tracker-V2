@@ -9,12 +9,12 @@ The task-log estimates below are retained from the superseded baseline; they are
 - Updated: 2026-10-26.
 - Task / slice: M0-BERNIE/reconciliation; explicitly authorised by Bernie.
 - Status: ready_for_review for documentation/proposals; M0 local milestone gate partial, project-owner acceptance pending.
-- Branch / HEAD: codex/m0-bernie-reconciliation at 847ecaa (M0 documentation commit; not pushed).
+- Branch / HEAD: codex/m0-bernie-reconciliation at 6f1dafa (M0 documentation commit; branch pushed to origin).
 - Isolation: .runtime/m0-bernie-20261026/platform; fresh synthetic setup DB, in-memory SQLite tests, separate browser DB/storage/cache/workers; browser port 8123 released.
 - Evidence: [M0 handoff](../handoffs/2026-10-26-M0-BERNIE-reconciliation.md), with source coverage, local tickets, D01-D10 and C01-C07 proposals, discovery and verification records.
 - Checks: 107 PHP tests passed / 587 assertions, four utility skips; seven browser scenarios passed; Pint passed. MariaDB/concurrency not run without verified isolated database.
 - Coordination: Saturnino remote work unknown; shared registers and counterpart record unchanged. No shared-file lock/acknowledgement inferred.
-- Next checkpoint: Saturnino UX review of proposed client/grant/calendar journeys; actual owner decisions for dependent foundation schema; coordinated rollup, PR publication and hosted CI pending.
+- Next checkpoint: Saturnino UX review of proposed client/grant/calendar journeys; actual owner decisions for dependent foundation schema; coordinated rollup, PR creation and hosted CI pending; GitHub browser session is signed out and CLI token invalid.
 - Actual hours: unknown.
 
 ## Milestone task log
@@ -107,5 +107,5 @@ For new work under the 23 October 2026 responsibility model, record Bernie's tec
 
 - Completed the bounded documentation/proposal lane; no feature implementation or shared-register edit. Source sections 1-37 and V2-01-V2-15 mapped, eleven local backlog tickets, ten open decision packets and seven unfrozen contract proposals prepared.
 - Fresh isolated setup, PHP suite (107 passed, four skipped, 587 assertions), seven browser scenarios and read-only Pint passed. Restricted-runner/bootstrap and environment setup failures retained; successful retries are separately identified. MariaDB/concurrency blocked; live/utility qualification remains incomplete.
-- Technical self-review recorded in the separate verification file against source HEAD and delivery manifest; commit 847ecaa. Saturnino UX review and project-owner acceptance pending; no actual hours supplied.
+- Technical self-review recorded in the separate verification file against source HEAD and delivery manifest; commit 6f1dafa pushed to origin. Saturnino UX review and project-owner acceptance pending; no actual hours supplied.
 - Historical branding handoff differs from present HEAD; integration remains unverified. Preserve all unrelated files and prior M1 review history.

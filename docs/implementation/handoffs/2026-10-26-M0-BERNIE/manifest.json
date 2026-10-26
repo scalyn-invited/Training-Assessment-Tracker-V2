@@ -1,10 +1,10 @@
 {
   "source_head": "8ce63129b5985c6edd86361df863ed960c999bfc",
   "branch": "codex/m0-bernie-reconciliation",
-  "state": "local commit 847ecaa; awaiting PR publication and CI",
+  "state": "commit 6f1dafa pushed to origin; awaiting GitHub authentication for PR creation and CI",
   "source_pdf_sha256": "f228aabcfa6edef8018a11a4f7e1135a0ed458e2bd3623fbbb7e3d201268bb75",
   "sha256": {
-    "docs/implementation/developers/BERNIE.md": "9265a6ec5d28cb3d058b02aaa64c232f1b6ac582491a6570dfddc0795b6f8144",
+    "docs/implementation/developers/BERNIE.md": "06b66322153701d70e7c2a75638b3344f99f1e24a035076077d80cc794e44455",
     "docs/implementation/handoffs/2026-10-26-M0-BERNIE/backlog.md": "edda3d4bca9b10146be91fcb60c4c6ae86c87fc23886dbfd16c258bd2aa472c0",
     "docs/implementation/handoffs/2026-10-26-M0-BERNIE/contracts-discovery.md": "d83a381921ff6e91117a0c79aebe0481e1b8013543998a18a80acd6e8f286703",
     "docs/implementation/handoffs/2026-10-26-M0-BERNIE/coverage.md": "7a931adf099a18e9b7fa2207d9810ccf4f7b6952c8acaeebb96026d6c2995999",
@@ -26,7 +26,7 @@
     "docs/implementation/handoffs/2026-10-26-M0-BERNIE/evidence/setup-retry.txt": "1a24b4666783c0dbad34b99fbf4b3c7bcf094ecb2eaafaaac847c920d413f694",
     "docs/implementation/handoffs/2026-10-26-M0-BERNIE/evidence/setup.txt": "1a24b4666783c0dbad34b99fbf4b3c7bcf094ecb2eaafaaac847c920d413f694",
     "docs/implementation/handoffs/2026-10-26-M0-BERNIE/evidence/validation.json": "49e2038c79d9402826d611088076eb3f611b7bd08ecac829eb45bcd29fe0a4da",
-    "docs/implementation/handoffs/2026-10-26-M0-BERNIE/verification.md": "143249edc5e18456c3676d17803d5c2b439fbae310625a33b93a87910b15546e",
-    "docs/implementation/handoffs/2026-10-26-M0-BERNIE-reconciliation.md": "aae93801ccc83b8168dd714998e90e11cd67ae060fb75aaa1c471f925c1b6b35"
+    "docs/implementation/handoffs/2026-10-26-M0-BERNIE/verification.md": "676b364781760bff8d3ee7f2de8c04ed9043b68d09afcf4932d5aa54a57f5e47",
+    "docs/implementation/handoffs/2026-10-26-M0-BERNIE-reconciliation.md": "2703fb5e65eed84d27419ca06ddaefcfa8bf8fca4c8d811d945ea147e66c63f0"
   }
 }
