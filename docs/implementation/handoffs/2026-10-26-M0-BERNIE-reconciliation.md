@@ -2,7 +2,7 @@
 
 - Date: 2026-10-26, Asia/Manila. Contributor: Bernie, technical lead.
 - Task: M0-BERNIE, scope reconciliation and isolated onboarding verification.
-- Branch: `codex/m0-bernie-reconciliation`; source revision: `8ce63129b5985c6edd86361df863ed960c999bfc`; documentation commit: `6f1dafa`, pushed to `origin/codex/m0-bernie-reconciliation`. PR creation and hosted CI await GitHub authentication. No merge or deployment performed.
+- Branch: `codex/m0-bernie-reconciliation`; source revision: `8ce63129b5985c6edd86361df863ed960c999bfc`; documentation commit: `6f1dafa`, pushed to `origin/codex/m0-bernie-reconciliation`. PR #9 is open against `main`; GitHub Actions run `40264329243` passed four jobs on `b6c6dc62a94980e0def0fef9deb6e7369252831e`. No merge or M0 acceptance. No merge or deployment performed.
 - Authority: Bernie explicitly requested execution of M0 and approved the implementation plan in this chat. Saturnino's remote activity is unknown; isolate work and hold shared registers. Actual hours unknown.
 - Baseline unrelated files: `docs/implementation/~$_ASSISTED_TWO_DEVELOPER_DELIVERY_PLAN.docx` and `platform/public/images/`; preserved. No reservation or acknowledgement from Saturnino is inferred.
 - Consumed decisions/contracts: none newly accepted; D01-D10 remain open and C01-C07 proposed v0. Existing permission, exact-version approval, quarantine, workload and N+2 safeguards remain in force.
@@ -33,4 +33,4 @@ Project owner's requested next action: identify the actual D01/D02/D04/D05 decis
 
 Next ready Bernie slice: coordinated C01/C02 synthetic fixtures and migration design; schema/grant implementation waits for D01/D02 and shared acknowledgement. Cerebru implementation waits for actual contracts; local discovery documentation can continue.
 
-Technical self-review is recorded separately in verification.md for the source revision plus hashed delivery. Saturnino UX/accessibility review: pending. Project-owner M0 acceptance: pending. PR/hosted CI: pending and not requested for publication in this session. Production, live services and representative human pilot: not established.
+Technical self-review is recorded separately in verification.md for the source revision plus hashed delivery. Saturnino UX/accessibility review: pending. Project-owner M0 acceptance: pending. PR #9: open; hosted CI run 40264329243 passed all four jobs on commit b6c6dc6. The result-only documentation update is a follow-up revision; merge remains pending. Production, live services and representative human pilot: not established.

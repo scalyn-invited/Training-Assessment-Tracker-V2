@@ -1,10 +1,10 @@
 {
   "source_head": "8ce63129b5985c6edd86361df863ed960c999bfc",
   "branch": "codex/m0-bernie-reconciliation",
-  "state": "commit 6f1dafa pushed to origin; awaiting GitHub authentication for PR creation and CI",
+  "state": "PR 9 open; run 40264329243 passed four checks on b6c6dc6; later documentation-only record update published",
   "source_pdf_sha256": "f228aabcfa6edef8018a11a4f7e1135a0ed458e2bd3623fbbb7e3d201268bb75",
   "sha256": {
-    "docs/implementation/developers/BERNIE.md": "06b66322153701d70e7c2a75638b3344f99f1e24a035076077d80cc794e44455",
+    "docs/implementation/developers/BERNIE.md": "3b8219f9de0a3a8f5964cf569db40a555ed53b1ed847ba38e173f532396285f5",
     "docs/implementation/handoffs/2026-10-26-M0-BERNIE/backlog.md": "edda3d4bca9b10146be91fcb60c4c6ae86c87fc23886dbfd16c258bd2aa472c0",
     "docs/implementation/handoffs/2026-10-26-M0-BERNIE/contracts-discovery.md": "d83a381921ff6e91117a0c79aebe0481e1b8013543998a18a80acd6e8f286703",
     "docs/implementation/handoffs/2026-10-26-M0-BERNIE/coverage.md": "7a931adf099a18e9b7fa2207d9810ccf4f7b6952c8acaeebb96026d6c2995999",
@@ -26,7 +26,7 @@
     "docs/implementation/handoffs/2026-10-26-M0-BERNIE/evidence/setup-retry.txt": "1a24b4666783c0dbad34b99fbf4b3c7bcf094ecb2eaafaaac847c920d413f694",
     "docs/implementation/handoffs/2026-10-26-M0-BERNIE/evidence/setup.txt": "1a24b4666783c0dbad34b99fbf4b3c7bcf094ecb2eaafaaac847c920d413f694",
     "docs/implementation/handoffs/2026-10-26-M0-BERNIE/evidence/validation.json": "49e2038c79d9402826d611088076eb3f611b7bd08ecac829eb45bcd29fe0a4da",
-    "docs/implementation/handoffs/2026-10-26-M0-BERNIE/verification.md": "676b364781760bff8d3ee7f2de8c04ed9043b68d09afcf4932d5aa54a57f5e47",
-    "docs/implementation/handoffs/2026-10-26-M0-BERNIE-reconciliation.md": "2703fb5e65eed84d27419ca06ddaefcfa8bf8fca4c8d811d945ea147e66c63f0"
+    "docs/implementation/handoffs/2026-10-26-M0-BERNIE/verification.md": "ed926006261c669825bcbd7440585cc5cf609e428756efeeb4bed23e1ba16387",
+    "docs/implementation/handoffs/2026-10-26-M0-BERNIE-reconciliation.md": "f3bc3b31e7af358afe1b1547d4bea08eb16b7796af891ad2021fcee9aae4deae"
   }
 }

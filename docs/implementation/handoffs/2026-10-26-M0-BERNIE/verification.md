@@ -61,6 +61,8 @@ No blocker requires inventing a product rule to complete this documentation lane
 
 ## Completion addendum
 
+- PR #9: https://github.com/scalyn-invited/Training-Assessment-Tracker-V2/pull/9; open against main. Hosted GitHub Actions run 40264329243 passed all four jobs (PHP/SQLite 25s, MariaDB/concurrency 1m07s, Browser/accessibility 1m39s, Document parsing/OCR 40s) on revision `b6c6dc62a94980e0def0fef9deb6e7369252831e`. CI is not product-owner acceptance; PR is not merged. A later documentation-only status update triggered a fresh run.
+
 - Browser retry completed all seven existing scenarios with no skips/failures. It exercised scan-gated extraction review; member/peer/private download and queued receipt scope; coordinator/admin scope; mobile accessibility; resumable/conflicting onboarding; coordinator creation/generation/approval followed by member submission, provisional grading and approved feedback; administrator routing.
 - Automated accessibility checks passed on exercised screens. The generated mobile progress screenshot was visually inspected: labels/cards were readable, insufficient evidence displayed explicitly, N+2 safeguards explained and no visible horizontal clipping. This is a local browser check, not Saturnino's UX review or a full manual WCAG audit. [Retained screenshot](evidence/progress-mobile.png).
 - Read-only Pint passed. Browser runner exited successfully and no listener remained on port 8123. No persistent worker/server is left by this task.

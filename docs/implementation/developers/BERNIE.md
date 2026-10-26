@@ -14,7 +14,7 @@ The task-log estimates below are retained from the superseded baseline; they are
 - Evidence: [M0 handoff](../handoffs/2026-10-26-M0-BERNIE-reconciliation.md), with source coverage, local tickets, D01-D10 and C01-C07 proposals, discovery and verification records.
 - Checks: 107 PHP tests passed / 587 assertions, four utility skips; seven browser scenarios passed; Pint passed. MariaDB/concurrency not run without verified isolated database.
 - Coordination: Saturnino remote work unknown; shared registers and counterpart record unchanged. No shared-file lock/acknowledgement inferred.
-- Next checkpoint: Saturnino UX review of proposed client/grant/calendar journeys; actual owner decisions for dependent foundation schema; coordinated rollup, PR creation and hosted CI pending; GitHub browser session is signed out and CLI token invalid.
+- PR: #9 (open, base main), https://github.com/scalyn-invited/Training-Assessment-Tracker-V2/pull/9. GitHub Actions run 40264329243 passed all four jobs on b6c6dc62a94980e0def0fef9deb6e7369252831e; the follow-up record-only commit awaits its own CI run.
 - Actual hours: unknown.
 
 ## Milestone task log
@@ -104,6 +104,8 @@ For new work under the 23 October 2026 responsibility model, record Bernie's tec
 - Actual hours: unknown.
 
 ## 2026-10-26 — M0-BERNIE delivery
+
+- PR #9 opened against main; hosted CI run 40264329243 passed PHP/SQLite, MariaDB/concurrency, browser/accessibility and document parsing/OCR on commit b6c6dc6. Record-only follow-up is pending its own run. PR remains open; no merge or milestone acceptance.
 
 - Completed the bounded documentation/proposal lane; no feature implementation or shared-register edit. Source sections 1-37 and V2-01-V2-15 mapped, eleven local backlog tickets, ten open decision packets and seven unfrozen contract proposals prepared.
 - Fresh isolated setup, PHP suite (107 passed, four skipped, 587 assertions), seven browser scenarios and read-only Pint passed. Restricted-runner/bootstrap and environment setup failures retained; successful retries are separately identified. MariaDB/concurrency blocked; live/utility qualification remains incomplete.
