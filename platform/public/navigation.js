@@ -48,7 +48,11 @@
         if (event.key === 'Escape') { event.preventDefault(); setOpen(false); }
         if (event.key !== 'Tab') return;
         const items = [...sidebar.querySelectorAll('a[href], button:not([hidden]), summary')];
-        const visible = items.filter(item => item.getClientRects().length && !item.disabled);
+        const visible = items.filter(item => {
+            const closedDetails = item.closest('details:not([open])');
+            return item.getClientRects().length && !item.disabled
+                && (!closedDetails || item === closedDetails.querySelector(':scope > summary'));
+        });
         const first = visible[0], last = visible.at(-1);
         if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
         else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }

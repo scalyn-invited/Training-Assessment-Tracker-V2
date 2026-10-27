@@ -72,7 +72,7 @@ test('mobile sidebar supports keyboard dismissal, navigation and narrow layouts'
         await page.setViewportSize({ width, height: 844 });
         expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     }
-    await expect(page.locator('.secondary')).toHaveCSS('min-height', '38px');
+    await expect(page.getByRole('button', { name: 'Use workspace default' })).toHaveCSS('min-height', '38px');
     expect((await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze()).violations).toEqual([]);
     await page.screenshot({ path: 'test-results/appearance-mobile.png', fullPage: true });
 });

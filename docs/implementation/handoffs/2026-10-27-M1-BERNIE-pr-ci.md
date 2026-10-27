@@ -19,3 +19,11 @@ Saturnino's separate UX/accessibility review and full M1/project-owner acceptanc
 Draft PR: https://github.com/scalyn-invited/Training-Assessment-Tracker-V2/pull/10. Integrated head: `3110fb102e7b3c15c258a9f5fa148d559d1538ea`; GitHub reported mergeable. CI run `40431145801`: MariaDB/concurrent workers and document utilities passed; PHP/SQLite stopped at Pint class spacing in AppServiceProvider; browser was still running when preparing the correction. This is not an all-green run.
 
 Provider formatting was corrected and verified locally. Navigation now also closes when following a sidebar link (including same-page anchors). The expanded UI suite has a two-minute per-scenario outer budget; individual assertion deadlines remain unchanged. Local integrated Chrome checks passed theme persistence and identity/storage isolation, then timed out in later scenarios and reported a closed browser session; the run was stopped and diagnostics retained under `.runtime/ui-sidebar/results/`. No complete local integrated browser pass is claimed. Hosted browser verification remains authoritative for this revision's CI result.
+
+## Browser corrections
+
+First hosted browser result on 3110fb1: 14 passed / 2 failed. One failure was an ambiguous legacy `.secondary` test selector after adding the client switcher; it now targets the workspace-default button by accessible name. The other was a real focus-loop bug: closed theme-menu buttons could have layout rectangles while remaining non-interactive. The trap now excludes descendants of closed details except their summary.
+
+Targeted local rerun after these fixes: both mobile scenarios passed (42.2 seconds), including Appearance navigation, responsive controls, Escape, backdrop dismissal, focus wrapping and desktop resize. Command: `npx playwright test --config=playwright.ui.config.js --grep "mobile sidebar supports|mobile drawer contains"`.
+
+Second hosted run 40431971518 on ee01e98 passed PHP/SQLite and document utilities while preparing this fix; other jobs were still running. The next PR head must complete its own CI before an all-green claim. [Current integrated desktop](2026-10-27-M1-BERNIE-pr-ci/desktop-workspace.png) and [mobile drawer](2026-10-27-M1-BERNIE-pr-ci/mobile-menu.png) supersede the earlier green presentation.
