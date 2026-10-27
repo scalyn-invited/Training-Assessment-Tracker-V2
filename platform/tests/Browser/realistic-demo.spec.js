@@ -9,6 +9,29 @@ const db=new DatabaseSync(demoEnv.DB_DATABASE,{readOnly:true});
 const person=(c,id)=>c.people.find(p=>p.id===id);
 async function login(page,name){await page.goto('/login');await page.getByRole('button',{name,exact:false}).click();await page.waitForURL(/dashboard|clients/);}
 async function logout(page){await page.getByRole('button',{name:'Sign out',exact:true}).click();}
+
+test('Global Admin workspace is accessible without client selection and denied to Client Admins',async({page})=>{
+ await page.goto('/login');
+ await page.getByRole('button',{name:'Alex Rowan — Fictional Global Admin',exact:true}).click();
+ await expect(page).toHaveURL(/\/platform$/);
+ for(const width of [1440,390]) {
+  await page.setViewportSize({width,height:900});
+  for(const section of ['','/clients','/admins','/appearance','/audit']) {
+   await page.goto('/platform'+section);
+   await expect(page.getByRole('heading',{name:'Platform administration',exact:true})).toBeVisible();
+   expect((await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze()).violations).toEqual([]);
+   expect(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth)).toBe(false);
+  }
+ }
+ await page.getByRole('button',{name:'Open navigation',exact:true}).click();
+ await page.keyboard.press('Escape');
+ await expect(page.getByRole('button',{name:'Open navigation',exact:true})).toBeFocused();
+ await page.screenshot({path:'test-results/global-admin-mobile.png',fullPage:true});
+ await logout(page);
+ await login(page,manifest.clients[0].people[0].name);
+ expect((await page.request.get('/platform')).status()).toBe(403);
+ await expect(page.getByRole('link',{name:'Platform administration',exact:true})).toHaveCount(0);
+});
 test.beforeEach(()=>{const r=spawnSync('php',['artisan','cache:clear'],{env:demoEnv,encoding:'utf8'});if(r.status!==0)throw Error(r.stderr+r.stdout);});
 test('three client administrators see their own directory and branding',async({page})=>{
  for(const c of manifest.clients){

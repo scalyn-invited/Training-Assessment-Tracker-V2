@@ -6,6 +6,7 @@ use App\Models\Identity;
 use App\Services\Access;
 use App\Services\Audit;
 use App\Services\MockIdentity;
+use App\Services\Tenancy\ClientAccess;
 use App\Services\Tenancy\ClientContext;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -42,7 +43,7 @@ class SessionController
             Audit::record($user, 'mock.login', $identity->id);
         }
 
-        return redirect()->route('dashboard');
+        return redirect()->route(app(ClientAccess::class)->globalAdmin($user) ? 'platform.overview' : 'dashboard');
     }
 
     public function destroy(Request $request)

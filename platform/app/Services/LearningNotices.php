@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Jobs\SendLearningNotice;
 use App\Models\Enrolment;
 use App\Models\LearningNotification;
+use App\Models\Organisation;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -24,6 +25,16 @@ class LearningNotices
     }
 
     public function deliver(string $id): void
+    {
+        DB::transaction(function () use ($id) {
+            $notice = LearningNotification::findOrFail($id);
+            $client = Enrolment::findOrFail($notice->enrolment_id)->organisation_id;
+            Organisation::whereKey($client)->lockForUpdate()->firstOrFail();
+            $this->deliverLocked($id);
+        }, 3);
+    }
+
+    private function deliverLocked(string $id): void
     {
         $claim = DB::transaction(function () use ($id) {
             $notice = LearningNotification::whereKey($id)->lockForUpdate()->firstOrFail();

@@ -8,6 +8,7 @@ use App\Services\LearningPlans;
 use App\Services\Tenancy\ClientAccess;
 use App\Services\Tenancy\ClientAdministration;
 use App\Services\Tenancy\ClientContext;
+use App\Services\Tenancy\PlatformAdministration;
 use App\Services\Tenancy\SensitiveAccess;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Http\Request;
@@ -29,6 +30,9 @@ if (trim((string) fgets(STDIN)) !== 'GO') {
 try {
     $service = app(ClientAdministration::class);
     match ($argv[1]) {
+        'platform-revoke' => app(PlatformAdministration::class)->revoke($actor, $argv[3], 'Concurrent Global Admin removal'),
+        'platform-appoint' => app(PlatformAdministration::class)->appoint($actor, $argv[3], 'Concurrent Global Admin appointment'),
+        'platform-client' => app(PlatformAdministration::class)->client($actor, $argv[3], 'Concurrent client', 0, 'Concurrent client update', true),
         'preference' => savePreference($actor, $argv[3]),
         'branding' => saveBranding($actor, $argv[3]),
         'sensitive' => app(SensitiveAccess::class)->grant($actor, $argv[3], $argv[4], 'Concurrent sensitive grant proof'),

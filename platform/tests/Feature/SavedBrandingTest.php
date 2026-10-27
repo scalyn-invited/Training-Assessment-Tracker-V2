@@ -146,6 +146,7 @@ class SavedBrandingTest extends TestCase
     public function test_unprepared_database_reports_setup_problem_without_attempting_save(): void
     {
         Schema::shouldReceive('hasTable')->with('client_brandings')->andReturn(false);
+        Schema::shouldReceive('hasTable')->with('platform_client_states')->andReturn(true);
         $this->post('/settings/appearance', $this->fields())->assertSessionHasErrors([
             'branding' => 'Branding settings are not ready in this workspace. Contact your administrator.',
         ]);

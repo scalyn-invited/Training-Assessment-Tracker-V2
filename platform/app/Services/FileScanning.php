@@ -4,12 +4,27 @@ namespace App\Services;
 
 use App\Jobs\ScanEvidence;
 use App\Models\EvidenceFile;
+use App\Models\Organisation;
+use App\Services\Tenancy\ClientAccess;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\Process\Process;
 
 class FileScanning
 {
     public function inspect(string $id): void
+    {
+        DB::transaction(function () use ($id) {
+            $file = EvidenceFile::findOrFail($id);
+            Organisation::whereKey($file->organisation_id)->lockForUpdate()->firstOrFail();
+            if ($file->environment !== config('training.environment') || ! app(ClientAccess::class)->available($file->organisation_id)) {
+                return;
+            }
+            $this->inspectLocked($id);
+        }, 3);
+    }
+
+    private function inspectLocked(string $id): void
     {
         $file = EvidenceFile::findOrFail($id);
         if ($file->scan_status !== 'quarantined') {

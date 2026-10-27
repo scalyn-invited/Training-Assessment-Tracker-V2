@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="C:\Users\cabas\Documents\Codex\Projects\Training Assessment Tracker V2\platform\phpunit.mariadb.xml" tests="1" assertions="6" errors="0" failures="0" skipped="0" time="17.463096">
+    <testsuite name="Integration" tests="1" assertions="6" errors="0" failures="0" skipped="0" time="17.463096">
+      <testsuite name="Tests\Integration\ClientConcurrencyTest" file="C:\Users\cabas\Documents\Codex\Projects\Training Assessment Tracker V2\platform\tests\Integration\ClientConcurrencyTest.php" tests="1" assertions="6" errors="0" failures="0" skipped="0" time="17.463096">
+        <testcase name="test_waiting_approval_is_denied_after_client_suspension" file="C:\Users\cabas\Documents\Codex\Projects\Training Assessment Tracker V2\platform\tests\Integration\ClientConcurrencyTest.php" line="324" class="Tests\Integration\ClientConcurrencyTest" classname="Tests.Integration.ClientConcurrencyTest" assertions="6" time="17.463096"/>
+      </testsuite>
+    </testsuite>
+  </testsuite>
+</testsuites>

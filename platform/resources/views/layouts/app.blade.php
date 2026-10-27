@@ -30,6 +30,9 @@
     @if($branding['mode'] === 'co-branded')<p class="co-brand">Part of Cerebru</p>@endif
     <p class="workspace-nav-label">Your workspace</p>
     <nav class="sidebar-nav" aria-label="Main navigation">
+        @if(app(\App\Services\Tenancy\ClientAccess::class)->globalAdmin(auth()->user()))
+        <a href="{{ route('platform.overview') }}" @if(request()->routeIs('platform.*')) aria-current="page" @endif><x-icon name="grid"/><span>Platform administration</span></a>
+        @endif
         <a href="{{ route('dashboard') }}" @if(request()->routeIs('dashboard')) aria-current="page" @endif><x-icon name="home"/><span>Overview</span></a>
         <a href="{{ route('dashboard') }}#learning-plans" @if(request()->routeIs('enrolments.*', 'onboarding.*', 'plans.*', 'delivery.*', 'submission.*', 'progress.*', 'documents.*', 'files.*', 'jobs.*', 'ai.request', 'ai.show')) aria-current="page" @endif><x-icon name="book"/><span>Learning plans</span></a>
         @if(app(\App\Services\Access::class)->coordinator(auth()->user()))<a href="{{ route('reviews.show') }}" @if(request()->routeIs('reviews.*')) aria-current="page" @endif><x-icon name="check"/><span>Review queue</span></a>@endif
