@@ -38,6 +38,9 @@
     toggle.addEventListener('click', () => setOpen(!opened));
     close.addEventListener('click', () => setOpen(false));
     backdrop.addEventListener('click', () => setOpen(false));
+    sidebar.querySelectorAll('a[href]').forEach(link => link.addEventListener('click', () => {
+        if (mobile.matches) setOpen(false, false);
+    }));
     document.addEventListener('keydown', event => {
         if (!opened) return;
         const themeMenu = sidebar.querySelector('.theme-picker[open]');

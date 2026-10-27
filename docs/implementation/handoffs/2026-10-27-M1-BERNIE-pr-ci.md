@@ -13,3 +13,9 @@ Local integration PHP: 59 tests / 353 assertions passed. The expanded 16 browser
 The initial Git push waited in the credential manager and was cancelled before a remote branch appeared. Publication uses the existing authenticated gh credential helper. No secrets, databases, Word lock files, CLI browser artifacts or unrelated untracked logo were selected for commit. No existing application/Postman DB migration, merge of the PR, deployment, live identity or paid service is authorised.
 
 Saturnino's separate UX/accessibility review and full M1/project-owner acceptance remain pending. Final PR link, commit and CI outcomes follow below when verified.
+
+## Publication and first CI run
+
+Draft PR: https://github.com/scalyn-invited/Training-Assessment-Tracker-V2/pull/10. Integrated head: `3110fb102e7b3c15c258a9f5fa148d559d1538ea`; GitHub reported mergeable. CI run `40431145801`: MariaDB/concurrent workers and document utilities passed; PHP/SQLite stopped at Pint class spacing in AppServiceProvider; browser was still running when preparing the correction. This is not an all-green run.
+
+Provider formatting was corrected and verified locally. Navigation now also closes when following a sidebar link (including same-page anchors). The expanded UI suite has a two-minute per-scenario outer budget; individual assertion deadlines remain unchanged. Local integrated Chrome checks passed theme persistence and identity/storage isolation, then timed out in later scenarios and reported a closed browser session; the run was stopped and diagnostics retained under `.runtime/ui-sidebar/results/`. No complete local integrated browser pass is claimed. Hosted browser verification remains authoritative for this revision's CI result.
