@@ -1,0 +1,478 @@
+{
+  "base_revision": "418dd7f5c2237d1c11d73bced4e6b11a26a4eca7",
+  "application_database_sha256_before": "027d460a9e5d1dca300181adb8cd6edc9e6cafb5325a450dcf747ba95b972f44",
+  "application_database_sha256_after": "027d460a9e5d1dca300181adb8cd6edc9e6cafb5325a450dcf747ba95b972f44",
+  "temporary_ports_listening_after_shutdown": {
+    "13318": false,
+    "8123": false
+  },
+  "runs": [
+    {
+      "report": "permission-first.xml",
+      "tests": 134,
+      "assertions": 677,
+      "errors_or_failures": [
+        {
+          "test": "test_revoked_coordinator_cannot_start_or_receive_generated_content",
+          "type": "error",
+          "summary": [
+            "Tests\\Feature\\AiGenerationTest::test_revoked_coordinator_cannot_start_or_receive_generated_content",
+            "Illuminate\\Database\\QueryException: SQLSTATE[23000]: Integrity constraint violation: 19 NOT NULL constraint failed: audit_events.organisation_id (Connection: sqlite, Database: :memory:, SQL: insert into \"audit_events\" (\"id\", \"organisation_id\", \"environment\", \"actor_id\", \"action\", \"target_id\", \"request_id\", \"metadata\", \"created_at\") values (c697d488-2d30-40b1-9e06-9d7b3e9650f8, ?, test, 01a17785-03bb-7012-a15e-aeec1fb49f6f, ai.generation_stopped, 01a17785-0498-724d-b0e7-11b677675f04, 2c0f9889-5563-4f71-b812-ebc664544b93, {\"status\":\"stale\"}, 2026-10-26 09:22:48))",
+            ""
+          ]
+        },
+        {
+          "test": "test_regrade_preserves_approved_grade_and_appeal_requires_alternate_reviewer",
+          "type": "failure",
+          "summary": [
+            "Tests\\Feature\\DeliveryTest::test_regrade_preserves_approved_grade_and_appeal_requires_alternate_reviewer",
+            "Expected response status code [403] but received 404.",
+            "Failed asserting that 404 is identical to 403."
+          ]
+        },
+        {
+          "test": "test_revoked_access_prevents_grading_and_notifications_never_send_synthetic_mail",
+          "type": "error",
+          "summary": [
+            "Tests\\Feature\\DeliveryTest::test_revoked_access_prevents_grading_and_notifications_never_send_synthetic_mail",
+            "Illuminate\\Database\\QueryException: SQLSTATE[23000]: Integrity constraint violation: 19 NOT NULL constraint failed: audit_events.organisation_id (Connection: sqlite, Database: :memory:, SQL: insert into \"audit_events\" (\"id\", \"organisation_id\", \"environment\", \"actor_id\", \"action\", \"target_id\", \"request_id\", \"metadata\", \"created_at\") values (5a1e7f61-2bc9-4af5-9799-e333bb8070fa, ?, test, 01a17785-36cb-7040-9de4-8d5f2f53cf2b, ai.task_stopped, 01a17785-3878-72ce-b49e-b7bfd4870301, db73dd65-991a-42b1-871b-33e4dd5f42bd, {\"error\":\"stale\"}, 2026-10-26 09:23:01))",
+            ""
+          ]
+        },
+        {
+          "test": "test_coordinator_requires_effective_assignment_and_named_responsibility",
+          "type": "failure",
+          "summary": [
+            "Tests\\Feature\\FoundationTest::test_coordinator_requires_effective_assignment_and_named_responsibility",
+            "Expected response status code [404] but received 200.",
+            "Failed asserting that 200 is identical to 404."
+          ]
+        },
+        {
+          "test": "test_future_assignment_cannot_grant_access",
+          "type": "failure",
+          "summary": [
+            "Tests\\Feature\\FoundationTest::test_future_assignment_cannot_grant_access",
+            "Expected response status code [404] but received 200.",
+            "Failed asserting that 200 is identical to 404."
+          ]
+        },
+        {
+          "test": "test_admin_needs_separate_sensitive_file_capability",
+          "type": "failure",
+          "summary": [
+            "Tests\\Feature\\FoundationTest::test_admin_needs_separate_sensitive_file_capability",
+            "Expected response status code [200] but received 404.",
+            "Failed asserting that 404 is identical to 200."
+          ]
+        },
+        {
+          "test": "test_real_local_only_member_can_train_locally_but_is_not_exported",
+          "type": "error",
+          "summary": [
+            "Tests\\Feature\\FoundationTest::test_real_local_only_member_can_train_locally_but_is_not_exported",
+            "Illuminate\\Database\\QueryException: SQLSTATE[23000]: Integrity constraint violation: 19 FOREIGN KEY constraint failed (Connection: sqlite, Database: :memory:, SQL: update \"users\" set \"environment\" = production, \"is_synthetic\" = 0, \"sync_policy\" = local_only where \"id\" = 01a17785-5f76-7304-a0df-3f2135cd12f7)",
+            ""
+          ]
+        },
+        {
+          "test": "test_valid_delegation_never_exports_synthetic_records",
+          "type": "failure",
+          "summary": [
+            "Tests\\Feature\\FoundationTest::test_valid_delegation_never_exports_synthetic_records",
+            "Expected response status code [200] but received 422.",
+            "Failed asserting that 422 is identical to 200."
+          ]
+        },
+        {
+          "test": "test_new_uploads_are_quarantined_and_unsafe_extensions_rejected",
+          "type": "failure",
+          "summary": [
+            "Tests\\Feature\\FoundationTest::test_new_uploads_are_quarantined_and_unsafe_extensions_rejected",
+            "Expected response status code [409] but received 404.",
+            "Failed asserting that 404 is identical to 409."
+          ]
+        },
+        {
+          "test": "test_directory_deactivation_invalidates_existing_delegation_and_session",
+          "type": "error",
+          "summary": [
+            "Tests\\Feature\\FoundationTest::test_directory_deactivation_invalidates_existing_delegation_and_session",
+            "Illuminate\\Database\\QueryException: SQLSTATE[23000]: Integrity constraint violation: 19 NOT NULL constraint failed: audit_events.organisation_id (Connection: sqlite, Database: :memory:, SQL: insert into \"audit_events\" (\"id\", \"organisation_id\", \"environment\", \"actor_id\", \"action\", \"target_id\", \"request_id\", \"metadata\", \"created_at\") values (d5c5b762-cf0d-4e26-8115-d3eae9114901, ?, test, 01a17785-6bf5-71f0-94ca-d4dc12459522, directory.person.deactivated, 01a17785-6bf5-71f0-94ca-d4dc12459522, cbe802d5-e2b9-4e3e-bef9-d6ff85049436, {\"event_id\":\"7871efdc-d115-44d6-ae69-6765f824d86f\",\"version\":1}, 2026-10-26 09:23:15))",
+            ""
+          ]
+        },
+        {
+          "test": "test_membership_removal_revokes_member_and_coordinator_record_access",
+          "type": "failure",
+          "summary": [
+            "Tests\\Feature\\FoundationTest::test_membership_removal_revokes_member_and_coordinator_record_access",
+            "Failed asserting that true is false.",
+            ""
+          ]
+        },
+        {
+          "test": "test_import_never_links_by_email_or_creates_identity_or_role",
+          "type": "error",
+          "summary": [
+            "Tests\\Feature\\FoundationTest::test_import_never_links_by_email_or_creates_identity_or_role",
+            "Illuminate\\Database\\QueryException: SQLSTATE[23000]: Integrity constraint violation: 19 NOT NULL constraint failed: audit_events.organisation_id (Connection: sqlite, Database: :memory:, SQL: insert into \"audit_events\" (\"id\", \"organisation_id\", \"environment\", \"actor_id\", \"action\", \"target_id\", \"request_id\", \"metadata\", \"created_at\") values (41fbe992-fdc4-4ca2-aa22-1a2891ca3026, ?, test, 01a17785-6c91-738b-a9e8-c97dd3b9e24d, directory.person.upserted, 01a17785-6c91-738b-a9e8-c97dd3b9e24d, d5dce42f-5b39-4d8a-9aa8-5f8207a4a920, {\"event_id\":\"db18f49b-5e22-4667-899d-a4c9ae7e36ef\",\"version\":1}, 2026-10-26 09:23:15))",
+            ""
+          ]
+        },
+        {
+          "test": "test_feed_excludes_history_until_explicit_export_and_rechecks_membership",
+          "type": "failure",
+          "summary": [
+            "Tests\\Feature\\IntegrationBoundaryTest::test_feed_excludes_history_until_explicit_export_and_rechecks_membership",
+            "Failed asserting that actual size 0 matches expected size 1.",
+            ""
+          ]
+        },
+        {
+          "test": "test_directory_page_does_not_advance_cursor_or_persist_partial_events_on_failure",
+          "type": "error",
+          "summary": [
+            "Tests\\Feature\\IntegrationBoundaryTest::test_directory_page_does_not_advance_cursor_or_persist_partial_events_on_failure",
+            "Illuminate\\Database\\QueryException: SQLSTATE[23000]: Integrity constraint violation: 19 NOT NULL constraint failed: audit_events.organisation_id (Connection: sqlite, Database: :memory:, SQL: insert into \"audit_events\" (\"id\", \"organisation_id\", \"environment\", \"actor_id\", \"action\", \"target_id\", \"request_id\", \"metadata\", \"created_at\") values (f1fe6989-b4c6-4d89-a18f-1ebfb9e3c086, ?, test, 01a17785-6d85-701a-9b99-8b60b7d1fb88, directory.person.upserted, 01a17785-6d85-701a-9b99-8b60b7d1fb88, 59ff2604-7305-4a6b-9360-1b58a3a76e27, {\"event_id\":\"5135057d-4e5a-4bfc-addf-f9a809736b0f\",\"version\":1}, 2026-10-26 09:23:15))",
+            ""
+          ]
+        },
+        {
+          "test": "test_explicit_smtp_transient_rejection_retries_boundedly",
+          "type": "failure",
+          "summary": [
+            "Tests\\Feature\\NotificationAndScanTest::test_explicit_smtp_transient_rejection_retries_boundedly",
+            "Failed asserting that two strings are identical.",
+            "--- Expected"
+          ]
+        },
+        {
+          "test": "test_unknown_smtp_outcome_is_held_without_retry",
+          "type": "failure",
+          "summary": [
+            "Tests\\Feature\\NotificationAndScanTest::test_unknown_smtp_outcome_is_held_without_retry",
+            "Failed asserting that two strings are identical.",
+            "--- Expected"
+          ]
+        }
+      ],
+      "skips": [
+        {
+          "test": "test_docx_text_and_tables_are_read_without_fetching_resources",
+          "reason": ""
+        },
+        {
+          "test": "test_docx_rejects_external_relationships_and_entities",
+          "reason": ""
+        },
+        {
+          "test": "test_real_pdf_and_image_ocr_tools",
+          "reason": ""
+        },
+        {
+          "test": "test_real_clamav_gates_extraction_using_a_harmless_custom_signature",
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "report": "permission-second.xml",
+      "tests": 76,
+      "assertions": 359,
+      "errors_or_failures": [
+        {
+          "test": "test_invalid_output_gets_one_repair_then_failure_with_charges_retained",
+          "type": "error",
+          "summary": [
+            "Tests\\Feature\\AiGenerationTest::test_invalid_output_gets_one_repair_then_failure_with_charges_retained",
+            "TypeError: Illuminate\\Database\\Eloquent\\Model::update(): Argument #2 ($options) must be of type array, string given, called in C:\\Users\\cabas\\Documents\\Codex\\Projects\\Training Assessment Tracker V2\\platform\\app\\Services\\Ai\\Generation.php on line 225",
+            ""
+          ]
+        },
+        {
+          "test": "test_timeout_is_not_retried_and_requires_audited_charge_reconciliation",
+          "type": "error",
+          "summary": [
+            "Tests\\Feature\\AiGenerationTest::test_timeout_is_not_retried_and_requires_audited_charge_reconciliation",
+            "TypeError: Illuminate\\Database\\Eloquent\\Model::update(): Argument #2 ($options) must be of type array, string given, called in C:\\Users\\cabas\\Documents\\Codex\\Projects\\Training Assessment Tracker V2\\platform\\app\\Services\\Ai\\Generation.php on line 225",
+            ""
+          ]
+        },
+        {
+          "test": "test_refusal_is_a_failure_without_repair_or_automatic_approval",
+          "type": "error",
+          "summary": [
+            "Tests\\Feature\\AiGenerationTest::test_refusal_is_a_failure_without_repair_or_automatic_approval",
+            "TypeError: Illuminate\\Database\\Eloquent\\Model::update(): Argument #2 ($options) must be of type array, string given, called in C:\\Users\\cabas\\Documents\\Codex\\Projects\\Training Assessment Tracker V2\\platform\\app\\Services\\Ai\\Generation.php on line 225",
+            ""
+          ]
+        },
+        {
+          "test": "test_edited_plan_during_provider_call_is_not_overwritten",
+          "type": "error",
+          "summary": [
+            "Tests\\Feature\\AiGenerationTest::test_edited_plan_during_provider_call_is_not_overwritten",
+            "TypeError: Illuminate\\Database\\Eloquent\\Model::update(): Argument #2 ($options) must be of type array, string given, called in C:\\Users\\cabas\\Documents\\Codex\\Projects\\Training Assessment Tracker V2\\platform\\app\\Services\\Ai\\Generation.php on line 225",
+            ""
+          ]
+        },
+        {
+          "test": "test_revoked_coordinator_cannot_start_or_receive_generated_content",
+          "type": "error",
+          "summary": [
+            "Tests\\Feature\\AiGenerationTest::test_revoked_coordinator_cannot_start_or_receive_generated_content",
+            "TypeError: Illuminate\\Database\\Eloquent\\Model::update(): Argument #2 ($options) must be of type array, string given, called in C:\\Users\\cabas\\Documents\\Codex\\Projects\\Training Assessment Tracker V2\\platform\\app\\Services\\Ai\\Generation.php on line 225",
+            ""
+          ]
+        },
+        {
+          "test": "test_changed_onboarding_invalidates_queued_generation",
+          "type": "error",
+          "summary": [
+            "Tests\\Feature\\AiGenerationTest::test_changed_onboarding_invalidates_queued_generation",
+            "TypeError: Illuminate\\Database\\Eloquent\\Model::update(): Argument #2 ($options) must be of type array, string given, called in C:\\Users\\cabas\\Documents\\Codex\\Projects\\Training Assessment Tracker V2\\platform\\app\\Services\\Ai\\Generation.php on line 225",
+            ""
+          ]
+        },
+        {
+          "test": "test_crashed_worker_is_ambiguous_and_duplicate_delivery_does_not_call_provider",
+          "type": "error",
+          "summary": [
+            "Tests\\Feature\\AiGenerationTest::test_crashed_worker_is_ambiguous_and_duplicate_delivery_does_not_call_provider",
+            "TypeError: Illuminate\\Database\\Eloquent\\Model::update(): Argument #2 ($options) must be of type array, string given, called in C:\\Users\\cabas\\Documents\\Codex\\Projects\\Training Assessment Tracker V2\\platform\\app\\Services\\Ai\\Generation.php on line 225",
+            ""
+          ]
+        },
+        {
+          "test": "test_throttle_retries_are_bounded_and_never_choose_unlisted_provider",
+          "type": "error",
+          "summary": [
+            "Tests\\Feature\\AiGenerationTest::test_throttle_retries_are_bounded_and_never_choose_unlisted_provider",
+            "TypeError: Illuminate\\Database\\Eloquent\\Model::update(): Argument #2 ($options) must be of type array, string given, called in C:\\Users\\cabas\\Documents\\Codex\\Projects\\Training Assessment Tracker V2\\platform\\app\\Services\\Ai\\Generation.php on line 225",
+            ""
+          ]
+        },
+        {
+          "test": "test_revoked_provider_data_policy_stops_queued_calls",
+          "type": "error",
+          "summary": [
+            "Tests\\Feature\\AiGenerationTest::test_revoked_provider_data_policy_stops_queued_calls",
+            "TypeError: Illuminate\\Database\\Eloquent\\Model::update(): Argument #2 ($options) must be of type array, string given, called in C:\\Users\\cabas\\Documents\\Codex\\Projects\\Training Assessment Tracker V2\\platform\\app\\Services\\Ai\\Generation.php on line 225",
+            ""
+          ]
+        },
+        {
+          "test": "test_approved_baseline_remains_available_during_failed_regeneration",
+          "type": "error",
+          "summary": [
+            "Tests\\Feature\\AiGenerationTest::test_approved_baseline_remains_available_during_failed_regeneration",
+            "TypeError: Illuminate\\Database\\Eloquent\\Model::update(): Argument #2 ($options) must be of type array, string given, called in C:\\Users\\cabas\\Documents\\Codex\\Projects\\Training Assessment Tracker V2\\platform\\app\\Services\\Ai\\Generation.php on line 225",
+            ""
+          ]
+        },
+        {
+          "test": "test_real_local_only_member_can_train_locally_but_is_not_exported",
+          "type": "error",
+          "summary": [
+            "Tests\\Feature\\FoundationTest::test_real_local_only_member_can_train_locally_but_is_not_exported",
+            "Illuminate\\Database\\QueryException: SQLSTATE[23000]: Integrity constraint violation: 19 NOT NULL constraint failed: role_assignments.granted_by (Connection: sqlite, Database: :memory:, SQL: insert into \"role_assignments\" (\"id\", \"user_id\", \"role_id\", \"organisation_id\", \"environment\", \"client_membership_id\", \"scope_type\", \"scope_key\", \"starts_at\", \"active_slot\", \"reason\") values (a1208f37-0ba8-4973-9e14-7f873d3700fd, 01a17793-9581-71ff-bcd3-ca85ef477d08, 30e746e7-5aff-4713-b5d2-b0b1448b7cd3, 01a17793-957e-7037-9365-9e0b8f05b5f7, production, b16323d7-d84e-49d2-ac1b-a1513e96839c, client, client:01a17793-957e-7037-9365-9e0b8f05b5f7, 2026-10-25 09:38:43, 1, Explicit isolated contract fixture))",
+            ""
+          ]
+        },
+        {
+          "test": "test_feed_excludes_history_until_explicit_export_and_rechecks_membership",
+          "type": "error",
+          "summary": [
+            "Tests\\Feature\\IntegrationBoundaryTest::test_feed_excludes_history_until_explicit_export_and_rechecks_membership",
+            "Illuminate\\Database\\QueryException: SQLSTATE[23000]: Integrity constraint violation: 19 NOT NULL constraint failed: role_assignments.granted_by (Connection: sqlite, Database: :memory:, SQL: insert into \"role_assignments\" (\"id\", \"user_id\", \"role_id\", \"organisation_id\", \"environment\", \"client_membership_id\", \"scope_type\", \"scope_key\", \"starts_at\", \"active_slot\", \"reason\") values (8cc0e356-f6ad-4dba-81b6-b052410d094e, 01a17793-f85b-7225-b92c-66bb240e9970, 30e746e7-5aff-4713-b5d2-b0b1448b7cd3, 01a17793-f859-71c8-8e34-059ccbe416fd, production, 9499f35d-ec86-4833-a4d4-345311562ee6, client, client:01a17793-f859-71c8-8e34-059ccbe416fd, 2026-10-25 09:39:08, 1, Explicit isolated contract fixture))",
+            ""
+          ]
+        },
+        {
+          "test": "test_explicit_smtp_transient_rejection_retries_boundedly",
+          "type": "error",
+          "summary": [
+            "Tests\\Feature\\NotificationAndScanTest::test_explicit_smtp_transient_rejection_retries_boundedly",
+            "Illuminate\\Database\\QueryException: SQLSTATE[23000]: Integrity constraint violation: 19 NOT NULL constraint failed: role_assignments.granted_by (Connection: sqlite, Database: :memory:, SQL: insert into \"role_assignments\" (\"id\", \"user_id\", \"role_id\", \"organisation_id\", \"environment\", \"client_membership_id\", \"scope_type\", \"scope_key\", \"starts_at\", \"active_slot\", \"reason\") values (2909738a-80ac-48c6-86b4-986308bdaf81, 01a17793-f8a9-72fd-88ac-e2f0ac72f874, 30e746e7-5aff-4713-b5d2-b0b1448b7cd3, 01a17793-f8a7-7153-af95-c398cb91797d, production, 48b19924-1ff4-496c-9047-ddf5689197dd, client, client:01a17793-f8a7-7153-af95-c398cb91797d, 2026-10-25 09:39:08, 1, Explicit isolated contract fixture))",
+            ""
+          ]
+        },
+        {
+          "test": "test_unknown_smtp_outcome_is_held_without_retry",
+          "type": "error",
+          "summary": [
+            "Tests\\Feature\\NotificationAndScanTest::test_unknown_smtp_outcome_is_held_without_retry",
+            "Illuminate\\Database\\QueryException: SQLSTATE[23000]: Integrity constraint violation: 19 NOT NULL constraint failed: role_assignments.granted_by (Connection: sqlite, Database: :memory:, SQL: insert into \"role_assignments\" (\"id\", \"user_id\", \"role_id\", \"organisation_id\", \"environment\", \"client_membership_id\", \"scope_type\", \"scope_key\", \"starts_at\", \"active_slot\", \"reason\") values (f0384cd3-64dc-43f5-9808-08853441b553, 01a17793-f8bc-73ae-a3dc-de761c8767f2, 30e746e7-5aff-4713-b5d2-b0b1448b7cd3, 01a17793-f8bb-70d4-b2fe-716d2d2c89a0, production, d57f3214-d9d6-4373-bdf3-2415539440e6, client, client:01a17793-f8bb-70d4-b2fe-716d2d2c89a0, 2026-10-25 09:39:08, 1, Explicit isolated contract fixture))",
+            ""
+          ]
+        }
+      ],
+      "skips": []
+    },
+    {
+      "report": "permission-third.xml",
+      "tests": 142,
+      "assertions": 774,
+      "errors_or_failures": [],
+      "skips": [
+        {
+          "test": "test_docx_text_and_tables_are_read_without_fetching_resources",
+          "reason": ""
+        },
+        {
+          "test": "test_docx_rejects_external_relationships_and_entities",
+          "reason": ""
+        },
+        {
+          "test": "test_real_pdf_and_image_ocr_tools",
+          "reason": ""
+        },
+        {
+          "test": "test_real_clamav_gates_extraction_using_a_harmless_custom_signature",
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "report": "permission-sqlite-final.xml",
+      "tests": 143,
+      "assertions": 790,
+      "errors_or_failures": [],
+      "skips": [
+        {
+          "test": "test_docx_text_and_tables_are_read_without_fetching_resources",
+          "reason": ""
+        },
+        {
+          "test": "test_docx_rejects_external_relationships_and_entities",
+          "reason": ""
+        },
+        {
+          "test": "test_real_pdf_and_image_ocr_tools",
+          "reason": ""
+        },
+        {
+          "test": "test_real_clamav_gates_extraction_using_a_harmless_custom_signature",
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "report": "permission-sqlite-followup.xml",
+      "tests": 20,
+      "assertions": 155,
+      "errors_or_failures": [],
+      "skips": []
+    },
+    {
+      "report": "permission-sqlite-complete.xml",
+      "tests": 145,
+      "assertions": 801,
+      "errors_or_failures": [],
+      "skips": [
+        {
+          "test": "test_docx_text_and_tables_are_read_without_fetching_resources",
+          "reason": ""
+        },
+        {
+          "test": "test_docx_rejects_external_relationships_and_entities",
+          "reason": ""
+        },
+        {
+          "test": "test_real_pdf_and_image_ocr_tools",
+          "reason": ""
+        },
+        {
+          "test": "test_real_clamav_gates_extraction_using_a_harmless_custom_signature",
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "report": "permission-mariadb-first.xml",
+      "tests": 163,
+      "assertions": 922,
+      "errors_or_failures": [
+        {
+          "test": "test_duplicate_workers_make_only_one_provider_attempt",
+          "type": "error",
+          "summary": [
+            "Tests\\Integration\\AiConcurrencyTest::test_duplicate_workers_make_only_one_provider_attempt",
+            "RuntimeException: Preserve sensitive grant and appeal authority history; restore/reconcile instead.",
+            ""
+          ]
+        },
+        {
+          "test": "test_competing_programmes_cannot_over_reserve_organisation_budget",
+          "type": "error",
+          "summary": [
+            "Tests\\Integration\\AiConcurrencyTest::test_competing_programmes_cannot_over_reserve_organisation_budget",
+            "RuntimeException: Preserve sensitive grant and appeal authority history; restore/reconcile instead.",
+            ""
+          ]
+        },
+        {
+          "test": "test_two_reviewers_cannot_overbook_the_same_member_day",
+          "type": "error",
+          "summary": [
+            "Tests\\Integration\\CapacityConcurrencyTest::test_two_reviewers_cannot_overbook_the_same_member_day",
+            "RuntimeException: Preserve sensitive grant and appeal authority history; restore/reconcile instead.",
+            ""
+          ]
+        },
+        {
+          "test": "test_two_real_workers_cannot_publish_the_same_event_twice",
+          "type": "error",
+          "summary": [
+            "Tests\\Integration\\WorkerConcurrencyTest::test_two_real_workers_cannot_publish_the_same_event_twice",
+            "RuntimeException: Preserve sensitive grant and appeal authority history; restore/reconcile instead.",
+            ""
+          ]
+        }
+      ],
+      "skips": [
+        {
+          "test": "test_docx_text_and_tables_are_read_without_fetching_resources",
+          "reason": ""
+        },
+        {
+          "test": "test_docx_rejects_external_relationships_and_entities",
+          "reason": ""
+        },
+        {
+          "test": "test_real_pdf_and_image_ocr_tools",
+          "reason": ""
+        },
+        {
+          "test": "test_real_clamav_gates_extraction_using_a_harmless_custom_signature",
+          "reason": ""
+        }
+      ]
+    },
+    {
+      "report": "permission-mariadb-recheck.xml",
+      "tests": 20,
+      "assertions": 143,
+      "errors_or_failures": [],
+      "skips": []
+    },
+    {
+      "report": "permission-mariadb-followup.xml",
+      "tests": 20,
+      "assertions": 139,
+      "errors_or_failures": [],
+      "skips": []
+    }
+  ],
+  "postman_validation": "JSON syntax, v2.1 shape, 8 requests, declared placeholders and empty environment values passed. No desktop import or live endpoint execution.",
+  "browser_checks": [
+    "Explicit multi-client selection",
+    "Active-client display and switching",
+    "Synthetic sensitive-grant revocation and creation",
+    "390x844 mobile viewport inspected; document width390",
+    "1440x1000 desktop viewport inspected",
+    "Console: zero errors, zero warnings"
+  ],
+  "formatting": "Final Pint --test passed; git diff --check passed."
+}

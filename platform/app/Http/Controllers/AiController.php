@@ -17,7 +17,7 @@ class AiController
     public function request(Request $request, string $id, Access $access, Generation $generation)
     {
         $input = $request->validate(['expected_version' => 'required|integer|min:1', 'idempotency_key' => 'required|uuid', 'feedback' => 'nullable|string|max:4000']);
-        $enrolment = $access->enrolments($request->user())->findOrFail($id);
+        $enrolment = $access->details($request->user())->findOrFail($id);
         $run = $generation->request($request->user(), $enrolment, $input['expected_version'], $input['idempotency_key'], $input['feedback'] ?? '');
 
         return redirect()->route('ai.show', $run->id);
@@ -25,8 +25,8 @@ class AiController
 
     public function show(Request $request, string $id, Access $access, Onboarding $onboarding)
     {
-        $run = AiRun::whereIn('enrolment_id', $access->enrolments($request->user())->select('enrolments.id'))->findOrFail($id);
-        $enrolment = $access->enrolments($request->user())->findOrFail($run->enrolment_id);
+        $run = AiRun::whereIn('enrolment_id', $access->details($request->user())->select('enrolments.id'))->findOrFail($id);
+        $enrolment = $access->details($request->user())->findOrFail($run->enrolment_id);
         $onboarding->coordinator($request->user(), $enrolment);
         $blocks = AiBlock::where('ai_run_id', $run->id)->orderBy('block_index')->get();
         $result = $run->result_version_id ? ProgrammeVersion::findOrFail($run->result_version_id) : null;
@@ -48,10 +48,10 @@ class AiController
         $registry->admin($actor);
         $policies = [];
         foreach (Registry::TASKS as $task) {
-            $policies[$task] = $registry->policy($actor->organisation_id, $actor->environment, $task);
+            $policies[$task] = $registry->policy(app(Access::class)->client($actor), $actor->environment, $task);
         }
         $providers = config('ai.providers');
-        $ambiguous = AiRun::where('organisation_id', $actor->organisation_id)->where('environment', $actor->environment)->where('status', 'ambiguous')->get();
+        $ambiguous = AiRun::where('organisation_id', app(Access::class)->client($actor))->where('environment', $actor->environment)->where('status', 'ambiguous')->get(['id', 'spent', 'reserved']);
 
         return view('ai.settings', compact('policies', 'providers', 'ambiguous'));
     }
@@ -68,7 +68,7 @@ class AiController
     {
         $registry->admin($request->user());
         $input = $request->validate(['total' => 'required|integer|min:0', 'reason' => 'required|string|min:8|max:2000']);
-        $run = AiRun::where('organisation_id', $request->user()->organisation_id)->where('environment', $request->user()->environment)->findOrFail($id);
+        $run = AiRun::where('organisation_id', app(Access::class)->client($request->user()))->where('environment', $request->user()->environment)->findOrFail($id);
         $generation->reconcile($request->user(), $run, $input['total'], $input['reason']);
 
         return back()->with('status', 'Charge reconciliation recorded. Generation was not retried.');

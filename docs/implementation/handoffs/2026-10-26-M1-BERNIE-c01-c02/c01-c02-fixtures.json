@@ -1,0 +1,59 @@
+{
+  "artifact": "M1 C01/C02 synthetic fixture proposal",
+  "date": "2026-10-26",
+  "status": "proposed_not_frozen",
+  "contract_versions": {
+    "C01": "proposed_v0",
+    "C02": "proposed_v0"
+  },
+  "decision_gates": {
+    "D01": "open",
+    "D02": "open",
+    "D03": "open; source identifiers and mappings are illustrative only"
+  },
+  "use": "Logical synthetic test cases only. These labels are not database IDs, a wire schema, accepted role names, or production source mappings.",
+  "fixture_entities": [
+    {"id": "client-a", "kind": "client", "data_class": "synthetic"},
+    {"id": "client-b", "kind": "client", "data_class": "synthetic"},
+    {"id": "team-a1", "kind": "imported_team_candidate", "client": "client-a"},
+    {"id": "team-a2", "kind": "imported_team_candidate", "client": "client-a"},
+    {"id": "team-b1", "kind": "imported_team_candidate", "client": "client-b"},
+    {"id": "cohort-a1", "kind": "training_cohort_candidate", "client": "client-a", "must_not_be_assumed_to_be": "imported_team"},
+    {"id": "member-a1", "kind": "member", "client": "client-a", "team": "team-a1"},
+    {"id": "member-a2", "kind": "peer_member", "client": "client-a", "team": "team-a1"},
+    {"id": "member-a3", "kind": "member_other_team", "client": "client-a", "team": "team-a2"},
+    {"id": "member-b1", "kind": "member", "client": "client-b", "team": "team-b1"},
+    {"id": "actor-coordinator-a1", "kind": "coordinator_actor", "client_scope": "client-a", "team_scope": ["team-a1"], "capabilities": ["assigned_member_review"]},
+    {"id": "actor-platform-operator", "kind": "platform_operations_actor", "client_scope": [], "capabilities": ["platform_operations"]},
+    {"id": "actor-explicit-sensitive-reviewer", "kind": "reviewer_actor", "client_scope": ["client-a"], "team_scope": ["team-a1"], "capabilities": ["assigned_member_review", "sensitive_assessment_read"]}
+  ],
+  "fixture_invariants": [
+    "Bind each request to server-resolved actor and scope; browser-supplied client/member IDs do not grant authority.",
+    "Restrict rows before search, pagination, totals, AI context, export construction, or file access.",
+    "Imported membership alone does not grant coordinator or reviewer power.",
+    "Platform operations and client-sensitive data access are distinct capabilities.",
+    "Recheck current permission version and scope at background execution and delivery.",
+    "Keep training cohorts distinct from imported teams; do not infer external IDs from email or labels."
+  ],
+  "scenarios": [
+    {"id": "C01-ALLOW-SELF", "actor": "member-a1", "operation": "read own approved training record", "target": "member-a1", "expectation": "allow within actor's current client and membership scope"},
+    {"id": "C01-ALLOW-ASSIGNED", "actor": "actor-coordinator-a1", "operation": "read assigned member record", "target": "member-a1", "expectation": "allow within explicit client and team assignment"},
+    {"id": "C01-DENY-PEER", "actor": "member-a1", "operation": "read peer record", "target": "member-a2", "expectation": "deny with no protected fields returned"},
+    {"id": "C01-DENY-OTHER-TEAM", "actor": "actor-coordinator-a1", "operation": "read member outside assigned team", "target": "member-a3", "expectation": "deny with no protected fields returned"},
+    {"id": "C01-DENY-CROSS-CLIENT", "actor": "actor-coordinator-a1", "operation": "read or mutate member in another client", "target": "member-b1", "expectation": "deny with no data or side effect"},
+    {"id": "C01-DENY-FORGED-SCOPE", "actor": "actor-coordinator-a1", "operation": "submit forged client, team, member, enrolment, or file identifier", "target": "client-b/team-b1/member-b1", "expectation": "resolve only through authorized server scope, then deny inaccessible object; status-code policy remains subject to C01 review"},
+    {"id": "C01-DENY-AGGREGATE-LEAK", "actor": "actor-coordinator-a1", "operation": "count members and compute dashboard totals", "target": "client-a plus client-b", "expectation": "client-b and unassigned team rows are excluded before aggregation"},
+    {"id": "C01-DENY-SELECTOR-LEAK", "actor": "actor-coordinator-a1", "operation": "search, paginate, and count member selector results", "target": "all synthetic members", "expectation": "only current authorized members and counts are visible"},
+    {"id": "C01-DENY-OPS-IS-NOT-SENSITIVE", "actor": "actor-platform-operator", "operation": "read a sensitive assessment", "target": "member-a1", "expectation": "deny unless a separately approved client-sensitive capability is present"},
+    {"id": "C01-CONDITIONAL-EXPLICIT-SENSITIVE", "actor": "actor-explicit-sensitive-reviewer", "operation": "read sensitive assessment", "target": "member-a1", "expectation": "allow only within the explicit approved capability scope; exact capability model awaits D02"},
+    {"id": "C01-DENY-STALE-GRANT", "actor": "actor-coordinator-a1", "operation": "read after grant freshness expires", "target": "member-a1", "expectation": "fail closed for privileged access; exact freshness response follows reviewed C01 semantics"},
+    {"id": "C01-DENY-REVOKED-GRANT", "actor": "actor-coordinator-a1", "operation": "read or mutate after grant revocation", "target": "member-a1", "expectation": "deny on the next authorization check; invalidate dependent cached access"},
+    {"id": "C01-DENY-BACKGROUND-EXECUTION", "actor": "actor-coordinator-a1", "operation": "execute queued report or AI job after revocation", "target": "member-a1", "expectation": "recheck permission at execution and produce no protected result"},
+    {"id": "C01-DENY-BACKGROUND-DELIVERY", "actor": "actor-coordinator-a1", "operation": "deliver queued result or download after revocation", "target": "member-a1", "expectation": "recheck permission at publication/delivery/download and disclose no protected result"},
+    {"id": "C02-DENY-MEMBERSHIP-AS-REVIEW", "actor": "actor-platform-operator", "operation": "review based only on imported group membership", "target": "member-a1", "expectation": "deny absent an explicit reviewer capability and assignment"},
+    {"id": "C02-DENY-COHORT-AS-TEAM", "actor": "actor-coordinator-a1", "operation": "use cohort ID as an imported team selector", "target": "cohort-a1", "expectation": "reject type mismatch or return no team-scoped rows; exact response follows C02 review"},
+    {"id": "C02-DENY-CROSS-CLIENT-RELATION", "actor": "migration-or-admin-command", "operation": "link client-a enrolment to client-b member/team/coordinator", "target": "member-b1/team-b1", "expectation": "reject before commit and preserve existing history"},
+    {"id": "C02-DENY-EMAIL-LINK", "actor": "directory-mapping", "operation": "link identities solely because email labels match", "target": "synthetic duplicate email labels", "expectation": "do not link; require verified immutable source identifiers under D03"}
+  ],
+  "execution_boundary": "No executable application factories or tests are changed by this proposal. Convert scenarios to isolated database tests only after D01/D02 and the stable C01/C02 contract are recorded."
+}

@@ -10,6 +10,7 @@ use App\Models\Enrolment;
 use App\Models\Organisation;
 use App\Models\ProgrammeVersion;
 use App\Models\User;
+use App\Services\Access;
 use App\Services\Audit;
 use App\Services\LearningPlans;
 use App\Services\Onboarding;
@@ -225,7 +226,7 @@ class Generation
         $block->update(['status' => $status]);
         AiBlock::where('ai_run_id', $run->id)->where('status', 'queued')->update(['status' => 'cancelled']);
         $run->update(['status' => $status, 'message' => $message, 'reserved' => $status === 'ambiguous' ? $run->reserved : 0]);
-        Audit::record(User::findOrFail($run->actor_id), 'ai.generation_stopped', $run->id, ['status' => $status]);
+        Audit::record(User::findOrFail($run->actor_id), 'ai.generation_stopped', $run->id, ['status' => $status], $run->organisation_id);
     }
 
     public function prune(): int
@@ -269,7 +270,7 @@ class Generation
         DB::transaction(function () use ($actor, $run, $total, $reason) {
             Organisation::whereKey($run->organisation_id)->lockForUpdate()->firstOrFail();
             $this->registry->admin($actor->fresh());
-            abort_unless($actor->organisation_id === $run->organisation_id && $actor->environment === $run->environment, 404);
+            abort_unless(app(Access::class)->client($actor) === $run->organisation_id && $actor->environment === $run->environment, 404);
             $run = AiRun::whereKey($run->id)->lockForUpdate()->firstOrFail();
             abort_unless($run->status === 'ambiguous' && $total >= $run->spent, 409, 'Reconciliation must include all known charges.');
             $run->update(['spent' => $total, 'reserved' => 0, 'status' => 'failed', 'message' => 'Charges reconciled by administrator. A new generation requires an explicit request.']);

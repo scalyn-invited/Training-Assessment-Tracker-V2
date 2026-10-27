@@ -6,3 +6,377 @@
 fieldset{border:0;padding:0;margin:0 0 20px;min-width:0}legend{font-weight:650;margin-bottom:12px}textarea,select,input:not([type=hidden]):not([type=checkbox]):not([type=file]){display:block;width:100%;min-width:0;max-width:100%;border:1px solid #91a79e;border-radius:6px;padding:10px 12px;margin:6px 0 20px;background:#fff;color:var(--ink);font:inherit}textarea{resize:vertical}textarea:focus-visible,select:focus-visible{outline:3px solid #b36c06;outline-offset:3px}.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.form-grid>*{min-width:0}.form-actions{display:flex;flex-wrap:wrap;gap:16px;align-items:center;margin:18px 0 26px}.form-actions a.primary{text-decoration:none}.choices{display:flex;flex-wrap:wrap;gap:14px}.choices label{font-weight:400}.choices input{width:20px;height:20px;vertical-align:middle}.step-nav{display:flex;flex-wrap:wrap;gap:8px;margin:25px 0}.step-nav a{background:white;border:1px solid var(--line);border-radius:7px;padding:10px 14px;font-size:14px}.step-nav [aria-current]{border-color:var(--green);background:#e4eee8}.lesson,.review-section{border:1px solid var(--line);border-radius:8px;padding:18px;margin:20px 0}summary{cursor:pointer;font-weight:650;padding:5px 0}details[open]>summary{margin-bottom:16px}.save-status{font-size:14px;white-space:pre-wrap;overflow-wrap:anywhere}.review-section dl>div{align-items:start}.review-section dd{max-width:68%;white-space:pre-wrap;overflow-wrap:anywhere}.comparison{margin-top:24px}.comparison p{white-space:pre-wrap;overflow-wrap:anywhere}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}fieldset:disabled input,fieldset:disabled textarea,fieldset:disabled select{color:var(--ink);background:#f4f7f5;opacity:1}
 @media(max-width:800px){.form-grid{grid-template-columns:minmax(0,1fr)}.step-nav{align-items:stretch;gap:7px}.step-nav a{flex:1 1 140px}.review-section dl>div{display:block}.review-section dd{max-width:100%}.lesson{padding:12px}}
 .preserve-lines{white-space:pre-wrap;overflow-wrap:anywhere}.panel{overflow-wrap:anywhere}nav{flex-wrap:wrap}button:disabled{cursor:not-allowed;opacity:.65}summary:focus-visible{outline:3px solid #b36c06;outline-offset:3px}
+/* Shared functional UI. Preserve workflow-specific selectors above. */
+[hidden]{
+    display:none!important
+}
+.sidebar{
+    position:fixed;
+    inset:0 auto 0 0;
+    width:248px;
+    background:var(--surface);
+    border-right:1px solid var(--line);
+    padding:30px 18px;
+    display:flex;
+    flex-direction:column;
+    z-index:40;
+    overflow-y:auto
+}
+.sidebar .brand{
+    font-size:16px;
+    gap:10px
+}
+.brand small{
+    display:block;
+    color:var(--muted);
+    font-size:11px;
+    font-weight:400;
+    margin-top:3px
+}
+.sidebar-heading{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px
+}
+.nav-caption{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:1.5px;
+    margin:38px 14px 12px;
+    font-weight:700
+}
+.sidebar nav{
+    display:flex;
+    flex-direction:column;
+    align-items:stretch;
+    gap:6px
+}
+.sidebar nav a{
+    padding:12px 14px;
+    border-radius:8px;
+    color:var(--muted);
+    font-size:14px;
+    border:1px solid transparent
+}
+.sidebar nav a:hover{
+    background:var(--bg);
+    color:var(--ink)
+}
+.sidebar nav a[aria-current]{
+    background:#e4eee8;
+    border-color:#b9d1c3;
+    color:var(--green);
+    font-weight:700
+}
+.sidebar-note{
+    margin-top:auto;
+    padding:32px 14px 0;
+    font-size:12px;
+    color:var(--muted)
+}
+.has-sidebar .app-content{
+    margin-left:248px;
+    min-width:0
+}
+.topbar{
+    padding:18px 32px;
+    gap:24px;
+    align-items:center;
+    flex-wrap:wrap
+}
+.client-switcher{
+    margin:0;
+    flex:1 1 270px;
+    max-width:510px;
+    min-width:0
+}
+.client-switcher label{
+    font-size:12px;
+    font-weight:650
+}
+.client-controls{
+    display:flex;
+    gap:10px;
+    align-items:center
+}
+.client-controls select{
+    margin:5px 0 0;
+    flex:1;
+    min-width:0
+}
+.client-controls button{
+    white-space:nowrap
+}
+.account{
+    display:flex;
+    gap:14px;
+    align-items:center;
+    margin-left:auto;
+    font-size:13px
+}
+.account form{
+    margin:0
+}
+.account span{
+    overflow-wrap:anywhere
+}
+.container{
+    width:100%;
+    padding:36px 32px 64px
+}
+.sandbox{
+    padding:10px 32px
+}
+.skip{
+    z-index:60
+}
+.menu-backdrop{
+    position:fixed;
+    inset:0;
+    background:rgba(15,35,29,.45);
+    z-index:35
+}
+.menu-open{
+    overflow:hidden
+}
+.container>.panel,.container>section,.container>form{
+    margin-bottom:24px
+}
+.panel+.panel{
+    margin-top:24px
+}
+.panel form+form{
+    border-top:1px solid var(--line);
+    padding-top:20px;
+    margin-top:20px
+}
+label{
+    font-weight:550;
+    font-size:14px
+}
+button,.primary,.secondary{
+    min-height:44px
+}
+.secondary{
+    background:white;
+    color:var(--green);
+    border:1px solid #91a79e;
+    border-radius:7px;
+    padding:9px 14px;
+    font:inherit;
+    cursor:pointer
+}
+.secondary:hover{
+    background:#edf5ef
+}
+button:focus-visible,summary:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{
+    outline:3px solid #9b6100;
+    outline-offset:3px
+}
+input[type=file]{
+    max-width:100%;
+    padding:8px 0;
+    font:inherit
+}
+input[type=checkbox],input[type=radio]{
+    accent-color:var(--green)
+}
+details{
+    border-bottom:1px solid var(--line);
+    padding:14px 0
+}
+details:last-child{
+    border-bottom:0
+}
+summary{
+    min-height:44px;
+    display:list-item
+}
+details[open]>summary{
+    color:var(--green)
+}
+.notice{
+    border-left:4px solid var(--green);
+    border-radius:8px;
+    padding:16px 20px;
+    margin-bottom:24px
+}
+.notice.error{
+    border-left-color:#a83232
+}
+table th{
+    background:var(--bg)
+}
+td{
+    vertical-align:top
+}
+pre{
+    white-space:pre-wrap;
+    overflow-wrap:anywhere;
+    max-width:100%
+}
+h1,h2,h3{
+    overflow-wrap:anywhere
+}
+.badge{
+    white-space:normal
+}
+.table-wrap{
+    border:1px solid var(--line);
+    border-radius:8px
+}
+.container>p{
+    max-width:78ch
+}
+.container form small{
+    display:block;
+    color:var(--muted)
+}
+.save-status{
+    border-left:3px solid var(--line);
+    padding-left:12px
+}
+.panel{
+    min-width:0
+}
+footer{
+    padding:22px 32px
+}
+.detail-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr))
+}
+@media(max-width:1100px){
+    .detail-grid{
+        grid-template-columns:minmax(0,1fr)
+    }
+    .metrics{
+        gap:12px
+    }
+    .metric{
+        padding:18px
+    }
+}
+@media(max-width:900px){
+    .has-sidebar .app-content{
+        margin-left:0
+    }
+    .sidebar{
+        position:static;
+        width:auto;
+        border-right:0;
+        border-bottom:1px solid var(--line);
+        padding:20px
+    }
+    .sidebar-note{
+        display:none
+    }
+    .sidebar nav{
+        flex-direction:row;
+        flex-wrap:wrap
+    }
+    .navigation-ready .sidebar{
+        position:fixed;
+        width:min(320px,calc(100vw - 32px));
+        height:100dvh;
+        transform:translateX(-100%);
+        visibility:hidden
+    }
+    .navigation-ready .sidebar.is-open{
+        transform:translateX(0);
+        visibility:visible
+    }
+    .navigation-ready .sidebar nav{
+        flex-direction:column;
+        flex-wrap:nowrap
+    }
+    .navigation-ready .sidebar-heading{
+        align-items:flex-start
+    }
+    .topbar{
+        padding:16px 20px;
+        gap:14px
+    }
+    .client-switcher{
+        order:3;
+        flex-basis:100%;
+        max-width:none
+    }
+    .account{
+        font-size:12px;
+        gap:10px
+    }
+    .container{
+        padding:28px 20px 48px
+    }
+    .sandbox{
+        padding:10px 20px
+    }
+    .detail-grid,.cards,.form-grid{
+        grid-template-columns:minmax(0,1fr)
+    }
+    .page-heading{
+        display:block
+    }
+    .metrics{
+        grid-template-columns:minmax(0,1fr)
+    }
+    .panel{
+        padding:20px
+    }
+    .client-controls{
+        align-items:stretch
+    }
+    .client-controls select{
+        margin:0
+    }
+    .client-controls button{
+        font-size:13px;
+        padding:8px
+    }
+    .sidebar .brand{
+        font-size:14px
+    }
+    .menu-close{
+        font-size:12px;
+        padding:7px
+    }
+    .login-grid{
+        grid-template-columns:minmax(0,1fr)
+    }
+    footer{
+        padding:20px
+    }
+    .table-wrap{
+        max-width:100%
+    }
+}
+@media(prefers-reduced-motion:reduce){
+    *{
+        scroll-behavior:auto!important;
+        transition:none!important
+    }
+}
+/* Unclassified action buttons use the same baseline without overriding identity cards. */
+button:not([class]){
+    background:var(--green);
+    color:white;
+    border:1px solid var(--green);
+    border-radius:7px;
+    padding:10px 16px;
+    font:inherit
+}
+button:not([class]):hover{
+    background:#125340
+}
+.login-panel form+form{
+    border:0;
+    padding:0;
+    margin:0
+}
+.skip{
+    display:inline-flex;
+    align-items:center;
+    min-height:44px
+}
+.table-wrap:focus-visible{outline:3px solid #9b6100;outline-offset:3px}

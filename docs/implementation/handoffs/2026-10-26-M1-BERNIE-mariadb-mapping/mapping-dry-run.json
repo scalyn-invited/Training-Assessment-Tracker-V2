@@ -1,0 +1,332 @@
+{
+  "write_operations": 0,
+  "backfill_authorised": false,
+  "client_membership_candidates": [
+    {
+      "user_id": "01a0f221-a1a1-72f3-b38b-87f70d1db793",
+      "organisation_id": "01a0f221-a076-70b9-b1dc-379b1bebe5c0",
+      "environment": "test",
+      "membership_status": "active",
+      "legacy_role": "admin",
+      "role_disposition": "client_admin_only_review",
+      "sensitive_access": "explicit_capability_review_required",
+      "source_mapping": "deferred_no_external_identity_linking",
+      "apply": false
+    },
+    {
+      "user_id": "01a0f221-a30e-73d8-88c3-714df5c39752",
+      "organisation_id": "01a0f221-a076-70b9-b1dc-379b1bebe5c0",
+      "environment": "test",
+      "membership_status": "active",
+      "legacy_role": "coordinator",
+      "role_disposition": "explicit_group_grants_review",
+      "sensitive_access": "explicit_capability_review_required",
+      "source_mapping": "deferred_no_external_identity_linking",
+      "apply": false
+    },
+    {
+      "user_id": "01a0f221-a4e4-72a1-b20a-1e5ab67dab0d",
+      "organisation_id": "01a0f221-a076-70b9-b1dc-379b1bebe5c0",
+      "environment": "test",
+      "membership_status": "active",
+      "legacy_role": "coordinator",
+      "role_disposition": "explicit_group_grants_review",
+      "sensitive_access": "explicit_capability_review_required",
+      "source_mapping": "deferred_no_external_identity_linking",
+      "apply": false
+    },
+    {
+      "user_id": "01a0f221-a69e-728c-9035-3402b5f1182e",
+      "organisation_id": "01a0f221-a076-70b9-b1dc-379b1bebe5c0",
+      "environment": "test",
+      "membership_status": "active",
+      "legacy_role": "member",
+      "role_disposition": "client_member_review",
+      "sensitive_access": "explicit_capability_review_required",
+      "source_mapping": "deferred_no_external_identity_linking",
+      "apply": false
+    },
+    {
+      "user_id": "01a0f221-a84b-708e-80bb-2e61a5562b99",
+      "organisation_id": "01a0f221-a076-70b9-b1dc-379b1bebe5c0",
+      "environment": "test",
+      "membership_status": "active",
+      "legacy_role": "member",
+      "role_disposition": "client_member_review",
+      "sensitive_access": "explicit_capability_review_required",
+      "source_mapping": "deferred_no_external_identity_linking",
+      "apply": false
+    }
+  ],
+  "group_decisions": [
+    {
+      "group_id": "01a0f221-a080-71df-bc53-c9d227539700",
+      "organisation_id": "01a0f221-a076-70b9-b1dc-379b1bebe5c0",
+      "environment": "test",
+      "origin": "manual",
+      "kind": null,
+      "decision": "human_classification_required"
+    },
+    {
+      "group_id": "01a0f221-a086-73e4-b24b-c86dbd01f4b4",
+      "organisation_id": "01a0f221-a076-70b9-b1dc-379b1bebe5c0",
+      "environment": "test",
+      "origin": "manual",
+      "kind": null,
+      "decision": "human_classification_required"
+    }
+  ],
+  "primary_candidates": [
+    {
+      "organisation_id": "01a0f221-a076-70b9-b1dc-379b1bebe5c0",
+      "environment": "test",
+      "member_id": "01a0f221-a69e-728c-9035-3402b5f1182e",
+      "coordinator_ids": [
+        "01a0f221-a30e-73d8-88c3-714df5c39752"
+      ],
+      "apply": false
+    },
+    {
+      "organisation_id": "01a0f221-a076-70b9-b1dc-379b1bebe5c0",
+      "environment": "test",
+      "member_id": "01a0f221-a84b-708e-80bb-2e61a5562b99",
+      "coordinator_ids": [
+        "01a0f221-a4e4-72a1-b20a-1e5ab67dab0d"
+      ],
+      "apply": false
+    }
+  ],
+  "findings": [
+    {
+      "code": "group_classification_required",
+      "table": "groups",
+      "record_id": "01a0f221-a080-71df-bc53-c9d227539700"
+    },
+    {
+      "code": "group_classification_required",
+      "table": "groups",
+      "record_id": "01a0f221-a086-73e4-b24b-c86dbd01f4b4"
+    }
+  ],
+  "history_warning": "Legacy unique group/user rows may have been reactivated in place. Do not invent earlier membership periods from starts_at/ends_at.",
+  "cutover_blockers": [
+    "Approve each group type and any team/cohort separation.",
+    "Review grants, effective dates and sensitive capabilities; never promote legacy Admin globally.",
+    "Review primary allocations and departure/history treatment.",
+    "Validate a separate populated backfill rehearsal before any application database mutation."
+  ],
+  "source_kind": "existing_local_synthetic_sqlite",
+  "source_name": "database.sqlite",
+  "observed_at_utc": "2026-10-26T07:31:25.264984+00:00",
+  "sqlite_query_only": true,
+  "tables": {
+    "adaptation_proposals": {
+      "count": 0,
+      "rows_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "ai_attempts": {
+      "count": 8,
+      "rows_sha256": "e6c2ee88f6c20172cdded5a5a5b97bfb887fd84459e9894464f34ee21da1ebd6"
+    },
+    "ai_blocks": {
+      "count": 8,
+      "rows_sha256": "78fe3db712969951fb1ab9cebd4c4cb3d20b808298736db507b8ddd119d9bb4f"
+    },
+    "ai_policies": {
+      "count": 0,
+      "rows_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "ai_runs": {
+      "count": 2,
+      "rows_sha256": "426e19b834a45f96336f391fe982d987586e87e8944cb37f49a7c42582d5ec53"
+    },
+    "appeals": {
+      "count": 0,
+      "rows_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "approved_changes": {
+      "count": 1,
+      "rows_sha256": "5c3373db662d9987d47ee8b25c34d68bf956532efdc57f36543e32a115cc199c"
+    },
+    "audit_events": {
+      "count": 140,
+      "rows_sha256": "c1eb49e6f7e7b0f40d550e9b88ed7060abf128567a6f168415c8eb4fbd654a1f"
+    },
+    "cache": {
+      "count": 5,
+      "rows_sha256": "862da73b40aeb7715cdf8c0b6f62d54d2e2dfce4d9fff002b8874a78cb11f48f"
+    },
+    "cache_locks": {
+      "count": 0,
+      "rows_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "calendar_changes": {
+      "count": 1,
+      "rows_sha256": "3f6d871eb73e3d1b1bbfd1c4b2f5d39548abd5951dfe5f4ae15e668d5fc79b1b"
+    },
+    "capacity_allocations": {
+      "count": 24,
+      "rows_sha256": "1f7d6bb4a5ae2852f1d73e155820bb4fd06903c651f9cb00166ea592b202e7c1"
+    },
+    "coordinator_assignments": {
+      "count": 2,
+      "rows_sha256": "7e756408ba303ffbe8b0cebea0d85beadb0a5bea5d532a163d96e2db1329f12f"
+    },
+    "deletion_ledger": {
+      "count": 0,
+      "rows_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "document_extractions": {
+      "count": 1,
+      "rows_sha256": "b863dba2d1014e41519ef1b3332ac7c913ac58c841da7ff6d9b01c387560fa70"
+    },
+    "enrolments": {
+      "count": 2,
+      "rows_sha256": "ddc6e498620f24c33fff64c379022fe97e0941bd5716df2f97df180c35e6f783"
+    },
+    "evidence_files": {
+      "count": 3,
+      "rows_sha256": "58bd2bc2bc0767f0f6226c381289a6b685cf3385379bac7245051b3ae2b93f85"
+    },
+    "failed_jobs": {
+      "count": 0,
+      "rows_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "grade_attempts": {
+      "count": 0,
+      "rows_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "grade_decisions": {
+      "count": 0,
+      "rows_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "groups": {
+      "count": 2,
+      "rows_sha256": "9d621f523fa1733625e67c40706e2f26246b878783caf31112417f2e25ee91f8"
+    },
+    "identities": {
+      "count": 5,
+      "rows_sha256": "e94d0c8e751a0394af1936d289264f74d68d857822f828d7b0d1981b3d94becd"
+    },
+    "inbound_events": {
+      "count": 0,
+      "rows_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "integration_cursors": {
+      "count": 0,
+      "rows_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "job_batches": {
+      "count": 0,
+      "rows_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "jobs": {
+      "count": 0,
+      "rows_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "kpi_observations": {
+      "count": 0,
+      "rows_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "kpi_snapshots": {
+      "count": 0,
+      "rows_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "kpi_suggestions": {
+      "count": 0,
+      "rows_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "kpi_versions": {
+      "count": 3,
+      "rows_sha256": "359eb144cdefca43d58a5dfa77b846a58c11ae9255453bee7a378e84b8528c45"
+    },
+    "learning_blocks": {
+      "count": 8,
+      "rows_sha256": "ee7a82da79f6b0a2d7ccd8351204bd04ef252363df11a3676f8768a6afea019c"
+    },
+    "learning_notifications": {
+      "count": 4,
+      "rows_sha256": "bd581478b77efd46a676a752dd63213320e1ae916493c68cc307c1cba633271a"
+    },
+    "legal_holds": {
+      "count": 0,
+      "rows_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "member_calendars": {
+      "count": 2,
+      "rows_sha256": "077ef0536a787f916ac3ee5d9e54d9ef9b6353f4a3b3d919929e736f705a31df"
+    },
+    "memberships": {
+      "count": 2,
+      "rows_sha256": "61be18d25a7b2c6dd4a199f3e76667f0e797cd94b0d23371ae4e1a3de1771167"
+    },
+    "migrations": {
+      "count": 15,
+      "rows_sha256": "a12d72fb29a22b125410e3fdc7fec5b97be2886beedcb54634c5cf1f02784242"
+    },
+    "notification_receipts": {
+      "count": 1,
+      "rows_sha256": "e84feaf4e95b54362275d5a0100337e715ae104b9fb5a8ab9bb3aa715cb5e946"
+    },
+    "objective_quizzes": {
+      "count": 2,
+      "rows_sha256": "b1815eb5a6447f0df8be29a360fe9aec3cdc6f65ab0d52298040d779656e1c97"
+    },
+    "onboarding_versions": {
+      "count": 59,
+      "rows_sha256": "7e53a77b245ee216acd901b4b4408afe74155f4d41f3e77103515a20adebe8c6"
+    },
+    "operational_heartbeats": {
+      "count": 2,
+      "rows_sha256": "4e5c9239d2a0ccfc6542d607c6cdb7ab0d76bd299840dbf3589ab3e9b95c0198"
+    },
+    "organisations": {
+      "count": 1,
+      "rows_sha256": "ca14362eebc64f0552fab2b990fcae98775b84516904cde8b21b229921b4ae82"
+    },
+    "outbox_events": {
+      "count": 1,
+      "rows_sha256": "b97412e3a662e4a431121e78769131e930bffcdabdf89e1e304e2df951551a5e"
+    },
+    "password_reset_tokens": {
+      "count": 0,
+      "rows_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "programme_approvals": {
+      "count": 1,
+      "rows_sha256": "d1eda84a9e947cece1d1d49f162cf2a6f087684218fcfa641ebf8184af513ed7"
+    },
+    "programme_versions": {
+      "count": 4,
+      "rows_sha256": "ac9a9504a7bd2536e260d0643f4c59df219c2ff47f4b57819c1c14675a4a6b27"
+    },
+    "promotions": {
+      "count": 0,
+      "rows_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "sessions": {
+      "count": 1,
+      "rows_sha256": "e7eefe0a986dacf7a393b4ffbfd9f954078a6cb0387f7d1e35f24ff0f9893cba"
+    },
+    "sqlite_sequence": {
+      "count": 4,
+      "rows_sha256": "719cbead5cd1b80ec544413d63b8c4dc78853d5271185c7e87d3c6acfded994c"
+    },
+    "submission_attempts": {
+      "count": 1,
+      "rows_sha256": "b002245d14a4d756af98471ddc00482646f82500d3edeb66d813ee3c283b96d4"
+    },
+    "users": {
+      "count": 5,
+      "rows_sha256": "38d337fe99eec7e786998e95bcbccb4b4b6b99cd09f00432835b5c71ec05c80d"
+    },
+    "work_drafts": {
+      "count": 1,
+      "rows_sha256": "e4d9711d1ef81588195f9d44f5b8e5070c049fed3da90f45e027301765be6316"
+    }
+  },
+  "schema_sha256": "e3bb360737058c84ea3fedb2ede06b5eedc2a24b95ff1039ff1c2c32fb25b530",
+  "source_sha256_before": "de0ca5b1523b8de5ad1db7765533b3bb87090e163f4ea6fd08c69285b9ca7334",
+  "source_sha256_after": "de0ca5b1523b8de5ad1db7765533b3bb87090e163f4ea6fd08c69285b9ca7334",
+  "source_unchanged": true
+}

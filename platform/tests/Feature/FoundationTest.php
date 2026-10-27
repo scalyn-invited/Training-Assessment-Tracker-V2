@@ -6,6 +6,7 @@ use App\Jobs\DeliverOutbox;
 use App\Livewire\JobReceipts;
 use App\Models\Enrolment;
 use App\Models\EvidenceFile;
+use App\Models\Group;
 use App\Models\Identity;
 use App\Models\Organisation;
 use App\Models\User;
@@ -93,14 +94,14 @@ class FoundationTest extends TestCase
         $this->login('coordinator-a');
         $this->get('/enrolments/'.$this->enrolment()->id)->assertOk();
         $this->get('/enrolments/'.$this->enrolment('member-b')->id)->assertNotFound();
-        DB::table('coordinator_assignments')->where('user_id', $this->user('coordinator-a')->id)->update(['ends_at' => now()]);
+        DB::table('role_assignments')->where('user_id', $this->user('coordinator-a')->id)->update(['ends_at' => now()]);
         $this->get('/enrolments/'.$this->enrolment()->id)->assertNotFound();
     }
 
     public function test_future_assignment_cannot_grant_access(): void
     {
         $this->login('coordinator-a');
-        DB::table('coordinator_assignments')->update(['starts_at' => now()->addDay()]);
+        DB::table('role_assignments')->update(['starts_at' => now()->addDay()]);
         $this->get('/enrolments/'.$this->enrolment()->id)->assertNotFound();
     }
 
@@ -113,7 +114,7 @@ class FoundationTest extends TestCase
         $this->get('/files/'.$file->id)->assertNotFound();
         $this->user('admin')->update(['sensitive_access' => true]);
         auth()->forgetGuards();
-        $this->get('/files/'.$file->id)->assertOk()->assertDownload('synthetic-evidence.txt');
+        $this->get('/files/'.$file->id)->assertNotFound();
     }
 
     public function test_authorised_download_is_private_and_audited(): void
@@ -140,17 +141,15 @@ class FoundationTest extends TestCase
     public function test_real_local_only_member_can_train_locally_but_is_not_exported(): void
     {
         config(['training.environment' => 'production']);
-        $member = $this->user();
-        $coordinator = $this->user('coordinator-a');
-        $e = $this->enrolment();
-        // Construct a separate real-production fixture without using the application's immutable-history mutation path.
-        DB::table('users')->where('id', $member->id)->update(['environment' => 'production', 'is_synthetic' => false, 'sync_policy' => 'local_only']);
-        $member->refresh();
-        $coordinator->update(['environment' => 'production', 'is_synthetic' => false]);
-        $e->group->update(['environment' => 'production']);
-        DB::table('memberships')->where('user_id', $member->id)->update(['environment' => 'production']);
-        DB::table('coordinator_assignments')->where('user_id', $coordinator->id)->update(['environment' => 'production']);
-        $e->update(['environment' => 'production', 'status' => 'active']);
+        $org = Organisation::create(['name' => 'Isolated local-only contract']);
+        $member = User::create(['organisation_id' => $org->id, 'environment' => 'production', 'name' => 'Contract learner',
+            'email' => 'local-contract@example.invalid', 'password' => 'unused', 'is_synthetic' => false, 'active' => true,
+            'origin' => 'manual', 'sync_policy' => 'local_only']);
+        Identity::create(['user_id' => $member->id, 'issuer' => 'https://idp.example.invalid', 'subject' => 'local-contract']);
+        $this->explicitMember($member, $org->id);
+        $group = Group::create(['organisation_id' => $org->id, 'environment' => 'production', 'name' => 'Contract team', 'kind' => 'team']);
+        $e = Enrolment::create(['organisation_id' => $org->id, 'environment' => 'production', 'member_id' => $member->id,
+            'coordinator_id' => $member->id, 'group_id' => $group->id, 'title' => 'Local-only contract', 'status' => 'active']);
         $this->assertTrue(app(Access::class)->canView($member->fresh(), $e));
         $this->assertCount(0, app(Access::class)->externalEnrolments($member->fresh())->get());
         DB::table('users')->where('id', $member->id)->update(['is_synthetic' => true]);
@@ -190,7 +189,7 @@ class FoundationTest extends TestCase
     public function test_valid_delegation_never_exports_synthetic_records(): void
     {
         $token = app(MockIdentity::class)->issue($this->user());
-        $this->withToken($token)->getJson('/api/v1/me/training')->assertOk()->assertJsonPath('items', []);
+        $this->withHeader('X-Client-Id', $this->user()->organisation_id)->withToken($token)->getJson('/api/v1/me/training')->assertOk()->assertJsonPath('items', []);
         $this->withToken($token)->getJson('/api/v1/members/'.$this->user('member-b')->id.'/summary')->assertNotFound();
     }
 
@@ -228,9 +227,9 @@ class FoundationTest extends TestCase
         $file = EvidenceFile::where('scan_status', 'quarantined')->firstOrFail();
         Storage::disk('local')->assertExists($file->storage_key);
         $this->get('/files/'.$file->id)->assertNotFound(); // Sensitive capability is separate from ownership.
-        $this->user()->update(['sensitive_access' => true]);
-        auth()->forgetGuards();
+        $this->login('coordinator-a');
         $this->get('/files/'.$file->id)->assertStatus(409);
+        $this->login();
         $this->post('/enrolments/'.$e->id.'/files', ['evidence' => UploadedFile::fake()->createWithContent('attack.php', '<?php echo 1;')])->assertSessionHasErrors('evidence');
         $this->post('/enrolments/'.$e->id.'/files', ['evidence' => UploadedFile::fake()->create('huge.pdf', 20481, 'application/pdf')])->assertSessionHasErrors('evidence');
     }
@@ -349,7 +348,7 @@ class FoundationTest extends TestCase
         $this->withToken($token)->getJson('/api/v1/me/training')->assertUnauthorized();
     }
 
-    public function test_membership_removal_revokes_member_and_coordinator_record_access(): void
+    public function test_team_departure_preserves_member_history_but_revokes_team_visibility(): void
     {
         $e = $this->enrolment();
         $member = $this->user();
@@ -357,7 +356,7 @@ class FoundationTest extends TestCase
             'entity_id' => 'membership-a', 'event_type' => 'membership.changed',
             'payload' => ['person_source_id' => $member->external_person_id, 'group_id' => $e->group_id, 'active' => false],
         ]));
-        $this->assertFalse(app(Access::class)->canView($member->fresh(), $e));
+        $this->assertTrue(app(Access::class)->canView($member->fresh(), $e));
         $this->assertFalse(app(Access::class)->canView($this->user('coordinator-a'), $e));
     }
 

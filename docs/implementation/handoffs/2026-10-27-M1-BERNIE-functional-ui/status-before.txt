@@ -1,0 +1,85 @@
+ M docs/implementation/developers/BERNIE.md
+ M platform/app/Http/Controllers/AdministrationController.php
+ M platform/app/Http/Controllers/AiController.php
+ M platform/app/Http/Controllers/DeliveryController.php
+ M platform/app/Http/Controllers/LearningController.php
+ M platform/app/Http/Controllers/ProgressionController.php
+ M platform/app/Http/Controllers/SandboxApiController.php
+ M platform/app/Http/Controllers/SessionController.php
+ M platform/app/Http/Controllers/WorkspaceController.php
+ M platform/app/Http/Middleware/TrainingSession.php
+ M platform/app/Jobs/DeliverOutbox.php
+ M platform/app/Jobs/PromotePerson.php
+ M platform/app/Livewire/JobReceipts.php
+ M platform/app/Providers/AppServiceProvider.php
+ M platform/app/Services/Access.php
+ M platform/app/Services/Administration.php
+ M platform/app/Services/Ai/Generation.php
+ M platform/app/Services/Ai/Registry.php
+ M platform/app/Services/Ai/TaskGateway.php
+ M platform/app/Services/Audit.php
+ M platform/app/Services/Delivery.php
+ M platform/app/Services/Grading.php
+ M platform/app/Services/LearningNotices.php
+ M platform/app/Services/Onboarding.php
+ M platform/app/Services/Operations.php
+ M platform/app/Services/Outbox.php
+ M platform/app/Services/Progression.php
+ M platform/app/Services/Promotions.php
+ M platform/app/Services/SandboxDirectory.php
+ M platform/database/seeders/DatabaseSeeder.php
+ M platform/resources/views/administration.blade.php
+ M platform/resources/views/dashboard.blade.php
+ M platform/resources/views/enrolment.blade.php
+ M platform/resources/views/layouts/app.blade.php
+ M platform/resources/views/learning/onboarding.blade.php
+ M platform/resources/views/people.blade.php
+ M platform/routes/web.php
+ M platform/tests/Feature/DeliveryTest.php
+ M platform/tests/Feature/FoundationTest.php
+ M platform/tests/Feature/IntegrationBoundaryTest.php
+ M platform/tests/Feature/LearningTest.php
+ M platform/tests/Feature/NotificationAndScanTest.php
+ M platform/tests/Integration/AiConcurrencyTest.php
+ M platform/tests/Integration/CapacityConcurrencyTest.php
+ M platform/tests/Integration/WorkerConcurrencyTest.php
+ M platform/tests/TestCase.php
+?? docs/implementation/handoffs/2026-10-26-M1-BERNIE-approved-client-foundation.md
+?? docs/implementation/handoffs/2026-10-26-M1-BERNIE-backfill-rehearsal.md
+?? docs/implementation/handoffs/2026-10-26-M1-BERNIE-backfill-rehearsal/
+?? docs/implementation/handoffs/2026-10-26-M1-BERNIE-c01-c02.md
+?? docs/implementation/handoffs/2026-10-26-M1-BERNIE-c01-c02/
+?? docs/implementation/handoffs/2026-10-26-M1-BERNIE-mariadb-mapping.md
+?? docs/implementation/handoffs/2026-10-26-M1-BERNIE-mariadb-mapping/
+?? docs/implementation/handoffs/2026-10-26-M1-BERNIE-permission-integration.md
+?? docs/implementation/handoffs/2026-10-26-M1-BERNIE-permission-integration/
+?? docs/implementation/handoffs/2026-10-26-approved-architecture-decisions.md
+?? docs/implementation/~$_ASSISTED_TWO_DEVELOPER_DELIVERY_PLAN.docx
+?? platform/.playwright-cli/
+?? platform/app/Http/Controllers/ClientContextController.php
+?? platform/app/Services/Tenancy/
+?? platform/database/migrations/2026_10_26_120000_create_client_foundation.php
+?? platform/database/migrations/2026_10_26_170000_create_client_sensitive_grants.php
+?? platform/database/seeders/ClientAuthoritySeeder.php
+?? platform/docs/postman/
+?? platform/output/
+?? platform/public/images/
+?? platform/resources/views/clients.blade.php
+?? platform/resources/views/training-summary.blade.php
+?? platform/scripts/client-backfill-rehearsal.php
+?? platform/scripts/client-mapping-dry-run.py
+?? platform/scripts/prepare-client-backfill.php
+?? platform/scripts/rehearse-client-backfill.py
+?? platform/scripts/support/
+?? platform/tests/Feature/ClientBackfillTest.php
+?? platform/tests/Feature/ClientFoundationMigrationTest.php
+?? platform/tests/Feature/ClientFoundationTest.php
+?? platform/tests/Feature/ClientPermissionIntegrationTest.php
+?? platform/tests/Integration/ClientBackfillMariaDbTest.php
+?? platform/tests/Integration/ClientConcurrencyTest.php
+?? platform/tests/Integration/ClientMigrationMariaDbTest.php
+?? platform/tests/Support/DisposableMariaDatabase.php
+?? platform/tests/Support/client-backfill-worker.php
+?? platform/tests/Support/client-concurrency-worker.php
+?? platform/tests/Support/client-qualification-guard.php
+?? platform/tests/Support/test_client_mapping.py

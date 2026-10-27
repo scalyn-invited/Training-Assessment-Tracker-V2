@@ -10,6 +10,7 @@ use App\Models\LearningBlock;
 use App\Models\LearningNotification;
 use App\Models\SubmissionAttempt;
 use App\Models\User;
+use App\Services\Access;
 use App\Services\Administration;
 use App\Services\Ai\TaskGateway;
 use App\Services\Delivery;
@@ -17,7 +18,9 @@ use App\Services\Grading;
 use App\Services\LearningNotices;
 use App\Services\LearningPlans;
 use App\Services\ObjectiveQuizzes;
+use App\Services\Tenancy\ClientAdministration;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Storage;
@@ -155,10 +158,42 @@ class DeliveryTest extends TestCase
         $this->post('/login', ['identity_id' => Identity::where('user_id', $alternate->id)->first()->id]);
         $this->get('/submissions/'.$submission->id)->assertOk();
         $this->get('/submissions/'.$other->id)->assertNotFound();
-        $this->get('/enrolments/'.$this->enrolment()->id.'/onboarding')->assertForbidden();
+        $this->get('/enrolments/'.$this->enrolment()->id.'/onboarding')->assertNotFound();
         $this->get('/reviews')->assertOk();
         $this->post('/submissions/'.$submission->id.'/review', ['action' => 'uphold', 'expected_version' => $submission->fresh()->version, 'reason' => 'Independent evidence review supports the original result.'])->assertRedirect('/reviews');
+        $this->get('/submissions/'.$submission->id)->assertRedirect('/login');
+        $this->post('/login', ['identity_id' => Identity::where('user_id', $alternate->id)->first()->id]);
         $this->get('/submissions/'.$submission->id)->assertNotFound();
+    }
+
+    public function test_appeal_assignment_expires_with_qualifying_role_and_member_departure(): void
+    {
+        $submission = $this->submit($this->activate());
+        $grade = $this->grade($submission);
+        app(Grading::class)->decide($this->person(), $grade, $submission->fresh()->version, 'approved', 'Original reviewed synthetic decision.');
+        $appeal = app(Grading::class)->appeal($this->person('member-a'), $submission->fresh(), 'Request independent review of this evidence.');
+        $admin = $this->person('admin');
+        $reviewer = $this->person('coordinator-b');
+        $e = $this->enrolment();
+        $service = app(ClientAdministration::class);
+        $cm = DB::table('client_memberships')->where('user_id', $reviewer->id)->first();
+        $role = $service->grantRole($admin, $e->organisation_id, $cm->id, 'coordinator', $e->group_id, 'Qualifying independent reviewer assignment.');
+        app(Grading::class)->assignAppeal($admin, $appeal, $reviewer, 'Assign this case to the alternate reviewer.');
+        $this->assertTrue(app(Access::class)->canReview($reviewer, $submission));
+        $service->revokeRole($admin, $e->organisation_id, $role->id, 'Remove qualifying appeal reviewer role.');
+        $this->assertFalse(app(Access::class)->canReview($reviewer, $submission));
+        $this->assertNotNull($appeal->fresh()->authority_ended_at);
+        $service->grantRole($admin, $e->organisation_id, $cm->id, 'coordinator', $e->group_id, 'New role does not revive prior case access.');
+        $this->assertFalse(app(Access::class)->canReview($reviewer, $submission));
+        app(Grading::class)->assignAppeal($admin, $appeal->fresh(), $reviewer->fresh(), 'Explicitly assign the case again.');
+        $this->assertTrue(app(Access::class)->canReview($reviewer, $submission));
+        $member = DB::table('client_memberships')->where('user_id', $e->member_id)->first();
+        $version = $reviewer->fresh()->permission_version;
+        $service->leave($admin, $e->organisation_id, $member->id, $member->version, 'Member departs the client during appeal.');
+        $this->assertFalse(app(Access::class)->canReview($reviewer, $submission));
+        $this->assertGreaterThan($version, $reviewer->fresh()->permission_version);
+        $this->assertNotNull($appeal->fresh()->authority_ended_at);
+        $this->assertSame('open', $appeal->fresh()->status);
     }
 
     public function test_revoked_access_prevents_grading_and_notifications_never_send_synthetic_mail(): void

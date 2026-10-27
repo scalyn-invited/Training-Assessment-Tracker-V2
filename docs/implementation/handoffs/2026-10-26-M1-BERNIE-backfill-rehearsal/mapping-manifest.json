@@ -1,0 +1,100 @@
+{
+    "version": 1,
+    "key": "client-foundation-v1",
+    "source_sha256": "3f3524ee26e38348e6dd2c29de4e7f1f21969b6832931cc59a37f154e704495e",
+    "effective_at_utc": "2026-10-26 08:09:03",
+    "audit_id": "49e0f14a-3668-494d-946d-e12ce9a0f528",
+    "legacy_sha256": "3a7024acf64a630ffb5a7e8865f2cb2c5d1c96dab3f278a5e82ee2d4c9f8125f",
+    "mapping": {
+        "memberships": [
+            {
+                "user_id": "01a0f221-a1a1-72f3-b38b-87f70d1db793",
+                "organisation_id": "01a0f221-a076-70b9-b1dc-379b1bebe5c0"
+            },
+            {
+                "user_id": "01a0f221-a30e-73d8-88c3-714df5c39752",
+                "organisation_id": "01a0f221-a076-70b9-b1dc-379b1bebe5c0"
+            },
+            {
+                "user_id": "01a0f221-a4e4-72a1-b20a-1e5ab67dab0d",
+                "organisation_id": "01a0f221-a076-70b9-b1dc-379b1bebe5c0"
+            },
+            {
+                "user_id": "01a0f221-a69e-728c-9035-3402b5f1182e",
+                "organisation_id": "01a0f221-a076-70b9-b1dc-379b1bebe5c0"
+            },
+            {
+                "user_id": "01a0f221-a84b-708e-80bb-2e61a5562b99",
+                "organisation_id": "01a0f221-a076-70b9-b1dc-379b1bebe5c0"
+            }
+        ],
+        "groups": [
+            {
+                "id": "01a0f221-a080-71df-bc53-c9d227539700",
+                "organisation_id": "01a0f221-a076-70b9-b1dc-379b1bebe5c0",
+                "kind": "team"
+            },
+            {
+                "id": "01a0f221-a086-73e4-b24b-c86dbd01f4b4",
+                "organisation_id": "01a0f221-a076-70b9-b1dc-379b1bebe5c0",
+                "kind": "team"
+            }
+        ],
+        "teams": [
+            {
+                "user_id": "01a0f221-a69e-728c-9035-3402b5f1182e",
+                "organisation_id": "01a0f221-a076-70b9-b1dc-379b1bebe5c0",
+                "group_id": "01a0f221-a080-71df-bc53-c9d227539700"
+            },
+            {
+                "user_id": "01a0f221-a84b-708e-80bb-2e61a5562b99",
+                "organisation_id": "01a0f221-a076-70b9-b1dc-379b1bebe5c0",
+                "group_id": "01a0f221-a086-73e4-b24b-c86dbd01f4b4"
+            }
+        ],
+        "grants": [
+            {
+                "user_id": "01a0f221-a1a1-72f3-b38b-87f70d1db793",
+                "organisation_id": "01a0f221-a076-70b9-b1dc-379b1bebe5c0",
+                "role": "admin",
+                "group_id": null
+            },
+            {
+                "user_id": "01a0f221-a69e-728c-9035-3402b5f1182e",
+                "organisation_id": "01a0f221-a076-70b9-b1dc-379b1bebe5c0",
+                "role": "member",
+                "group_id": null
+            },
+            {
+                "user_id": "01a0f221-a84b-708e-80bb-2e61a5562b99",
+                "organisation_id": "01a0f221-a076-70b9-b1dc-379b1bebe5c0",
+                "role": "member",
+                "group_id": null
+            },
+            {
+                "user_id": "01a0f221-a30e-73d8-88c3-714df5c39752",
+                "organisation_id": "01a0f221-a076-70b9-b1dc-379b1bebe5c0",
+                "role": "coordinator",
+                "group_id": "01a0f221-a080-71df-bc53-c9d227539700"
+            },
+            {
+                "user_id": "01a0f221-a4e4-72a1-b20a-1e5ab67dab0d",
+                "organisation_id": "01a0f221-a076-70b9-b1dc-379b1bebe5c0",
+                "role": "coordinator",
+                "group_id": "01a0f221-a086-73e4-b24b-c86dbd01f4b4"
+            }
+        ],
+        "primaries": [
+            {
+                "organisation_id": "01a0f221-a076-70b9-b1dc-379b1bebe5c0",
+                "member_id": "01a0f221-a69e-728c-9035-3402b5f1182e",
+                "coordinator_id": "01a0f221-a30e-73d8-88c3-714df5c39752"
+            },
+            {
+                "organisation_id": "01a0f221-a076-70b9-b1dc-379b1bebe5c0",
+                "member_id": "01a0f221-a84b-708e-80bb-2e61a5562b99",
+                "coordinator_id": "01a0f221-a4e4-72a1-b20a-1e5ab67dab0d"
+            }
+        ]
+    }
+}

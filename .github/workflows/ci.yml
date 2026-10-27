@@ -39,6 +39,8 @@ jobs:
           php artisan key:generate
       - run: php vendor/bin/pint --test
       - run: php artisan test --compact
+      - name: Verify synthetic mapping safeguards
+        run: python3 -m unittest discover -s tests/Support -p test_client_mapping.py
       - run: php artisan view:cache
       - run: php scripts/restore-drill.php
 
@@ -105,7 +107,15 @@ jobs:
           php artisan key:generate
       - run: npm ci
       - run: npx playwright install --with-deps chrome
-      - run: npm run test:browser
+      - name: Check navigation and UI tooling syntax
+        run: |
+          node --check public/navigation.js
+          node --check scripts/ui-prepare.mjs
+          node --check scripts/ui-preview.mjs
+      - name: Prepare isolated UI fixture
+        run: node scripts/ui-prepare.mjs
+      - name: Verify browser journeys and sidebar accessibility
+        run: npx playwright test --config=playwright.ui.config.js
       - name: Diagnose browser server failures
         if: failure()
         run: |
@@ -120,6 +130,9 @@ jobs:
           path: |
             platform/playwright-report/
             platform/test-results/
+            platform/.runtime/ui-sidebar/results/
+            platform/.runtime/ui-sidebar/results.json
+            platform/.runtime/ui-sidebar/*.png
           retention-days: 7
 
   documents:

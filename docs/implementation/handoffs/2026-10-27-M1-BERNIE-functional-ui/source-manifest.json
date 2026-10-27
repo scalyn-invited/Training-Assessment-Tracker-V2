@@ -1,0 +1,19 @@
+{
+  "base_revision": "418dd7f5c2237d1c11d73bced4e6b11a26a4eca7",
+  "branch": "codex/m1-functional-sidebar",
+  "state": "uncommitted; pre-existing M1 changes preserved",
+  "files": {
+    "platform/resources/views/layouts/app.blade.php": "d072f7e9a652e2384b3e23c7b192841eccf9b7cf7708eb42cf93ad34c69d71d4",
+    "platform/resources/views/dashboard.blade.php": "b9c69aba01b3dcdf56a26fa97e0f072ef3446bdbf864f7d41c0468d93a6272e2",
+    "platform/resources/views/people.blade.php": "f74b9e834defcfbf1874a387d4026940fee0f0f8d18c76561b8819852bfb4d76",
+    "platform/public/app.css": "e11a16ce6d457592989957b5db5125bbd90976b781cbc7283ceb3cec20d7ba36",
+    "platform/public/navigation.js": "f18f15f2f4dfc662d5f5141c368fd5103a263c7064d01ffea1eaa72fd4cd3ea5",
+    "platform/playwright.config.js": "d82e1b967b69da849f5dddf7cf92c9ae8b249d8a96304de4cb4540c8d8b3bd24",
+    "platform/playwright.ui.config.js": "9af31be6aa196b1b05d634f698c5262a79264202662321be7fcb34c9d6afe7c6",
+    "platform/scripts/ui-prepare.mjs": "e9f290c064af5c4157f38557486db120ab0958da0e64155fd410af79011e65d4",
+    "platform/scripts/ui-preview.mjs": "15dbadf719a364b6cc3e552e42b083f96b262135538f46fda7a1d3c0fad1692a",
+    "platform/tests/Browser/foundation.spec.js": "416a382bfe2944eba60edf254b23e57637f05a71681be686cff92f7408c8e848",
+    "platform/tests/Browser/isolated-cache.js": "d230432ec6f8ecb3413e7a742b09230425e44bbe9940b7a0784a7116c1c942a8",
+    "platform/tests/Browser/sidebar.spec.js": "824ce8f12a86f4de06ab2c0b6b37bd0aa821a93376b7353b2c5bb6274f95867e"
+  }
+}

@@ -25,7 +25,8 @@ class Delivery
             User::whereKey($enrolment->member_id)->lockForUpdate()->firstOrFail();
             $enrolment = Enrolment::whereKey($enrolment->id)->lockForUpdate()->firstOrFail();
             $actor = User::whereKey($actor->id)->lockForUpdate()->firstOrFail();
-            abort_unless(app(Access::class)->canView($actor, $enrolment), 404);
+            abort_unless(app(Access::class)->canView($actor, $enrolment)
+                || app(Access::class)->appealCases($actor, $enrolment->organisation_id)->where('s.enrolment_id', $enrolment->id)->exists(), 404);
 
             return $action($actor, $enrolment);
         }, 3);
@@ -147,7 +148,7 @@ class Delivery
                 'answers' => $draft->answers, 'quiz_snapshot' => $quizSnapshot,
                 'content_hash' => hash('sha256', json_encode([$draft->body, $files, $block->rubric, $draft->answers, $quizSnapshot], JSON_THROW_ON_ERROR)), 'idempotency_key' => $key]);
             Audit::record($actor, 'submission.submitted', $submission->id, ['attempt' => $submission->attempt]);
-            app(LearningNotices::class)->record($enrolment, $enrolment->coordinator_id, 'submitted:'.$submission->id, 'review_needed');
+            app(LearningNotices::class)->record($enrolment, app(Access::class)->primaryUser($enrolment), 'submitted:'.$submission->id, 'review_needed');
 
             return $submission;
         });

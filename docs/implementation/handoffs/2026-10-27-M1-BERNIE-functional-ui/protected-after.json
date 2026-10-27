@@ -1,0 +1,12 @@
+[
+  {
+    "Algorithm": "SHA256",
+    "Hash": "9EADDD403FF6087873072572B610AC5F0B0DC96F9E944D5A6FE1523B2FE309A9",
+    "Path": "C:\\Users\\cabas\\Documents\\Codex\\Projects\\Training Assessment Tracker V2\\platform\\database\\database.sqlite"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "25DECE64136BD75A93E6B5D449DAEA4D5DE4219FE25735D9B537559400FA6D68",
+    "Path": "C:\\Users\\cabas\\Documents\\Codex\\Projects\\Training Assessment Tracker V2\\platform\\.runtime\\browser.sqlite"
+  }
+]

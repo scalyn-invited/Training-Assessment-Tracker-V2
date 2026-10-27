@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="C:\Users\cabas\Documents\Codex\Projects\Training Assessment Tracker V2\platform\.runtime\m1-qualification-20261026\phpunit.xml" tests="2" assertions="18" errors="0" failures="0" skipped="0" time="15.460877">
+    <testsuite name="Integration" tests="2" assertions="18" errors="0" failures="0" skipped="0" time="15.460877">
+      <testsuite name="Tests\Integration\ClientBackfillMariaDbTest" file="C:\Users\cabas\Documents\Codex\Projects\Training Assessment Tracker V2\platform\tests\Integration\ClientBackfillMariaDbTest.php" tests="2" assertions="18" errors="0" failures="0" skipped="0" time="15.460877">
+        <testcase name="test_concurrent_identical_applications_commit_one_mapping_and_audit" file="C:\Users\cabas\Documents\Codex\Projects\Training Assessment Tracker V2\platform\tests\Integration\ClientBackfillMariaDbTest.php" line="59" class="Tests\Integration\ClientBackfillMariaDbTest" classname="Tests.Integration.ClientBackfillMariaDbTest" assertions="8" time="7.651915"/>
+        <testcase name="test_concurrent_revocation_waits_for_mapping_and_is_not_lost_on_retry" file="C:\Users\cabas\Documents\Codex\Projects\Training Assessment Tracker V2\platform\tests\Integration\ClientBackfillMariaDbTest.php" line="79" class="Tests\Integration\ClientBackfillMariaDbTest" classname="Tests.Integration.ClientBackfillMariaDbTest" assertions="10" time="7.808962"/>
+      </testsuite>
+    </testsuite>
+  </testsuite>
+</testsuites>

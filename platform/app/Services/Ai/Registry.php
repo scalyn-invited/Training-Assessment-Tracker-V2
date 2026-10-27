@@ -16,23 +16,23 @@ class Registry
 
     public function admin(User $actor): void
     {
-        abort_unless(app(Access::class)->active($actor) && app(Access::class)->fresh($actor) && $actor->role === 'admin', 403);
+        abort_unless(app(Access::class)->admin($actor), 403);
     }
 
     public function save(User $actor, string $task, int $expected, string $primary, ?string $fallback): AiPolicy
     {
         return DB::transaction(function () use ($actor, $task, $expected, $primary, $fallback) {
-            Organisation::whereKey($actor->organisation_id)->lockForUpdate()->firstOrFail();
+            Organisation::whereKey(app(Access::class)->client($actor))->lockForUpdate()->firstOrFail();
             $actor = $actor->fresh();
             $this->admin($actor);
             abort_unless(in_array($task, self::TASKS), 422);
-            $latest = $this->policy($actor->organisation_id, $actor->environment, $task);
+            $latest = $this->policy(app(Access::class)->client($actor), $actor->environment, $task);
             abort_unless(($latest?->version ?? 0) === $expected, 409, 'Routing changed; reload before saving.');
             $providers = array_values(array_unique(array_filter([$primary, $fallback])));
             foreach ($providers as $id) {
                 $this->profile($id, $task);
             }
-            $policy = AiPolicy::create(['organisation_id' => $actor->organisation_id, 'environment' => $actor->environment,
+            $policy = AiPolicy::create(['organisation_id' => app(Access::class)->client($actor), 'environment' => $actor->environment,
                 'task' => $task, 'version' => $expected + 1, 'routing' => $providers, 'actor_id' => $actor->id]);
             Audit::record($actor, 'ai.routing_changed', $policy->id, ['task' => $task, 'version' => $policy->version]);
 

@@ -6,15 +6,62 @@ Owner: Bernie — Developer A and technical lead. UI/design counterpart: Saturni
 The task-log estimates below are retained from the superseded baseline; they are not the current weekly resource allocation. Effective 23 October 2026, Bernie has 9h 36m per week: 8h 06m core development, technical checks and documented self-review plus 1h 30m coordination. See [the current plan](../IMPLEMENTATION_PLAN.md).
 ## Current task
 
+### 2026-10-26 application permission integration claim
+
+- Explicit user-approved implementation plan: integrate client context, scoped access, sensitive grants, appeal authority and all-session invalidation across existing consumers; Postman sandbox API collection included.
+- Continuing preserved dirty branch `codex/m1-approved-client-foundation`, base `418dd7f`. Own backend/tests/routes and the specifically authorised minimal switcher/admin UI integration; no redesign or counterpart record edits. No active counterpart claim is recorded locally; remote activity remains unknown.
+- Decisions: explicit multi-client choice; member own history retained within client; separate Client Admin grants sensitive access, no self-grants; grants end with relationships; appeal-specific alternate authority. All permission changes invalidate affected users' sessions.
+- Only disposable SQLite/MariaDB databases; no application database migration, push, merge, paid service or deployment. Status: ready_for_review for the local permission-integration slice; full M1 remains in progress.
+- Final complete SQLite: 145 tests / 801 assertions, 141 passed and four utility skips. Broad MariaDB: 163 tests / 922 assertions with four old teardown errors; corrected concurrency/cleanup recheck 20/20 passed (143 assertions), final permission/appeal/migration follow-up 20/20 passed (139 assertions). These are separate runs, not a claimed repeated full MariaDB pass.
+- Postman v2.1 collection and empty environment validated; browser client selection/switching and synthetic grant/revoke checks passed. Mobile/desktop inspected; separate UX/accessibility review remains pending. Pint and whitespace checks passed.
+- Original application database hash unchanged. Temporary MariaDB/browser services stopped and ports 13318/8123 confirmed closed. Changes remain uncommitted; actual hours unknown.
+- [Delivery, exact revision/manifest, evidence, technical self-review and Saturnino review request](../handoffs/2026-10-26-M1-BERNIE-permission-integration.md). Application cutover, hosted CI, live identity and project-owner acceptance remain separate gates.
+
+### 2026-10-26 approved mapping/backfill rehearsal claim
+
+- Explicit user instruction: implement the approved isolated backfill plan. Both groups are teams; retain both primary coordinators; permissions start at the recorded rehearsal timestamp.
+- Continuing the preserved dirty `codex/m1-approved-client-foundation` branch at `418dd7f5c2237d1c11d73bced4e6b11a26a4eca7`. Scope: uniquely named local rehearsal tooling, manifest, tests and evidence; no public API/consumer cutover or counterpart UI changes.
+- Existing database is read-only. Only disposable SQLite copies and the verified task-owned MariaDB instance may change. No push/merge/deployment. No external coordination acknowledgement inferred.
+- Status: ready_for_review for the completed local mapping/rehearsal slice; actual hours unknown. Full M1 remains in progress.
+- Implemented versioned hash-bound manifest, guarded validation/apply tooling, atomic completion/audit ledger, idempotency and concurrency tests. Full SQLite source-copy rehearsal and pre-application snapshot restoration passed; no existing database migration/backfill.
+- Final results: MariaDB-configured suite 148 passed / 4 utility skips, 843 assertions; SQLite suite 130 passed / 4 utility skips, 714 assertions. Both new MariaDB races passed. Pint/syntax/whitespace checks passed. Temporary server stopped and port closed; original hash matches capture.
+- [Completion handoff and technical self-review](../handoffs/2026-10-26-M1-BERNIE-backfill-rehearsal.md), with [approved manifest](../handoffs/2026-10-26-M1-BERNIE-backfill-rehearsal/mapping-manifest.json) and exact evidence. Prior foundation source unchanged. No Postman collection because no public API was added.
+- Next: coordinated application consumer integration and session invalidation qualification. Group/primary/date mapping decisions are now resolved for this source. No UI, hosted CI, project-owner M1 acceptance or live release is claimed.
+
+### 2026-10-26 MariaDB qualification and mapping continuation
+
+- Explicit user instruction: continue M1 with isolated synthetic MariaDB integrity/concurrency tests and a dry-run existing-data mapping report; do not migrate the application database, push, merge or deploy.
+- Continuing `codex/m1-approved-client-foundation` at `418dd7f` plus preserved dirty foundation/proposal files. Scope: test harness, read-only mapping tooling/report, necessary fixes demonstrated by qualification, unique evidence/handoff. No UI/counterpart files.
+- Existing SQLite eligibility check: five users, all `environment=test`, `is_synthetic=1`; inspection uses read-only SQLite connection. No assessment body output. Preserve database byte hash across inspection.
+- Provision only a task-owned temporary database process/data directory, bind loopback, use dedicated database names and shut it down at completion. Existing XAMPP data/service remain untouched.
+- Status: ready_for_review for this bounded local qualification/inventory slice. Full M1 and application cutover remain in progress. Actual hours unknown; no milestone acceptance or distributed lock inferred.
+- Results: fixed MariaDB empty-rollback FK-index dependency; targeted 21/21 passed (117 assertions). Full MariaDB 132 passed / 4 utility skips (737 assertions); SQLite 123 passed / 4 utility skips (670 assertions); Python mapping 4 passed; targeted Pint and whitespace checks passed.
+- Existing database byte hash unchanged; no mapping applied. Task-owned MariaDB 11.4.13 process shut down and port closed. Group classifications remain unresolved after the user requested team/cohort clarification. No push, merge or deployment.
+- Evidence, technical self-review and next gates: [MariaDB qualification handoff](../handoffs/2026-10-26-M1-BERNIE-mariadb-mapping.md) and [mapping report](../handoffs/2026-10-26-M1-BERNIE-mariadb-mapping/MAPPING-REPORT.md). Next: approved mapping manifest and isolated populated backfill rehearsal; legacy consumer cutover still pending.
+
+### 2026-10-26 approved foundation implementation claim
+
+- Task: M1-BERNIE/approved-client-foundation; in_progress on `codex/m1-approved-client-foundation`, base `418dd7f`.
+- Authority: current conversation architecture approval (`All approved`) followed by explicit confirmation that this is Bernie's session. The newer decisions supersede the pending D01/D02 proposals below; Cerebru remains deferred.
+- Scope: additive client memberships, typed groups, scoped roles and dated primary/backup allocations; executable policy and administration services with isolated regression tests. Existing learning consumers retain their legacy boundary until an explicit tested cutover. No live database backfill, identity provisioning or production operations.
+- Preserve previous proposal files, existing images and Word lock file. No Saturnino acknowledgement or remote activity is inferred; new foundation files are isolated from his UI lane. No external messages or remote push authorised.
+- Database checks: in-memory SQLite and separately qualified isolated MariaDB only; never the existing application database.
+- Unspecified notice duration, historical-access expiry and backup activation remain unset, not invented defaults.
+
+### Approved foundation delivery
+
+- New additive schema and Tenancy access/administration services implemented; see [handoff](../handoffs/2026-10-26-M1-BERNIE-approved-client-foundation.md) and [approved architecture decisions](../handoffs/2026-10-26-approved-architecture-decisions.md).
+- Local component tested; full M1 remains partial. Legacy application consumers have NOT been cut over and no actual app database was migrated. Authentik, branding, standalone assessments and later training policies remain separate implementation work.
+- Regression: 127 tests / 670 assertions / four documented external-utility skips; no failures. SQLite migration preservation rehearsal passed. MariaDB port 3308 unavailable; MariaDB/concurrency gate pending. Technical self-review recorded in handoff; human UX/implementation acceptance and PR/hosted CI not claimed.
+- Branch remains uncommitted with prior changes preserved. No push, merge or deployment. No actual hours supplied.
+
 - Updated: 2026-10-26.
-- Task / slice: M0-BERNIE/reconciliation; explicitly authorised by Bernie.
-- Status: ready_for_review for documentation/proposals; M0 local milestone gate partial, project-owner acceptance pending.
-- Branch / HEAD: codex/m0-bernie-reconciliation at 6f1dafa (M0 documentation commit; branch pushed to origin).
-- Isolation: .runtime/m0-bernie-20261026/platform; fresh synthetic setup DB, in-memory SQLite tests, separate browser DB/storage/cache/workers; browser port 8123 released.
-- Evidence: [M0 handoff](../handoffs/2026-10-26-M0-BERNIE-reconciliation.md), with source coverage, local tickets, D01-D10 and C01-C07 proposals, discovery and verification records.
-- Checks: 107 PHP tests passed / 587 assertions, four utility skips; seven browser scenarios passed; Pint passed. MariaDB/concurrency not run without verified isolated database.
-- Coordination: Saturnino remote work unknown; shared registers and counterpart record unchanged. No shared-file lock/acknowledgement inferred.
-- PR: #9 (open, base main), https://github.com/scalyn-invited/Training-Assessment-Tracker-V2/pull/9. GitHub Actions run 40264329243 passed all four jobs on b6c6dc62a94980e0def0fef9deb6e7369252831e; the follow-up record-only commit awaits its own CI run.
+- Task / slice: M1-BERNIE/C01-C02 synthetic fixtures and additive migration design; explicitly authorised by Bernie.
+- Status: ready_for_review for this bounded proposal slice. D01/D02 block committing client/grant schema and backfill decisions; C01/C02 remain proposed.
+- Branch / HEAD: codex/m1-bernie-c01-c02 at 418dd7f5c2237d1c11d73bced4e6b11a26a4eca7; branch created from the verified local HEAD.
+- Dirty baseline: preserved untracked `docs/implementation/~$_ASSISTED_TWO_DEVELOPER_DELIVERY_PLAN.docx` and `platform/public/images/`; no task artifacts existed when this claim was recorded.
+- Scope/ownership: Bernie-owned task-specific proposal artifacts only; no app source, migrations, shared contract registers or Saturnino files. No cross-machine lock or acknowledgement inferred.
+- Prior M0 state: ready_for_review for its documentation/proposals; M0 gate partial and project-owner acceptance pending. See the unchanged [M0 handoff](../handoffs/2026-10-26-M0-BERNIE-reconciliation.md).
 - Actual hours: unknown.
 
 ## Milestone task log
@@ -22,7 +69,7 @@ The task-log estimates below are retained from the superseded baseline; they are
 | Task | Estimate | Status | Evidence / reviewed revision |
 | --- | --- | --- | --- |
 | M0-BERNIE | 16h | ready_for_review | 2026-10-26 handoff; proposals/check evidence, four utility skips, MariaDB and human gates pending. |
-| M1-BERNIE | 56h | in_progress | Cerebru UI slice ready for review; client foundation acceptance pending. |
+| M1-BERNIE | 56h | in_progress | Historical Cerebru UI slice remains ready for review; current C01/C02 fixture/design slice is recorded in the [2026-10-26 handoff](../handoffs/2026-10-26-M1-BERNIE-c01-c02.md). Client foundation acceptance pending. |
 | M2-BERNIE | 56h | not_started | None recorded |
 | M3-BERNIE | 32h | not_started | None recorded |
 | M4-BERNIE | 32h | not_started | None recorded |
@@ -32,7 +79,20 @@ The task-log estimates below are retained from the superseded baseline; they are
 
 ## Session evidence and handoffs
 
-No execution evidence recorded. Append dated updates: revision/dirty state, bounded change, exact checks and result, handoff path, limitations, actual hours if supplied, and next dependency. Preserve previous records rather than rewriting history as complete.
+For each task, append dated updates with revision/dirty state, bounded change, exact checks and result, handoff path, limitations, actual hours if supplied, and next dependency. Preserve previous records rather than rewriting history as complete.
+
+## 2026-10-26 — M1-BERNIE/C01-C02 claim
+
+- User explicitly authorised the ready fixtures and migration-design slice. Branch `codex/m1-bernie-c01-c02` starts at `418dd7f5c2237d1c11d73bced4e6b11a26a4eca7`; the two pre-existing untracked items above are preserved.
+- D01/D02 remain open. This claim excludes schema/migration implementation, backfill, shared-register edits and permission-dependent release. C01/C02 fixtures and design remain task-specific proposals pending technical review and coordination.
+- Saturnino's current remote activity is unknown; no UX/accessibility review is claimed. M0 history and project-owner acceptance are unchanged.
+
+## 2026-10-26 — M1-BERNIE/C01-C02 proposal delivered
+
+- Branch `codex/m1-bernie-c01-c02`; base HEAD `418dd7f5c2237d1c11d73bced4e6b11a26a4eca7`; changes remain uncommitted in the working tree. The two pre-existing untracked items remain untouched.
+- Added logical synthetic C01/C02 scenarios and a migration/rollback sequence under [the M1 handoff directory](../handoffs/2026-10-26-M1-BERNIE-c01-c02/). Bernie technical self-review is recorded there.
+- Artifact checks: fixture JSON parsed successfully (18 scenarios, 13 logical fixture entities); `git diff --check` passed for tracked changes; all handoff and contributor paths exist. No application, browser, MariaDB, or concurrency tests run; no app code/schema changed.
+- D01/D02 and D03 remain open; no schema/backfill, shared-register change, UI binding, or M1 acceptance is claimed. Next: project owner records D01/D02 and actual source evidence/contact for D03; then coordinate the stable C01/C02 contract before implementation.
 
 ## Review and acceptance
 
@@ -111,3 +171,11 @@ For new work under the 23 October 2026 responsibility model, record Bernie's tec
 - Fresh isolated setup, PHP suite (107 passed, four skipped, 587 assertions), seven browser scenarios and read-only Pint passed. Restricted-runner/bootstrap and environment setup failures retained; successful retries are separately identified. MariaDB/concurrency blocked; live/utility qualification remains incomplete.
 - Technical self-review recorded in the separate verification file against source HEAD and delivery manifest; commit 6f1dafa pushed to origin. Saturnino UX review and project-owner acceptance pending; no actual hours supplied.
 - Historical branding handoff differs from present HEAD; integration remains unverified. Preserve all unrelated files and prior M1 review history.
+
+### 2026-10-27 functional UI claim
+User assigned Bernie all existing screens, shared layout/styles/navigation for this pass; Saturnino follows afterward. Base 418dd7f5c2237d1c11d73bced4e6b11a26a4eca7 with all prior dirty changes preserved. Branch codex/m1-functional-sidebar. Separate UI database/port; no production migration or push. Status: ready_for_review for this local UI slice.
+
+- Final verification: 12 browser tests passed; 79 PHP tests / 444 assertions passed; Pint, JS syntax and whitespace checks passed. Initial browser run had six failures, corrected and retained in the evidence; no silent pass claim.
+- Shared sidebar/header/styles cover existing screens. Desktop/mobile screenshots inspected; Saturnino UX/accessibility review, hosted CI and full M1 acceptance remain pending.
+- Application database SHA256 unchanged from this pass's baseline. Existing Postman preview remained active; its session/cache writes changed its byte hash, and it was not reset/migrated. Separate UI fixture and preview on port 8124.
+- [Handoff, exact source hashes, checks and screenshots](../handoffs/2026-10-27-M1-BERNIE-functional-ui.md). Changes remain uncommitted; no push, merge, deployment or paid service. Actual hours not supplied.

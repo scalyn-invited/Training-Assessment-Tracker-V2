@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Appeal;
 use App\Models\CalendarChange;
-use App\Models\Enrolment;
 use App\Models\GradeAttempt;
 use App\Models\GradeDecision;
 use App\Models\LearningBlock;
@@ -16,7 +15,6 @@ use App\Services\Delivery;
 use App\Services\Grading;
 use App\Services\LearningLifecycle;
 use App\Services\ObjectiveQuizzes;
-use App\Services\Onboarding;
 use App\Services\Progression;
 use Illuminate\Http\Request;
 
@@ -24,13 +22,13 @@ class DeliveryController
 {
     public function show(Request $request, string $id, Access $access)
     {
-        $enrolment = $access->enrolments($request->user())->with('member')->findOrFail($id);
+        $enrolment = $access->details($request->user())->with('member')->findOrFail($id);
         $blocks = LearningBlock::where('enrolment_id', $id)->where('state', 'current')->orderBy('number')->get();
         $submissions = SubmissionAttempt::where('enrolment_id', $id)
-            ->when($request->user()->role === 'coordinator' && $request->user()->id !== $enrolment->coordinator_id,
+            ->when(! $access->canDetails($request->user(), $enrolment),
                 fn ($query) => $query->whereIn('id', Appeal::where('reviewer_id', $request->user()->id)->where('status', 'open')->select('submission_attempt_id')))
             ->orderByDesc('created_at')->get();
-        $coordinator = $request->user()->role === 'coordinator' && $request->user()->sensitive_access && $request->user()->id === $enrolment->coordinator_id;
+        $coordinator = $access->canManage($request->user(), $enrolment);
         $changes = $coordinator ? CalendarChange::where('enrolment_id', $id)->where('status', 'preview')->latest()->limit(3)->get() : collect();
 
         return view('delivery.show', compact('enrolment', 'blocks', 'submissions', 'coordinator', 'changes'));
@@ -38,7 +36,7 @@ class DeliveryController
 
     public function lifecycle(Request $request, string $id, Access $access, LearningLifecycle $lifecycle)
     {
-        $enrolment = $access->enrolments($request->user())->findOrFail($id);
+        $enrolment = $access->details($request->user())->findOrFail($id);
         $input = $request->validate(['action' => 'required|in:pause,preview,resume,complete', 'expected_version' => 'required|integer',
             'reason' => 'nullable|string', 'weeks' => 'nullable|integer|between:0,52', 'change' => 'nullable|uuid']);
         $actor = $request->user();
@@ -56,14 +54,14 @@ class DeliveryController
     public function activate(Request $request, string $id, Access $access, Delivery $delivery)
     {
         $input = $request->validate(['expected_version' => 'required|integer', 'reason' => 'required|string']);
-        $delivery->activate($request->user(), $access->enrolments($request->user())->findOrFail($id), $input['expected_version'], $input['reason']);
+        $delivery->activate($request->user(), $access->details($request->user())->findOrFail($id), $input['expected_version'], $input['reason']);
 
         return redirect()->route('delivery.show', $id)->with('status', 'Approved programme activated. Lessons are available; future days remain preview only.');
     }
 
     private function block(Request $request, string $id, Access $access): LearningBlock
     {
-        return LearningBlock::whereIn('enrolment_id', $access->enrolments($request->user())->select('enrolments.id'))->findOrFail($id);
+        return LearningBlock::whereIn('enrolment_id', $access->details($request->user())->select('enrolments.id'))->findOrFail($id);
     }
 
     public function lesson(Request $request, string $id, int $index, Access $access)
@@ -74,14 +72,14 @@ class DeliveryController
         $lesson = $block->content['lessons'][$index];
         $draft = WorkDraft::where('learning_block_id', $id)->where('lesson_index', $index)->where('member_id', $request->user()->id)->first();
         $attempts = SubmissionAttempt::where('learning_block_id', $id)->where('lesson_index', $index)
-            ->when($request->user()->role === 'coordinator' && $request->user()->id !== $enrolment->coordinator_id,
+            ->when(! $access->canDetails($request->user(), $enrolment),
                 fn ($query) => $query->whereIn('id', Appeal::where('reviewer_id', $request->user()->id)->where('status', 'open')->select('submission_attempt_id')))
             ->orderByDesc('attempt')->get();
         $editable = $request->user()->id === $enrolment->member_id && $enrolment->status === 'active' && $block->state === 'current'
             && ($block->early_start || $lesson['date'] <= now($enrolment->timezone)->toDateString());
         $files = $enrolment->files()->where('scan_status', 'clean')->get()->filter(fn ($file) => $access->canFile($request->user(), $file));
         $quiz = ObjectiveQuiz::where('learning_block_id', $id)->where('lesson_index', $index)->first();
-        $canConfigureQuiz = $request->user()->id === $enrolment->coordinator_id && ! $quiz && app(Progression::class)->eligible($block);
+        $canConfigureQuiz = $access->canManage($request->user(), $enrolment) && ! $quiz && app(Progression::class)->eligible($block);
 
         return view('delivery.lesson', compact('block', 'index', 'enrolment', 'lesson', 'draft', 'attempts', 'editable', 'files', 'quiz', 'canConfigureQuiz'));
     }
@@ -128,10 +126,7 @@ class DeliveryController
 
     private function submission(Request $request, string $id, Access $access): SubmissionAttempt
     {
-        $submission = SubmissionAttempt::whereIn('enrolment_id', $access->enrolments($request->user())->select('enrolments.id'))->findOrFail($id);
-        app(Onboarding::class)->authorise($request->user(), $submission->enrolment, true);
-        abort_unless($request->user()->id === $submission->member_id || $request->user()->id === $submission->enrolment->coordinator_id
-            || Appeal::where('submission_attempt_id', $id)->where('reviewer_id', $request->user()->id)->where('status', 'open')->exists(), 404);
+        $submission = $access->submissions($request->user())->findOrFail($id);
 
         return $submission;
     }
@@ -140,8 +135,8 @@ class DeliveryController
     {
         $submission = $this->submission($request, $id, $access);
         $enrolment = $submission->enrolment;
-        $coordinator = $request->user()->role === 'coordinator' && $request->user()->id !== $enrolment->member_id;
-        $grades = $coordinator ? $submission->grades()->with('decision')->orderByDesc('version')->get() : collect();
+        $coordinator = $access->canReview($request->user(), $submission);
+        $grades = $coordinator ? $submission->grades()->with('decision')->when(! $access->canManage($request->user(), $enrolment), fn ($q) => $q->where('actor_id', $request->user()->id))->orderByDesc('version')->get() : collect();
         $approved = $submission->approved_grade_id ? GradeAttempt::with('decision')->find($submission->approved_grade_id) : null;
         $appeals = Appeal::where('submission_attempt_id', $id)->get();
         $changeDecision = GradeDecision::whereIn('grade_attempt_id', $submission->grades()->select('id'))->where('outcome', 'changes_requested')->latest()->first();
@@ -177,7 +172,7 @@ class DeliveryController
                 $grading->decide($request->user(), $grade, $input['expected_version'], $input['action'] === 'approve' ? 'approved' : 'changes_requested', $input['reason']);
         }
 
-        if ($request->user()->id !== $submission->member_id && $request->user()->id !== $submission->enrolment->coordinator_id) {
+        if ($request->user()->id !== $submission->member_id && ! $access->canManage($request->user(), $submission->enrolment)) {
             return redirect()->route('reviews.show')->with('status', 'Independent review recorded. Case access closes when the appeal resolves.');
         }
 
@@ -187,10 +182,10 @@ class DeliveryController
     public function reviews(Request $request, Access $access)
     {
         $actor = $request->user();
-        abort_unless($actor->role === 'coordinator' && $actor->sensitive_access, 403);
-        $submissions = SubmissionAttempt::whereIn('enrolment_id', $access->enrolments($actor)->select('enrolments.id'))
+        abort_unless($access->coordinator($actor), 403);
+        $submissions = $access->submissions($actor)
             ->where(function ($scope) use ($actor) {
-                $scope->whereIn('enrolment_id', Enrolment::where('coordinator_id', $actor->id)->select('id'))
+                $scope->whereIn('enrolment_id', app(Access::class)->manageableEnrolments($actor)->select('enrolments.id'))
                     ->orWhereIn('id', Appeal::where('reviewer_id', $actor->id)->where('status', 'open')->select('submission_attempt_id'));
             })
             ->where(fn ($query) => $query->whereIn('status', ['submitted', 'queued', 'review_pending', 'technical_failure'])
