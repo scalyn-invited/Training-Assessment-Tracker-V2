@@ -7,6 +7,7 @@ use App\Models\Organisation;
 use App\Models\User;
 use App\Services\LearningPlans;
 use App\Services\Tenancy\ClientAdministration;
+use App\Services\Tenancy\PlatformAdministration;
 use App\Services\Tenancy\SensitiveAccess;
 use Illuminate\Foundation\Testing\RefreshDatabaseState;
 use Illuminate\Support\Facades\Artisan;
@@ -37,6 +38,7 @@ class ClientConcurrencyTest extends TestCase
         Artisan::call('migrate:fresh', ['--force' => true]);
         $this->service = app(ClientAdministration::class);
         $this->client = Organisation::create(['name' => 'Concurrent synthetic client', 'active' => true])->id;
+        DB::table('platform_client_states')->insert(['organisation_id' => $this->client, 'environment' => 'test', 'version' => 0, 'suspended' => false]);
         $this->admin = $this->person();
         DB::table('role_assignments')->insert(['id' => (string) Str::uuid(), 'user_id' => $this->admin->id,
             'role_id' => DB::table('roles')->where('code', 'admin')->value('id'), 'environment' => 'test',
@@ -133,6 +135,40 @@ class ClientConcurrencyTest extends TestCase
         $this->assertSame([0, 2], $this->results($workers));
         $this->assertSame(1, DB::table('coordinator_allocations')->where('member_membership_id', $member->id)->where('primary_slot', 1)->count());
         $this->assertSame(1, DB::table('audit_events')->where('action', 'client.coordinator.allocated')->count());
+    }
+
+    public function test_concurrent_global_admin_removals_leave_one_active_admin(): void
+    {
+        $service = app(PlatformAdministration::class);
+        $other = $this->person();
+        $service->appoint($this->admin, $other->id, 'Second synthetic platform administrator');
+        $one = $service->admins()->where('ra.user_id', $this->admin->id)->value('ra.id');
+        $two = $service->admins()->where('ra.user_id', $other->id)->value('ra.id');
+        $workers = [$this->start(['platform-revoke', $this->admin->id, $one]), $this->start(['platform-revoke', $other->id, $two])];
+        $this->ready($workers);
+        $this->release($workers);
+        $this->assertSame([0, 2], $this->results($workers));
+        $this->assertSame(1, $service->admins()->count());
+        $this->assertSame(1, DB::table('platform_audit_events')->where('action', 'platform.admin.revoked')->count());
+    }
+
+    public function test_concurrent_platform_grants_are_idempotent(): void
+    {
+        $other = $this->person();
+        $workers = [$this->start(['platform-appoint', $this->admin->id, $other->id]), $this->start(['platform-appoint', $this->admin->id, $other->id])];
+        $this->ready($workers);
+        $this->release($workers);
+        $this->assertSame([0, 0], $this->results($workers));
+        $this->assertSame(1, DB::table('platform_audit_events')->where('target_id', $other->id)->count());
+    }
+
+    public function test_concurrent_client_edits_reject_stale_version(): void
+    {
+        $workers = [$this->start(['platform-client', $this->admin->id, $this->client]), $this->start(['platform-client', $this->admin->id, $this->client])];
+        $this->ready($workers);
+        $this->release($workers);
+        $this->assertSame([0, 2], $this->results($workers));
+        $this->assertSame(1, (int) DB::table('platform_client_states')->value('version'));
     }
 
     public function test_competing_identical_grants_commit_one_active_grant(): void
@@ -283,5 +319,68 @@ class ClientConcurrencyTest extends TestCase
         $this->assertSame([0, 2], $this->results($workers));
         $this->assertSame(1, DB::table('client_theme_preferences')->where('organisation_id', $this->client)->value('version'));
         $this->assertSame(1, DB::table('audit_events')->where('action', 'client.theme.preference.saved')->count());
+    }
+
+    public function test_waiting_approval_is_denied_after_client_suspension(): void
+    {
+        Storage::fake('local');
+        Queue::fake();
+        $this->seed();
+        $fixture = new class
+        {
+            use LearningFixtures;
+
+            public function pending(): array
+            {
+                $plan = $this->fill($this->prepare());
+                app(LearningPlans::class)->review($this->person(), $this->enrolment(), $plan->version, false, '');
+
+                return [$this->person(), $this->enrolment(), $plan];
+            }
+        };
+        [$actor,$enrolment,$plan] = $fixture->pending();
+        $client = $enrolment->organisation_id;
+        $workers = [$this->start(['approve', $actor->id, $client, $enrolment->id, (string) $plan->version])];
+        $this->ready($workers);
+        DB::beginTransaction();
+        try {
+            app(PlatformAdministration::class)->lock();
+            Organisation::whereKey($client)->lockForUpdate()->firstOrFail();
+            $this->release($workers);
+            usleep(250000);
+            $this->assertTrue($workers[0][0]->isRunning());
+            app(PlatformAdministration::class)->client($this->admin, $client, Organisation::findOrFail($client)->name, 0, 'Suspend before waiting approval', true);
+            DB::commit();
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            throw $e;
+        }
+        $this->assertSame([3], $this->results($workers));
+        $this->assertSame('needs_review', $plan->fresh()->state);
+        $this->assertDatabaseMissing('programme_versions', ['enrolment_id' => $enrolment->id, 'state' => 'approved']);
+    }
+
+    public function test_waiting_global_admin_write_reads_current_grant_after_revocation(): void
+    {
+        $service = app(PlatformAdministration::class);
+        $other = $this->person();
+        $service->appoint($this->admin, $other->id, 'Appoint waiting mutation actor');
+        $grant = $service->admins()->where('ra.user_id', $other->id)->value('ra.id');
+        $workers = [$this->start(['branding', $other->id, $this->client])];
+        $this->ready($workers);
+        DB::beginTransaction();
+        try {
+            User::whereKey($other->id)->lockForUpdate()->firstOrFail();
+            $this->release($workers);
+            usleep(250000);
+            $this->assertTrue($workers[0][0]->isRunning());
+            $service->revoke($this->admin, $grant, 'Revoke while client write waits');
+            DB::commit();
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            throw $e;
+        }
+        $this->assertSame([3], $this->results($workers));
+        $this->assertDatabaseCount('client_brandings', 0);
     }
 }

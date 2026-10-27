@@ -1,0 +1,15 @@
+{
+  "preserved_databases": {
+    "application": true,
+    "postman": true
+  },
+  "demo_prior_rows_changed_or_missing": {},
+  "demo_additions": {
+    "identities": 1,
+    "role_assignments": 1,
+    "users": 1
+  },
+  "demo_branding_unchanged": true,
+  "restored_snapshot_integrity": "ok",
+  "restored_snapshot_matches": true
+}

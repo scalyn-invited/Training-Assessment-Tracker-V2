@@ -1,0 +1,90 @@
+[
+  {
+    "path": "platform/app/Console/Commands/ExtendGlobalAdminDemo.php",
+    "sha256": "2c9836f2555b18300ff6f65291e66c2d3bfad42b01f309b8ae8311ff9fdcdc01"
+  },
+  {
+    "path": "platform/app/Http/Controllers/PlatformController.php",
+    "sha256": "87e5f8890922bd3cdda8f39793c84f0655cf8fda6f849354cc71a5f6b48eb1b8"
+  },
+  {
+    "path": "platform/app/Http/Controllers/SessionController.php",
+    "sha256": "573eceb89b1026bdf40008908753872989d6fdf5c4a95e6c3b483571a9267018"
+  },
+  {
+    "path": "platform/app/Http/Middleware/TrainingSession.php",
+    "sha256": "84b42b9e8885c40935fc95ae1238cb906d3ec83c19cc23b3cf3399eda597c776"
+  },
+  {
+    "path": "platform/app/Providers/AppServiceProvider.php",
+    "sha256": "e1293f2ddb0f96ffc2fc7df7a21aea8fe1373d64fa2e143e1ca5b07ccde8592e"
+  },
+  {
+    "path": "platform/app/Services/Branding.php",
+    "sha256": "9acd281fb860fed946e371c3bcd597e6b3e8f1f6e83f01eaa6f8d5eeab0f660d"
+  },
+  {
+    "path": "platform/app/Services/FileScanning.php",
+    "sha256": "c5d791456e7be19902ad9789eac295dafbdf1779d44c96d5f60c1a054e3bd22c"
+  },
+  {
+    "path": "platform/app/Services/LearningNotices.php",
+    "sha256": "e8d1dc1b7573a82bb0d8d97412b3357dfca33c8b2460b8cd76836c698cdc01ef"
+  },
+  {
+    "path": "platform/app/Services/Tenancy/ClientAccess.php",
+    "sha256": "f6f6af3a53900f5018e728bbe6857386079b87b83968156df86a88ee618b997b"
+  },
+  {
+    "path": "platform/app/Services/Tenancy/ClientContext.php",
+    "sha256": "4341d1401db2c0770b642542913e50261986a93cce7b3c1530f20644a0d995c4"
+  },
+  {
+    "path": "platform/app/Services/Tenancy/PlatformAdministration.php",
+    "sha256": "99d4cf2350208dc4d8480bfc0d96b64e7eda72ba51016d1ff50e7f1320dbcbb4"
+  },
+  {
+    "path": "platform/database/migrations/2026_10_27_140000_create_platform_administration.php",
+    "sha256": "babf12a307472e1c3cec780b8fef40f31d0fa91dc2bd8bc33f161b48ec05172b"
+  },
+  {
+    "path": "platform/resources/views/layouts/app.blade.php",
+    "sha256": "2fcb576b4cda41576ecd63b3d4935c7f9614a21b7b9b4fa5595d72540e84ae9b"
+  },
+  {
+    "path": "platform/resources/views/platform-conflict.blade.php",
+    "sha256": "6555d8c1181e6ca9589d6f3cc62d39439762f3f76bd6460fed4a216689598281"
+  },
+  {
+    "path": "platform/resources/views/platform.blade.php",
+    "sha256": "1a11114b5676ee4542b480ee1699170d19b064ee7894270a003987ea8b5de48b"
+  },
+  {
+    "path": "platform/routes/console.php",
+    "sha256": "e38dd74ac1c87c46e26a56f0d6fd60e7dba224c6099e170d4152d10387755c73"
+  },
+  {
+    "path": "platform/routes/web.php",
+    "sha256": "4de63c91db68711b6157e0cdfd77cf6b0a07da0f7a14688b33ece62c812826ca"
+  },
+  {
+    "path": "platform/scripts/global-admin-demo.mjs",
+    "sha256": "95edea0b164907d7fc670ada300da4935deefde719dab2a844acaba0bb98bef7"
+  },
+  {
+    "path": "platform/tests/Feature/PlatformAdministrationTest.php",
+    "sha256": "8867dda5d7f66433149caf7b4e84b899048bc3d0a452d3643482cec86dfe327f"
+  },
+  {
+    "path": "platform/tests/Feature/SavedBrandingTest.php",
+    "sha256": "29bc6fe838afe0a6826657ca1317886d907162b509367686ef462d8898024ba9"
+  },
+  {
+    "path": "platform/tests/Integration/ClientConcurrencyTest.php",
+    "sha256": "5d1e689d2d194293a497df4b4b2534ea938fffd578b9b458bb4795a52e817d0c"
+  },
+  {
+    "path": "platform/tests/Support/client-concurrency-worker.php",
+    "sha256": "57506e1d66056ded8d091ab49074a96c3ad3caecda7463afd137eb45f58e2f07"
+  }
+]

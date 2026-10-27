@@ -120,6 +120,8 @@ jobs:
         run: npx playwright test --config=playwright.ui.config.js
       - name: Prepare separate realistic demo fixture
         run: node scripts/realistic-demo.mjs --name=realistic-demo-browser --prepare
+      - name: Extend isolated demo with fictional Global Admin
+        run: node scripts/global-admin-demo.mjs --name=realistic-demo-browser --upgrade
       - name: Verify realistic demo journeys
         run: npx playwright test --config=playwright.demo.config.js
       - name: Diagnose browser server failures

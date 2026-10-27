@@ -239,3 +239,13 @@ User approved shared realistic-demo data on8000/8123/8124/8125/8129. Replaced ve
 ## 2026-10-27 — Branding/demo PR and hosted CI
 
 User authorised publication. Draft PR #11 publishes saved branding, account themes, realistic fixtures and shared-demo launcher. Local SQLite169/3875 with4 skips and formatting passed. Initial hosted run passed SQLite, MariaDB/concurrency and document tools; browser18/19 exposed an ambiguous colour-label test selector, corrected to exact matching. Final hosted results are recorded on the PR. See [PR/CI handoff](../handoffs/2026-10-27-M1-BERNIE-branding-pr-ci.md). Saturnino/owner/full M1 acceptance remain pending; no merge/deployment.
+
+## 2026-10-27 — Global Admin workspace claim
+
+M1-BERNIE/global-admin in progress on codex/m1-global-admin, starting bdd55830adaceb241d48c5965f3999a88ddd4a03. User explicitly approved platform administration, role provisioning, suspension, platform defaults and synthetic demo upgrade, including shared navigation integration. No remote publication authorised. Preserve unrelated files; no Saturnino record edits. Qualification uses disposable databases; shared demo backup precedes upgrade.
+
+Global Admin slice locally ready for review: dedicated platform UI, environment-scoped client suspension, audited bootstrap/role changes, last-active-admin concurrency protection and saved platform defaults/logo. Shared synthetic demo upgraded after backup; Alex Rowan fictional Global Admin works on all five ports. Application/Postman domain hashes and all pre-existing demo rows/branding preserved; restored snapshot verified. Full SQLite176/3948 with4 skips; final platform10/98; MariaDB combined22/171; final current-read concurrency4/24 and SQLite permission20/164 passed. Ten desktop/mobile screen checks had no axe violations or overflow; ordinary Client Admin denied403. Temporary services stopped. [Exact source hashes, commands, failures, self-review, screenshots and Saturnino handoff](../handoffs/2026-10-27-M1-BERNIE-global-admin.md). No push, merge, deployment or hosted CI; Saturnino/owner/full M1 acceptance pending.
+
+## 2026-10-27 — Global Admin publication and CI
+
+User now authorised PR publication and hosted CI. Previous PR #11 is merged at f1b38651cc57c418029a9894750caa85dee62e6d; the Global Admin branch fast-forwards to that identical-content base. CI now upgrades its isolated realistic-demo fixture and runs Global Admin desktop/mobile accessibility, navigation and Client Admin denial checks alongside the existing journeys. Hosted results will be recorded against the exact PR head in its description. No merge or deployment authorised; existing synthetic services/databases preserved.

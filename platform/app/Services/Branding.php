@@ -15,6 +15,12 @@ class Branding
     {
         $client = $user && $user->active ? app(ClientContext::class)->resolve($user) : null;
         $defaults = config('branding.defaults', []);
+        $platform = Schema::hasTable('platform_settings') ? DB::table('platform_settings')->where('environment', config('training.environment'))->first() : null;
+        if ($platform?->display_name !== null) {
+            $palettes = app(ClientTheme::class)->generate($platform->accent);
+            $defaults = array_replace($defaults, ['client_name' => $platform->display_name, 'app_name' => $platform->app_name,
+                'accent_light' => $palettes['light']['primary'], 'accent_dark' => $palettes['dark']['primary'], 'default_theme' => $platform->default_theme]);
+        }
         $overrides = $client !== null
             ? (config('branding.organisations', [])[$client][$user->environment] ?? []) : [];
         $raw = array_replace($defaults, $overrides);
@@ -30,6 +36,14 @@ class Branding
         $theme = array_key_exists($raw['default_theme'] ?? '', self::THEMES) ? $raw['default_theme'] : 'dark';
         $light = $this->asset($raw['logo_light'] ?? null);
         $dark = $this->asset($raw['logo_dark'] ?? null);
+        if ($platform?->logo_path) {
+            if (! isset($overrides['logo_light'])) {
+                $light = route('platform-logo', ['v' => $platform->version], false);
+            }
+            if (! isset($overrides['logo_dark'])) {
+                $dark = route('platform-logo', ['v' => $platform->version], false);
+            }
+        }
         $customLogo = $saved?->logo_path ? route('branding.logo', ['client' => $client, 'v' => $saved->version], false) : null;
         if ($customLogo) {
             $light = $dark = $customLogo;

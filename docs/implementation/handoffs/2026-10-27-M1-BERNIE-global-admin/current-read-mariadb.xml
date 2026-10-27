@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="C:\Users\cabas\Documents\Codex\Projects\Training Assessment Tracker V2\platform\phpunit.mariadb.xml" tests="4" assertions="24" errors="0" failures="0" skipped="0" time="85.558036">
+    <testsuite name="Integration" tests="4" assertions="24" errors="0" failures="0" skipped="0" time="85.558036">
+      <testsuite name="Tests\Integration\ClientConcurrencyTest" file="C:\Users\cabas\Documents\Codex\Projects\Training Assessment Tracker V2\platform\tests\Integration\ClientConcurrencyTest.php" tests="4" assertions="24" errors="0" failures="0" skipped="0" time="85.558036">
+        <testcase name="test_concurrent_global_admin_removals_leave_one_active_admin" file="C:\Users\cabas\Documents\Codex\Projects\Training Assessment Tracker V2\platform\tests\Integration\ClientConcurrencyTest.php" line="140" class="Tests\Integration\ClientConcurrencyTest" classname="Tests.Integration.ClientConcurrencyTest" assertions="7" time="19.564058"/>
+        <testcase name="test_concurrent_platform_grants_are_idempotent" file="C:\Users\cabas\Documents\Codex\Projects\Training Assessment Tracker V2\platform\tests\Integration\ClientConcurrencyTest.php" line="155" class="Tests\Integration\ClientConcurrencyTest" classname="Tests.Integration.ClientConcurrencyTest" assertions="6" time="17.988031"/>
+        <testcase name="test_waiting_approval_is_denied_after_client_suspension" file="C:\Users\cabas\Documents\Codex\Projects\Training Assessment Tracker V2\platform\tests\Integration\ClientConcurrencyTest.php" line="324" class="Tests\Integration\ClientConcurrencyTest" classname="Tests.Integration.ClientConcurrencyTest" assertions="6" time="33.847092"/>
+        <testcase name="test_waiting_global_admin_write_reads_current_grant_after_revocation" file="C:\Users\cabas\Documents\Codex\Projects\Training Assessment Tracker V2\platform\tests\Integration\ClientConcurrencyTest.php" line="363" class="Tests\Integration\ClientConcurrencyTest" classname="Tests.Integration.ClientConcurrencyTest" assertions="5" time="14.158856"/>
+      </testsuite>
+    </testsuite>
+  </testsuite>
+</testsuites>

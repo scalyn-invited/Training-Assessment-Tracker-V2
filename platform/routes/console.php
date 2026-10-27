@@ -13,8 +13,21 @@ use App\Services\MockIdentity;
 use App\Services\Operations;
 use App\Services\Promotions;
 use App\Services\SandboxDirectory;
+use App\Services\Tenancy\PlatformAdministration;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schedule;
+
+Artisan::command('training:global-admin {user} {--environment=} {--operator=} {--reason=}', function () {
+    if ($this->option('environment') !== config('training.environment')) {
+        $this->error('Explicit environment must match the configured environment.');
+
+        return 1;
+    }
+    app(PlatformAdministration::class)->appoint(null, $this->argument('user'), (string) $this->option('reason'), $this->option('operator'));
+    $this->info('Global Admin appointment recorded (or already present).');
+
+    return 0;
+})->purpose('Audited first Global Admin bootstrap for an existing active identity');
 
 Artisan::command('training:outbox', function () {
     $count = 0;

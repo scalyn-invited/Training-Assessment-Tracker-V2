@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use App\Models\Identity;
 use App\Services\Access;
 use App\Services\Tenancy\ClientContext;
+use App\Services\Tenancy\PlatformAdministration;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,7 +31,9 @@ class TrainingSession
         $request->session()->put('last_seen', time());
         $context = app(ClientContext::class);
         $context->id = null;
-        if (! $request->routeIs('clients.*')) {
+        if ($request->routeIs('platform.*')) {
+            app(PlatformAdministration::class)->authorised($user);
+        } elseif (! $request->routeIs('clients.*')) {
             $choices = $context->choices($user);
             $selected = $request->session()->get('client_id');
             if (! $selected && $choices->count() === 1) {

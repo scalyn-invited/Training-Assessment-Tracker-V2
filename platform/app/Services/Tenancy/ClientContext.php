@@ -4,6 +4,8 @@ namespace App\Services\Tenancy;
 
 use App\Models\Organisation;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class ClientContext
 {
@@ -13,8 +15,11 @@ class ClientContext
     {
         $access = app(ClientAccess::class);
 
-        return Organisation::where('active', true)->when(! $access->globalAdmin($actor),
-            fn ($q) => $q->whereIn('id', $access->activeMemberships()->where('cm.user_id', $actor->id)->select('cm.organisation_id')))
+        return Organisation::where('active', true)
+            ->when(Schema::hasTable('platform_client_states'), fn ($q) => $q->whereNotIn('id', DB::table('platform_client_states')->where('environment', config('training.environment'))->where('suspended', true)->select('organisation_id')))
+            ->when($access->globalAdmin($actor) && Schema::hasTable('platform_client_states'), fn ($q) => $q->whereIn('id', app(PlatformAdministration::class)->clients()->select('id')))
+            ->when(! $access->globalAdmin($actor),
+                fn ($q) => $q->whereIn('id', $access->activeMemberships()->where('cm.user_id', $actor->id)->select('cm.organisation_id')))
             ->orderBy('name')->get(['id', 'name']);
     }
 

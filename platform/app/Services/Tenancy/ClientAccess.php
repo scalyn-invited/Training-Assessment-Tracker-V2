@@ -6,6 +6,7 @@ use App\Models\User;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 /** Explicit client context; never derive authority from users.role/organisation_id. */
 class ClientAccess
@@ -41,6 +42,7 @@ class ClientAccess
         return DB::table('client_memberships as cm')->join('organisations as org', 'org.id', '=', 'cm.organisation_id')
             ->join('users as person', 'person.id', '=', 'cm.user_id')
             ->where('org.active', true)->where('person.active', true)
+            ->when(Schema::hasTable('platform_client_states'), fn ($q) => $q->whereNotExists(fn ($s) => $s->selectRaw('1')->from('platform_client_states as ps')->whereColumn('ps.organisation_id', 'cm.organisation_id')->whereColumn('ps.environment', 'cm.environment')->where('ps.suspended', true)))
             ->where('cm.environment', config('training.environment'))->whereColumn('person.environment', 'cm.environment')
             ->when(config('training.environment') === 'production', fn ($q) => $q->where('person.is_synthetic', false))
             ->where('cm.status', 'active')->where('cm.joined_at', '<=', now())->whereNull('cm.ended_at');
@@ -59,8 +61,22 @@ class ClientAccess
 
     public function globalAdmin(User $actor): bool
     {
-        return $this->grants($actor, 'admin')->where('ra.scope_type', 'platform')->whereNull('ra.organisation_id')
-            ->whereNull('ra.client_membership_id')->whereNull('ra.group_id')->exists();
+        // Protected mutations hold the actor row through commit. Revocation invalidates that
+        // same row, so an in-flight authorised write finishes before the revocation commits.
+        if (DB::transactionLevel() > 0) {
+            $current = User::whereKey($actor->id)->lockForUpdate()->first();
+            if (! $current || ! $current->active || $current->environment !== config('training.environment')
+                || ($current->environment === 'production' && $current->is_synthetic)
+                || ($current->origin === 'primary_import' && (! $current->permissions_synced_at || $current->permissions_synced_at->lt(now()->subSeconds(config('training.permission_freshness_seconds')))))
+                || ! DB::table('identities')->where('user_id', $actor->id)->where('active', true)->lockForUpdate()->first()) {
+                return false;
+            }
+        }
+        $query = $this->grants($actor, 'admin')->where('ra.scope_type', 'platform')->whereNull('ra.organisation_id')
+            ->whereNull('ra.client_membership_id')->whereNull('ra.group_id');
+
+        // A locking current read avoids an older MariaDB repeatable-read snapshot after waiting.
+        return DB::transactionLevel() > 0 ? $query->lockForUpdate()->first(['ra.id']) !== null : $query->exists();
     }
 
     public function clientRole(User $actor, string $client, string $role): bool
@@ -76,8 +92,14 @@ class ClientAccess
 
     public function administer(User $actor, string $client): bool
     {
-        return DB::table('organisations')->where('id', $client)->where('active', true)->exists()
+        return $this->available($client)
             && ($this->globalAdmin($actor) || $this->clientRole($actor, $client, 'admin'));
+    }
+
+    public function available(string $client): bool
+    {
+        return DB::table('organisations')->where('id', $client)->where('active', true)->exists()
+            && (! Schema::hasTable('platform_client_states') || ! DB::table('platform_client_states')->where('organisation_id', $client)->where('environment', config('training.environment'))->where('suspended', true)->exists());
     }
 
     public function teamRole(User $actor, string $client, string $group): bool

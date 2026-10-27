@@ -1,0 +1,161 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Services\Branding;
+use App\Services\Tenancy\PlatformAdministration;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
+
+class PlatformController extends Controller
+{
+    public function show(Request $request, PlatformAdministration $service, string $section = 'overview')
+    {
+        $service->authorised($request->user());
+        abort_unless(in_array($section, ['overview', 'clients', 'admins', 'appearance', 'audit']), 404);
+        $env = $service->environment();
+        $clients = $service->clients()->orderBy('name')->paginate(20);
+        $states = DB::table('platform_client_states')->where('environment', $env)->get()->keyBy('organisation_id');
+        $accounts = $service->accounts()->when($request->filled('search'), fn ($q) => $q->where('name', 'like', '%'.mb_substr($request->string('search'), 0, 120).'%'))->orderBy('name')->paginate(20, ['id', 'name', 'email', 'permission_version'], 'accounts_page')->withQueryString();
+        $admins = $service->admins()->join('users as u', 'u.id', '=', 'ra.user_id')->orderBy('u.name')->paginate(20, ['ra.id', 'u.name', 'u.email', 'u.active'], 'admins_page');
+        $settings = DB::table('platform_settings')->where('environment', $env)->first();
+        $clientAdmins = DB::table('role_assignments as ra')->join('roles as r', 'r.id', '=', 'ra.role_id')->join('users as u', 'u.id', '=', 'ra.user_id')
+            ->where('ra.environment', $env)->where('r.code', 'admin')->where('ra.scope_type', 'client')->whereNull('ra.ends_at')->where('ra.starts_at', '<=', now())
+            ->whereIn('ra.organisation_id', $clients->pluck('id'))->get(['ra.organisation_id', 'u.name'])->groupBy('organisation_id');
+        $events = DB::table('platform_audit_events as e')->leftJoin('users as u', 'u.id', '=', 'e.actor_id')->where('e.environment', $env)
+            ->when($request->filled('action'), fn ($q) => $q->where('e.action', mb_substr($request->string('action'), 0, 100)))
+            ->when($request->filled('target'), fn ($q) => $q->where('e.target_id', mb_substr($request->string('target'), 0, 80)))
+            ->orderByDesc('e.created_at')->orderByDesc('e.id')->paginate(25, ['e.created_at', 'e.action', 'e.target_id', 'e.reason', 'e.operator_reference', 'u.name'], 'events_page')->withQueryString();
+
+        return view('platform', compact('section', 'clients', 'states', 'accounts', 'admins', 'settings', 'events', 'env', 'clientAdmins'));
+    }
+
+    public function act(Request $request, PlatformAdministration $service)
+    {
+        try {
+            return $this->perform($request, $service);
+        } catch (HttpExceptionInterface $error) {
+            if ($error->getStatusCode() !== 409 || $request->expectsJson()) {
+                throw $error;
+            }
+
+            return response()->view('platform-conflict', ['message' => $error->getMessage()], 409);
+        }
+    }
+
+    private function perform(Request $request, PlatformAdministration $service)
+    {
+        $service->authorised($request->user());
+        $d = $request->validate(['action' => 'required|in:create,edit,suspend,reactivate,join,grant,revoke,appoint,remove',
+            'client' => 'nullable|uuid', 'user' => 'nullable|uuid', 'grant' => 'nullable|uuid', 'name' => 'nullable|string|max:160',
+            'version' => 'required|integer|min:0', 'reason' => 'required|string|min:8|max:2000']);
+        $a = $d['action'];
+        if (in_array($a, ['create', 'edit', 'suspend', 'reactivate'])) {
+            if ($a !== 'create') {
+                $request->validate(['client' => 'required|uuid']);
+            }
+            $service->client($request->user(), $a === 'create' ? null : $d['client'], $d['name'] ?? '', $d['version'], $d['reason'], match ($a) {
+                'suspend' => true,'reactivate' => false,default => null
+            });
+        } elseif (in_array($a, ['join', 'grant', 'revoke'])) {
+            $request->validate(['client' => 'required|uuid', 'user' => 'required|uuid']);
+            $service->clientRole($request->user(), $d['client'], $d['user'], $a, $d['version'], $d['reason']);
+        } elseif ($a === 'appoint') {
+            $request->validate(['user' => 'required|uuid']);
+            // Bind a grant to the account version displayed to this editor.
+            DB::transaction(function () use ($service, $request, $d) {
+                $service->lock();
+                abort_unless($service->accounts()->whereKey($d['user'])->value('permission_version') === (int) $d['version'], 409, 'Account changed. Reload.');
+                $service->appoint($request->user(), $d['user'], $d['reason']);
+            }, 3);
+        } else {
+            $request->validate(['grant' => 'required|uuid']);
+            $service->revoke($request->user(), $d['grant'], $d['reason']);
+        }
+
+        return back()->with('status', 'Platform administration updated.');
+    }
+
+    public function saveAppearance(Request $request, PlatformAdministration $service)
+    {
+        $service->authorised($request->user());
+        $d = $request->validate(['version' => 'required|integer|min:0', 'display_name' => 'required|string|max:120',
+            'app_name' => 'required|string|max:120', 'accent' => ['required', 'regex:/^#[0-9a-fA-F]{6}$/D'],
+            'default_theme' => 'required|in:'.implode(',', array_keys(Branding::THEMES)), 'reason' => 'required|string|min:8|max:2000',
+            'logo' => 'nullable|file|mimes:png,jpg,jpeg,webp|max:2048|dimensions:max_width=4096,max_height=4096', 'remove_logo' => 'sometimes|boolean']);
+        if ($request->hasFile('logo') && $request->boolean('remove_logo')) {
+            throw ValidationException::withMessages(['logo' => 'Choose replacement or removal, not both.']);
+        }
+        $path = null;
+        $obsolete = null;
+        try {
+            if ($file = $request->file('logo')) {
+                if (! function_exists('imagecreatefromstring') || ! ($image = @imagecreatefromstring($file->get()))) {
+                    throw ValidationException::withMessages(['logo' => 'Valid raster image processing is unavailable.']);
+                }
+                imagesavealpha($image, true);
+                ob_start();
+                imagepng($image);
+                $bytes = ob_get_clean();
+                imagedestroy($image);
+                $path = 'platform-branding/'.$service->environment().'/'.Str::uuid().'.png';
+                if (! Storage::disk('local')->put($path, $bytes)) {
+                    throw new \RuntimeException('Logo storage failed.');
+                }
+            }
+            DB::transaction(function () use ($request, $service, $d, $path, &$obsolete) {
+                $old = $service->lock();
+                $service->authorised($request->user());
+                if ((int) $old->version !== (int) $d['version']) {
+                    throw ValidationException::withMessages(['version' => 'Platform appearance changed. Reload before saving.']);
+                }
+                $values = array_intersect_key($d, array_flip(['display_name', 'app_name', 'accent', 'default_theme']));
+                $values['logo_path'] = $request->boolean('remove_logo') ? null : ($path ?? $old->logo_path);
+                $values['version'] = $old->version + 1;
+                $values['updated_at'] = now();
+                DB::table('platform_settings')->where('environment', $service->environment())->update($values);
+                $changes = [];
+                foreach (['display_name', 'app_name', 'accent', 'default_theme'] as $key) {
+                    if ($values[$key] !== $old->$key) {
+                        $changes[$key] = ['before' => $old->$key, 'after' => $values[$key]];
+                    }
+                }
+                $changes['logo_changed'] = $old->logo_path !== $values['logo_path'];
+                $service->audit($request->user(), 'platform.appearance.saved', $service->environment(), $d['reason'], $changes);
+                if ($old->logo_path !== $values['logo_path']) {
+                    $obsolete = $old->logo_path;
+                }
+            }, 3);
+        } catch (\Throwable $e) {
+            if ($path) {
+                Storage::disk('local')->delete($path);
+            }
+            if ($e instanceof ValidationException || $e instanceof HttpExceptionInterface) {
+                throw $e;
+            }
+            report($e);
+            throw ValidationException::withMessages(['logo' => 'Save failed. Previous platform settings remain unchanged.']);
+        }
+        if ($obsolete) {
+            try {
+                Storage::disk('local')->delete($obsolete);
+            } catch (\Throwable $e) {
+                report($e);
+            }
+        }
+
+        return back()->with('status', 'Platform appearance saved.');
+    }
+
+    public function logo()
+    {
+        $path = DB::table('platform_settings')->where('environment', config('training.environment'))->value('logo_path');
+        abort_unless($path && Storage::disk('local')->exists($path), 404);
+
+        return response(Storage::disk('local')->get($path), 200, ['Content-Type' => 'image/png', 'X-Content-Type-Options' => 'nosniff', 'Cache-Control' => 'no-store']);
+    }
+}
