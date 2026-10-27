@@ -102,7 +102,7 @@ test('client branding saves with a logo and survives desktop and mobile navigati
     await page.goto('/settings/appearance');
     await page.getByLabel('Client name', { exact: true }).fill('Northstar');
     await page.getByLabel('Application name').fill('Northstar Academy');
-    await page.getByLabel('Brand colour').fill('#ffffff');
+    await page.getByLabel('Brand colour', { exact: true }).fill('#ffffff');
     await page.getByLabel('Client logo', {exact:true}).setInputFiles('public/images/scalyn-opc-logo.png');
     await page.getByRole('button', {name:'Save client branding'}).click();
     await expect(page.getByText('Client branding saved.', {exact:false})).toBeVisible();

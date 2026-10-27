@@ -235,3 +235,7 @@ User-approved continuation on codex/m1-saved-branding, base908b6c5. Added opt-in
 ## 2026-10-27 — Shared demo ports and8000 repair
 
 User approved shared realistic-demo data on8000/8123/8124/8125/8129. Replaced verified runtime instances with one guarded multi-port launcher; old databases backed up and domain hashes unchanged. Port8000 failed on missing role_assignments in the preserved original database; runtime now points at the qualified demo. Authenticated Chrome and synthetic API checks returned200 on all five ports. No migration/reseed/push/deployment. [Cutover evidence and restart instructions](../handoffs/2026-10-27-M1-BERNIE-shared-demo-ports.md).
+
+## 2026-10-27 — Branding/demo PR and hosted CI
+
+User authorised publication. Draft PR #11 publishes saved branding, account themes, realistic fixtures and shared-demo launcher. Local SQLite169/3875 with4 skips and formatting passed. Initial hosted run passed SQLite, MariaDB/concurrency and document tools; browser18/19 exposed an ambiguous colour-label test selector, corrected to exact matching. Final hosted results are recorded on the PR. See [PR/CI handoff](../handoffs/2026-10-27-M1-BERNIE-branding-pr-ci.md). Saturnino/owner/full M1 acceptance remain pending; no merge/deployment.
