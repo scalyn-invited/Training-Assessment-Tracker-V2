@@ -5,19 +5,19 @@ import { resetScenarioCache } from './isolated-cache.js';
 test.beforeEach(resetScenarioCache);
 
 for (const [name, expected] of [
-    [/Alex/, ['Workspace', 'People', 'Updates', 'Administration', 'AI settings']],
-    [/Morgan/, ['Workspace', 'Review queue', 'Updates']],
-    [/Sam/, ['Workspace', 'Updates']],
+    [/Alex/, ['Overview', 'Learning plans', 'Updates', 'People', 'Administration', 'AI settings', 'Appearance']],
+    [/Morgan/, ['Overview', 'Learning plans', 'Review queue', 'Updates', 'Appearance']],
+    [/Sam/, ['Overview', 'Learning plans', 'Updates', 'Appearance']],
 ]) {
     test(`sidebar permissions and active state ${name}`, async ({ page }) => {
         await page.goto('/login');
         await page.getByRole('button', { name }).click();
         const menu = page.getByRole('navigation', { name: 'Main navigation' });
         await expect(menu.getByRole('link')).toHaveText(expected);
-        await expect(menu.getByRole('link', { name: 'Workspace', exact: true })).toHaveAttribute('aria-current', 'page');
+        await expect(menu.getByRole('link', { name: 'Overview', exact: true })).toHaveAttribute('aria-current', 'page');
         await menu.getByRole('link', { name: 'Updates' }).click();
         await page.waitForLoadState('load');
-        await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(244, 247, 245)');
+        await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(244, 248, 251)');
         await expect(menu.getByRole('link', { name: 'Updates' })).toHaveAttribute('aria-current', 'page');
         expect((await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze()).violations).toEqual([]);
     });
@@ -27,17 +27,18 @@ test('mobile drawer contains focus, closes and restores focus, resizes safely', 
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/login');
     await page.getByRole('button', { name: /Sam/ }).click();
-    const toggle = page.getByRole('button', { name: 'Menu', exact: true });
+    const toggle = page.getByRole('button', { name: 'Open navigation', exact: true });
     await expect(page.getByRole('navigation', { name: 'Main navigation' })).not.toBeVisible();
     await toggle.click();
     await expect(page.getByRole('dialog', { name: 'Workspace menu' })).toBeVisible();
-    await expect(page.getByRole('button', { name: 'Close menu' })).toBeFocused();
+    await expect(page.getByRole('button', { name: 'Close navigation' })).toBeFocused();
     const links = page.locator('#app-sidebar a');
-    await links.last().focus();
+    const lastControl = page.locator('#app-sidebar .theme-picker summary');
+    await lastControl.focus();
     await page.keyboard.press('Tab');
     await expect(links.first()).toBeFocused();
     await page.keyboard.press('Shift+Tab');
-    await expect(links.last()).toBeFocused();
+    await expect(lastControl).toBeFocused();
     expect((await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze()).violations).toEqual([]);
     await page.screenshot({ path: '.runtime/ui-sidebar/mobile-menu.png', fullPage: true });
     await page.keyboard.press('Escape');

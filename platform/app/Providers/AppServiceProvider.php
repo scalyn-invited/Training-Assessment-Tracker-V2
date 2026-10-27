@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Http\Middleware\TrainingSession;
+use App\Services\Branding;
 use App\Services\Tenancy\ClientContext;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 
@@ -14,7 +16,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+
         $this->app->scoped(ClientContext::class);
+
     }
 
     /**
@@ -22,6 +26,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+
         Livewire::addPersistentMiddleware([TrainingSession::class]);
+
+        View::composer(['layouts.app', 'appearance'], function ($view) {
+
+            $view->with('branding', app(Branding::class)->forUser(auth()->user()));
+
+        });
+
     }
+
 }

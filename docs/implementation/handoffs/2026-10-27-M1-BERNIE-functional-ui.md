@@ -1,4 +1,4 @@
-# M1-BERNIE — functional UI and sidebar navigation
+# M1-BERNIE â€” functional UI and sidebar navigation
 
 Date: 2026-10-27. Owner: Bernie. Status: ready_for_review (local UI slice only).
 

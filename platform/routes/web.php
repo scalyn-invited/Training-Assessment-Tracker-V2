@@ -21,6 +21,7 @@ Route::post('/logout', [SessionController::class, 'destroy'])->name('logout');
 Route::middleware(TrainingSession::class)->group(function () {
     Route::get('/clients', [ClientContextController::class, 'show'])->name('clients.show');
     Route::post('/clients', [ClientContextController::class, 'store'])->name('clients.select');
+    Route::view('/settings/appearance', 'appearance')->name('appearance');
     Route::get('/files/{id}/extraction', [DocumentExtractionController::class, 'show'])->name('documents.show');
     Route::post('/files/{id}/extraction', [DocumentExtractionController::class, 'request'])->middleware('throttle:10,1')->name('documents.request');
     Route::post('/extractions/{id}/review', [DocumentExtractionController::class, 'review'])->name('documents.review');

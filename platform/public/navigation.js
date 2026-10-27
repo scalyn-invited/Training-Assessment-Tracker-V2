@@ -5,7 +5,7 @@
     const close = sidebar.querySelector('.menu-close');
     const backdrop = document.querySelector('.menu-backdrop');
     const content = document.querySelector('#app-content');
-    const mobile = window.matchMedia('(max-width: 900px)');
+    const mobile = window.matchMedia('(max-width: 800px)');
     let opened = false;
     document.body.classList.add('navigation-ready');
 
@@ -16,7 +16,7 @@
         backdrop.hidden = !opened;
         content.inert = opened;
         sidebar.inert = mobile.matches && !opened;
-        document.body.classList.toggle('menu-open', opened);
+        document.body.classList.toggle('nav-open', opened);
         if (opened) {
             sidebar.setAttribute('role', 'dialog');
             sidebar.setAttribute('aria-modal', 'true');
@@ -40,10 +40,13 @@
     backdrop.addEventListener('click', () => setOpen(false));
     document.addEventListener('keydown', event => {
         if (!opened) return;
+        const themeMenu = sidebar.querySelector('.theme-picker[open]');
+        if (event.key === 'Escape' && themeMenu) { event.preventDefault(); themeMenu.open = false; themeMenu.querySelector('summary').focus(); return; }
         if (event.key === 'Escape') { event.preventDefault(); setOpen(false); }
         if (event.key !== 'Tab') return;
-        const items = [...sidebar.querySelectorAll('a[href], button:not([hidden])')];
-        const first = items[0], last = items.at(-1);
+        const items = [...sidebar.querySelectorAll('a[href], button:not([hidden]), summary')];
+        const visible = items.filter(item => item.getClientRects().length && !item.disabled);
+        const first = visible[0], last = visible.at(-1);
         if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
         else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
     });

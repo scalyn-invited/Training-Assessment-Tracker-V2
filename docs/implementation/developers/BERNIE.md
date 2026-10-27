@@ -179,3 +179,7 @@ User assigned Bernie all existing screens, shared layout/styles/navigation for t
 - Shared sidebar/header/styles cover existing screens. Desktop/mobile screenshots inspected; Saturnino UX/accessibility review, hosted CI and full M1 acceptance remain pending.
 - Application database SHA256 unchanged from this pass's baseline. Existing Postman preview remained active; its session/cache writes changed its byte hash, and it was not reset/migrated. Separate UI fixture and preview on port 8124.
 - [Handoff, exact source hashes, checks and screenshots](../handoffs/2026-10-27-M1-BERNIE-functional-ui.md). Changes remain uncommitted; no push, merge, deployment or paid service. Actual hours not supplied.
+
+### 2026-10-27 combined M1 PR / CI publication
+
+User explicitly authorised combined M1 publication and hosted CI, then selected preservation of main's Scalyn branding/themes while integrating the sidebar. Combined commit c79ca5b; integrate main 9d794e0 without merging the PR. Fresh branding/permission/foundation PHP checks: 59 tests / 353 assertions passed. Expanded browser and hosted CI results pending. [Publication handoff](../handoffs/2026-10-27-M1-BERNIE-pr-ci.md). Earlier green UI evidence is historical, superseded by the selected Scalyn integration.
