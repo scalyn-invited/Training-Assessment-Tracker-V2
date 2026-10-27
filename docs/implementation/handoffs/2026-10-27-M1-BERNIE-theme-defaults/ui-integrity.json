@@ -1,0 +1,8 @@
+{
+  "tables": 54,
+  "differences": [
+    "migrations"
+  ],
+  "new_default_unset": true,
+  "domain_data_preserved": true
+}

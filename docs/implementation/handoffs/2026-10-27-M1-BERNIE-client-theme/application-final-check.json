@@ -1,0 +1,11 @@
+{
+  "sha256": "72c0f54300a25453ad70101daec77581a04d3b45b13490b62f1c559a6ab91464",
+  "comparison_source": "platform/.runtime/client-backfill/rehearsal-ybgaok1w/source.sqlite",
+  "changed_tables": [
+    "sessions",
+    "cache"
+  ],
+  "added_tables": [],
+  "latest_migration": "2026_10_05_000001_create_document_extractions",
+  "branding_table_present": false
+}

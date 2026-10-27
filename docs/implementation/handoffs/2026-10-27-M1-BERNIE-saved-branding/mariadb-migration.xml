@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="C:\Users\cabas\Documents\Codex\Projects\Training Assessment Tracker V2\platform\.runtime\m1-qualification-20261026\phpunit.xml" tests="1" assertions="14" errors="0" failures="0" skipped="0" time="20.612183">
+    <testsuite name="Integration" tests="1" assertions="14" errors="0" failures="0" skipped="0" time="20.612183">
+      <testsuite name="Tests\Integration\ClientMigrationMariaDbTest" file="C:\Users\cabas\Documents\Codex\Projects\Training Assessment Tracker V2\platform\tests\Integration\ClientMigrationMariaDbTest.php" tests="1" assertions="14" errors="0" failures="0" skipped="0" time="20.612183">
+        <testcase name="test_upgrade_empty_rollback_and_reupgrade_preserve_approved_learning_history" file="C:\Users\cabas\Documents\Codex\Projects\Training Assessment Tracker V2\platform\tests\Integration\ClientMigrationMariaDbTest.php" line="23" class="Tests\Integration\ClientMigrationMariaDbTest" classname="Tests.Integration.ClientMigrationMariaDbTest" assertions="14" time="20.612183"/>
+      </testsuite>
+    </testsuite>
+  </testsuite>
+</testsuites>

@@ -187,3 +187,55 @@ User explicitly authorised combined M1 publication and hosted CI, then selected 
 - Draft PR #10 published: https://github.com/scalyn-invited/Training-Assessment-Tracker-V2/pull/10. Integrated head 3110fb1 was mergeable. First CI 40431145801 passed MariaDB and document utilities; PHP formatting failed and was corrected. Browser final result pending. Local expanded Chrome run was interrupted after timeouts/session closure; earlier green-only 12/12 is not an integrated Scalyn pass.
 
 - First hosted browser suite: 14/16 passed; fixed a hidden-theme-option focus-loop bug and a now-ambiguous legacy test selector. Both affected mobile scenarios passed locally afterward. Current integrated Scalyn screenshots and PHP/mobile test reports are in the PR/CI handoff evidence folder. Final hosted head still requires its own CI result.
+
+## Final hosted CI receipt — 2026-10-27
+
+PR #10: https://github.com/scalyn-invited/Training-Assessment-Tracker-V2/pull/10. Current verified head `908b6c5c5c91b34552fc4e41c284e9e25b047359`. All four jobs in run `40432225153` completed successfully: PHP/SQLite, MariaDB/concurrent workers, browser/accessibility and document parsing/OCR. https://github.com/scalyn-invited/Training-Assessment-Tracker-V2/actions/runs/40432225153
+
+GitHub reported the PR mergeable and no longer draft at final verification; this session did not merge it or claim a reviewer's acceptance. The final result is also published in the PR description. This local documentation receipt does not change the tested source revision. No migration of the existing application database or deployment occurred. The original database hash remains 9EADDD403FF6087873072572B610AC5F0B0DC96F9E944D5A6FE1523B2FE309A9. The isolated Scalyn preview is running on 8124 (PID stored in .runtime/ui-sidebar/preview.pid); no MariaDB or queue worker was left running locally by this pass.
+
+## 2026-10-27 — M1 saved branding claim
+
+User approved implementation of saved client branding and one private raster logo, immediately published per selected client. Branch codex/m1-saved-branding, starting revision 908b6c5c5c91b34552fc4e41c284e9e25b047359. Existing local receipts and untracked files preserved. Bernie owns service/routes/migration and this explicitly requested UI integration; Saturnino UX review remains separate. Isolated databases only; no original or Postman migration.
+
+## 2026-10-27 — Saved branding verification
+
+Implemented client-scoped branding saves/private raster logos on codex/m1-saved-branding (uncommitted, base 908b6c5). SQLite and MariaDB: 23 tests/208 assertions each; concurrency: 8/50; MariaDB history migration: 1/14. SQLite migration preserved 55 legacy table hashes and original application hash unchanged. Browser: initial four pass plus corrected final upload/save scenario pass; not a new combined-suite claim. Temporary MariaDB stopped. Synthetic preview port8125; Alex -> Appearance. Technical self-review, source hashes, screenshots, failures/corrections and outstanding Saturnino/owner review in [saved-branding handoff](../handoffs/2026-10-27-M1-BERNIE-saved-branding.md). No push/deployment/original or Postman migration.
+
+## 2026-10-27 — Existing UI preview save repair
+
+Reproduced missing-branding-table failure on8124. Backed up synthetic UI DB and applied only branding migration there; original/Postman unchanged. Restarted verified preview with GD, added startup readiness and missing-schema regression. Actual in-app save, reload persistence and original-name restoration passed; 14 tests/147 assertions passed. See [repair evidence](../handoffs/2026-10-27-M1-BERNIE-branding-save-repair.md).
+
+## 2026-10-27 — Client theme continuation
+
+User confirmed four individually editable colours (primary/background/card/text), as a selectable Client theme alongside the five existing themes. Continuing the uncommitted saved-branding slice on codex/m1-saved-branding, preserving earlier changes. Client/environment storage and contrast validation; isolated preview migrations only. No implicit change to any member’s selected theme.
+
+## 2026-10-27 — Client theme verified
+
+Four editable Client theme colours and opt-in sixth theme delivered locally. SQLite29/271, MariaDB31/280 (including concurrency/migration), browser6/6 passed after fixing preview paragraph contrast. Both synthetic previews backed up/migrated; existing domain data preserved. Original application file changed at the final check: only sessions/cache differ from the preserved source, no new tables/migrations; see handoff investigation. Temporary test/MariaDB servers stopped. Current8124 branding and personal preferences unchanged. Technical self-review, exact source hashes, screenshots and outstanding Saturnino/owner review in [client-theme handoff](../handoffs/2026-10-27-M1-BERNIE-client-theme.md). No publication/deployment.
+
+## 2026-10-27 — Automatic brand palette continuation
+
+User approved one Brand colours picker/hex input, generated Client Light/Dark and conversion of existing manual palettes only on next explicit save. Continuing codex/m1-saved-branding without discarding existing changes; no schema migration required. Preserve current8124 branding and preferences until user saves.
+
+## 2026-10-27 — Automatic brand palettes verified
+
+One Brand colours picker/hex now generates Client Light/Dark; manual palettes remain unchanged until explicit save. Source/version saved in existing JSON, stale four-colour forms rejected, built-ins and scoped permissions preserved. SQLite30/3043, MariaDB31/3050 including concurrent saves, browser6/6 and16 parity fixtures passed. Domain hashes match original application47 tables and both existing previews54 each; sessions/cache excluded. No migration or Postman mutation. Temporary MariaDB/browser services stopped; existing8124 preview remains available with saved branding unchanged. See [automatic-theme handoff](../handoffs/2026-10-27-M1-BERNIE-automatic-theme.md) for exact source hashes, commands, screenshots, self-review and remaining Saturnino/owner/CI gates. No push, merge or deployment.
+
+## 2026-10-27 — Client defaults and softer borders
+
+User-approved continuation on codex/m1-saved-branding, base908b6c5c5c91b34552fc4e41c284e9e25b047359. Added client default plus account/client/environment preferences, explicit legacy-choice decision, soft decorative borders with separate control boundaries. Existing changes preserved. SQLite33/3078 and MariaDB35/3092 passed; migration1/3 and extra border checks2/2793 passed. Synthetic8124 backed up before additive migration; application/Postman domain hashes unchanged. Browser qualification found shared throttle budget and was corrected with a separate personal-preference budget; final browser evidence pending below. No publication or deployment.
+
+Theme-default verification closed locally: initial browser6/7, corrected throttle scenario1/1, final cross-device1/1 after resetting test decisions. All scenarios now have passing evidence across runs; no combined rerun claim. [Handoff and self-review](../handoffs/2026-10-27-M1-BERNIE-theme-defaults.md) records failures, exact files, screenshots, data integrity and remaining Saturnino/owner/CI gates.
+
+## 2026-10-27 — Realistic demo factories and separate preview
+
+User-approved continuation on codex/m1-saved-branding, base908b6c5. Added opt-in guarded demo seeder, explicit scoped factories and service-built workflows for3 fictional clients,30 people and21 enrolments. Preview8129 is separate from unchanged8124/application/Postman data. SQLite demo1/30 plus regressions32/200, MariaDB33/229 and browser3/3 passed; initial missing review-request transition corrected and recorded. Identical final seed rerun adds nothing. MariaDB/test browser stopped. [Technical self-review, exact source/evidence and handoff](../handoffs/2026-10-27-M1-BERNIE-realistic-demo.md); [sign-in and scenario guide](../handoffs/2026-10-27-M1-BERNIE-realistic-demo-guide.md). Saturnino/owner/CI/full M1 gates remain separate. No push, merge or deployment.
+
+## 2026-10-27 — Shared demo ports and8000 repair
+
+User approved shared realistic-demo data on8000/8123/8124/8125/8129. Replaced verified runtime instances with one guarded multi-port launcher; old databases backed up and domain hashes unchanged. Port8000 failed on missing role_assignments in the preserved original database; runtime now points at the qualified demo. Authenticated Chrome and synthetic API checks returned200 on all five ports. No migration/reseed/push/deployment. [Cutover evidence and restart instructions](../handoffs/2026-10-27-M1-BERNIE-shared-demo-ports.md).
+
+## 2026-10-27 — Branding/demo PR and hosted CI
+
+User authorised publication. Draft PR #11 publishes saved branding, account themes, realistic fixtures and shared-demo launcher. Local SQLite169/3875 with4 skips and formatting passed. Initial hosted run passed SQLite, MariaDB/concurrency and document tools; browser18/19 exposed an ambiguous colour-label test selector, corrected to exact matching. Final hosted results are recorded on the PR. See [PR/CI handoff](../handoffs/2026-10-27-M1-BERNIE-branding-pr-ci.md). Saturnino/owner/full M1 acceptance remain pending; no merge/deployment.

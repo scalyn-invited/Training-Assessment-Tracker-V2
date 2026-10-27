@@ -27,7 +27,7 @@ jobs:
       - uses: shivammathur/setup-php@b604ade2a87db23f8871b7182e69ec5e75effb45 # v2
         with:
           php-version: '8.2'
-          extensions: mbstring, pdo_sqlite, zip
+          extensions: gd, mbstring, pdo_sqlite, zip
           coverage: none
           ini-values: opcache.jit=off, opcache.jit_buffer_size=0
           tools: composer:v2
@@ -71,7 +71,7 @@ jobs:
       - uses: shivammathur/setup-php@b604ade2a87db23f8871b7182e69ec5e75effb45 # v2
         with:
           php-version: '8.2'
-          extensions: mbstring, pdo_mysql, pdo_sqlite
+          extensions: gd, mbstring, pdo_mysql, pdo_sqlite
           coverage: none
           ini-values: opcache.jit=off, opcache.jit_buffer_size=0
           tools: composer:v2
@@ -91,7 +91,7 @@ jobs:
       - uses: shivammathur/setup-php@b604ade2a87db23f8871b7182e69ec5e75effb45 # v2
         with:
           php-version: '8.2'
-          extensions: mbstring, pdo_sqlite
+          extensions: gd, mbstring, pdo_sqlite
           coverage: none
           ini-values: opcache.jit=off, opcache.jit_buffer_size=0
           tools: composer:v2
@@ -110,12 +110,18 @@ jobs:
       - name: Check navigation and UI tooling syntax
         run: |
           node --check public/navigation.js
+          node --check public/client-palette.js
+          node tests/Support/check-client-palettes.mjs
           node --check scripts/ui-prepare.mjs
           node --check scripts/ui-preview.mjs
       - name: Prepare isolated UI fixture
         run: node scripts/ui-prepare.mjs
       - name: Verify browser journeys and sidebar accessibility
         run: npx playwright test --config=playwright.ui.config.js
+      - name: Prepare separate realistic demo fixture
+        run: node scripts/realistic-demo.mjs --name=realistic-demo-browser --prepare
+      - name: Verify realistic demo journeys
+        run: npx playwright test --config=playwright.demo.config.js
       - name: Diagnose browser server failures
         if: failure()
         run: |
@@ -133,6 +139,8 @@ jobs:
             platform/.runtime/ui-sidebar/results/
             platform/.runtime/ui-sidebar/results.json
             platform/.runtime/ui-sidebar/*.png
+            platform/.runtime/realistic-demo-evidence/browser.json
+            platform/.runtime/realistic-demo-evidence/browser-results/
           retention-days: 7
 
   documents:
@@ -150,7 +158,7 @@ jobs:
       - uses: shivammathur/setup-php@b604ade2a87db23f8871b7182e69ec5e75effb45
         with:
           php-version: '8.2'
-          extensions: mbstring, pdo_sqlite, zip
+          extensions: gd, mbstring, pdo_sqlite, zip
           coverage: none
           tools: composer:v2
       - run: sudo apt-get update && sudo apt-get install -y poppler-utils tesseract-ocr tesseract-ocr-eng clamav

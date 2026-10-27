@@ -60,3 +60,46 @@ h1{font-size:31px;letter-spacing:-1px;font-weight:600}.eyebrow{font-size:9px;let
  .app-layout:not(.navigation-ready) .app-sidebar{position:static;width:100%;visibility:visible;transform:none;height:auto}
  .app-layout:not(.navigation-ready) .mobile-bar{display:none}
 }
+
+/* Branding accents are decorative; theme contrast tokens continue to control text and controls. */
+.brand-logo,.preview-logo{background:#f5f5f5;border-radius:5px;padding:3px;object-fit:contain}
+
+/* Client palette is opt-in and never overrides the five built-in themes. */
+:root:is([data-theme=client],[data-theme=client-light],[data-theme=client-dark]){color-scheme:var(--client-scheme,light);--bg:var(--client-background);--surface:var(--client-card);--raised:var(--client-card);--hover:var(--client-background);--ink:var(--client-text);--muted:var(--client-text);--line:var(--client-text);--primary:var(--client-primary);--on-primary:var(--client-on-primary);--focus:var(--client-text);--soft:var(--client-card);--brand:var(--client-primary)}
+:root:is([data-theme=client],[data-theme=client-light],[data-theme=client-dark]) .primary:hover{filter:none;text-decoration:underline}
+:root:is([data-theme=client],[data-theme=client-light],[data-theme=client-dark]) .workspace-hero{background:var(--primary);color:var(--on-primary);border-color:var(--primary)}
+:root:is([data-theme=client],[data-theme=client-light],[data-theme=client-dark]) .workspace-hero .eyebrow,:root:is([data-theme=client],[data-theme=client-light],[data-theme=client-dark]) .workspace-hero p:not(.eyebrow),:root:is([data-theme=client],[data-theme=client-light],[data-theme=client-dark]) .growth-orbit span{color:var(--on-primary)}
+:root:is([data-theme=client],[data-theme=client-light],[data-theme=client-dark]) .growth-orbit{border-color:var(--on-primary);box-shadow:none}
+.sample-client{--sample-bg:var(--client-background);--sample-surface:var(--client-card);--sample-accent:var(--client-primary)}
+.theme-dot-client{background:var(--client-primary)}
+.client-colour-editor{margin-top:24px}.client-colour-editor legend{font-size:16px}.client-colour-editor .form-grid{gap:12px}
+.client-preview-card{display:flex;flex-direction:column;gap:14px;border:1px solid var(--preview-text);border-radius:6px;padding:16px;background:var(--preview-card);color:var(--preview-text)}
+.client-preview-button{align-self:flex-start;border-radius:6px;padding:9px 15px;background:var(--preview-primary);color:var(--preview-on-primary)}
+.branding-preview[data-client-preview]{background:var(--preview-background);color:var(--preview-text);border-color:var(--preview-text);border-top-color:var(--preview-primary)}
+.branding-preview[data-client-preview] .preview-caption,.branding-preview[data-client-preview] p{color:var(--preview-text)}
+
+:root[data-theme=client-light]{--client-primary:var(--client-light-primary);--client-background:var(--client-light-background);--client-card:var(--client-light-card);--client-text:var(--client-light-text);--client-muted:var(--client-light-muted);--client-line:var(--client-light-line);--client-focus:var(--client-light-focus);--client-raised:var(--client-light-raised);--client-hover:var(--client-light-hover);--client-soft:var(--client-light-soft);--client-primary-hover:var(--client-light-primary-hover);--client-on-primary:var(--client-light-on-primary);--client-scheme:var(--client-light-scheme)}
+.sample-client-light{--sample-bg:var(--client-light-background);--sample-surface:var(--client-light-card);--sample-accent:var(--client-light-primary)}
+.theme-dot-client-light{background:var(--client-light-primary)}
+
+:root[data-theme=client-dark]{--client-primary:var(--client-dark-primary);--client-background:var(--client-dark-background);--client-card:var(--client-dark-card);--client-text:var(--client-dark-text);--client-muted:var(--client-dark-muted);--client-line:var(--client-dark-line);--client-focus:var(--client-dark-focus);--client-raised:var(--client-dark-raised);--client-hover:var(--client-dark-hover);--client-soft:var(--client-dark-soft);--client-primary-hover:var(--client-dark-primary-hover);--client-on-primary:var(--client-dark-on-primary);--client-scheme:var(--client-dark-scheme)}
+.sample-client-dark{--sample-bg:var(--client-dark-background);--sample-surface:var(--client-dark-card);--sample-accent:var(--client-dark-primary)}
+.theme-dot-client-dark{background:var(--client-dark-primary)}
+
+:root:is([data-theme=client-light],[data-theme=client-dark]){--muted:var(--client-muted);--line:var(--client-line);--focus:var(--client-focus);--raised:var(--client-raised);--hover:var(--client-hover);--soft:var(--client-soft)}
+:root:is([data-theme=client-light],[data-theme=client-dark]) .primary:hover{background:var(--client-primary-hover);filter:none}
+.brand-colour-control{display:flex;align-items:center;gap:14px;margin:8px 0}.brand-colour-control input[type=color]{margin:0;width:64px;height:44px}.brand-colour-control #brand-colour-hex{margin:0;max-width:150px;font-family:ui-monospace,monospace}
+.auto-theme-previews{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin:24px 0}
+.auto-theme-preview{min-width:0;display:flex;flex-direction:column;gap:12px;padding:20px;border:1px solid var(--preview-line);border-top:4px solid var(--preview-primary);border-radius:10px;background:var(--preview-background);color:var(--preview-text)}
+.auto-theme-preview h3,.auto-theme-preview h4,.auto-theme-preview p{margin:0;color:var(--preview-text)}.auto-theme-preview>p,.auto-theme-preview>[data-preview-parent]{color:var(--preview-muted)}.auto-theme-preview strong,.auto-theme-preview p{overflow-wrap:anywhere}
+.auto-preview-card{display:flex;flex-direction:column;gap:16px;padding:18px;background:var(--preview-card);border:1px solid var(--preview-line);border-radius:8px;color:var(--preview-text)}
+.auto-preview-active,.auto-preview-button{padding:9px 12px;border-radius:6px;background:var(--preview-primary);color:var(--preview-on-primary)}.auto-preview-button{align-self:flex-start}
+@media(max-width:600px){.auto-theme-previews{grid-template-columns:minmax(0,1fr)}}
+
+/* Decorative boundaries are softer; interactive boundaries retain contrast. */
+:root[data-theme=client-light]{--client-decorative:var(--client-light-decorative)}
+:root[data-theme=client-dark]{--client-decorative:var(--client-dark-decorative)}
+:root:is([data-theme=client-light],[data-theme=client-dark]){--line:var(--client-decorative)}
+:root:is([data-theme=client-light],[data-theme=client-dark]) :is(input,select,textarea,button,.secondary,.theme-tile){border-color:var(--client-line)}
+.auto-theme-preview,.auto-preview-card{border-color:var(--preview-decorative)}
+.auto-theme-preview{border-top-color:var(--preview-primary)}

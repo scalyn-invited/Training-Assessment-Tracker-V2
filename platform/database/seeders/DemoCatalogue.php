@@ -1,0 +1,12 @@
+<?php
+
+namespace Database\Seeders;
+
+class DemoCatalogue
+{
+    public const CLIENTS = [
+        ['name' => 'Harbor Voice Support', 'sector' => 'BPO / customer support', 'colour' => '#0f766e', 'teams' => ['Customer Care', 'Escalations'], 'topic' => 'Customer communication and escalation', 'role' => 'Customer support specialist', 'example' => 'A fictional customer reports a duplicate invoice. Acknowledge the concern, verify the case reference without requesting a password, explain the next step, and route the billing dispute with a clear owner and response time.', 'tasks' => ['Write a clear acknowledgement', 'Classify and route an escalation', 'Document the resolution and follow-up'], 'people' => ['Maya Santos', 'Eli Cruz', 'Nora Reyes', 'Lena Flores', 'Owen Tan', 'Iris Lim', 'Noah Ramos', 'Ava Garcia', 'Leo Mendoza', 'Zoe Navarro']],
+        ['name' => 'Northbridge IT Services', 'sector' => 'IT services', 'colour' => '#2563eb', 'teams' => ['Service Desk', 'Infrastructure'], 'topic' => 'Incident triage and service documentation', 'role' => 'Service desk analyst', 'example' => 'A fictional user cannot connect to a test VPN. Record impact and start time, check the published status, reproduce the error on a test account, collect redacted logs, and escalate with recovery steps. Never request the user password.', 'tasks' => ['Triage an incident', 'Write a reproducible runbook', 'Verify recovery and close the ticket'], 'people' => ['Adrian Cole', 'Priya Shah', 'Marco Vega', 'Ella Quinn', 'Finn Parker', 'Isla Brooks', 'Theo Lane', 'Mia Chen', 'Jude Ellis', 'Ruby Wells']],
+        ['name' => 'Pixel Grove Studio', 'sector' => 'App and website development', 'colour' => '#7c3aed', 'teams' => ['Application Engineering', 'Web Experience'], 'topic' => 'Application testing, accessibility and release preparation', 'role' => 'Application and web developer', 'example' => 'A fictional checkout form fails keyboard navigation. Reproduce in a local test page, record expected and actual focus order, implement a labelled error message, verify keyboard and screen-reader behaviour, and attach a rollback checklist for review.', 'tasks' => ['Write a reproducible test case', 'Review keyboard and form accessibility', 'Prepare a release and rollback checklist'], 'people' => ['Sofia Blake', 'Kai Morgan', 'Amara Reed', 'Ben Foster', 'Chloe Hart', 'Dylan Stone', 'Eva Ross', 'Hugo West', 'Jasmine Ford', 'Luca Gray']],
+    ];
+}

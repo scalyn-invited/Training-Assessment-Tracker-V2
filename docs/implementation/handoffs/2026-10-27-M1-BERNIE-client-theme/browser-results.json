@@ -1,0 +1,54 @@
+{
+  "stats": {
+    "startTime": "2026-10-27T02:33:55.540Z",
+    "duration": 120664.42000000001,
+    "expected": 6,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "checks": [
+    {
+      "name": "all five themes persist across pages and pass automated contrast checks",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "preferences are isolated between identities and storage failure stays usable",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "mobile sidebar supports keyboard dismissal, navigation and narrow layouts",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "admin can preview co-branding and white-label without saving changes",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "client branding saves with a logo and survives desktop and mobile navigation",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "custom client palette validates contrast, persists selection and preserves built-in themes",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    }
+  ]
+}

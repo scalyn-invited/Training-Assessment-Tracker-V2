@@ -263,4 +263,25 @@ class ClientConcurrencyTest extends TestCase
         $this->assertSame('needs_review', $plan->fresh()->state);
         $this->assertDatabaseMissing('programme_versions', ['enrolment_id' => $enrolment->id, 'state' => 'approved']);
     }
+
+    public function test_competing_branding_saves_commit_one_version_and_audit(): void
+    {
+        $workers = [$this->start(['branding', $this->admin->id, $this->client]),
+            $this->start(['branding', $this->admin->id, $this->client])];
+        $this->ready($workers);
+        $this->release($workers);
+        $this->assertSame([0, 2], $this->results($workers));
+        $this->assertSame(1, DB::table('client_brandings')->where('organisation_id', $this->client)->value('version'));
+        $this->assertSame(1, DB::table('audit_events')->where('action', 'client.branding.saved')->count());
+    }
+
+    public function test_competing_theme_preferences_commit_one_version(): void
+    {
+        $workers = [$this->start(['preference', $this->admin->id, $this->client]), $this->start(['preference', $this->admin->id, $this->client])];
+        $this->ready($workers);
+        $this->release($workers);
+        $this->assertSame([0, 2], $this->results($workers));
+        $this->assertSame(1, DB::table('client_theme_preferences')->where('organisation_id', $this->client)->value('version'));
+        $this->assertSame(1, DB::table('audit_events')->where('action', 'client.theme.preference.saved')->count());
+    }
 }

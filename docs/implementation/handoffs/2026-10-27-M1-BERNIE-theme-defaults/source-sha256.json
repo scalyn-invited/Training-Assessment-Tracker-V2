@@ -1,0 +1,23 @@
+{
+  "app/Http/Controllers/ThemePreferenceController.php": "a5c35bce11e6c403c5815c356bbba0c5c18dcafa44a9f39fc8e32b30f0b7245c",
+  "app/Http/Controllers/BrandingController.php": "d79f46dbc540d76910ea26f12f30136007d96e7e4e87d67fdbd7ee2e9081d028",
+  "app/Services/Branding.php": "f37fc4e8a543557189f9880d0b3f367e4a701af2a0b97fe637f0ab3f38410ca9",
+  "app/Services/ClientTheme.php": "3b5d3c3737692a0ad6acb2cffc34105e2cdf0efa04fb53cf94609bcc9ee22e6b",
+  "database/migrations/2026_10_27_120000_add_theme_preferences.php": "409eb89c87d5a397875db8edf3f654812187062687b08d7b2e64c541ce590b5b",
+  "routes/web.php": "872fce03563261e6267f0e271aeb30abff4527e525baccc76958f2030604affa",
+  "public/appearance.js": "16dc7a9dc11cfa3b3af76efe562e64ac988749c962ed57e34bfd223aabc30b6a",
+  "public/app.css": "5ae1ff71f2260dde64c77421438eec664bff2d1f2c7502aa8671eeabad36129e",
+  "public/client-palette.js": "840012fff692eef17e4baab604bf94df4bcffbf37ad4fc55087cb09a063d00d0",
+  "resources/views/appearance.blade.php": "0f4bec95ae56f07404927305621c66749a6c1e0384da86c487a48672e6271458",
+  "resources/views/layouts/app.blade.php": "9f94dc301e4a91174b47a2c3ec1825874b6bd10566ffcc908a347b2ef55407bb",
+  "tests/Feature/ThemePreferenceTest.php": "112a91a194b6ff2e8889a05e1e273fc8bc7af21774deca366488e130b773594c",
+  "tests/Feature/AutomaticClientThemeTest.php": "634b0f8b4ed7576c5d3f92c1efc9a4301884bc11e1a39c74c8e3ee3ea753d834",
+  "tests/Fixtures/client-palette-v1.json": "c26a4a9b1ac54e81a0b296e5ac51644fe1131ef7dc3f1408d4593e830bb2226a",
+  "tests/Browser/appearance.spec.js": "65b6c349b694262ea51dfc4ee1222f45dcbab96e8a1c2ae98db210d380a742ad",
+  "tests/Browser/isolated-cache.js": "a8f28cf26dbea86e12edd38b53a06e03a891f54ba5179ff1c10e3310d92cd040",
+  "tests/Integration/ClientConcurrencyTest.php": "d48938d0f08020556852486e45bc6d5ff5e32ddac9f7f29ee4edc0835c0cc2ba",
+  "tests/Integration/ClientMigrationMariaDbTest.php": "b4e41b833a0c62d26c3581a750c8b37649fde56d903df29c6808b53154dbf3b5",
+  "tests/Support/client-concurrency-worker.php": "8a49acb22577f54799b3674fef2d421d832353b652d05ac73d02d4edb1c3cbd8",
+  "playwright.preferences.config.js": "2f38b5021fe731095d50cf637d6dd3bbff7e0f6abd93502084d729e78acaea1a",
+  "scripts/ui-preview.mjs": "92017584a0ff98a7c4c66a339d81ffad48a414115ea6bf0dfa1f0713f0660d87"
+}

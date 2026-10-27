@@ -1,0 +1,11 @@
+{
+  "ui": {
+    "tables_unchanged": 53,
+    "new_palette_null": true
+  },
+  "branding": {
+    "tables_unchanged": 53,
+    "new_palette_null": true
+  },
+  "application_database_sha256": "9eaddd403ff6087873072572b610ac5f0b0dc96f9e944d5a6fe1523b2fe309a9"
+}
