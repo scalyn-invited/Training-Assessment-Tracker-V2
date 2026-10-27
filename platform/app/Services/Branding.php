@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\User;
+use App\Services\Tenancy\ClientContext;
 
 class Branding
 {
@@ -10,12 +11,13 @@ class Branding
 
     public function forUser(?User $user): array
     {
+        $client = $user && $user->active ? app(ClientContext::class)->resolve($user) : null;
         $defaults = config('branding.defaults', []);
-        $overrides = $user && $user->active
-            ? (config('branding.organisations', [])[$user->organisation_id][$user->environment] ?? []) : [];
+        $overrides = $client !== null
+            ? (config('branding.organisations', [])[$client][$user->environment] ?? []) : [];
         $raw = array_replace($defaults, $overrides);
         $mode = in_array($raw['mode'] ?? '', ['cerebru', 'co-branded', 'white-label'], true) ? $raw['mode'] : 'cerebru';
-        $client = $this->text($raw['client_name'] ?? '', '');
+        $clientName = $this->text($raw['client_name'] ?? '', '');
         $app = $this->text($raw['app_name'] ?? '', 'Assessment Training Tracker');
         $theme = array_key_exists($raw['default_theme'] ?? '', self::THEMES) ? $raw['default_theme'] : 'dark';
         $light = $this->asset($raw['logo_light'] ?? null);
@@ -24,8 +26,8 @@ class Branding
         return [
             'mode' => $mode,
             'app_name' => $app,
-            'client_name' => $client,
-            'brand_name' => $mode === 'cerebru' ? 'Cerebru' : ($client ?: $app),
+            'client_name' => $clientName,
+            'brand_name' => $mode === 'cerebru' ? 'Cerebru' : ($clientName ?: $app),
             'logo_light' => $light ?: $dark,
             'logo_dark' => $dark ?: $light,
             'compact_logo' => $this->asset($raw['compact_logo'] ?? null),
@@ -35,7 +37,7 @@ class Branding
             'default_theme' => $theme,
             'footer' => $this->text($raw['footer'] ?? '', 'Learning with purpose. Progress with evidence.'),
             'cerebru_url' => $mode === 'white-label' ? null : $this->url($raw['cerebru_url'] ?? null),
-            'theme_key' => 'training.appearance.'.hash('sha256', $user && $user->active ? $user->organisation_id.'|'.$user->environment.'|'.$user->id : 'guest'),
+            'theme_key' => 'training.appearance.'.hash('sha256', $user && $user->active ? ($client ?? 'unselected').'|'.$user->environment.'|'.$user->id : 'guest'),
             'themes' => self::THEMES,
         ];
     }

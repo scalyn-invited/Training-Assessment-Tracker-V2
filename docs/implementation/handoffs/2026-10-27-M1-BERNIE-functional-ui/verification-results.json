@@ -1,0 +1,29 @@
+{
+  "browser_first": {
+    "startTime": "2026-10-27T00:40:39.205Z",
+    "duration": 460268.813,
+    "expected": 6,
+    "skipped": 0,
+    "unexpected": 6,
+    "flaky": 0
+  },
+  "browser_final": {
+    "startTime": "2026-10-27T00:49:01.993Z",
+    "duration": 278199.06799999997,
+    "expected": 12,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "phpunit": {
+    "tests": 79,
+    "assertions": 444,
+    "result": "passed"
+  },
+  "pint": "passed",
+  "javascript_syntax": "passed",
+  "git_diff_check": "passed",
+  "original_database_unchanged": true,
+  "postman_database_byte_identical": false,
+  "postman_note": "Existing preview remained active with session/cache writes; no reset, migration or seeding performed on that database."
+}

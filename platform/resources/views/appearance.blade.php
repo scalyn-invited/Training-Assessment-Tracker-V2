@@ -9,7 +9,7 @@
 @endforeach
 </div><div class="form-actions"><button type="button" class="secondary" data-theme-reset>Use workspace default</button></div>
 </section>
-@if(auth()->user()->role === 'admin')
+@if(app(\App\Services\Access::class)->admin(auth()->user()))
 <section class="panel appearance-section" aria-labelledby="branding-heading"><h2 id="branding-heading">Branding preview</h2><p>Explore your client identity before it is configured. This preview changes only the sample below; it does not save or change anyone’s workspace.</p>
 <div class="detail-grid"><form id="brand-preview-form">
 <label for="preview-mode">Branding mode</label><select id="preview-mode" name="preview_mode"><option value="cerebru" @selected($branding['mode'] === 'cerebru')>Cerebru</option><option value="co-branded" @selected($branding['mode'] === 'co-branded')>Client + Cerebru</option><option value="white-label" @selected($branding['mode'] === 'white-label')>Client only (white-label)</option></select>

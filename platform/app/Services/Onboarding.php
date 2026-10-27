@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Enrolment;
 use App\Models\MemberCalendar;
 use App\Models\OnboardingVersion;
+use App\Models\Organisation;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -39,20 +40,20 @@ class Onboarding
     public function authorise(User $actor, Enrolment $enrolment, bool $alternateReview = false): void
     {
         abort_unless(app(Access::class)->canView($actor, $enrolment), 404);
-        abort_unless($actor->id === $enrolment->member_id || ($actor->role === 'coordinator' && $actor->sensitive_access), 403);
-        abort_if($actor->role === 'coordinator' && $actor->id !== $enrolment->coordinator_id && ! $alternateReview, 403);
+        abort_unless($actor->id === $enrolment->member_id || app(Access::class)->canManage($actor, $enrolment), 403);
     }
 
     public function coordinator(User $actor, Enrolment $enrolment): void
     {
         $this->authorise($actor, $enrolment);
-        abort_unless($actor->role === 'coordinator' && $actor->id === $enrolment->coordinator_id && $actor->id !== $enrolment->member_id, 403);
+        abort_unless(app(Access::class)->canManage($actor, $enrolment), 403);
     }
 
     // All learning mutations serialize on the member, including allocation of concurrent plans.
     public function locked(User $actor, Enrolment $enrolment, callable $action): mixed
     {
         return DB::transaction(function () use ($actor, $enrolment, $action) {
+            Organisation::whereKey($enrolment->organisation_id)->lockForUpdate()->firstOrFail();
             User::whereKey($enrolment->member_id)->lockForUpdate()->firstOrFail();
             $current = Enrolment::whereKey($enrolment->id)->lockForUpdate()->firstOrFail();
             $freshActor = User::whereKey($actor->id)->lockForUpdate()->firstOrFail();

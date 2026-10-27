@@ -2,7 +2,7 @@
 @section('title', 'Onboarding')
 @section('content')
 <a class="back" href="{{ route('enrolments.show', $enrolment->id) }}">← Enrolment</a>
-<div class="page-heading"><div><p class="eyebrow">Learning setup · Revision {{ $draft?->version ?? 0 }}</p><h1>{{ $enrolment->member->name }}</h1><p>Coordinator: {{ $enrolment->coordinator->name }} · {{ $enrolment->group->name }}</p></div><span class="badge">Saved draft ≠ approved plan</span></div>
+<div class="page-heading"><div><p class="eyebrow">Learning setup · Revision {{ $draft?->version ?? 0 }}</p><h1>{{ $enrolment->member->name }}</h1><p>Coordinator: {{ \App\Models\User::find(app(\App\Services\Access::class)->primaryUser($enrolment))?->name ?? 'Not assigned' }} · {{ $enrolment->group?->name ?? 'No team' }}</p></div><span class="badge">Saved draft ≠ approved plan</span></div>
 <nav class="step-nav" aria-label="Onboarding steps">
 @foreach(App\Services\Onboarding::STEPS as $key => $label)<a href="{{ route('onboarding.show', ['id' => $enrolment->id, 'step' => $key]) }}" @if($step === $key) aria-current="step" @endif>{{ $loop->iteration }}. {{ $label }} @if(isset($data[$key]))<span class="subtle">· saved</span>@endif</a>@endforeach
 <a href="{{ route('onboarding.show', ['id' => $enrolment->id, 'step' => 'review']) }}" @if($step === 'review') aria-current="step" @endif>7. Review and create</a></nav>

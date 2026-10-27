@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Identity;
+use App\Services\Access;
 use App\Services\Audit;
 use App\Services\MockIdentity;
+use App\Services\Tenancy\ClientContext;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -34,7 +36,11 @@ class SessionController
         Auth::login($user);
         $request->session()->regenerate();
         $request->session()->put(['identity_id' => $identity->id, 'login_at' => time(), 'last_seen' => time(), 'permission_version' => $user->permission_version]);
-        Audit::record($user, 'mock.login', $identity->id);
+        app(ClientContext::class)->id = null;
+        $request->session()->forget('client_id');
+        if (app(Access::class)->client($user)) {
+            Audit::record($user, 'mock.login', $identity->id);
+        }
 
         return redirect()->route('dashboard');
     }

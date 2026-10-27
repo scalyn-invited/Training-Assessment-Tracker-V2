@@ -63,5 +63,8 @@ class DatabaseSeeder extends Seeder
                     'bytes' => strlen($content), 'sha256' => hash('sha256', $content), 'scan_status' => 'clean', 'sensitive' => false]);
             }
         }
+        if (! config('training.legacy_fixture', false)) {
+            $this->call(ClientAuthoritySeeder::class);
+        }
     }
 }

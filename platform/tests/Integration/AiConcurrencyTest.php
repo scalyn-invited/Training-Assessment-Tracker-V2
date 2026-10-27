@@ -5,15 +5,15 @@ namespace Tests\Integration;
 use App\Models\AiBlock;
 use App\Models\AiRun;
 use App\Services\Ai\Generation;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\Queue;
 use Symfony\Component\Process\Process;
+use Tests\Support\DisposableMariaDatabase;
 use Tests\Support\LearningFixtures;
 use Tests\TestCase;
 
 class AiConcurrencyTest extends TestCase
 {
-    use DatabaseMigrations, LearningFixtures;
+    use DisposableMariaDatabase, LearningFixtures;
 
     public function test_duplicate_workers_make_only_one_provider_attempt(): void
     {

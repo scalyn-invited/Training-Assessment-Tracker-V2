@@ -41,7 +41,7 @@ class Operations
     public function hold(User $actor, Enrolment $enrolment, string $reason): string
     {
         return app(Administration::class)->locked($actor, function ($actor) use ($enrolment, $reason) {
-            abort_unless($enrolment->organisation_id === $actor->organisation_id && $enrolment->environment === $actor->environment, 404);
+            abort_unless($enrolment->organisation_id === app(Access::class)->client($actor) && $enrolment->environment === $actor->environment, 404);
             app(Delivery::class)->reason($reason);
             $id = (string) Str::uuid();
             DB::table('legal_holds')->insert(['id' => $id, 'enrolment_id' => $enrolment->id, 'actor_id' => $actor->id, 'reason' => $reason, 'created_at' => now(), 'updated_at' => now()]);

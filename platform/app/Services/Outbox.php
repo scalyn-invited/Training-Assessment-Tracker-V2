@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Jobs\DeliverOutbox;
 use App\Models\Enrolment;
+use App\Models\Organisation;
 use App\Models\OutboxEvent;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -13,6 +14,7 @@ class Outbox
     public function requestCheck(User $actor, Enrolment $enrolment, int $version, string $key): OutboxEvent
     {
         return DB::transaction(function () use ($actor, $enrolment, $version, $key) {
+            Organisation::whereKey($enrolment->organisation_id)->lockForUpdate()->firstOrFail();
             $actor = User::whereKey($actor->id)->lockForUpdate()->firstOrFail();
             $enrolment = Enrolment::whereKey($enrolment->id)->lockForUpdate()->firstOrFail();
             abort_unless(app(Access::class)->canView($actor, $enrolment), 404);
@@ -25,7 +27,7 @@ class Outbox
             }
             abort_unless($enrolment->version === $version, 409, 'The enrolment changed. Reload before retrying.');
             $event = OutboxEvent::create([
-                'organisation_id' => $actor->organisation_id, 'environment' => $actor->environment, 'actor_id' => $actor->id,
+                'organisation_id' => app(Access::class)->client($actor), 'environment' => $actor->environment, 'actor_id' => $actor->id,
                 'enrolment_id' => $enrolment->id, 'enrolment_version' => $version, 'idempotency_key' => $key,
                 'payload_hash' => $hash, 'type' => 'foundation.check', 'status' => 'pending',
             ]);

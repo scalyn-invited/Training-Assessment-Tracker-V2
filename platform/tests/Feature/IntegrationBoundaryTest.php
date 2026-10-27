@@ -26,6 +26,7 @@ class IntegrationBoundaryTest extends TestCase
         $member = User::create(['organisation_id' => $org->id, 'environment' => 'production', 'name' => 'Contract learner', 'email' => 'contract-member@example.invalid', 'password' => 'unused', 'role' => 'member', 'active' => true,
             'is_synthetic' => false, 'origin' => 'manual', 'sync_policy' => 'linked', 'external_person_id' => 'person-1', 'linked_at' => now()->addMinute()]);
         Identity::create(['user_id' => $member->id, 'issuer' => 'https://idp.example.invalid', 'subject' => 'contract-member']);
+        $clientMembership = $this->explicitMember($member, $org->id);
         $group = Group::create(['organisation_id' => $org->id, 'environment' => 'production', 'name' => 'Contract group', 'active' => true]);
         $membership = (string) Str::uuid();
         DB::table('memberships')->insert(['id' => $membership, 'organisation_id' => $org->id, 'environment' => 'production', 'user_id' => $member->id, 'group_id' => $group->id, 'starts_at' => now()]);
@@ -38,7 +39,7 @@ class IntegrationBoundaryTest extends TestCase
         $this->assertCount(1, $visible['items']);
         $this->assertSame(['status' => 'completed'], $visible['items'][0]['facts']);
         $this->assertSame([], $feed->read($member, $visible['next_cursor'])['items']);
-        DB::table('memberships')->where('id', $membership)->update(['ends_at' => now()]);
+        DB::table('client_memberships')->where('id', $clientMembership)->update(['status' => 'ended', 'ended_at' => now()]);
         $member->increment('permission_version');
         $this->assertSame([], $feed->read($member)['items']);
     }

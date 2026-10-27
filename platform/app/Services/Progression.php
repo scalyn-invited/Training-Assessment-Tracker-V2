@@ -160,7 +160,7 @@ class Progression
                 continue;
             }
             $proposal->update(['status' => $proposal->status === 'approved' ? 'source_review_required' : 'stale']);
-            app(LearningNotices::class)->record($submission->enrolment, $submission->enrolment->coordinator_id, 'source-regraded:'.$proposal->id.':'.$submission->approved_grade_id, 'source_review_required');
+            app(LearningNotices::class)->record($submission->enrolment, app(Access::class)->primaryUser($submission->enrolment), 'source-regraded:'.$proposal->id.':'.$submission->approved_grade_id, 'source_review_required');
         }
     }
 

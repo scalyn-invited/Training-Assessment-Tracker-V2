@@ -39,37 +39,10 @@
 
 
         document.addEventListener('click', event => document.querySelectorAll('.theme-picker[open]').forEach(menu => { if (!menu.contains(event.target)) menu.open = false; }));
-        const toggle = document.getElementById('nav-toggle');
-        const sidebar = document.getElementById('app-sidebar');
-        const backdrop = document.getElementById('nav-backdrop');
-        const content = document.querySelector('.app-content');
-        const mobile = matchMedia('(max-width: 800px)');
-        function navigation(open, focus = true) {
-            if (!toggle) return;
-            document.body.classList.toggle('nav-open', open);
-            toggle.setAttribute('aria-expanded', String(open));
-            toggle.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
-            backdrop.hidden = !open;
-            content.inert = open;
-            if (focus) (open ? document.getElementById('nav-close') : toggle).focus();
-        }
-        toggle?.addEventListener('click', () => navigation(!document.body.classList.contains('nav-open')));
-        document.getElementById('nav-close')?.addEventListener('click', () => navigation(false));
-        backdrop?.addEventListener('click', () => navigation(false));
-        sidebar?.querySelectorAll('a').forEach(link => link.addEventListener('click', () => { if (mobile.matches) navigation(false, false); }));
-        mobile.addEventListener('change', () => { if (!mobile.matches) navigation(false, false); });
         document.addEventListener('keydown', event => {
-            if (event.key === 'Escape') {
-                const menu = document.querySelector('.theme-picker[open]');
-                if (menu) { menu.open = false; menu.querySelector('summary').focus(); return; }
-                if (document.body.classList.contains('nav-open')) navigation(false);
-            }
-            if (event.key === 'Tab' && document.body.classList.contains('nav-open')) {
-                const elements = [...sidebar.querySelectorAll('a, button, summary')].filter(el => el.getClientRects().length && !el.disabled);
-                const first = elements[0], last = elements.at(-1);
-                if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
-                else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
-            }
+            if (event.key !== 'Escape' || event.defaultPrevented) return;
+            const menu = document.querySelector('.theme-picker[open]');
+            if (menu) { menu.open = false; menu.querySelector('summary').focus(); }
         });
         const form = document.getElementById('brand-preview-form');
         if (form) {

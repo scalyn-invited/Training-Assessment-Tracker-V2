@@ -207,7 +207,7 @@ class LearningTest extends TestCase
     public function test_removed_coordinator_and_self_approval_are_rejected(): void
     {
         $plan = $this->fill($this->prepare());
-        DB::table('coordinator_assignments')->where('user_id', $this->person()->id)->update(['ends_at' => now()->subMinute()]);
+        DB::table('role_assignments')->where('user_id', $this->person()->id)->update(['ends_at' => now()->subMinute()]);
         $this->failure(404, fn () => app(LearningPlans::class)->review($this->person(), $this->enrolment(), $plan->version, false, ''));
         $member = $this->person('member-a');
         $member->update(['role' => 'coordinator', 'sensitive_access' => true]);

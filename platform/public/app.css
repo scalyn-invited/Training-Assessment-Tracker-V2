@@ -40,3 +40,23 @@ h1{font-size:31px;letter-spacing:-1px;font-weight:600}.eyebrow{font-size:9px;let
 
 /* Keep the supplied full-colour logo legible in every theme. */
 .brand-symbol:has(.brand-logo){max-width:60px;min-width:54px;padding:5px;border:0!important;border-radius:7px;background:#fff}.brand-symbol .brand-logo{width:50px;height:36px}.guest-header .brand-logo{width:60px;height:44px;padding:4px;background:#fff;border-radius:7px}.preview-logo{background:#fff;padding:3px;border-radius:5px}
+
+/* M1 scoped client header and accessible navigation integration. Theme tokens remain authoritative. */
+.workspace-header{height:auto;min-height:88px;flex-wrap:wrap;padding-top:16px;padding-bottom:16px}
+.client-switcher{flex:1 1 260px;max-width:480px;min-width:0;margin:0}
+.client-switcher label{font-size:12px;color:var(--muted)}
+.client-controls{display:flex;align-items:center;gap:8px}
+.client-controls select{flex:1;min-width:0;margin:0}
+.client-controls button{white-space:nowrap;min-height:44px}
+.workspace-header .profile{margin-left:auto;min-width:0}
+.app-sidebar{overflow-y:auto}.nav-open{overflow:hidden}
+.table-wrap:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+.skip{display:inline-flex;align-items:center;min-height:44px}
+.container>.panel,.container>section,.container>form{margin-bottom:24px}
+.panel{min-width:0;overflow-wrap:anywhere}.badge{white-space:normal}
+@media(max-width:800px){
+ .workspace-header{gap:14px}.workspace-header .profile{width:auto;flex:1 1 100%}
+ .client-switcher{flex-basis:100%;max-width:none}.client-controls button{font-size:12px;padding:8px}
+ .app-layout:not(.navigation-ready) .app-sidebar{position:static;width:100%;visibility:visible;transform:none;height:auto}
+ .app-layout:not(.navigation-ready) .mobile-bar{display:none}
+}

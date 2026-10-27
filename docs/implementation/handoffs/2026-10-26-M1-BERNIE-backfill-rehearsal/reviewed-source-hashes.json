@@ -1,0 +1,30 @@
+[
+  {
+    "file": "platform/scripts/support/ClientBackfill.php",
+    "sha256": "C32C8C5357BEF0A716043F6E0F882AE17AFA4FC8EE6CCBB59F2F7724EEF3C7EB"
+  },
+  {
+    "file": "platform/scripts/client-backfill-rehearsal.php",
+    "sha256": "2CB1DBBFE832EDC4726C588AD0593DCE1479ED24C562E9890AB30DA2BDC5B5B8"
+  },
+  {
+    "file": "platform/scripts/prepare-client-backfill.php",
+    "sha256": "72BA09070B81B46844773AA8B3A6F3621D5CA02A53DB2486D1ACA5F30D3A374A"
+  },
+  {
+    "file": "platform/scripts/rehearse-client-backfill.py",
+    "sha256": "B7B74890AF1F9631FDF01B693AF4C426C0ACC6234C5BA175C1A2294385581225"
+  },
+  {
+    "file": "platform/tests/Feature/ClientBackfillTest.php",
+    "sha256": "DF89681042BBF33E53277F89D7EE35C94EEE2A41250B35766AEC1047F8FE428A"
+  },
+  {
+    "file": "platform/tests/Integration/ClientBackfillMariaDbTest.php",
+    "sha256": "44539281ADBAB241671257F4C5C0FB9C8C9E21AC046ABA63B9A77331914CDC7F"
+  },
+  {
+    "file": "platform/tests/Support/client-backfill-worker.php",
+    "sha256": "DDA54D9D6362BE998BA5CF45258115C2A40595D528F38A76475A7CB5B3204B48"
+  }
+]

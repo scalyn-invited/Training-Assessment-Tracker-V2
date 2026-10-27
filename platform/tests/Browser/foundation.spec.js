@@ -49,7 +49,9 @@ test('coordinator and admin dashboards expose only their intended scope', async 
     expect(results.violations).toEqual([]);
     await page.getByRole('button', { name: 'Sign out' }).click();
     await login(page, /Alex/);
-    await expect(page.locator('.plan-card')).toHaveCount(2);
+    // Client administration does not grant training-record visibility.
+    await expect(page.locator('.plan-card')).toHaveCount(0);
+    await expect(page.getByRole('heading', { name: 'No enrolments available' })).toBeVisible();
     await page.getByRole('link', { name: 'People', exact: true }).click();
     await expect(page.getByRole('cell', { name: /Sam/ })).toBeVisible();
 });

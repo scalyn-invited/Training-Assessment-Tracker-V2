@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\Enrolment;
+use App\Models\Organisation;
 use App\Models\OutboxEvent;
 use App\Models\User;
 use App\Services\Access;
@@ -38,6 +39,8 @@ class DeliverOutbox implements ShouldQueue
     public function handle(Access $access): void
     {
         DB::transaction(function () use ($access) {
+            $stored = OutboxEvent::findOrFail($this->eventId);
+            Organisation::whereKey($stored->organisation_id)->lockForUpdate()->firstOrFail();
             $event = OutboxEvent::whereKey($this->eventId)->lockForUpdate()->firstOrFail();
             if ($event->status !== 'pending') {
                 return;
@@ -46,7 +49,7 @@ class DeliverOutbox implements ShouldQueue
             $enrolment = Enrolment::whereKey($event->enrolment_id)->lockForUpdate()->first();
             $event->increment('attempts');
             if (! $actor || ! $enrolment || ! $access->canView($actor, $enrolment)
-                || $event->organisation_id !== $actor->organisation_id || $event->environment !== $actor->environment
+                || $event->organisation_id !== app(Access::class)->client($actor) || $event->environment !== $actor->environment
                 || $event->enrolment_version !== $enrolment->version) {
                 $event->update(['status' => 'cancelled', 'error_code' => 'authority_or_version_changed']);
 
@@ -55,7 +58,7 @@ class DeliverOutbox implements ShouldQueue
             // Durable, non-delivering notification sink. No SMTP or external publication occurs here.
             DB::table('notification_receipts')->insertOrIgnore([
                 'id' => (string) Str::uuid(), 'outbox_event_id' => $event->id,
-                'organisation_id' => $actor->organisation_id, 'environment' => $actor->environment,
+                'organisation_id' => app(Access::class)->client($actor), 'environment' => $actor->environment,
                 'recipient_id' => $actor->id, 'transport' => 'database-sink',
                 'subject' => 'Foundation check completed', 'created_at' => now(),
             ]);

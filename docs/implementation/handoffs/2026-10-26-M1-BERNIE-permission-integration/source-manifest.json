@@ -1,0 +1,294 @@
+{
+  "base_revision": "418dd7f5c2237d1c11d73bced4e6b11a26a4eca7",
+  "state": "uncommitted working tree; includes preserved foundation/rehearsal dependencies",
+  "files": [
+    {
+      "path": "docs/implementation/developers/BERNIE.md",
+      "sha256": "13b334d46aa35b9b09cb0ebdeb1d96eb5021474fb08ebff096e94f20dfa7ac69"
+    },
+    {
+      "path": "platform/app/Http/Controllers/AdministrationController.php",
+      "sha256": "4b606598074a41ee019ae8b52d3520fbfec96dbd801a9f7a77fd5fa4007d030a"
+    },
+    {
+      "path": "platform/app/Http/Controllers/AiController.php",
+      "sha256": "b2775df0d2006de6a8b5939286bae9ca3062c9555bcb8fa52b6959b8b52c0a1f"
+    },
+    {
+      "path": "platform/app/Http/Controllers/ClientContextController.php",
+      "sha256": "fce695b2ba38b90f1050e7e8e2ca43664c465792c159935499cbbba34ef479d0"
+    },
+    {
+      "path": "platform/app/Http/Controllers/DeliveryController.php",
+      "sha256": "1096c1098b9ad2e32942fcf41df34a34dfa95c03c877a5fbd78e5f8bff1b0ee7"
+    },
+    {
+      "path": "platform/app/Http/Controllers/LearningController.php",
+      "sha256": "8d8aa48d9142c99a51d70a3e610b8a9b47555aa25b19ddcc32b424ec3b98c370"
+    },
+    {
+      "path": "platform/app/Http/Controllers/ProgressionController.php",
+      "sha256": "68de6bfc3a3f4e6ca3d3c0ece80e4b8e401b2dd2d79e8a240d96b6510c0c8b5b"
+    },
+    {
+      "path": "platform/app/Http/Controllers/SandboxApiController.php",
+      "sha256": "9959cbc6418667c67094aa1c24bfd84a3a81e2131c398011c7165b35318fb3e1"
+    },
+    {
+      "path": "platform/app/Http/Controllers/SessionController.php",
+      "sha256": "be17196dca77f87ab758d18c8d4e8fdc66f560d0b52d0742a31c1f16a87c617a"
+    },
+    {
+      "path": "platform/app/Http/Controllers/WorkspaceController.php",
+      "sha256": "8bd837433947f9fa4d2e4d2cbd578ec0719880c36e57daf9dfa2eb8966a7353a"
+    },
+    {
+      "path": "platform/app/Http/Middleware/TrainingSession.php",
+      "sha256": "7f744647a631025e07d6e7b17162865787c5fddd765997cf9933c622649312b9"
+    },
+    {
+      "path": "platform/app/Jobs/DeliverOutbox.php",
+      "sha256": "82f4f8873a006d74686feb01956b98e27267a2c2dae3b01ec0cdbbc9d1705b2e"
+    },
+    {
+      "path": "platform/app/Jobs/PromotePerson.php",
+      "sha256": "6bf75ee0f3f60c1c3549830a8e851dd611cbcc53ccd1fa2f48eb2743f89fd331"
+    },
+    {
+      "path": "platform/app/Livewire/JobReceipts.php",
+      "sha256": "a1cde784b88704428e4e96017963419f328220457d6fd0de4337e52654c4aecd"
+    },
+    {
+      "path": "platform/app/Providers/AppServiceProvider.php",
+      "sha256": "33c6ccf4548e5cdd274f2a34b1b6a395554652e8e0196fc578073831ee92a5da"
+    },
+    {
+      "path": "platform/app/Services/Access.php",
+      "sha256": "977e727dbf915156957bd48d194e0d2a0d7117b1c1cd293f860883f78f419209"
+    },
+    {
+      "path": "platform/app/Services/Administration.php",
+      "sha256": "28a96fb838a51868a985a06d719aec46e481e16bb7c9e78db7e705db37517d99"
+    },
+    {
+      "path": "platform/app/Services/Ai/Generation.php",
+      "sha256": "f548a4c72d1d783336fb78177eaf120a90453b3a82caef27aee9409d1f78fce9"
+    },
+    {
+      "path": "platform/app/Services/Ai/Registry.php",
+      "sha256": "ae5032f3ee5920dab7b8d648f5f982a259ba4fcff840d6626d731c6a9cd504c5"
+    },
+    {
+      "path": "platform/app/Services/Ai/TaskGateway.php",
+      "sha256": "8c656d2d5a935049d715f79e9ce8ccd5f1238a2d6a45bcb0fd71a979b228960e"
+    },
+    {
+      "path": "platform/app/Services/Audit.php",
+      "sha256": "f855fe00d3994401f070cb85a7af26d596b8b4dc19f2a37018299f3f59c12bb7"
+    },
+    {
+      "path": "platform/app/Services/Delivery.php",
+      "sha256": "b1d55b5c561e55c5dff444093cb1c3dd42309a23c3b8962eb4912ff9e561a59f"
+    },
+    {
+      "path": "platform/app/Services/Grading.php",
+      "sha256": "f136890cfedaf0e5be90600a77bb97db5da352fcdaa97b6c3317d14924f0219d"
+    },
+    {
+      "path": "platform/app/Services/LearningNotices.php",
+      "sha256": "5866fbeff053e9ed7076d2339795cd14686c668075cd66b377776cf373b017af"
+    },
+    {
+      "path": "platform/app/Services/Onboarding.php",
+      "sha256": "a673fb788108e16158b8c887ca2079611a3b4eff4a351549eeb8c18a28787d0a"
+    },
+    {
+      "path": "platform/app/Services/Operations.php",
+      "sha256": "746d41bbde316b259b9d23271d830623f18cafe4199d651bb648f7b9e8542718"
+    },
+    {
+      "path": "platform/app/Services/Outbox.php",
+      "sha256": "5d2a076f6210554c800a464cf4b18468d34c1cea38c4c7110508502d689c357a"
+    },
+    {
+      "path": "platform/app/Services/Progression.php",
+      "sha256": "de7f5736560c985b0d4bd0272a31a98ca162877e3f4af905a47b930acbdc49b9"
+    },
+    {
+      "path": "platform/app/Services/Promotions.php",
+      "sha256": "9c4afbf027048c5146883a0a63160aaa2f4cc130df8bf9465ea1e0d58d462d5f"
+    },
+    {
+      "path": "platform/app/Services/SandboxDirectory.php",
+      "sha256": "ec2deb0073c6210ecdcdbd13ea754037f4d29fef8f6d5c3daf8db935f338168a"
+    },
+    {
+      "path": "platform/app/Services/Tenancy/ClientAccess.php",
+      "sha256": "bdbd9711b963a82268512084ba6072c7aac698b75136d4749bbd4d4d5e0a6662"
+    },
+    {
+      "path": "platform/app/Services/Tenancy/ClientAdministration.php",
+      "sha256": "0ff2e5391edc13f648c8bb1147d906a6bb1ce1a91dc306d61a7bef27018a5f4f"
+    },
+    {
+      "path": "platform/app/Services/Tenancy/ClientContext.php",
+      "sha256": "3dd2554db3badf7d608b988ccf470beb5f093cf02aabd022374febcffdae22d4"
+    },
+    {
+      "path": "platform/app/Services/Tenancy/SensitiveAccess.php",
+      "sha256": "81d865491c5426f363f8f25d7eb0d7b771bd095dc024fdf27d0a405b1046e7d8"
+    },
+    {
+      "path": "platform/database/migrations/2026_10_26_120000_create_client_foundation.php",
+      "sha256": "4ebc920af4bcef174d0289e80e920bf9779640cbc44f584b40cc1c8d684e2ecb"
+    },
+    {
+      "path": "platform/database/migrations/2026_10_26_170000_create_client_sensitive_grants.php",
+      "sha256": "cdcf46ca8ef0b9a07137ced4470cafbebfc8d401e27501d3e0672a9bae98afcf"
+    },
+    {
+      "path": "platform/database/seeders/ClientAuthoritySeeder.php",
+      "sha256": "c630032fc795ca561e92dc54fe3ea9cdfada5c56601e2b4e45ad2c5f33c80e19"
+    },
+    {
+      "path": "platform/database/seeders/DatabaseSeeder.php",
+      "sha256": "756479670b60f55f3aed511e77af8013122947bb8ec2a7217109c85e48152fbc"
+    },
+    {
+      "path": "platform/docs/postman/README.md",
+      "sha256": "0eb4e5e151de43cb1ef5ec6873a91dc5d395129b141cab75ff8cf1581cb4c0d5"
+    },
+    {
+      "path": "platform/docs/postman/m1-client-permissions.postman_collection.json",
+      "sha256": "3b317b3c080be3bf930cf3a48ea18b05992cc7333ecac7a3fb6054c040bc5f6a"
+    },
+    {
+      "path": "platform/docs/postman/m1-client-permissions.postman_environment.json",
+      "sha256": "d57a754a549969f67a4168e959ee58d7b6da23f55a4ef167eae24405d515235d"
+    },
+    {
+      "path": "platform/resources/views/administration.blade.php",
+      "sha256": "2907037dc54d3a0f39b1c70444b7e5dabbee108ed4587a2e62d86e12ee9283c9"
+    },
+    {
+      "path": "platform/resources/views/clients.blade.php",
+      "sha256": "ef24249fc59169ea8b927b20668afa8d440df87e5ab8624fc959feb60d06b03e"
+    },
+    {
+      "path": "platform/resources/views/dashboard.blade.php",
+      "sha256": "550d8d784d3085c2eeb9e559c66b83bdfbcccaeec722ca11a9c35661aa698040"
+    },
+    {
+      "path": "platform/resources/views/enrolment.blade.php",
+      "sha256": "20a06cf986404c05554df509ffe7f90626bd35c9aa57a1b9e04932c0ffa46d59"
+    },
+    {
+      "path": "platform/resources/views/layouts/app.blade.php",
+      "sha256": "b73ac2f3aae6ffa99b1345e6e4f6cbc761852b2ff810ab2a7d10f9b4df231826"
+    },
+    {
+      "path": "platform/resources/views/learning/onboarding.blade.php",
+      "sha256": "6a594e5c98d8e11e012153f9a64111927d6f0a955dc8ab29d460c8ed05f5c6f3"
+    },
+    {
+      "path": "platform/resources/views/people.blade.php",
+      "sha256": "8699bc9a9671b619f6bd74b721fe0d429eea1679247d3ae0a2ebaa6df5fbf6f5"
+    },
+    {
+      "path": "platform/resources/views/training-summary.blade.php",
+      "sha256": "a7b02e26993f103eeff4147fe0708311b72d5d4f011e08b94ca98463f7fdb4d1"
+    },
+    {
+      "path": "platform/routes/web.php",
+      "sha256": "b89735fbb5a91e24ef20a14890c6e0731b402c638ae8b9cc03d1e45f6b25afd1"
+    },
+    {
+      "path": "platform/scripts/support/ClientBackfill.php",
+      "sha256": "da92bb16aa7144d4e5bb6da3bfbd7634dec3abf9f3e29ea3b031c3ce6fc5ce2d"
+    },
+    {
+      "path": "platform/tests/Feature/ClientBackfillTest.php",
+      "sha256": "9baa6439cfb4ed7943262944636c0aa2f4519fc203a9d95f257bb6244ce0c24f"
+    },
+    {
+      "path": "platform/tests/Feature/ClientFoundationMigrationTest.php",
+      "sha256": "d36675d89c53d805b7952e95ff2b17c5a0c0ad66eedbfaf3dec4ec7b35a03b9f"
+    },
+    {
+      "path": "platform/tests/Feature/ClientFoundationTest.php",
+      "sha256": "77193fb7e0772852dfe90276c23ed61192fd77c57dabd3ec400bf1fa585566b3"
+    },
+    {
+      "path": "platform/tests/Feature/ClientPermissionIntegrationTest.php",
+      "sha256": "61c2b5d6c3829e53c5c613bd21586e37b448b23e8cda99ff6e2254e4cebcd305"
+    },
+    {
+      "path": "platform/tests/Feature/DeliveryTest.php",
+      "sha256": "239368fdd78b9986387ad01583bdfe142fd4bf9a91576c203d2a5b6c5222fcad"
+    },
+    {
+      "path": "platform/tests/Feature/FoundationTest.php",
+      "sha256": "6777bb54b15b6ea94cd88dfe4f34874b8bad64ecc00b0f9fac2de9af6d420ccb"
+    },
+    {
+      "path": "platform/tests/Feature/IntegrationBoundaryTest.php",
+      "sha256": "a91891eef1c9c038dca086786ebf098843bbfb81901e450874c4d91fdc48eb12"
+    },
+    {
+      "path": "platform/tests/Feature/LearningTest.php",
+      "sha256": "ede8a8311069db72ece8f6bd89250e4c2497209b440f0eaad742ec4348179595"
+    },
+    {
+      "path": "platform/tests/Feature/NotificationAndScanTest.php",
+      "sha256": "60b9c6b91b60e35d34b42d335cc8800b95e1010844a5b42c8716978f136dfd2c"
+    },
+    {
+      "path": "platform/tests/Integration/AiConcurrencyTest.php",
+      "sha256": "be3b7ec299127b9d3f0125bbd0988f110c76916b736e8ed378f7d9c42b241dd2"
+    },
+    {
+      "path": "platform/tests/Integration/CapacityConcurrencyTest.php",
+      "sha256": "bdd31dcbf12c670b93fd9a9c4569cffe95c830cedd8b0aa640d3115304c906ca"
+    },
+    {
+      "path": "platform/tests/Integration/ClientBackfillMariaDbTest.php",
+      "sha256": "44539281adbab241671257f4c5c0fb9c8c9e21ac046aba63b9a77331914cdc7f"
+    },
+    {
+      "path": "platform/tests/Integration/ClientConcurrencyTest.php",
+      "sha256": "36faec03aafde6b6e29dd6ec816271b06164fb7cc83b075ff917efb0a392dd0e"
+    },
+    {
+      "path": "platform/tests/Integration/ClientMigrationMariaDbTest.php",
+      "sha256": "b908196bdea0e97534a81322402a28872e0401bf541f05bc7d91f52871aa78f4"
+    },
+    {
+      "path": "platform/tests/Integration/WorkerConcurrencyTest.php",
+      "sha256": "ee2a76cc03406ee2deafb1d8130ea1fadf6db51a84cf444ed566d9fef61363ce"
+    },
+    {
+      "path": "platform/tests/Support/DisposableMariaDatabase.php",
+      "sha256": "fa8215f7d592a78678cb1384a440457584a55efd4dd0c098edd595ef3a0eee64"
+    },
+    {
+      "path": "platform/tests/Support/client-backfill-worker.php",
+      "sha256": "dda54d9d6362be998ba5cf45258115c2a40595d528f38a76475a7cb5b3204b48"
+    },
+    {
+      "path": "platform/tests/Support/client-concurrency-worker.php",
+      "sha256": "26536410539f84cd8c6b5fa41fbcdd3e0290a07b0e819bef962a00d8a678c869"
+    },
+    {
+      "path": "platform/tests/Support/client-qualification-guard.php",
+      "sha256": "5b58a7e0581273878c494f4411553673e0437ff25c33364c0b7a7680daa25ad7"
+    },
+    {
+      "path": "platform/tests/Support/test_client_mapping.py",
+      "sha256": "0370512e8882eeb3ce758ab2acffb0f81251c519aead4fe688f653363c1a4828"
+    },
+    {
+      "path": "platform/tests/TestCase.php",
+      "sha256": "87264d45416ab8a87f89938380579914e40ea4ff8fcf00d7793af965f373f53c"
+    }
+  ]
+}

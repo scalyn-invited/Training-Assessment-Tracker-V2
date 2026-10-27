@@ -7,14 +7,15 @@
     <link rel="icon" href="{{ $branding['favicon'] }}">
     <script src="{{ asset('appearance.js') }}?v=2"></script>
     <link rel="stylesheet" href="{{ asset('app.css') }}?v=scalyn-3">
+    <script src="{{ asset('navigation.js') }}" defer></script>
     @livewireStyles
 </head>
 <body class="@auth app-layout @else guest-layout @endauth">
 <a class="skip" href="#main">Skip to content</a>
 @auth
-<header class="mobile-bar"><button type="button" class="icon-button" id="nav-toggle" aria-controls="app-sidebar" aria-expanded="false" aria-label="Open navigation"><x-icon name="menu"/></button><span>{{ $branding['app_name'] }}</span></header>
-<div class="nav-backdrop" id="nav-backdrop" hidden></div>
-<aside class="app-sidebar" id="app-sidebar" aria-label="Application sidebar">
+<header class="mobile-bar"><button type="button" class="icon-button menu-toggle" id="nav-toggle" aria-controls="app-sidebar" aria-expanded="false" aria-label="Open navigation"><x-icon name="menu"/></button><span>{{ $branding['app_name'] }}</span></header>
+<div class="nav-backdrop menu-backdrop" id="nav-backdrop" hidden></div>
+<aside class="app-sidebar" id="app-sidebar" aria-label="Workspace menu">
     <div class="sidebar-top">
         <a class="brand" href="{{ route('dashboard') }}" aria-label="{{ $branding['brand_name'] }} {{ $branding['app_name'] }} home">
             <span class="brand-symbol">
@@ -23,17 +24,17 @@
             </span>
             <span class="brand-copy"><strong>{{ $branding['brand_name'] }}</strong><span>{{ $branding['app_name'] }}</span></span>
         </a>
-        <button type="button" class="icon-button nav-close" id="nav-close" aria-label="Close navigation"><x-icon name="close"/></button>
+        <button type="button" class="icon-button nav-close menu-close" id="nav-close" aria-label="Close navigation"><x-icon name="close"/></button>
     </div>
     @if($branding['mode'] === 'co-branded')<p class="co-brand">Part of Cerebru</p>@endif
     <p class="workspace-nav-label">Your workspace</p>
     <nav class="sidebar-nav" aria-label="Main navigation">
         <a href="{{ route('dashboard') }}" @if(request()->routeIs('dashboard')) aria-current="page" @endif><x-icon name="home"/><span>Overview</span></a>
         <a href="{{ route('dashboard') }}#learning-plans" @if(request()->routeIs('enrolments.*', 'onboarding.*', 'plans.*', 'delivery.*', 'submission.*', 'progress.*', 'documents.*', 'files.*', 'jobs.*', 'ai.request', 'ai.show')) aria-current="page" @endif><x-icon name="book"/><span>Learning plans</span></a>
-        @if(auth()->user()->role === 'coordinator' && auth()->user()->sensitive_access)<a href="{{ route('reviews.show') }}" @if(request()->routeIs('reviews.*')) aria-current="page" @endif><x-icon name="check"/><span>Review queue</span></a>@endif
+        @if(app(\App\Services\Access::class)->coordinator(auth()->user()))<a href="{{ route('reviews.show') }}" @if(request()->routeIs('reviews.*')) aria-current="page" @endif><x-icon name="check"/><span>Review queue</span></a>@endif
         <a href="{{ route('notifications.show') }}" @if(request()->routeIs('notifications.*')) aria-current="page" @endif><x-icon name="bell"/><span>Updates</span></a>
         <span class="nav-section">Manage</span>
-        @if(auth()->user()->role === 'admin')
+        @if(app(\App\Services\Access::class)->admin(auth()->user()))
         <a href="{{ route('people') }}" @if(request()->routeIs('people')) aria-current="page" @endif><x-icon name="users"/><span>People</span></a>
         <a href="{{ route('administration.show') }}" @if(request()->routeIs('administration.*')) aria-current="page" @endif><x-icon name="grid"/><span>Administration</span></a>
         <a href="{{ route('ai.settings') }}" @if(request()->routeIs('ai.settings', 'ai.policy', 'ai.reconcile')) aria-current="page" @endif><x-icon name="spark"/><span>AI settings</span></a>
@@ -49,9 +50,15 @@
 @else
 <header class="guest-header"><a class="brand" href="{{ route('login') }}"><img src="{{ $branding['logo_light'] ?: $branding['compact_logo'] ?: '/images/training-mark.svg' }}" class="brand-logo logo-light" alt=""><img src="{{ $branding['logo_dark'] ?: $branding['compact_logo'] ?: '/images/training-mark.svg' }}" class="brand-logo logo-dark" alt=""><span class="brand-copy"><strong>{{ $branding['brand_name'] }}</strong><span>{{ $branding['app_name'] }}</span></span></a><x-theme-picker :branding="$branding"/></header>
 @endauth
-<div class="app-content">
+<div class="app-content" id="app-content">
 @auth
-<header class="workspace-header"><span>{{ $branding['app_name'] }}</span><div class="profile"><span class="avatar" aria-hidden="true">{{ mb_strtoupper(mb_substr(auth()->user()->name, 0, 1)) }}</span><span class="profile-copy"><strong>{{ auth()->user()->name }}</strong><small>{{ ucfirst(auth()->user()->role) }}</small></span><form method="post" action="{{ route('logout') }}">@csrf<button class="icon-button" aria-label="Sign out" title="Sign out"><x-icon name="logout"/></button></form></div></header>
+<header class="workspace-header">
+@php($clientContext = app(\App\Services\Tenancy\ClientContext::class))
+@php($clientChoices = $clientContext->choices(auth()->user()))
+<form class="client-switcher" method="post" action="{{ route('clients.select') }}" aria-label="Active client">@csrf
+<label for="active-client">Active client</label><div class="client-controls"><select id="active-client" name="client_id" required>
+<option value="">Choose client</option>@foreach($clientChoices as $client)<option value="{{ $client->id }}" @selected($clientContext->id === $client->id)>{{ $client->name }}</option>@endforeach
+</select><button type="submit" class="secondary">Switch client</button></div></form><div class="profile"><span class="avatar" aria-hidden="true">{{ mb_strtoupper(mb_substr(auth()->user()->name, 0, 1)) }}</span><span class="profile-copy"><strong>{{ auth()->user()->name }}</strong><small>Current client access</small></span><form method="post" action="{{ route('logout') }}">@csrf<button class="icon-button" aria-label="Sign out" title="Sign out"><x-icon name="logout"/></button></form></div></header>
 @endauth
 @if(config('training.mock_identity') && config('training.environment') === 'test')<div class="sandbox"><span class="dot"></span><strong>LOCAL SANDBOX</strong><span>Synthetic people · Mock sign-in · No email delivery</span></div>@endif
 <main id="main" class="container" tabindex="-1">

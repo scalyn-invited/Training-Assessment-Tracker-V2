@@ -223,7 +223,7 @@ class TaskGateway
         } elseif ($run->configuration['task'] === 'suggest_kpi_actions') {
             KpiSuggestion::whereKey($run->configuration['subject_id'])->where('status', 'queued')->update(['status' => $state]);
         }
-        Audit::record(User::findOrFail($run->actor_id), 'ai.task_stopped', $run->id, ['error' => $error]);
+        Audit::record(User::findOrFail($run->actor_id), 'ai.task_stopped', $run->id, ['error' => $error], $run->organisation_id);
     }
 
     private function authorise(User $actor, Enrolment $enrolment, string $task, string $subject): void

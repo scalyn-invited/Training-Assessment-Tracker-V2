@@ -1,0 +1,46 @@
+[
+  {
+    "sha256": "4EBC920AF4BCEF174D0289E80E920BF9779640CBC44F584B40CC1C8D684E2ECB",
+    "file": "platform/database/migrations/2026_10_26_120000_create_client_foundation.php"
+  },
+  {
+    "sha256": "7A2993C00FB4BB24AD24AA9E77DE6C674396D023146FD776DC3D6BB3F4829DB1",
+    "file": "platform/app/Services/Tenancy/ClientAccess.php"
+  },
+  {
+    "sha256": "48AA8FB0DCD3366D85DA70E6529AA7071B2F0F47D3864BAA46C5DDD074D5DF87",
+    "file": "platform/app/Services/Tenancy/ClientAdministration.php"
+  },
+  {
+    "sha256": "E79D39CD4715833E0DEF3748DB60ED11F4C020C14C4FCDD44F3DF03B445E21BB",
+    "file": "platform/tests/Feature/ClientFoundationTest.php"
+  },
+  {
+    "sha256": "FF32C3092158C5A8A8016DEA79008B3B078C8D3BEEEABBD31B8B4D7B151A21AC",
+    "file": "platform/tests/Feature/ClientFoundationMigrationTest.php"
+  },
+  {
+    "sha256": "ADD0543BDF253D980435C841637D73D2F561C50E9C067394BB81C542F2BD8424",
+    "file": "platform/tests/Integration/ClientConcurrencyTest.php"
+  },
+  {
+    "sha256": "D969EAC10DB510C92A9F5A72D94DA3E248520B0768F9B83C47D96B26DF46BE25",
+    "file": "platform/tests/Integration/ClientMigrationMariaDbTest.php"
+  },
+  {
+    "sha256": "5A490C3FC241AAE8BF98B93ABDBF6AE59CDD224ACEEEC9ADC2DE7A6A991C318D",
+    "file": "platform/tests/Support/client-concurrency-worker.php"
+  },
+  {
+    "sha256": "5B58A7E0581273878C494F4411553673E0437FF25C33364C0B7A7680DAA25AD7",
+    "file": "platform/tests/Support/client-qualification-guard.php"
+  },
+  {
+    "sha256": "581B79C8B2E55BC59DF876259D5B1C4B06181D623DF7BF84BBF16D64F18BD175",
+    "file": "platform/scripts/client-mapping-dry-run.py"
+  },
+  {
+    "sha256": "0370512E8882EEB3CE758AB2ACFFB0F81251C519AEAD4FE688F653363C1A4828",
+    "file": "platform/tests/Support/test_client_mapping.py"
+  }
+]

@@ -3,15 +3,15 @@
 namespace Tests\Integration;
 
 use App\Services\LearningPlans;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\Process\Process;
+use Tests\Support\DisposableMariaDatabase;
 use Tests\Support\LearningFixtures;
 use Tests\TestCase;
 
 class CapacityConcurrencyTest extends TestCase
 {
-    use DatabaseMigrations, LearningFixtures;
+    use DisposableMariaDatabase, LearningFixtures;
 
     public function test_two_reviewers_cannot_overbook_the_same_member_day(): void
     {

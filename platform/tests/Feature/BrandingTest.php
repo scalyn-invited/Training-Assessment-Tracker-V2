@@ -4,8 +4,10 @@ namespace Tests\Feature;
 
 use App\Models\Enrolment;
 use App\Models\Identity;
+use App\Models\Organisation;
 use App\Models\User;
 use App\Services\Branding;
+use App\Services\Tenancy\ClientContext;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
@@ -39,8 +41,15 @@ class BrandingTest extends TestCase
         $this->get('/dashboard?organisation_id=other&environment=production')->assertOk()->assertSee('Client Alpha')->assertDontSee('Other Client Secret')->assertDontSee('Production Secret');
         $other = clone $user;
         $other->organisation_id = 'other';
-        $this->assertSame('Other Client Secret', app(Branding::class)->forUser($other)['client_name']);
-        $this->assertNotSame(app(Branding::class)->forUser($user)['theme_key'], app(Branding::class)->forUser($other)['theme_key']);
+        $this->assertSame('Client Alpha', app(Branding::class)->forUser($other)['client_name']);
+        $this->assertSame(app(Branding::class)->forUser($user)['theme_key'], app(Branding::class)->forUser($other)['theme_key']);
+        $firstKey = app(Branding::class)->forUser($user)['theme_key'];
+        $secondClient = Organisation::create(['name' => 'Second branding client']);
+        $this->explicitMember($user, $secondClient->id);
+        config(['branding.organisations.'.$secondClient->id.'.test.client_name' => 'Selected Client']);
+        app(ClientContext::class)->select($user, $secondClient->id);
+        $this->assertSame('Selected Client', app(Branding::class)->forUser($user)['client_name']);
+        $this->assertNotSame($firstKey, app(Branding::class)->forUser($user)['theme_key']);
         $other->active = false;
         $this->assertSame('Scalyn', app(Branding::class)->forUser($other)['client_name']);
         $this->assertSame('Scalyn', app(Branding::class)->forUser(null)['client_name']);

@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Enrolment;
 use App\Models\Organisation;
 use App\Models\User;
+use App\Services\Tenancy\SensitiveAccess;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -73,6 +74,13 @@ class SandboxDirectory
                         ->where('organisation_id', $organisation->id)->where('environment', 'test')->first();
                     abort_unless($membership, 422, 'Unknown sandbox membership mapping.');
                     DB::table('memberships')->where('id', $membership->id)->update(['ends_at' => $payload['active'] ? null : now(), 'updated_at' => now()]);
+                    if (! $payload['active']) {
+                        DB::table('client_team_memberships')->where('organisation_id', $organisation->id)
+                            ->where('group_id', $payload['group_id'])->whereIn('client_membership_id',
+                                DB::table('client_memberships')->where('user_id', $user->id)->select('id'))
+                            ->whereNull('ends_at')->update(['ends_at' => now(), 'active_slot' => null, 'updated_at' => now()]);
+                    }
+                    // Directory re-entry does not revive application-owned permission periods.
                     $user->increment('permission_version');
                     DB::table('sessions')->where('user_id', $user->id)->delete();
                 } else {
@@ -97,7 +105,16 @@ class SandboxDirectory
                     $user->update(['directory_version' => $event['entity_version'], 'permissions_synced_at' => now(), 'permission_version' => $user->permission_version + 1]);
                     DB::table('sessions')->where('user_id', $user->id)->delete();
                 }
-                Audit::record($user, 'directory.'.$event['event_type'], $user->id, ['event_id' => $event['event_id'], 'version' => $event['entity_version']]);
+                if (! $user->active) {
+                    $membershipIds = DB::table('client_memberships')->where('user_id', $user->id)->pluck('id');
+                    DB::table('coordinator_allocations')->where(fn ($q) => $q->whereIn('member_membership_id', $membershipIds)
+                        ->orWhereIn('coordinator_membership_id', $membershipIds))->whereNull('ends_at')
+                        ->update(['ends_at' => now(), 'active_slot' => null, 'primary_slot' => null, 'updated_at' => now()]);
+                    DB::table('role_assignments')->where('user_id', $user->id)->whereNull('ends_at')
+                        ->update(['ends_at' => now(), 'active_slot' => null, 'updated_at' => now()]);
+                }
+                app(SensitiveAccess::class)->expireInvalid($organisation->id, $user);
+                Audit::record($user, 'directory.'.$event['event_type'], $user->id, ['event_id' => $event['event_id'], 'version' => $event['entity_version']], $organisation->id);
             }
             DB::table('inbound_events')->insert(['id' => (string) Str::uuid(), 'organisation_id' => $organisation->id,
                 'environment' => 'test', 'event_id' => $event['event_id'], 'payload_hash' => $hash,

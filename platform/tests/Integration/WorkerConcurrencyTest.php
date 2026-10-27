@@ -6,15 +6,15 @@ use App\Jobs\DeliverOutbox;
 use App\Models\Enrolment;
 use App\Models\User;
 use App\Services\Outbox;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Queue;
 use Symfony\Component\Process\Process;
+use Tests\Support\DisposableMariaDatabase;
 use Tests\TestCase;
 
 class WorkerConcurrencyTest extends TestCase
 {
-    use DatabaseMigrations;
+    use DisposableMariaDatabase;
 
     public function test_two_real_workers_cannot_publish_the_same_event_twice(): void
     {

@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use App\Jobs\ScanEvidence;
 use App\Models\Enrolment;
 use App\Models\EvidenceFile;
+use App\Models\Organisation;
 use App\Models\OutboxEvent;
 use App\Models\User;
 use App\Services\Access;
 use App\Services\Audit;
 use App\Services\FileScanning;
 use App\Services\Outbox;
+use App\Services\Tenancy\ClientAccess;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -28,6 +30,9 @@ class WorkspaceController
     public function show(Request $request, string $id, Access $access)
     {
         $enrolment = $access->enrolments($request->user())->with(['member', 'group', 'coordinator'])->findOrFail($id);
+        if (! $access->canDetails($request->user(), $enrolment)) {
+            return view('training-summary', ['summary' => $enrolment->only(['id', 'title', 'status'])]);
+        }
         $files = $enrolment->files->filter(fn ($file) => $access->canFile($request->user(), $file));
 
         return view('enrolment', compact('enrolment', 'files'));
@@ -35,8 +40,8 @@ class WorkspaceController
 
     public function people(Request $request)
     {
-        abort_unless($request->user()->role === 'admin', 403);
-        $people = User::where('organisation_id', $request->user()->organisation_id)->where('environment', $request->user()->environment)
+        abort_unless(app(Access::class)->admin($request->user()), 403);
+        $people = User::whereIn('id', app(ClientAccess::class)->members($request->user(), app(Access::class)->client($request->user()))->select('cm.user_id'))->where('environment', $request->user()->environment)
             ->when($request->user()->environment === 'production', fn ($q) => $q->where('is_synthetic', false))->orderBy('name')->paginate(20);
 
         return view('people', compact('people'));
@@ -53,7 +58,7 @@ class WorkspaceController
 
     public function job(Request $request, string $id, Access $access)
     {
-        $job = OutboxEvent::where('actor_id', $request->user()->id)->where('organisation_id', $request->user()->organisation_id)
+        $job = OutboxEvent::where('actor_id', $request->user()->id)->where('organisation_id', app(Access::class)->client($request->user()))
             ->where('environment', $request->user()->environment)->findOrFail($id);
         abort_unless($access->enrolments($request->user())->whereKey($job->enrolment_id)->exists(), 404);
 
@@ -74,7 +79,7 @@ class WorkspaceController
     public function upload(Request $request, string $id, Access $access)
     {
         $enrolment = $access->enrolments($request->user())->findOrFail($id);
-        abort_unless($request->user()->id === $enrolment->member_id || ($request->user()->role === 'coordinator' && $request->user()->id === $enrolment->coordinator_id && $request->user()->sensitive_access), 403);
+        abort_unless($request->user()->id === $enrolment->member_id || $access->canManage($request->user(), $enrolment), 403);
         $request->validate(['evidence' => 'required|file|max:20480|mimes:pdf,png,jpg,jpeg,txt,docx|extensions:pdf,png,jpg,jpeg,txt,docx', 'purpose' => 'nullable|in:assessment,evidence']);
         $upload = $request->file('evidence');
         app(FileScanning::class)->validateDocument($upload->getRealPath(), strtolower($upload->getClientOriginalExtension()));
@@ -82,10 +87,11 @@ class WorkspaceController
         Storage::disk('local')->put($key, file_get_contents($upload->getRealPath()));
         try {
             DB::transaction(function () use ($request, $enrolment, $upload, $key, $access) {
+                Organisation::whereKey($enrolment->organisation_id)->lockForUpdate()->firstOrFail();
                 $actor = User::whereKey($request->user()->id)->lockForUpdate()->firstOrFail();
                 $current = Enrolment::whereKey($enrolment->id)->lockForUpdate()->firstOrFail();
                 abort_unless($access->canView($actor, $current), 404);
-                abort_unless($actor->id === $current->member_id || ($actor->role === 'coordinator' && $actor->id === $current->coordinator_id && $actor->sensitive_access), 403);
+                abort_unless($actor->id === $current->member_id || $access->canManage($actor, $current), 403);
                 $file = EvidenceFile::create(['organisation_id' => $enrolment->organisation_id, 'environment' => $enrolment->environment,
                     'enrolment_id' => $enrolment->id, 'storage_key' => $key, 'original_name' => Str::limit(basename($upload->getClientOriginalName()), 180, ''),
                     'mime' => $upload->getMimeType(), 'bytes' => $upload->getSize(), 'sha256' => hash_file('sha256', $upload->getRealPath()),

@@ -17,9 +17,9 @@ class ProgressionController
 {
     public function show(Request $request, string $id, Access $access)
     {
-        $enrolment = $access->enrolments($request->user())->with('member')->findOrFail($id);
+        $enrolment = $access->details($request->user())->with('member')->findOrFail($id);
         app(Onboarding::class)->authorise($request->user(), $enrolment);
-        $coordinator = $request->user()->id === $enrolment->coordinator_id;
+        $coordinator = $access->canManage($request->user(), $enrolment);
         $metrics = KpiVersion::where('enrolment_id', $id)->where('effective_at', '<=', now())->get()->groupBy('number')->map(fn ($versions) => $versions->sortByDesc('version')->first());
         $snapshots = $metrics->mapWithKeys(fn ($metric) => [$metric->id => KpiSnapshot::where('kpi_version_id', $metric->id)->latest()->first()]);
         $proposals = AdaptationProposal::where('enrolment_id', $id)->when(! $coordinator, fn ($query) => $query->whereIn('status', ['approved', 'source_review_required']))->latest()->get();
@@ -30,7 +30,7 @@ class ProgressionController
 
     public function act(Request $request, string $id, Access $access, Progression $progression, Kpis $kpis)
     {
-        $enrolment = $access->enrolments($request->user())->findOrFail($id);
+        $enrolment = $access->details($request->user())->findOrFail($id);
         app(Onboarding::class)->coordinator($request->user(), $enrolment);
         $input = $request->validate(['action' => 'required|in:propose,approve,suggest,observe,revise,snapshot', 'reason' => 'nullable|string',
             'evidence_block' => 'nullable|integer|min:1|max:12', 'proposal' => 'nullable|uuid', 'base' => 'nullable|uuid', 'metric' => 'nullable|uuid',

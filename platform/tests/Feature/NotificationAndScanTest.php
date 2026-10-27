@@ -31,6 +31,7 @@ class NotificationAndScanTest extends TestCase
         $org = Organisation::create(['name' => 'Isolated notification fixture']);
         $member = User::create(['organisation_id' => $org->id, 'environment' => 'production', 'name' => 'Contract member', 'email' => 'contract@example.invalid', 'password' => 'unused', 'role' => 'member', 'is_synthetic' => false, 'active' => true, 'origin' => 'manual']);
         Identity::create(['user_id' => $member->id, 'issuer' => 'https://idp.example.invalid', 'subject' => 'notification-fixture']);
+        $clientMembership = $this->explicitMember($member, $org->id);
         $group = Group::create(['organisation_id' => $org->id, 'environment' => 'production', 'name' => 'Fixture group', 'active' => true]);
         DB::table('memberships')->insert(['id' => (string) Str::uuid(), 'organisation_id' => $org->id, 'environment' => 'production', 'user_id' => $member->id, 'group_id' => $group->id, 'starts_at' => now()]);
         $enrolment = Enrolment::create(['organisation_id' => $org->id, 'environment' => 'production', 'member_id' => $member->id, 'coordinator_id' => $member->id, 'group_id' => $group->id, 'title' => 'Notification fixture']);

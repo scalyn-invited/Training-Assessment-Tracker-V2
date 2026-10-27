@@ -12,8 +12,11 @@ use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 
 class LearningNotices
 {
-    public function record(Enrolment $enrolment, string $recipient, string $key, string $kind): LearningNotification
+    public function record(Enrolment $enrolment, ?string $recipient, string $key, string $kind): ?LearningNotification
     {
+        if ($recipient === null) {
+            return null;
+        }
         $notice = LearningNotification::firstOrCreate(['event_key' => $key], ['enrolment_id' => $enrolment->id, 'recipient_id' => $recipient, 'kind' => $kind]);
         SendLearningNotice::dispatch($notice->id)->afterCommit();
 
@@ -58,6 +61,11 @@ class LearningNotices
         }
         [$notice, $user, $enrolment] = $claim;
         try {
+            if (! app(Access::class)->canView($user->fresh(), $enrolment->fresh())) {
+                $notice->update(['status' => 'cancelled', 'error_code' => 'access_revoked']);
+
+                return;
+            }
             // Only a secure workspace link; never scores, submissions or assessment content.
             Mail::raw('A training update is ready. Sign in to review: '.route('delivery.show', $enrolment->id), function ($message) use ($user) {
                 $message->to($user->email)->subject('Training review update');
