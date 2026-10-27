@@ -49,6 +49,13 @@ class ClientMigrationMariaDbTest extends TestCase
         app(Grading::class)->manual($this->person(), $submission, $submission->version, 'approved', 'Synthetic human decision migration proof', $result);
         $this->assertDatabaseCount('grade_decisions', 1);
         $this->assertDatabaseCount('programme_approvals', 1);
+        $brandingMigration = require database_path('migrations/2026_10_27_100000_create_client_brandings_table.php');
+        $brandingMigration->down(); // Empty disposable table only; historical tables remain populated.
+        $brandingBefore = $this->snapshot();
+        $brandingMigration->up();
+        (require database_path('migrations/2026_10_27_110000_add_client_theme_colours.php'))->up();
+        $this->assertSame($brandingBefore, $this->snapshot(), 'Branding migration preserves approved historical records.');
+        $this->assertDatabaseCount('client_brandings', 0);
         foreach (['client_sensitive_grants', 'coordinator_allocations', 'role_assignments', 'client_team_memberships', 'client_memberships'] as $table) {
             DB::table($table)->delete();
         }
@@ -74,7 +81,7 @@ class ClientMigrationMariaDbTest extends TestCase
 
     private function snapshot(): array
     {
-        $exclude = ['client_sensitive_grants', 'roles', 'client_memberships', 'client_team_memberships', 'role_assignments', 'coordinator_allocations'];
+        $exclude = ['client_brandings', 'client_sensitive_grants', 'roles', 'client_memberships', 'client_team_memberships', 'role_assignments', 'coordinator_allocations'];
         $snapshot = [];
         foreach (DB::select('SHOW TABLES') as $entry) {
             $table = array_values((array) $entry)[0];
@@ -101,5 +108,44 @@ class ClientMigrationMariaDbTest extends TestCase
         ksort($snapshot);
 
         return $snapshot;
+    }
+
+    public function test_theme_migration_preserves_existing_branding(): void
+    {
+        require_once __DIR__.'/../Support/client-qualification-guard.php';
+        assertClientQualificationDatabase();
+        Artisan::call('migrate:fresh', ['--force' => true]);
+        RefreshDatabaseState::$migrated = false;
+        $this->seed();
+        $migration = require database_path('migrations/2026_10_27_110000_add_client_theme_colours.php');
+        $migration->down();
+        $row = ['organisation_id' => DB::table('organisations')->value('id'), 'environment' => 'test',
+            'mode' => 'white-label', 'client_name' => 'Preserved name', 'app_name' => 'Preserved application',
+            'accent' => '#123456', 'logo_path' => 'branding/preserved.png', 'version' => 7];
+        DB::table('client_brandings')->insert($row);
+        $before = $this->snapshot();
+        $migration->up();
+        $this->assertSame($before, $this->snapshot());
+        $this->assertDatabaseHas('client_brandings', $row + ['theme_colours' => null]);
+    }
+
+    public function test_preference_migration_preserves_branding_and_history(): void
+    {
+        require_once __DIR__.'/../Support/client-qualification-guard.php';
+        assertClientQualificationDatabase();
+        Artisan::call('migrate:fresh', ['--force' => true]);
+        RefreshDatabaseState::$migrated = false;
+        $this->seed();
+        $migration = require database_path('migrations/2026_10_27_120000_add_theme_preferences.php');
+        $migration->down();
+        $row = ['organisation_id' => DB::table('organisations')->value('id'), 'environment' => 'test', 'mode' => 'white-label', 'client_name' => 'Preserved', 'app_name' => 'Academy', 'accent' => '#123456', 'theme_colours' => '{"generation":1,"source":"#123456"}', 'version' => 7];
+        DB::table('client_brandings')->insert($row);
+        $before = $this->snapshot();
+        $migration->up();
+        $after = $this->snapshot();
+        unset($after['client_theme_preferences']);
+        $this->assertSame($before, $after);
+        $this->assertDatabaseHas('client_brandings', $row + ['default_theme' => null]);
+        $this->assertDatabaseCount('client_theme_preferences', 0);
     }
 }

@@ -1,0 +1,319 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "C:\\Users\\cabas\\Documents\\Codex\\Projects\\Training Assessment Tracker V2\\platform\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--config=playwright.preferences.config.js",
+      "--grep",
+      "one brand colour|client default and account"
+    ],
+    "configFile": "C:\\Users\\cabas\\Documents\\Codex\\Projects\\Training Assessment Tracker V2\\platform\\playwright.preferences.config.js",
+    "rootDir": "C:/Users/cabas/Documents/Codex/Projects/Training Assessment Tracker V2/platform/tests/Browser",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/cabas/Documents/Codex/Projects/Training Assessment Tracker V2/platform/.runtime/preferences/results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "C:/Users/cabas/Documents/Codex/Projects/Training Assessment Tracker V2/platform/tests/Browser",
+        "testIgnore": [],
+        "testMatch": [
+          "/appearance.spec.js/"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": ".runtime/preferences/browser.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "php -d extension=gd -S 127.0.0.1:8128 -t public scripts/browser-router.php",
+      "url": "http://127.0.0.1:8128/login",
+      "reuseExistingServer": false,
+      "env": {
+        "ALLUSERSPROFILE": "C:\\ProgramData",
+        "APPDATA": "C:\\Users\\cabas\\AppData\\Roaming",
+        "BROWSER_USE_ACCESS_VERIFYING_IDENTITY": "MCowBQYDK2VwAyEAbu6W8kW1UO7QGHjiKfDlnD6jSX0CZf1LCPHpKMj42Io=",
+        "CODEX_APPLY_PATCH_PRESERVE_LINE_ENDINGS": "1",
+        "CODEX_APP_RUNTIME_CLI_PATH": "C:\\Users\\cabas\\AppData\\Local\\OpenAI\\Codex\\bin\\2993767bd1dfb009\\codex.exe",
+        "CODEX_APP_TOOLS_PIPE_PATH": "\\\\.\\pipe\\codex-app-tools-51d8b0a9-523e-4909-a21f-d3d797231c2b",
+        "CODEX_CI": "1",
+        "CODEX_INTERNAL_ORIGINATOR_OVERRIDE": "Codex Desktop",
+        "CODEX_MCP_NODE_PATH": "C:\\Users\\cabas\\AppData\\Local\\OpenAI\\Codex\\runtimes\\cua_node\\1fb7137c46617d50\\bin\\node.exe",
+        "CODEX_PERMISSION_PROFILE": ":workspace",
+        "CODEX_SAGE_BACKFILL_TRACKER_TAB_REUSE": "1",
+        "CODEX_SANDBOX_NETWORK_DISABLED": "1",
+        "CODEX_SESSION_ID": "01a176b9-ebcd-7f12-9ab6-1b53a36aece7",
+        "CODEX_SHELL": "1",
+        "CODEX_TASK_WORKSPACE_VERIFYING_IDENTITY": "MCowBQYDK2VwAyEAbu6W8kW1UO7QGHjiKfDlnD6jSX0CZf1LCPHpKMj42Io=",
+        "CODEX_TECTONIC_PATH": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.1021.3705.0_x64__2p2nqsd0c76g0\\app\\resources\\tectonic\\tectonic.exe",
+        "CODEX_THREAD_ID": "01a176b9-ebcd-7f12-9ab6-1b53a36aece7",
+        "CODEX_TOOL_CALL_ID": "exec-7031f37e-0645-4a73-ad6b-3df4905e2381",
+        "CODEX_VERSION": "0.164.0-alpha.11.1",
+        "CODEX_WINDOWS_SANDBOX_PACKAGE_FAMILY": "OpenAI.Codex_2p2nqsd0c76g0",
+        "COLOR": "0",
+        "COLORTERM": "",
+        "CommonProgramFiles": "C:\\Program Files\\Common Files",
+        "CommonProgramFiles(x86)": "C:\\Program Files (x86)\\Common Files",
+        "CommonProgramW6432": "C:\\Program Files\\Common Files",
+        "COMPUTERNAME": "BERNIE",
+        "ComSpec": "C:\\WINDOWS\\system32\\cmd.exe",
+        "DISABLE_AUTO_UPDATE": "true",
+        "DriverData": "C:\\Windows\\System32\\Drivers\\DriverData",
+        "EDITOR": "C:\\WINDOWS\\notepad.exe",
+        "GH_PAGER": "cat",
+        "GIT_PAGER": "cat",
+        "HOME": "C:\\Users\\cabas",
+        "HOMEDRIVE": "C:",
+        "HOMEPATH": "\\Users\\cabas",
+        "IGCCSVC_DB": "AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAArrb28wmnRECKWBwS71zTywQAAAACAAAAAAAQZgAAAAEAACAAAAD/dlokHX2AteCjPmTaS930orFumoo+74TiWha7MeiragAAAAAOgAAAAAIAACAAAAAVsnQWcsNkcAERWqtHu9Rb972ZoPkOhjRsqnXt0RnBFWAAAAACsXS/weexBEyzoPsRVCMyFsBb/2ion8v27/NuYuSlYVwlseAkPpGcxBHFgdAlWLHHoQRrQEGf2EMOhmqVagdO4V+m/kGsqBiblSQMaSMdK960NFDXx2x9pe5HHQmKAfdAAAAA5SNuTN8Q6cHIVcp9QbAtu+dqYV4wnCWySiS3kylZCnr89YvGcI4P4+IsSslc/ucOkMbhc0PgYM9vPop5VeodgQ==",
+        "INIT_CWD": "C:\\Users\\cabas\\Documents\\Codex\\Projects\\Training Assessment Tracker V2\\platform",
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "LC_CTYPE": "C.UTF-8",
+        "LOCALAPPDATA": "C:\\Users\\cabas\\AppData\\Local",
+        "LOGONSERVER": "\\\\BERNIE",
+        "LOG_FORMAT": "json",
+        "NODE": "C:\\Program Files\\nodejs\\node.exe",
+        "NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S": "8e172ec9f458f2e636fc69a1b8c68c217f6bb8d10c41f70a05a0878b73863701",
+        "NO_COLOR": "1",
+        "npm_command": "exec",
+        "npm_config_allow_scripts": "",
+        "npm_config_cache": "C:\\Users\\cabas\\AppData\\Local\\npm-cache",
+        "npm_config_globalconfig": "C:\\Users\\cabas\\AppData\\Roaming\\npm\\etc\\npmrc",
+        "npm_config_global_prefix": "C:\\Users\\cabas\\AppData\\Roaming\\npm",
+        "npm_config_init_module": "C:\\Users\\cabas\\.npm-init.js",
+        "npm_config_local_prefix": "C:\\Users\\cabas\\Documents\\Codex\\Projects\\Training Assessment Tracker V2\\platform",
+        "npm_config_node_gyp": "C:\\Program Files\\nodejs\\node_modules\\npm\\node_modules\\node-gyp\\bin\\node-gyp.js",
+        "npm_config_noproxy": "",
+        "npm_config_npm_version": "11.17.0",
+        "npm_config_prefix": "C:\\Users\\cabas\\AppData\\Roaming\\npm",
+        "npm_config_userconfig": "C:\\Users\\cabas\\.npmrc",
+        "npm_config_user_agent": "npm/11.17.0 node/v24.19.0 win32 x64 workspaces/false",
+        "npm_execpath": "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js",
+        "npm_lifecycle_event": "npx",
+        "npm_lifecycle_script": "playwright",
+        "npm_node_execpath": "C:\\Program Files\\nodejs\\node.exe",
+        "npm_package_json": "C:\\Users\\cabas\\Documents\\Codex\\Projects\\Training Assessment Tracker V2\\platform\\package.json",
+        "NUMBER_OF_PROCESSORS": "12",
+        "OneDrive": "C:\\Users\\cabas\\OneDrive",
+        "OS": "Windows_NT",
+        "PAGER": "cat",
+        "Path": "C:\\Users\\cabas\\Documents\\Codex\\Projects\\Training Assessment Tracker V2\\platform\\node_modules\\.bin;C:\\Users\\cabas\\Documents\\Codex\\Projects\\Training Assessment Tracker V2\\platform\\node_modules\\.bin;C:\\Users\\cabas\\Documents\\Codex\\Projects\\Training Assessment Tracker V2\\node_modules\\.bin;C:\\Users\\cabas\\Documents\\Codex\\Projects\\node_modules\\.bin;C:\\Users\\cabas\\Documents\\Codex\\node_modules\\.bin;C:\\Users\\cabas\\Documents\\node_modules\\.bin;C:\\Users\\cabas\\node_modules\\.bin;C:\\Users\\node_modules\\.bin;C:\\node_modules\\.bin;C:\\Program Files\\nodejs\\node_modules\\npm\\node_modules\\@npmcli\\run-script\\lib\\node-gyp-bin;C:\\Users\\cabas\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell;C:\\Users\\cabas\\.codex\\tmp\\arg0-windows\\codex-arg0QoOKWX;C:\\Users\\cabas\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\libheif\\libheif\\bin;C:\\Users\\cabas\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\jxrlib\\jxrlib\\bin;C:\\Users\\cabas\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\poppler\\Library\\bin;C:\\Users\\cabas\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\bin\\override;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files\\dotnet\\;C:\\ProgramData\\ComposerSetup\\bin;C:\\Program Files\\WireGuard\\;C:\\Program Files\\Git\\cmd;C:\\Program Files\\GitHub CLI\\;C:\\Program Files\\nodejs\\;C:\\Users\\cabas\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell;C:\\Users\\cabas\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\cabas\\AppData\\Local\\Programs\\Microsoft VS Code\\bin;C:\\Users\\cabas\\.dotnet\\tools;C:\\xampp\\php;C:\\Users\\cabas\\AppData\\Roaming\\Composer\\vendor\\bin;C:\\Users\\cabas\\AppData\\Roaming\\npm;C:\\Users\\cabas\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\bin\\fallback;C:\\Users\\cabas\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\bin;C:\\Users\\cabas\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\git\\cmd;C:\\Users\\cabas\\AppData\\Local\\OpenAI\\Codex\\bin\\c602dfdab3808440;C:\\Users\\cabas\\AppData\\Local\\OpenAI\\Codex\\bin\\2993767bd1dfb009",
+        "PATHEXT": ".COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC;.CPL",
+        "PROCESSOR_ARCHITECTURE": "AMD64",
+        "PROCESSOR_IDENTIFIER": "Intel64 Family 6 Model 154 Stepping 3, GenuineIntel",
+        "PROCESSOR_LEVEL": "6",
+        "PROCESSOR_REVISION": "9a03",
+        "ProgramData": "C:\\ProgramData",
+        "ProgramFiles": "C:\\Program Files",
+        "ProgramFiles(x86)": "C:\\Program Files (x86)",
+        "ProgramW6432": "C:\\Program Files",
+        "PROMPT": "$P$G",
+        "PSModulePath": "C:\\Users\\cabas\\Documents\\PowerShell\\Modules;C:\\Program Files\\PowerShell\\Modules;c:\\users\\cabas\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\Modules;C:\\Users\\cabas\\Documents\\WindowsPowerShell\\Modules;C:\\Program Files\\WindowsPowerShell\\Modules;C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\Modules",
+        "PUBLIC": "C:\\Users\\Public",
+        "PYTHONUTF8": "1",
+        "RUST_LOG": "warn",
+        "SHELL": "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+        "SystemDrive": "C:",
+        "SystemRoot": "C:\\WINDOWS",
+        "TEMP": "C:\\Users\\cabas\\AppData\\Local\\Temp",
+        "TERM": "dumb",
+        "TMP": "C:\\Users\\cabas\\AppData\\Local\\Temp",
+        "TRAINING_UI_REHEARSAL": "1",
+        "USERDOMAIN": "BERNIE",
+        "USERDOMAIN_ROAMINGPROFILE": "BERNIE",
+        "USERNAME": "cabas",
+        "USERPROFILE": "C:\\Users\\cabas",
+        "windir": "C:\\WINDOWS",
+        "ZES_ENABLE_SYSMAN": "1",
+        "ZSH_TMUX_AUTOSTART": "false",
+        "ZSH_TMUX_AUTOSTARTED": "true",
+        "APP_ENV": "local",
+        "APP_DEBUG": "false",
+        "DB_CONNECTION": "sqlite",
+        "DB_DATABASE": "C:\\Users\\cabas\\Documents\\Codex\\Projects\\Training Assessment Tracker V2\\platform\\.runtime\\preferences\\browser.sqlite",
+        "MOCK_IDENTITY_ENABLED": "true",
+        "TRAINING_ENVIRONMENT": "test",
+        "MAIL_MAILER": "array",
+        "QUEUE_CONNECTION": "database",
+        "SESSION_DRIVER": "database",
+        "CACHE_STORE": "database",
+        "APP_URL": "http://127.0.0.1:8128",
+        "APP_CONFIG_CACHE": "C:\\Users\\cabas\\Documents\\Codex\\Projects\\Training Assessment Tracker V2\\platform\\.runtime\\preferences\\config.php"
+      },
+      "stdout": "ignore",
+      "stderr": "ignore"
+    }
+  },
+  "suites": [
+    {
+      "title": "appearance.spec.js",
+      "file": "appearance.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "one brand colour generates accessible light/dark themes with consistent preview and selection",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 69326,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T03:16:50.831Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "276f3069232db339b930-ffd210cd6dbd79008175",
+          "file": "appearance.spec.js",
+          "line": 131,
+          "column": 1
+        },
+        {
+          "title": "client default and account choice follow separate browser contexts",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 28210,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: 'Keep previous theme' })\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('button', { name: 'Keep previous theme' }) with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: 'Keep previous theme' })\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: 'Keep previous theme' })\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('button', { name: 'Keep previous theme' }) with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: 'Keep previous theme' })\u001b[22m\n\n    at C:\\Users\\cabas\\Documents\\Codex\\Projects\\Training Assessment Tracker V2\\platform\\tests\\Browser\\appearance.spec.js:194:95",
+                    "location": {
+                      "file": "C:\\Users\\cabas\\Documents\\Codex\\Projects\\Training Assessment Tracker V2\\platform\\tests\\Browser\\appearance.spec.js",
+                      "column": 95,
+                      "line": 194
+                    },
+                    "snippet": "  192 |  await member.goto(origin+'/settings/appearance');\n  193 |  await member.evaluate(()=>localStorage.setItem(document.documentElement.dataset.themeKey,'neon-amber'));\n> 194 |  await member.reload(); await expect(member.getByRole('button',{name:'Keep previous theme'})).toBeVisible();\n      |                                                                                               ^\n  195 |  await member.getByRole('button',{name:'Keep previous theme'}).click();\n  196 |  await expect(member.locator('html')).toHaveAttribute('data-theme','neon-amber');\n  197 |  const third=await browser.newContext(); const again=await third.newPage();"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "C:\\Users\\cabas\\Documents\\Codex\\Projects\\Training Assessment Tracker V2\\platform\\tests\\Browser\\appearance.spec.js",
+                        "column": 95,
+                        "line": 194
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('button', { name: 'Keep previous theme' })\nExpected: visible\nTimeout: 10000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('button', { name: 'Keep previous theme' }) with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('button', { name: 'Keep previous theme' })\u001b[22m\n\n\n  192 |  await member.goto(origin+'/settings/appearance');\n  193 |  await member.evaluate(()=>localStorage.setItem(document.documentElement.dataset.themeKey,'neon-amber'));\n> 194 |  await member.reload(); await expect(member.getByRole('button',{name:'Keep previous theme'})).toBeVisible();\n      |                                                                                               ^\n  195 |  await member.getByRole('button',{name:'Keep previous theme'}).click();\n  196 |  await expect(member.locator('html')).toHaveAttribute('data-theme','neon-amber');\n  197 |  const third=await browser.newContext(); const again=await third.newPage();\n    at C:\\Users\\cabas\\Documents\\Codex\\Projects\\Training Assessment Tracker V2\\platform\\tests\\Browser\\appearance.spec.js:194:95"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-27T03:18:00.456Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "C:\\Users\\cabas\\Documents\\Codex\\Projects\\Training Assessment Tracker V2\\platform\\.runtime\\preferences\\results\\appearance-client-default--618b1-w-separate-browser-contexts\\test-failed-1.png"
+                    },
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "C:\\Users\\cabas\\Documents\\Codex\\Projects\\Training Assessment Tracker V2\\platform\\.runtime\\preferences\\results\\appearance-client-default--618b1-w-separate-browser-contexts\\test-failed-2.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "C:\\Users\\cabas\\Documents\\Codex\\Projects\\Training Assessment Tracker V2\\platform\\.runtime\\preferences\\results\\appearance-client-default--618b1-w-separate-browser-contexts\\error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "C:\\Users\\cabas\\Documents\\Codex\\Projects\\Training Assessment Tracker V2\\platform\\.runtime\\preferences\\results\\appearance-client-default--618b1-w-separate-browser-contexts\\trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "C:\\Users\\cabas\\Documents\\Codex\\Projects\\Training Assessment Tracker V2\\platform\\tests\\Browser\\appearance.spec.js",
+                    "column": 95,
+                    "line": 194
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "276f3069232db339b930-701bb07d60359289670a",
+          "file": "appearance.spec.js",
+          "line": 182,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-27T03:16:49.839Z",
+    "duration": 99838.42499999999,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

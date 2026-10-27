@@ -1,0 +1,22 @@
+{
+  "organisations": 3,
+  "users": 30,
+  "groups": 9,
+  "client_memberships": 31,
+  "client_team_memberships": 21,
+  "role_assignments": 37,
+  "coordinator_allocations": 25,
+  "client_sensitive_grants": 21,
+  "enrolments": 21,
+  "onboarding_versions": 111,
+  "programme_versions": 90,
+  "learning_blocks": 60,
+  "work_drafts": 48,
+  "submission_attempts": 48,
+  "grade_decisions": 42,
+  "appeals": 3,
+  "kpi_observations": 39,
+  "evidence_files": 42,
+  "learning_notifications": 111,
+  "audit_events": 545
+}

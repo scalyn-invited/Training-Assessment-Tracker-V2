@@ -1,0 +1,22 @@
+{
+  ".github/workflows/ci.yml": "4be23ba3ee7dcc22bf58dcbacf8a6226375d4a87ed3aeb3349bfc28a5019d6a1",
+  "platform/app/Http/Controllers/BrandingController.php": "c6ee1b1c9fba4b35e29c19e03cf544b5e2ef8c32901dbad63223cc6fd241e044",
+  "platform/app/Providers/AppServiceProvider.php": "73197b2a8088fc180dc98a0c22cace6286146bb0d16c70545dc671c4a7ba6690",
+  "platform/app/Services/Branding.php": "a4c88c64f69ac88020794121c9b949a8bec1d3d6fdb0148ee4be98139b1c1ef8",
+  "platform/database/migrations/2026_10_27_100000_create_client_brandings_table.php": "73195c45cd3cf8dd0518424e789619730582e2b2888d2269512aa96f19f703bc",
+  "platform/public/app.css": "f511053af6e90267ae8c4383e010ecfd0949b7e6b4f2453efc3cda7d08eff8e2",
+  "platform/public/appearance.js": "2bd5bfdbfa1d3411b4b52cccd1dac5bff6a0d9855b8c47ce26d4bea4e3ec221a",
+  "platform/resources/views/appearance.blade.php": "64a586ddace6cd3e3a90fd501ac5ea7d3c2f91d45aa7f27f0709e45289200e1c",
+  "platform/resources/views/layouts/app.blade.php": "f9480c13f276caa9746d9a5a421c1722e482b4d56714b78357eb9e6c4f37240f",
+  "platform/routes/web.php": "2650af6448326b764c0b8fd3296cab5a6f05c8b7747177c5514d964eb8f57f0d",
+  "platform/tests/Browser/appearance.spec.js": "c1e3a625750af611e03b8315e6551ee8d74e9abae63205f4f53e1125e036c4c9",
+  "platform/tests/Browser/isolated-cache.js": "aac5119f9fb94fbb22f74fd36d3942c173def8bac1f2bfb42b79ef734565547f",
+  "platform/tests/Feature/BrandingTest.php": "b65b071fe0ae5368779e1ef17f0f67657eb83e9ef6c684e80bcd3efa5a69a354",
+  "platform/tests/Feature/SavedBrandingTest.php": "8f5b702de298f3e0ed5c108b4b0c6114a4ea789cf5e147098e2db4c8b0afd0f9",
+  "platform/tests/Integration/ClientConcurrencyTest.php": "e5ae6bf7d8a9e6dc7a2b0285edb1ea3a8c6540b40cd9cc0bea5de24826fd5190",
+  "platform/tests/Integration/ClientMigrationMariaDbTest.php": "1afcdfbc36422dcd3380c603363aecc2f52d8d1fc48e459f7c84cbd5dd5cb101",
+  "platform/tests/Support/client-concurrency-worker.php": "f792e100c29f47a15942781646459494965d0dc6f192a78cd0e034c1dcbe13ef",
+  "platform/playwright.branding.config.js": "dae411c83c1c27e1afa16967b39021400d17ef9592cd963fe5c274dc31a4929e",
+  "platform/scripts/branding-preview.mjs": "33ce1f12f709b05821149f5c06523890ba809b96d7f1d40e6dda640ed2fa6686",
+  "platform/scripts/ui-preview.mjs": "015223da60a42534ef7272c31015b6507573405052577b3bcccf4fbb69a47f31"
+}

@@ -1,0 +1,18 @@
+{
+  "application": {
+    "tables": 47,
+    "unchanged": true
+  },
+  "postman": {
+    "tables": 53,
+    "unchanged": true
+  },
+  "ui": {
+    "tables": 55,
+    "unchanged": true
+  },
+  "branding": {
+    "tables": 54,
+    "unchanged": true
+  }
+}

@@ -1,0 +1,32 @@
+[
+  {
+    "port": 8000,
+    "authenticated": 200,
+    "client": "Harbor Voice Support",
+    "api": 200
+  },
+  {
+    "port": 8123,
+    "authenticated": 200,
+    "client": "Harbor Voice Support",
+    "api": 200
+  },
+  {
+    "port": 8124,
+    "authenticated": 200,
+    "client": "Harbor Voice Support",
+    "api": 200
+  },
+  {
+    "port": 8125,
+    "authenticated": 200,
+    "client": "Harbor Voice Support",
+    "api": 200
+  },
+  {
+    "port": 8129,
+    "authenticated": 200,
+    "client": "Harbor Voice Support",
+    "api": 200
+  }
+]

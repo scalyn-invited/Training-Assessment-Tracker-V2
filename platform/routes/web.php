@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdministrationController;
 use App\Http\Controllers\AiController;
+use App\Http\Controllers\BrandingController;
 use App\Http\Controllers\ClientContextController;
 use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\DocumentExtractionController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\ProgressionController;
 use App\Http\Controllers\SandboxApiController;
 use App\Http\Controllers\SessionController;
+use App\Http\Controllers\ThemePreferenceController;
 use App\Http\Controllers\WorkspaceController;
 use App\Http\Middleware\TrainingSession;
 use Illuminate\Support\Facades\Route;
@@ -21,7 +23,10 @@ Route::post('/logout', [SessionController::class, 'destroy'])->name('logout');
 Route::middleware(TrainingSession::class)->group(function () {
     Route::get('/clients', [ClientContextController::class, 'show'])->name('clients.show');
     Route::post('/clients', [ClientContextController::class, 'store'])->name('clients.select');
+    Route::post('/settings/appearance/preference', [ThemePreferenceController::class, 'save'])->middleware('throttle:60,1,theme-preferences:')->name('appearance.preference');
     Route::view('/settings/appearance', 'appearance')->name('appearance');
+    Route::post('/settings/appearance', [BrandingController::class, 'save'])->middleware('throttle:20,1')->name('branding.save');
+    Route::get('/branding/{client}/logo', [BrandingController::class, 'logo'])->name('branding.logo');
     Route::get('/files/{id}/extraction', [DocumentExtractionController::class, 'show'])->name('documents.show');
     Route::post('/files/{id}/extraction', [DocumentExtractionController::class, 'request'])->middleware('throttle:10,1')->name('documents.request');
     Route::post('/extractions/{id}/review', [DocumentExtractionController::class, 'review'])->name('documents.review');
@@ -63,6 +68,6 @@ Route::middleware(TrainingSession::class)->group(function () {
     Route::get('/jobs/{id}', [WorkspaceController::class, 'job'])->name('jobs.show');
 });
 // Read-only sandbox contract proof. Live delegated identity is deliberately not advertised as implemented.
-Route::get('/api/v1/me/training', [SandboxApiController::class, 'summary'])->middleware('throttle:60,1');
-Route::get('/api/v1/training/changes', [SandboxApiController::class, 'changes'])->middleware('throttle:60,1');
-Route::get('/api/v1/members/{memberId}/summary', [SandboxApiController::class, 'summary'])->middleware('throttle:60,1');
+Route::get('/api/v1/me/training', [SandboxApiController::class, 'summary'])->middleware('throttle:60,1,theme-preferences:');
+Route::get('/api/v1/training/changes', [SandboxApiController::class, 'changes'])->middleware('throttle:60,1,theme-preferences:');
+Route::get('/api/v1/members/{memberId}/summary', [SandboxApiController::class, 'summary'])->middleware('throttle:60,1,theme-preferences:');

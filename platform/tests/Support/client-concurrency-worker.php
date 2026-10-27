@@ -1,12 +1,17 @@
 <?php
 
+use App\Http\Controllers\BrandingController;
+use App\Http\Controllers\ThemePreferenceController;
 use App\Models\Enrolment;
 use App\Models\User;
 use App\Services\LearningPlans;
 use App\Services\Tenancy\ClientAccess;
 use App\Services\Tenancy\ClientAdministration;
+use App\Services\Tenancy\ClientContext;
 use App\Services\Tenancy\SensitiveAccess;
 use Illuminate\Contracts\Console\Kernel;
+use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 require __DIR__.'/../../vendor/autoload.php';
@@ -24,6 +29,8 @@ if (trim((string) fgets(STDIN)) !== 'GO') {
 try {
     $service = app(ClientAdministration::class);
     match ($argv[1]) {
+        'preference' => savePreference($actor, $argv[3]),
+        'branding' => saveBranding($actor, $argv[3]),
         'sensitive' => app(SensitiveAccess::class)->grant($actor, $argv[3], $argv[4], 'Concurrent sensitive grant proof'),
         'approve' => app(LearningPlans::class)->review($actor, Enrolment::findOrFail($argv[4]), (int) $argv[5], true, 'Concurrent programme approval proof'),
         'primary' => $service->allocate($actor, $argv[3], $argv[4], $argv[5], 'primary', 'Concurrent primary allocation proof'),
@@ -36,4 +43,32 @@ try {
 } catch (HttpException $exception) {
     echo 'DENIED:'.$exception->getStatusCode();
     exit($exception->getStatusCode() === 409 ? 2 : 3);
+}
+
+function saveBranding(User $actor, string $client): void
+{
+    $context = app(ClientContext::class);
+    $context->id = $client;
+    $request = Request::create('/settings/appearance', 'POST', [
+        'client_id' => $client, 'version' => 0, 'preview_mode' => 'white-label',
+        'preview_client' => 'Concurrent brand', 'preview_name' => 'Concurrent academy', 'preview_accent' => '#123456',
+    ]);
+    $request->setUserResolver(fn () => $actor);
+    try {
+        app(BrandingController::class)->save($request, $context, app(ClientAccess::class));
+    } catch (ValidationException $error) {
+        if (isset($error->errors()['version'])) {
+            exit(2);
+        }
+        throw $error;
+    }
+}
+
+function savePreference(User $actor, string $client): void
+{
+    $context = app(ClientContext::class);
+    $context->id = $client;
+    $request = Request::create('/settings/appearance/preference', 'POST', ['client_id' => $client, 'version' => 0, 'theme' => 'dark']);
+    $request->setUserResolver(fn () => $actor);
+    app(ThemePreferenceController::class)->save($request, $context);
 }

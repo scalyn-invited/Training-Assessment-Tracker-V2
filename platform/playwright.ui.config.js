@@ -12,7 +12,7 @@ export const browserEnv = {
 };
 
 export default defineConfig({
-    testDir: './tests/Browser', workers: 1, timeout: 120000,
+    testDir: './tests/Browser', testIgnore: /realistic-demo.spec.js/, workers: 1, timeout: 120000,
     expect: { timeout: 10000 },
     outputDir: '.runtime/ui-sidebar/results',
     reporter: [['list'], ['json', { outputFile: '.runtime/ui-sidebar/results.json' }]],

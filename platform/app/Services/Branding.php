@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\Models\User;
 use App\Services\Tenancy\ClientContext;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class Branding
 {
@@ -16,14 +18,64 @@ class Branding
         $overrides = $client !== null
             ? (config('branding.organisations', [])[$client][$user->environment] ?? []) : [];
         $raw = array_replace($defaults, $overrides);
+        $saved = $client !== null && Schema::hasTable('client_brandings') ? DB::table('client_brandings')
+            ->where('organisation_id', $client)->where('environment', $user->environment)->first() : null;
+        if ($saved) {
+            $raw = array_replace($raw, ['mode' => $saved->mode, 'client_name' => $saved->client_name,
+                'app_name' => $saved->app_name, 'accent_light' => $saved->accent, 'accent_dark' => $saved->accent]);
+        }
         $mode = in_array($raw['mode'] ?? '', ['cerebru', 'co-branded', 'white-label'], true) ? $raw['mode'] : 'cerebru';
         $clientName = $this->text($raw['client_name'] ?? '', '');
         $app = $this->text($raw['app_name'] ?? '', 'Assessment Training Tracker');
         $theme = array_key_exists($raw['default_theme'] ?? '', self::THEMES) ? $raw['default_theme'] : 'dark';
         $light = $this->asset($raw['logo_light'] ?? null);
         $dark = $this->asset($raw['logo_dark'] ?? null);
+        $customLogo = $saved?->logo_path ? route('branding.logo', ['client' => $client, 'v' => $saved->version], false) : null;
+        if ($customLogo) {
+            $light = $dark = $customLogo;
+        }
+
+        $clientTheme = app(ClientTheme::class)->stored($saved->theme_colours ?? null);
+
+        $generated = isset($clientTheme['generation']);
+        $source = $clientTheme['source'] ?? $clientTheme['primary'] ?? $this->colour($raw['accent_dark'] ?? null, '#1d4668');
+        $themeTokens = [];
+        if ($generated) {
+            foreach (app(ClientTheme::class)->generate($source) as $variant => $tokens) {
+                foreach ($tokens as $key => $value) {
+                    $themeTokens['client-'.$variant.'-'.$key] = $value;
+                }
+            }
+        } elseif ($clientTheme) {
+            foreach (app(ClientTheme::class)->tokens($clientTheme) as $key => $value) {
+                $themeTokens['client-'.$key] = $value;
+            }
+        }
+
+        $themes = self::THEMES + ($generated ? ['client-light' => 'Client Light', 'client-dark' => 'Client Dark'] : ($clientTheme ? ['client' => 'Client theme'] : []));
+        $resolve = fn ($value) => $value === 'client' && $generated ? 'client-light' : $value;
+        $savedDefault = $resolve($saved->default_theme ?? null);
+        if (isset($themes[$savedDefault ?? ''])) {
+            $theme = $savedDefault;
+        }
+        $preferencesReady = $client !== null && Schema::hasTable('client_theme_preferences');
+        $preference = $preferencesReady ? DB::table('client_theme_preferences')->where('user_id', $user->id)->where('organisation_id', $client)->where('environment', $user->environment)->first() : null;
+        $personal = $resolve($preference?->theme);
 
         return [
+            'selected_theme' => isset($themes[$personal ?? '']) ? $personal : $theme,
+            'saved_default_theme' => $savedDefault,
+            'preference_ready' => $preferencesReady,
+            'preference_client' => $client,
+            'preference_version' => $preference->version ?? 0,
+            'preference_decided' => $preference !== null,
+            'theme_kind' => $generated ? 'generated' : ($clientTheme ? 'legacy' : 'none'),
+            'brand_source' => $source,
+            'theme_previews' => app(ClientTheme::class)->generate($source),
+            'client_theme' => $clientTheme,
+            'theme_tokens' => $themeTokens,
+            'version' => $saved->version ?? 0,
+            'custom_logo' => $customLogo,
             'mode' => $mode,
             'app_name' => $app,
             'client_name' => $clientName,
@@ -38,7 +90,7 @@ class Branding
             'footer' => $this->text($raw['footer'] ?? '', 'Learning with purpose. Progress with evidence.'),
             'cerebru_url' => $mode === 'white-label' ? null : $this->url($raw['cerebru_url'] ?? null),
             'theme_key' => 'training.appearance.'.hash('sha256', $user && $user->active ? ($client ?? 'unselected').'|'.$user->environment.'|'.$user->id : 'guest'),
-            'themes' => self::THEMES,
+            'themes' => self::THEMES + ($generated ? ['client-light' => 'Client Light', 'client-dark' => 'Client Dark'] : ($clientTheme ? ['client' => 'Client theme'] : [])),
         ];
     }
 

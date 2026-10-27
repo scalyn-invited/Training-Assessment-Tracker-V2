@@ -15,7 +15,7 @@ export const browserEnv = {
 };
 
 export default defineConfig({
-    testDir: './tests/Browser',
+    testDir: './tests/Browser', testIgnore: /realistic-demo.spec.js/,
     fullyParallel: false,
     timeout: 60000,
     expect: { timeout: 15000 },

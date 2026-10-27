@@ -1,0 +1,19 @@
+{
+  "platform/app/Services/ClientTheme.php": "f05b42c075845c97fa9f7ac431a4d599ced8ee5120809788be25101e1d8e131a",
+  "platform/app/Services/Branding.php": "ebdacb0cc1e2c11de709e7f7bb808bebcfa915a5e7408c31ebef96124ee09547",
+  "platform/app/Http/Controllers/BrandingController.php": "7454e0bdd2e21756de73017381be89040535b90169548c4054c714ec5af255fa",
+  "platform/public/client-palette.js": "8a69f679ac8c29ea399316eb1e86beaa49943d63902a78dcccfa3c8238bee876",
+  "platform/public/appearance.js": "48061dab253e3802e29d06ba438a3a65e3878cdcf6e447ac24598bde68b3730a",
+  "platform/public/app.css": "44b29a4ac5477ace533798ee3ee29aa2e10e7478c9ef6d21bbabc7691b7a8452",
+  "platform/resources/views/appearance.blade.php": "64de2ed68495e93a0a48f17d69ca14a9e0172d6e2e4f5ed3f1e974a81569cd03",
+  "platform/resources/views/layouts/app.blade.php": "558a4e2523e03d61d20fea12013e6b6c3db4c6aaec92c58430c03504332ae577",
+  "platform/tests/Feature/AutomaticClientThemeTest.php": "7f114e3205cb7c98fca7c6535c2ae67b4d903243912ee3b1715d32f52e8d7f30",
+  "platform/tests/Feature/SavedBrandingTest.php": "a2550a899d518bc1cdd07c9c3335be92d9bc5d043216f38f6217f3381fbc796b",
+  "platform/tests/Fixtures/client-palette-v1.json": "1444969321cc032ed1833ecf09ace9888bea14244bbef902cfe5f99b7fb4d4f3",
+  "platform/tests/Support/check-client-palettes.mjs": "f7c1f37fa7c685cb58fe2d31be9318e2678dc0b90d19043a0ca06d33f5d52828",
+  "platform/tests/Support/client-concurrency-worker.php": "f792e100c29f47a15942781646459494965d0dc6f192a78cd0e034c1dcbe13ef",
+  "platform/tests/Browser/appearance.spec.js": "7fae29fbb20af77acc080bce39d88300f9d000b5fc963d6088446c7653aaf8d7",
+  "platform/tests/Browser/isolated-cache.js": "0e29f92c6b95a0aa0efb64b5a962fc4329811a1700ff77fc1fd2ae73f03becd8",
+  "platform/playwright.automatic-theme.config.js": "e24c1a8bb1608e28172be61a4c72abf79b1db3d86d968fdb73efcc3de39774e0",
+  ".github/workflows/ci.yml": "f5cc2e9f5ed1b566c1f23ea405503192acb62375490e1364843fbb0497e4286a"
+}

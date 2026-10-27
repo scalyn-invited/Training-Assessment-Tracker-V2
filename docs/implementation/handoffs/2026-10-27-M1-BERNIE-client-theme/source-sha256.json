@@ -1,0 +1,17 @@
+{
+  "platform/app/Services/ClientTheme.php": "f72e472dee0627b4e886a9a6e137a18a7ec5e03ba469ec22012f087c5b577035",
+  "platform/app/Services/Branding.php": "8dd2fdb76ff20a8b2793fe205b875ddff8e24cd2ac78d6782d5f64186efec1b9",
+  "platform/app/Http/Controllers/BrandingController.php": "550a6830fea41870374e9cb42ef5488dbec4dae73fa522fe3d9fe5581c6fb750",
+  "platform/database/migrations/2026_10_27_110000_add_client_theme_colours.php": "e105f49ec5b4c157bce9ff85b2d5031e995e3d1d6cbf8e0562342fd8ee432dca",
+  "platform/public/appearance.js": "e03ae9d5350f418134352f6a6c50cf90d015a617b49c8853cb53741940e2add9",
+  "platform/public/app.css": "cab39ea3e6d056a2610b5a8c205702c0ac325555b166876d613a3c01a58cb4ff",
+  "platform/resources/views/appearance.blade.php": "ed9807a788e4e1313763a344e037769f55cabba254b26cbfe0b4e26c1183d7cb",
+  "platform/resources/views/layouts/app.blade.php": "26ed75d958f49d882e16dc02f7687f79d763a9bf29eea2d770affb01bd229be2",
+  "platform/scripts/ui-preview.mjs": "80494d34680dcb7d692516674b6698d2278600a64a7df1246c5130a9ef5fd959",
+  "platform/tests/Feature/SavedBrandingTest.php": "9479d006734ec62d3c50d4fe5788b2b6dea1796682a449f63d025117f2e2784b",
+  "platform/tests/Browser/appearance.spec.js": "acdd73deb2dd32213e70bf41360f87fcf0ad593f4e15c3a4dfe650f83242442a",
+  "platform/tests/Browser/isolated-cache.js": "bf5dbe049256fb826dde84bf77ce1eaa5ed1af2b61ef9ec5c6d2810c7ca4d5d8",
+  "platform/tests/Integration/ClientMigrationMariaDbTest.php": "2a8e56186d4dfbebd12031f07f2bbae34906a1bb13bd834237172469d1aab312",
+  "platform/tests/Support/client-concurrency-worker.php": "b0a63b8961acac64c90dbd18d26bf33ee9cc4cf4934c790235603c582d315a12",
+  "platform/playwright.client-theme.config.js": "137e4b3307602565dfcb7b3da8a00df689fc513a61195c8d508e96a4b7dee13f"
+}

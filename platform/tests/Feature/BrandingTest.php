@@ -64,7 +64,7 @@ class BrandingTest extends TestCase
         ]]]]);
         $this->assertSame('/images/training-mark.svg', app(Branding::class)->forUser($user)['logo_dark']);
         $this->get('/dashboard')->assertOk()->assertSee('Northstar Academy')->assertSee('/images/training-mark.svg')->assertDontSee('Cerebru')->assertDontSee('opsbrain-eosin');
-        $this->get('/settings/appearance')->assertOk()->assertDontSee('Branding preview');
+        $this->get('/settings/appearance')->assertOk()->assertDontSee('Save client branding');
     }
 
     public function test_unsafe_colour_asset_and_parent_urls_fall_back_and_text_is_escaped(): void

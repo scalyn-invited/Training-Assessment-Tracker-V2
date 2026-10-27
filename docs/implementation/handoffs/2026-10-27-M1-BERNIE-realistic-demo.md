@@ -1,0 +1,34 @@
+# M1-BERNIE: Realistic demo factories and sample data
+
+## Source and delivery
+
+Implemented locally on `codex/m1-saved-branding`, starting/current HEAD `908b6c5c5c91b34552fc4e41c284e9e25b047359`. Preserved all earlier uncommitted work and the original minimal DatabaseSeeder/UserFactory. No push, merge or deployment. [Exact source hashes](2026-10-27-M1-BERNIE-realistic-demo/source-sha256.json).
+
+[Sign-in guide and complete scenario inventory](2026-10-27-M1-BERNIE-realistic-demo-guide.md). Preview **http://127.0.0.1:8129/login**, HTTP200 verified; PHP listener26792 started through the task-owned hidden Node launcher. Existing8124 listener20056 remains unchanged. The current demo database/private storage is `.runtime/realistic-demo/`; never migrate/reset the application or Postman data.
+
+## Implementation and technical self-review
+
+Reusable Laravel factories: Organisation, SyntheticUser, Group (team/cohort), Enrolment and EvidenceFile, with a shared explicit-client/environment validator. Relationship checks reject foreign-client groups/enrolments and nonmember enrolment participants. AuthorityFactory bootstraps only explicit synthetic Client Admin memberships; ordinary memberships, roles, allocations, grants, revocations and departure use existing administration services. TrainingScenarioFactory builds onboarding, curriculum review requests/approval, activation, saved work, submissions, correction/resubmission, manual review decisions, KPI observations, completion and appeals through domain services. No unsupported certification or AI calibration claimed.
+
+Opt-in RealisticDemoSeeder uses a fixed reference timestamp14 September2026, deterministic UUID sequence and scenario content, with earlier authority dates than training records. It creates3 clients,30 people,9 groups,31 client memberships,21 enrolments,60 learning blocks,48 submissions,42 review decisions,3 appeals,39 KPI observations,42 private files and111 learning notifications. Full counts in counts.json. Three programmes are completed; correction attempts and historical decisions remain stored. A shared teamless member has explicit independent membership/allocation in another client. One departed member retains history but loses client access. Source labels and fixture notes distinguish all records from real people and real scanning.
+
+Guarded runner requires explicitly matching disposable database configuration, synthetic test environment, mock identity, private storage, array mail, disabled live AI/SMTP and a verified dedicated SQLite path or the existing guarded MariaDB qualification target. It refuses non-synthetic/populated datasets, source/data/evidence changes and partial manifests. A filesystem lock prevents overlapping builds, DB transaction contains data changes, and the building marker remains after failure rather than silently repairing. Identical reruns compare the completion snapshot and file hashes and add no rows/audit events. Evidence files from failed attempts remain isolated in the abandoned disposable directory. Default application storage remains unchanged unless the explicit TRAINING_PRIVATE_STORAGE environment override is supplied by the demo launcher.
+
+Bernie's technical self-review covered guard-before-write, explicit authority, absence of Global Admin escalation, chronology, immutable review/submission lineage, shared membership isolation, active primary versus backup authority, private evidence checks, case-specific appeal access, local-only generated identities, and non-destructive reruns. Factories/bootstrap are test-data tools, not public administration APIs. No database schema or public API change was needed.
+
+## Actual verification
+
+- SQLite demo qualification: initial1 test/29 assertions passed; final strengthened storage/change-refusal checks **1 test/30 assertions passed**. Tests cover counts, completed states, primary/backup, sensitive revocation, appeal restrictions, cross-client/departure denial, temporal relationships, rerun integrity, wrong database, partial/changed manifest, non-synthetic data, edited records and invalid factory inputs.
+- Existing SQLite training/permission regressions: **32 tests/200 assertions passed** (`ClientPermissionIntegrationTest|LearningTest|DeliveryTest`).
+- Isolated MariaDB11.4.13: demo plus those regressions **33 tests/229 assertions passed**, including the full service-built dataset. The later private-directory-existence guard and extra edited-name assertion were rechecked on SQLite; no second MariaDB claim for those small additions. Temporary MariaDB shut down with the verified task-owned helper.
+- `npx playwright test --config=playwright.demo.config.js`: **3/3 passed**,1.1min, on a separate `.runtime/realistic-demo-browser` database/private directory and port8130. Administrators for all clients see scoped directories/branding; coordinator summary and private-file restrictions, alternate appeal access, member completion/progress, own/private files, explicit multi-client selection and departure denial verified. Desktop/mobile screenshots and scoped axe A/AA checks passed. Browser test server stopped.
+- Final preview `node scripts/realistic-demo.mjs --prepare` succeeded. Immediately rerunning `--seed` reported identical completion with no new rows/audit events. Startup returnedHTTP200 on8129.
+- Pint, Node syntax and whitespace checks passed. Screenshots visually inspected. Full repository suite, hosted CI, real scanner/provider integration and manual screen-reader review were not run.
+
+Initial build1 failed at curriculum approval because the scenario omitted the required review-request transition. Transaction rolled back and its building marker was retained. Added the existing service's review-request call; fresh build2 and subsequent qualification/final builds passed. No remaining local failure or skip in the selected checks. This is a synthetic demo, not production readiness or full M1 acceptance.
+
+## Preservation and UX handoff
+
+Read-only before/after domain hashes match the original application47 tables, Postman53 tables and8124 preview55 tables. Runtime sessions/cache excluded; no byte-identical claim for active databases. Evidence snapshots retained beside this handoff. None of those databases was seeded, migrated or reset.
+
+Saturnino: use the sign-in guide to inspect the30-identity login list, long client/person labels, multiple-client selection, coordinator review queue, member completed progress and mobile navigation. [Review queue](2026-10-27-M1-BERNIE-realistic-demo/demo-review-desktop.png), [desktop progress](2026-10-27-M1-BERNIE-realistic-demo/demo-progress-desktop.png), [mobile progress](2026-10-27-M1-BERNIE-realistic-demo/demo-progress-mobile.png). The branding label wraps within the sidebar without horizontal overflow. Separate UX/accessibility review, project-owner acceptance, hosted CI and full M1 remain pending. Saturnino's record was not edited.

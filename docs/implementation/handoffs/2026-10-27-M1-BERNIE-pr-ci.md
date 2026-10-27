@@ -27,3 +27,9 @@ First hosted browser result on 3110fb1: 14 passed / 2 failed. One failure was an
 Targeted local rerun after these fixes: both mobile scenarios passed (42.2 seconds), including Appearance navigation, responsive controls, Escape, backdrop dismissal, focus wrapping and desktop resize. Command: `npx playwright test --config=playwright.ui.config.js --grep "mobile sidebar supports|mobile drawer contains"`.
 
 Second hosted run 40431971518 on ee01e98 passed PHP/SQLite and document utilities while preparing this fix; other jobs were still running. The next PR head must complete its own CI before an all-green claim. [Current integrated desktop](2026-10-27-M1-BERNIE-pr-ci/desktop-workspace.png) and [mobile drawer](2026-10-27-M1-BERNIE-pr-ci/mobile-menu.png) supersede the earlier green presentation.
+
+## Final hosted CI receipt — 2026-10-27
+
+PR #10: https://github.com/scalyn-invited/Training-Assessment-Tracker-V2/pull/10. Current verified head `908b6c5c5c91b34552fc4e41c284e9e25b047359`. All four jobs in run `40432225153` completed successfully: PHP/SQLite, MariaDB/concurrent workers, browser/accessibility and document parsing/OCR. https://github.com/scalyn-invited/Training-Assessment-Tracker-V2/actions/runs/40432225153
+
+GitHub reported the PR mergeable and no longer draft at final verification; this session did not merge it or claim a reviewer's acceptance. The final result is also published in the PR description. This local documentation receipt does not change the tested source revision. No migration of the existing application database or deployment occurred. The original database hash remains 9EADDD403FF6087873072572B610AC5F0B0DC96F9E944D5A6FE1523B2FE309A9. The isolated Scalyn preview is running on 8124 (PID stored in .runtime/ui-sidebar/preview.pid); no MariaDB or queue worker was left running locally by this pass.

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="C:\Users\cabas\Documents\Codex\Projects\Training Assessment Tracker V2\platform\phpunit.xml" tests="2" assertions="2793" errors="0" failures="0" skipped="0" time="0.316594">
+    <testsuite name="Feature" tests="2" assertions="2793" errors="0" failures="0" skipped="0" time="0.316594">
+      <testsuite name="Tests\Feature\AutomaticClientThemeTest" file="C:\Users\cabas\Documents\Codex\Projects\Training Assessment Tracker V2\platform\tests\Feature\AutomaticClientThemeTest.php" tests="2" assertions="2793" errors="0" failures="0" skipped="0" time="0.316594">
+        <testcase name="test_shared_fixtures_match_and_all_roles_meet_contrast" file="C:\Users\cabas\Documents\Codex\Projects\Training Assessment Tracker V2\platform\tests\Feature\AutomaticClientThemeTest.php" line="10" class="Tests\Feature\AutomaticClientThemeTest" classname="Tests.Feature.AutomaticClientThemeTest" assertions="1793" time="0.120056"/>
+        <testcase name="test_representative_colour_cube_generates_accessible_button_states" file="C:\Users\cabas\Documents\Codex\Projects\Training Assessment Tracker V2\platform\tests\Feature\AutomaticClientThemeTest.php" line="32" class="Tests\Feature\AutomaticClientThemeTest" classname="Tests.Feature.AutomaticClientThemeTest" assertions="1000" time="0.196538"/>
+      </testsuite>
+    </testsuite>
+  </testsuite>
+</testsuites>

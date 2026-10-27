@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="C:\Users\cabas\Documents\Codex\Projects\Training Assessment Tracker V2\platform\phpunit.xml" tests="1" assertions="29" errors="0" failures="0" skipped="0" time="23.812982">
+    <testsuite name="Feature" tests="1" assertions="29" errors="0" failures="0" skipped="0" time="23.812982">
+      <testsuite name="Tests\Feature\RealisticDemoTest" file="C:\Users\cabas\Documents\Codex\Projects\Training Assessment Tracker V2\platform\tests\Feature\RealisticDemoTest.php" tests="1" assertions="29" errors="0" failures="0" skipped="0" time="23.812982">
+        <testcase name="test_realistic_demo_workflows_isolation_factories_and_guards" file="C:\Users\cabas\Documents\Codex\Projects\Training Assessment Tracker V2\platform\tests\Feature\RealisticDemoTest.php" line="23" class="Tests\Feature\RealisticDemoTest" classname="Tests.Feature.RealisticDemoTest" assertions="29" time="23.812982"/>
+      </testsuite>
+    </testsuite>
+  </testsuite>
+</testsuites>
