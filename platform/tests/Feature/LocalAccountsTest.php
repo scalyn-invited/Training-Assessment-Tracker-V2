@@ -310,4 +310,19 @@ class LocalAccountsTest extends TestCase
         $this->accounts->setPassword($link['token'], 'setup', self::PASSWORD, self::PASSWORD);
         $this->denied(fn () => $delivery->send($this->admin, $link), 410);
     }
+
+    public function test_credential_forms_have_safe_return_targets_without_referrers(): void
+    {
+        $this->login($this->admin);
+        $this->get('/platform')->assertHeader('Referrer-Policy', 'no-referrer');
+        $this->get('/clients')->assertHeader('Referrer-Policy', 'same-origin');
+        $this->withSession(['_previous' => ['url' => url('/platform-logo')]])->post('/platform/actions', [
+            'action' => 'create', 'name' => 'Return target client', 'version' => 0, 'reason' => 'Verify safe return location',
+        ])->assertRedirect('/platform/clients');
+        $this->withSession(['_previous' => ['url' => url('/platform-logo')]])->post('/accounts/actions', [
+            'action' => 'create', 'client' => $this->admin->organisation_id, 'email' => 'invalid',
+            'current_password' => self::PASSWORD, 'reason' => 'Verify invalid input return',
+        ])->assertSessionHasErrors('email')->assertRedirect('/platform');
+        $this->assertArrayNotHasKey('current_password', session()->getOldInput());
+    }
 }

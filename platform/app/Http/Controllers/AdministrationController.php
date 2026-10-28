@@ -90,6 +90,6 @@ class AdministrationController
                 break;
         }
 
-        return back()->with('status', 'Administration action recorded. Live promotion remains prepared until a primary-platform adapter is configured.');
+        return redirect()->route('administration.show')->with('status', 'Administration action recorded. Live promotion remains prepared until a primary-platform adapter is configured.');
     }
 }
