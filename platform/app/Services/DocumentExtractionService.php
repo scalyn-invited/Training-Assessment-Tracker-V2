@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Jobs\ExtractDocument;
+use App\Models\AssessmentAttempt;
 use App\Models\DocumentExtraction;
 use App\Models\Enrolment;
 use App\Models\EvidenceFile;
@@ -67,6 +68,36 @@ class DocumentExtractionService
         });
     }
 
+    public function requestAssessment(User $actor, AssessmentAttempt $attempt, EvidenceFile $file): DocumentExtraction
+    {
+        return app(InitialAssessments::class)->locked($actor, $attempt->assignment, function ($actor, $a) use ($attempt, $file) {
+            app(InitialAssessments::class)->reviewer($actor, $a);
+            abort_unless(in_array($file->id, $attempt->snapshot['files']) && $file->enrolment_id === $a->enrolment_id && $file->scan_status === 'clean', 422);
+            $latest = DocumentExtraction::where('evidence_file_id', $file->id)->orderByDesc('attempt')->first();
+            if ($latest && $latest->assessment_attempt_id === $attempt->id && $latest->status !== 'failed') {
+                return $latest;
+            }
+            $run = DocumentExtraction::create(['assessment_attempt_id' => $attempt->id, 'evidence_file_id' => $file->id, 'actor_id' => $actor->id, 'attempt' => ($latest?->attempt ?? 0) + 1,
+                'version' => 1, 'status' => 'queued', 'source_hash' => $file->sha256]);
+            Audit::record($actor, 'assessment.extraction_requested', $run->id);
+            ExtractDocument::dispatch($run->id)->afterCommit();
+
+            return $run;
+        });
+    }
+
+    private function authoriseRun(User $actor, DocumentExtraction $run): void
+    {
+        if ($run->assessment_attempt_id) {
+            $attempt = AssessmentAttempt::findOrFail($run->assessment_attempt_id);
+            app(InitialAssessments::class)->reviewer($actor, $attempt->assignment);
+            abort_unless(in_array($run->evidence_file_id, $attempt->snapshot['files']) && $run->file->enrolment_id === $attempt->assignment->enrolment_id, 404);
+        } else {
+            $this->authorise($actor, $run->file);
+            abort_unless(in_array($run->file->enrolment->status, ['onboarding', 'ready']), 409);
+        }
+    }
+
     public function process(string $id): void
     {
         $run = DB::transaction(function () use ($id) {
@@ -76,8 +107,7 @@ class DocumentExtractionService
             }
             $file = $run->file;
             try {
-                $this->authorise(User::findOrFail($run->actor_id), $file);
-                abort_unless(in_array($file->enrolment->status, ['onboarding', 'ready']), 409);
+                $this->authoriseRun(User::findOrFail($run->actor_id), $run);
             } catch (\Throwable) {
                 $this->fail($run, 'access_revoked');
 
@@ -128,8 +158,7 @@ class DocumentExtractionService
             $file = EvidenceFile::whereKey($current->evidence_file_id)->lockForUpdate()->firstOrFail();
             try {
                 $actor = User::findOrFail($current->actor_id);
-                $this->authorise($actor, $file);
-                abort_unless(in_array($file->enrolment->status, ['onboarding', 'ready']), 409);
+                $this->authoriseRun($actor, $current);
             } catch (\Throwable) {
                 $this->fail($current, 'access_revoked');
 
@@ -154,6 +183,7 @@ class DocumentExtractionService
         app(Delivery::class)->locked($actor, $run->file->enrolment, function ($actor, $enrolment) use ($run, $input, $version, $onboardingVersion, $confirm) {
             abort_unless(in_array($enrolment->status, ['onboarding', 'ready']), 409, 'Active onboarding cannot be replaced.');
             $file = EvidenceFile::whereKey($run->evidence_file_id)->lockForUpdate()->firstOrFail();
+            abort_if($run->assessment_attempt_id, 409, 'Confirm initial assessment evidence in its review screen.');
             $this->authorise($actor, $file);
             $current = DocumentExtraction::whereKey($run->id)->lockForUpdate()->firstOrFail();
             abort_unless($current->status === 'ready' && $current->version === $version, 409, 'This extraction changed or was already confirmed. Reload after copying your edits.');

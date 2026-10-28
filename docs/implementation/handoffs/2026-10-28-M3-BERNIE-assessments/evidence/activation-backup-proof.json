@@ -1,0 +1,7 @@
+{
+    "operation": "backup",
+    "integrity": "ok",
+    "preserved_tables": 61,
+    "new_empty_tables": [],
+    "rows": 31
+}

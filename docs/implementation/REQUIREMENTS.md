@@ -30,3 +30,7 @@ For each ID add actual ticket/slice, code paths, check/scenario paths, current r
 - Legacy block durations versus 30-day plan: D04; retain old programmes and add an explicit mode.
 - Following-week recommendations versus existing N+2 publication/freeze: D05; do not weaken approval or started-content safeguards silently.
 - No default private chat visibility for coordinators/admins; any expansion requires D07 and access tests.
+
+## M3 implementation evidence — 28 October 2026
+
+V2-04, V2-05, V2-06 and V2-13 are covered for the bounded initial-assessment lifecycle by InitialAssessments, AssessmentAnalysis, AssessmentController, assessment views, and the additive initial-assessment migration. InitialAssessmentTest and AssessmentConcurrencyTest qualify permissions, immutable attempts, scoring/evidence, review, appeals and races; scripts/m3-browser-check.mjs qualifies the synthetic browser journey. See the M3 handoff for exact execution evidence and limits. This does not establish real rubric approval, live AI calibration, M4 plan creation or human milestone acceptance.

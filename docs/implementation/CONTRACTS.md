@@ -23,3 +23,7 @@ For changes: propose → review → accept version → implement producer/consum
 ## M2 local identity contract, 27 October 2026
 
 Task-specific [local account contract v1](handoffs/2026-10-27-M2-BERNIE-local-password/CONTRACT.md) defines the approved local-password starter. It consumes M1 client permissions and leaves external Cerebru payload/delegation contracts unverified. Technical verification and separate UX acceptance are recorded in the M2 handoff, not inferred from this entry.
+
+## M3 initial assessment contract, 28 October 2026
+
+[C03 v1](handoffs/2026-10-28-M3-BERNIE-assessments/CONTRACT.md) and [synthetic examples](handoffs/2026-10-28-M3-BERNIE-assessments/examples.json) define the locally implemented initial-assessment lifecycle, evidence confirmation, manual review and approved M4 output. This supersedes the proposed C03 description for this bounded implementation; technical evidence is in the M3 handoff. Consumer UX review and project-owner milestone acceptance remain separate. No live Cerebru or paid AI contract is inferred.

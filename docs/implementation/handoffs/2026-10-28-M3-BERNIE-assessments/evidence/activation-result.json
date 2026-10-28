@@ -1,0 +1,15 @@
+{
+  "Status": "activated",
+  "Base": "baaeaed757a2980271ba2991f2cbd2ee8f696c1b",
+  "Branch": "codex/m3-assessments",
+  "Backup": "C:\\Users\\cabas\\Documents\\Codex\\Projects\\Training Assessment Tracker V2\\.runtime\\m3-activation-20261028-153551",
+  "SourceFiles": 34,
+  "StorageFilesVerified": 13,
+  "UnrelatedFilesVerified": 29,
+  "Launcher": 21480,
+  "Url": "http://127.0.0.1:8000",
+  "Migration": "passed",
+  "Preservation": "passed",
+  "SMTP": "disabled",
+  "LiveAI": "disabled"
+}

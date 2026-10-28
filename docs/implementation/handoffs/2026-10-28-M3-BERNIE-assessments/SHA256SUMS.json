@@ -1,0 +1,238 @@
+[
+  {
+    "Path": "docs/implementation/CONTRACTS.md",
+    "SHA256": "D34BD1805FB77278EC210B145277A43A4E28F7F403D5F209DCA00164B4C9F7D1"
+  },
+  {
+    "Path": "docs/implementation/DECISIONS.md",
+    "SHA256": "A8349F351E405B40F680FEE2B36E0F08459DA31D6FEFC0B94C3F1197F4C571DB"
+  },
+  {
+    "Path": "docs/implementation/developers/BERNIE.md",
+    "SHA256": "4B093E5F80AAA0BE4C6B3330148ED58A9E436A95DD3F252263E768A258E55E77"
+  },
+  {
+    "Path": "docs/implementation/handoffs/2026-10-28-M3-BERNIE-assessments.md",
+    "SHA256": "F320A267B836C8D00519945EAC3EA1508DAF05B57D89EE85DB65CDC4ABAC9349"
+  },
+  {
+    "Path": "docs/implementation/handoffs/2026-10-28-M3-BERNIE-assessments/CONTRACT.md",
+    "SHA256": "1C9A18409173904659701680CFC13BE2812AB7633D855D9FAF6D445EFAA57A17"
+  },
+  {
+    "Path": "docs/implementation/handoffs/2026-10-28-M3-BERNIE-assessments/evidence/activation-activation-migration.txt",
+    "SHA256": "8D9D95A0EEEE643155788E7AD6B2336994A1757F47CC1C37E9DC54D900D36CCD"
+  },
+  {
+    "Path": "docs/implementation/handoffs/2026-10-28-M3-BERNIE-assessments/evidence/activation-activation-proof.json",
+    "SHA256": "EA936F319BAA86BEF0923AB16AC7E8C1620B9CE35F08399C57F0FF1F5303F693"
+  },
+  {
+    "Path": "docs/implementation/handoffs/2026-10-28-M3-BERNIE-assessments/evidence/activation-backup-proof.json",
+    "SHA256": "162596C1328E2A48EA14F62F17B0B154D33D6488AF7A29B082FA20D5A76F7C2D"
+  },
+  {
+    "Path": "docs/implementation/handoffs/2026-10-28-M3-BERNIE-assessments/evidence/activation-rehearsal-migration.txt",
+    "SHA256": "D620662BD66F1885EE42E408BDD8EC7AD5F8472D5E945F4E36BE94A0C1467B0F"
+  },
+  {
+    "Path": "docs/implementation/handoffs/2026-10-28-M3-BERNIE-assessments/evidence/activation-rehearsal-proof.json",
+    "SHA256": "EA936F319BAA86BEF0923AB16AC7E8C1620B9CE35F08399C57F0FF1F5303F693"
+  },
+  {
+    "Path": "docs/implementation/handoffs/2026-10-28-M3-BERNIE-assessments/evidence/activation-result.json",
+    "SHA256": "77406532223C36D9C0C19F8DEFBBFDE283624ECB6931DC360B51CF1954851197"
+  },
+  {
+    "Path": "docs/implementation/handoffs/2026-10-28-M3-BERNIE-assessments/evidence/activation-source-manifest.json",
+    "SHA256": "535B3AE4D1537CA1A9426D401FC89B00405D9626001397A1F78AD3219183C76A"
+  },
+  {
+    "Path": "docs/implementation/handoffs/2026-10-28-M3-BERNIE-assessments/evidence/browser-accessibility.json",
+    "SHA256": "1C5A154F63F45B78C36C557E670A9D158E9A14A674DD374D6B6D08DB4C363C07"
+  },
+  {
+    "Path": "docs/implementation/handoffs/2026-10-28-M3-BERNIE-assessments/evidence/browser-approved-mobile.png",
+    "SHA256": "47142B2C1492BB64B26C92B0BE4BA09310D32648DAA4EB1795D3881D580B62AE"
+  },
+  {
+    "Path": "docs/implementation/handoffs/2026-10-28-M3-BERNIE-assessments/evidence/browser-definition-desktop.png",
+    "SHA256": "3D50A10C88D917C5BE45562FB5085C7EC1DD4A707B6399C89E3C5FF61DDD354B"
+  },
+  {
+    "Path": "docs/implementation/handoffs/2026-10-28-M3-BERNIE-assessments/evidence/browser-response-mobile.png",
+    "SHA256": "DBE5432DEAC08E44CD36BFF2CB644F36CDFFA838223B810A910D140DE096B055"
+  },
+  {
+    "Path": "docs/implementation/handoffs/2026-10-28-M3-BERNIE-assessments/evidence/browser-result.json",
+    "SHA256": "2D7105A0A084CBD2C74D8CC6E119253DDA250A85DF8D3A0CEA6AFC760CD485DA"
+  },
+  {
+    "Path": "docs/implementation/handoffs/2026-10-28-M3-BERNIE-assessments/evidence/browser-review-desktop.png",
+    "SHA256": "9EB49B2592DF29CC7AEBBF615BF4CB38CC8EB678118160667488BD14C9393333"
+  },
+  {
+    "Path": "docs/implementation/handoffs/2026-10-28-M3-BERNIE-assessments/evidence/m3-retention-final.xml",
+    "SHA256": "612312C59816A897A8E81450BDAB711B7A00E13A370ECF0D1F38D768596B9011"
+  },
+  {
+    "Path": "docs/implementation/handoffs/2026-10-28-M3-BERNIE-assessments/evidence/m3-serial-regression.xml",
+    "SHA256": "D02467B645F0675A277AC7FA7A69A58410A204C39778840B8B43F5CDCAC46EE5"
+  },
+  {
+    "Path": "docs/implementation/handoffs/2026-10-28-M3-BERNIE-assessments/evidence/mariadb.xml",
+    "SHA256": "BC35109CF342232301F9DFB44331F8A3217679B9E28E037C30017D1ADCF152E9"
+  },
+  {
+    "Path": "docs/implementation/handoffs/2026-10-28-M3-BERNIE-assessments/examples.json",
+    "SHA256": "3EE4481DD95F2CB5FF1A44362F34AC625BC91B865508B94BFE4517829D8622FF"
+  },
+  {
+    "Path": "docs/implementation/handoffs/2026-10-28-M3-BERNIE-assessments/PR-DRAFT.md",
+    "SHA256": "D4C592781FCDE430994CDDFAD2B92BD92C9F6920D2C1DC8EBEDA25C4C2005C7F"
+  },
+  {
+    "Path": "docs/implementation/REQUIREMENTS.md",
+    "SHA256": "4FF3BD41507256DEB13727F6BB12C878B10943E8BF70C7EE47F9E7B712B660D0"
+  },
+  {
+    "Path": "docs/implementation/STATUS.md",
+    "SHA256": "08D3C792E010753B445844A7A2AF5F51A19C5D5F186812108600A4EB527CF9A1"
+  },
+  {
+    "Path": "platform/app/Http/Controllers/AssessmentController.php",
+    "SHA256": "9045CDDBE8D61ACB3233FEC6F9F8B3F8AC44FD0523515CA256768BA4064E0157"
+  },
+  {
+    "Path": "platform/app/Models/AssessmentAppeal.php",
+    "SHA256": "DB1BB846A0E60C25F3815C2061567968E4B9D04B5564A91CFCC50A8EE14AD362"
+  },
+  {
+    "Path": "platform/app/Models/AssessmentAssignment.php",
+    "SHA256": "FE2158205DFF7FB8F1D8FB0B37348CFF43D98F7638ACA8526AD3EC6A67E3F845"
+  },
+  {
+    "Path": "platform/app/Models/AssessmentAttempt.php",
+    "SHA256": "BF01BF3B4B29B0E55DBB1078085084265D145F882E73A1E47F3B1B97C2758587"
+  },
+  {
+    "Path": "platform/app/Models/AssessmentDefinition.php",
+    "SHA256": "9EECFD15D9E5735F8CACEDEC4085293501E25FEA6B3AFBE216EF9CA82F05DCDF"
+  },
+  {
+    "Path": "platform/app/Models/AssessmentFileConfirmation.php",
+    "SHA256": "7C39FE011881994B1ABC1C77A17D8F2257E3A035DA7F2A19F631E8EE13684748"
+  },
+  {
+    "Path": "platform/app/Models/AssessmentReview.php",
+    "SHA256": "AF7421C414ABEA4F2573F8FDA8DEFAE0BAFA0805710AC685DD21E169375F56C2"
+  },
+  {
+    "Path": "platform/app/Services/Access.php",
+    "SHA256": "AC022B6D833A48BFF6FD7786BD41DEAAF45ED8AD1E76EFBE4D0CCDAE977CF459"
+  },
+  {
+    "Path": "platform/app/Services/Ai/MockProvider.php",
+    "SHA256": "B87FDE11A292A2D6F6D4FB19B6E452100503BF715D448F10DC3AE9F0ABD871DA"
+  },
+  {
+    "Path": "platform/app/Services/Ai/Registry.php",
+    "SHA256": "40FE27A8F9DF93FE7AE0525BFB3CA067E01233CD79C460FEAD51EE5F98A8E93B"
+  },
+  {
+    "Path": "platform/app/Services/Ai/TaskGateway.php",
+    "SHA256": "D378771722EF96F896ACDB78D1C8AD264D0607F853EDDFA113861877ECDAF279"
+  },
+  {
+    "Path": "platform/app/Services/AssessmentAnalysis.php",
+    "SHA256": "01AF58EC32606EA3EC5062FA608954F30B65BCDCE46BC242FDE7BE08E3064F89"
+  },
+  {
+    "Path": "platform/app/Services/DocumentExtractionService.php",
+    "SHA256": "F22A1384DB51717837123DEE5142753A5560AC2B55415F4E12638EBD5A955806"
+  },
+  {
+    "Path": "platform/app/Services/InitialAssessments.php",
+    "SHA256": "79457E9EFC54B3AC52C871C8DE4ADE32ED49B12A44B8EC2E7154CFE27E18EF8A"
+  },
+  {
+    "Path": "platform/app/Services/LearningNotices.php",
+    "SHA256": "F4F863F4EBCA56B1CD6401C0659D44BF6C625DF7BB40E15FBCB5AD76C0034EDE"
+  },
+  {
+    "Path": "platform/app/Services/Operations.php",
+    "SHA256": "81EEAA1B573EFA77508EDA81502302A2B24CD069AED213A78EE8C14D49B39890"
+  },
+  {
+    "Path": "platform/config/ai.php",
+    "SHA256": "A5A941FED31B0FB39297B9A04E9BEA89164F3FBA38D2321AB91E17A54F1AC49C"
+  },
+  {
+    "Path": "platform/database/migrations/2026_10_28_150000_create_initial_assessments.php",
+    "SHA256": "FCCAC9ED7004F994D3C2776639C9E5691380CEAE2FBACD5999C72D846E2C54BB"
+  },
+  {
+    "Path": "platform/docs/postman/m3-assessments.postman_collection.json",
+    "SHA256": "2862F5F7F45CFDB381ECAA6F43F1263BD2245F9208ECFD54E6E04A801E7596E5"
+  },
+  {
+    "Path": "platform/docs/postman/m3-assessments.postman_environment.json",
+    "SHA256": "B955C05CA9BC42BA51DE0DBC0A66D494000EAA6A98EB69EFF34503BBECE83379"
+  },
+  {
+    "Path": "platform/public/assessment-draft.js",
+    "SHA256": "BA2EA6D50A55A0F86CE82CB772DD9641BA8421B340B7E52D97302CCB67F0F927"
+  },
+  {
+    "Path": "platform/public/assessments.css",
+    "SHA256": "A62598A083B5083EC2846171C1F2DF54DA559E894D1145C345AB54BF1A43D29C"
+  },
+  {
+    "Path": "platform/resources/views/assessments/definition.blade.php",
+    "SHA256": "18DC751D98D205C584059E9542FBDB540C216FF4A397E9168EEB2471464BDEE0"
+  },
+  {
+    "Path": "platform/resources/views/assessments/index.blade.php",
+    "SHA256": "368AA700881A27FABDB676B02BC34564C8C0ACD2B61AC319AAC120AE6D6BF4CE"
+  },
+  {
+    "Path": "platform/resources/views/assessments/show.blade.php",
+    "SHA256": "ED2FA01FE217321861B752931002E727D6C7FCE59515C14B4B144A50671B2E98"
+  },
+  {
+    "Path": "platform/resources/views/layouts/app.blade.php",
+    "SHA256": "9C2C889C9119AC19CB92329F9342908F7D460423D27325DE98E3E32A62A48A5D"
+  },
+  {
+    "Path": "platform/resources/views/notifications.blade.php",
+    "SHA256": "59E91D44724FCFCB567940A1A1F0DBDB08737C927231842215EB83A33A4C1BE0"
+  },
+  {
+    "Path": "platform/routes/web.php",
+    "SHA256": "AA8F7914EC930F0E0A211F3750917CADB6168A778CB2AA7B2063AB0927CA375B"
+  },
+  {
+    "Path": "platform/scripts/m3-browser-check.mjs",
+    "SHA256": "5CCC0EB613FD6FF65D41C3FC36E309388B35CB0EE221D438518D119CA5589635"
+  },
+  {
+    "Path": "platform/scripts/m3-browser-fixture.php",
+    "SHA256": "7953ACF2F41FA74A2E7FD167432976A1843DCA869A940FAB60BA7AE1E0EDC6EF"
+  },
+  {
+    "Path": "platform/tests/Feature/InitialAssessmentTest.php",
+    "SHA256": "319298B4F18CA3F24F862BF0631638CCBA1D3D944731D0E61D8348695D096539"
+  },
+  {
+    "Path": "platform/tests/Integration/AssessmentConcurrencyTest.php",
+    "SHA256": "5E757B96EA406843B50A00817CC86BF3C31A9735949DF869E355A47AE6301D4C"
+  },
+  {
+    "Path": "platform/tests/Integration/ClientMigrationMariaDbTest.php",
+    "SHA256": "05FDEAC803D4DAF25F44725A296A276FAE7EF1BF569263064901EF2381613F94"
+  },
+  {
+    "Path": "platform/tests/Support/assessment-concurrency-worker.php",
+    "SHA256": "7B067F01C02C2492A5FABB30506FA328A3C6F866238003974A18EEB4ED679453"
+  }
+]

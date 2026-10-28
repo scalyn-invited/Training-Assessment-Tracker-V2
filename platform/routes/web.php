@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdministrationController;
 use App\Http\Controllers\AiController;
+use App\Http\Controllers\AssessmentController;
 use App\Http\Controllers\BrandingController;
 use App\Http\Controllers\ClientContextController;
 use App\Http\Controllers\DeliveryController;
@@ -24,6 +25,14 @@ Route::post('/login', [SessionController::class, 'store'])->middleware('throttle
 Route::post('/logout', [SessionController::class, 'destroy'])->name('logout');
 Route::get('/platform-logo', [PlatformController::class, 'logo'])->name('platform-logo');
 Route::middleware(TrainingSession::class)->group(function () {
+    Route::get('/assessments', [AssessmentController::class, 'index'])->name('assessments.index');
+    Route::get('/assessments/definitions/new', [AssessmentController::class, 'edit'])->name('assessments.new');
+    Route::get('/assessments/definitions/{id}', [AssessmentController::class, 'edit'])->name('assessments.edit');
+    Route::post('/assessments/definitions', [AssessmentController::class, 'definition'])->name('assessments.definition');
+    Route::post('/assessments/appeals/assign', [AssessmentController::class, 'routeAppeal'])->name('assessments.appeal');
+    Route::get('/assessments/{id}', [AssessmentController::class, 'show'])->name('assessments.show');
+    Route::post('/assessments/{id}', [AssessmentController::class, 'act'])->middleware('throttle:60,1')->name('assessments.act');
+
     Route::get('/platform', [PlatformController::class, 'show'])->name('platform.overview');
     Route::get('/platform/{section}', [PlatformController::class, 'show'])->whereIn('section', ['clients', 'admins', 'appearance', 'audit'])->name('platform.section');
     Route::post('/platform/actions', [PlatformController::class, 'act'])->middleware('throttle:30,1,platform:')->name('platform.act');

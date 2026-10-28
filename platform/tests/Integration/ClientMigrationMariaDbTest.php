@@ -56,6 +56,7 @@ class ClientMigrationMariaDbTest extends TestCase
         (require database_path('migrations/2026_10_27_110000_add_client_theme_colours.php'))->up();
         $this->assertSame($brandingBefore, $this->snapshot(), 'Branding migration preserves approved historical records.');
         $this->assertDatabaseCount('client_brandings', 0);
+        (require database_path('migrations/2026_10_28_150000_create_initial_assessments.php'))->down(); // Remove empty dependent M3 tables before rehearsing M1 rollback.
         foreach (['client_sensitive_grants', 'coordinator_allocations', 'role_assignments', 'client_team_memberships', 'client_memberships'] as $table) {
             DB::table($table)->delete();
         }

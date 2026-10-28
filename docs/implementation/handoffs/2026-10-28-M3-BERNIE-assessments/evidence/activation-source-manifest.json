@@ -1,0 +1,172 @@
+[
+  {
+    "Path": "platform/app/Http/Controllers/AssessmentController.php",
+    "Before": null,
+    "After": "9045CDDBE8D61ACB3233FEC6F9F8B3F8AC44FD0523515CA256768BA4064E0157"
+  },
+  {
+    "Path": "platform/app/Models/AssessmentAppeal.php",
+    "Before": null,
+    "After": "DB1BB846A0E60C25F3815C2061567968E4B9D04B5564A91CFCC50A8EE14AD362"
+  },
+  {
+    "Path": "platform/app/Models/AssessmentAssignment.php",
+    "Before": null,
+    "After": "FE2158205DFF7FB8F1D8FB0B37348CFF43D98F7638ACA8526AD3EC6A67E3F845"
+  },
+  {
+    "Path": "platform/app/Models/AssessmentAttempt.php",
+    "Before": null,
+    "After": "BF01BF3B4B29B0E55DBB1078085084265D145F882E73A1E47F3B1B97C2758587"
+  },
+  {
+    "Path": "platform/app/Models/AssessmentDefinition.php",
+    "Before": null,
+    "After": "9EECFD15D9E5735F8CACEDEC4085293501E25FEA6B3AFBE216EF9CA82F05DCDF"
+  },
+  {
+    "Path": "platform/app/Models/AssessmentFileConfirmation.php",
+    "Before": null,
+    "After": "7C39FE011881994B1ABC1C77A17D8F2257E3A035DA7F2A19F631E8EE13684748"
+  },
+  {
+    "Path": "platform/app/Models/AssessmentReview.php",
+    "Before": null,
+    "After": "AF7421C414ABEA4F2573F8FDA8DEFAE0BAFA0805710AC685DD21E169375F56C2"
+  },
+  {
+    "Path": "platform/app/Services/AssessmentAnalysis.php",
+    "Before": null,
+    "After": "01AF58EC32606EA3EC5062FA608954F30B65BCDCE46BC242FDE7BE08E3064F89"
+  },
+  {
+    "Path": "platform/app/Services/InitialAssessments.php",
+    "Before": null,
+    "After": "79457E9EFC54B3AC52C871C8DE4ADE32ED49B12A44B8EC2E7154CFE27E18EF8A"
+  },
+  {
+    "Path": "platform/database/migrations/2026_10_28_150000_create_initial_assessments.php",
+    "Before": null,
+    "After": "FCCAC9ED7004F994D3C2776639C9E5691380CEAE2FBACD5999C72D846E2C54BB"
+  },
+  {
+    "Path": "platform/docs/postman/m3-assessments.postman_collection.json",
+    "Before": null,
+    "After": "2862F5F7F45CFDB381ECAA6F43F1263BD2245F9208ECFD54E6E04A801E7596E5"
+  },
+  {
+    "Path": "platform/docs/postman/m3-assessments.postman_environment.json",
+    "Before": null,
+    "After": "B955C05CA9BC42BA51DE0DBC0A66D494000EAA6A98EB69EFF34503BBECE83379"
+  },
+  {
+    "Path": "platform/public/assessment-draft.js",
+    "Before": null,
+    "After": "BA2EA6D50A55A0F86CE82CB772DD9641BA8421B340B7E52D97302CCB67F0F927"
+  },
+  {
+    "Path": "platform/public/assessments.css",
+    "Before": null,
+    "After": "A62598A083B5083EC2846171C1F2DF54DA559E894D1145C345AB54BF1A43D29C"
+  },
+  {
+    "Path": "platform/resources/views/assessments/definition.blade.php",
+    "Before": null,
+    "After": "18DC751D98D205C584059E9542FBDB540C216FF4A397E9168EEB2471464BDEE0"
+  },
+  {
+    "Path": "platform/resources/views/assessments/index.blade.php",
+    "Before": null,
+    "After": "368AA700881A27FABDB676B02BC34564C8C0ACD2B61AC319AAC120AE6D6BF4CE"
+  },
+  {
+    "Path": "platform/resources/views/assessments/show.blade.php",
+    "Before": null,
+    "After": "ED2FA01FE217321861B752931002E727D6C7FCE59515C14B4B144A50671B2E98"
+  },
+  {
+    "Path": "platform/scripts/m3-browser-check.mjs",
+    "Before": null,
+    "After": "5CCC0EB613FD6FF65D41C3FC36E309388B35CB0EE221D438518D119CA5589635"
+  },
+  {
+    "Path": "platform/scripts/m3-browser-fixture.php",
+    "Before": null,
+    "After": "7953ACF2F41FA74A2E7FD167432976A1843DCA869A940FAB60BA7AE1E0EDC6EF"
+  },
+  {
+    "Path": "platform/tests/Feature/InitialAssessmentTest.php",
+    "Before": null,
+    "After": "319298B4F18CA3F24F862BF0631638CCBA1D3D944731D0E61D8348695D096539"
+  },
+  {
+    "Path": "platform/tests/Integration/AssessmentConcurrencyTest.php",
+    "Before": null,
+    "After": "5E757B96EA406843B50A00817CC86BF3C31A9735949DF869E355A47AE6301D4C"
+  },
+  {
+    "Path": "platform/tests/Support/assessment-concurrency-worker.php",
+    "Before": null,
+    "After": "7B067F01C02C2492A5FABB30506FA328A3C6F866238003974A18EEB4ED679453"
+  },
+  {
+    "Path": "platform/app/Services/Access.php",
+    "Before": "977E727DBF915156957BD48D194E0D2A0D7117B1C1CD293F860883F78F419209",
+    "After": "AC022B6D833A48BFF6FD7786BD41DEAAF45ED8AD1E76EFBE4D0CCDAE977CF459"
+  },
+  {
+    "Path": "platform/app/Services/Ai/MockProvider.php",
+    "Before": "EDA5AED4E0AD81A65971211E4D5C61DD0184E3DFBBF9B8522B6F7C4F72890AB8",
+    "After": "B87FDE11A292A2D6F6D4FB19B6E452100503BF715D448F10DC3AE9F0ABD871DA"
+  },
+  {
+    "Path": "platform/app/Services/Ai/Registry.php",
+    "Before": "FAE6E3635C9047A9861A2DB720ECDAF406F82E95819DA982FF99D2F7A9757F24",
+    "After": "40FE27A8F9DF93FE7AE0525BFB3CA067E01233CD79C460FEAD51EE5F98A8E93B"
+  },
+  {
+    "Path": "platform/app/Services/Ai/TaskGateway.php",
+    "Before": "8C656D2D5A935049D715F79E9CE8CCD5F1238A2D6A45BCB0FD71A979B228960E",
+    "After": "D378771722EF96F896ACDB78D1C8AD264D0607F853EDDFA113861877ECDAF279"
+  },
+  {
+    "Path": "platform/app/Services/DocumentExtractionService.php",
+    "Before": "7FAF68F19B29BFCB0F86CDCB94992497F6738F27DE7552E0D9A471F879C70877",
+    "After": "F22A1384DB51717837123DEE5142753A5560AC2B55415F4E12638EBD5A955806"
+  },
+  {
+    "Path": "platform/app/Services/LearningNotices.php",
+    "Before": "E8D1DC1B7573A82BB0D8D97412B3357DFCA33C8B2460B8CD76836C698CDC01EF",
+    "After": "F4F863F4EBCA56B1CD6401C0659D44BF6C625DF7BB40E15FBCB5AD76C0034EDE"
+  },
+  {
+    "Path": "platform/app/Services/Operations.php",
+    "Before": "746D41BBDE316B259B9D23271D830623F18CAFE4199D651BB648F7B9E8542718",
+    "After": "81EEAA1B573EFA77508EDA81502302A2B24CD069AED213A78EE8C14D49B39890"
+  },
+  {
+    "Path": "platform/config/ai.php",
+    "Before": "8696BBCDD39B5E7ED518A22996DAE9ED8D3FADC03A93FF74A48C84F08E408FCF",
+    "After": "A5A941FED31B0FB39297B9A04E9BEA89164F3FBA38D2321AB91E17A54F1AC49C"
+  },
+  {
+    "Path": "platform/resources/views/layouts/app.blade.php",
+    "Before": "57A839DC2D2F8F105711A6E6045C15371B1C5C4D34129A3F74497C4CAEB3D791",
+    "After": "9C2C889C9119AC19CB92329F9342908F7D460423D27325DE98E3E32A62A48A5D"
+  },
+  {
+    "Path": "platform/resources/views/notifications.blade.php",
+    "Before": "B9C9388AB1751962AF94A8CF5DBC2FB0373925F445425200B5A2A4AAD5486ABB",
+    "After": "59E91D44724FCFCB567940A1A1F0DBDB08737C927231842215EB83A33A4C1BE0"
+  },
+  {
+    "Path": "platform/routes/web.php",
+    "Before": "EB6551B4E50F457DF958933CED2DA54D4323C1399D4AAA75E570A56E5C46CE35",
+    "After": "AA8F7914EC930F0E0A211F3750917CADB6168A778CB2AA7B2063AB0927CA375B"
+  },
+  {
+    "Path": "platform/tests/Integration/ClientMigrationMariaDbTest.php",
+    "Before": "B4E41B833A0C62D26C3581A750C8B37649FDE56D903DF29C6808B53154DBF3B5",
+    "After": "05FDEAC803D4DAF25F44725A296A276FAE7EF1BF569263064901EF2381613F94"
+  }
+]

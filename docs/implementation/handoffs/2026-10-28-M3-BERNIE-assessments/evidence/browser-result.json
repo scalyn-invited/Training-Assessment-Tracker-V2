@@ -1,0 +1,18 @@
+{
+  "passed": true,
+  "assignmentUrl": "http://127.0.0.1:8127/assessments/01a18152-8b98-7396-8986-1c853827a5be",
+  "checks": [
+    "definition publication",
+    "member assignment",
+    "autosave and reload",
+    "network recovery",
+    "immutable receipt",
+    "rejection and resubmission",
+    "manual approved weighted total",
+    "private review hidden",
+    "mobile overflow",
+    "keyboard focus",
+    "axe serious/critical"
+  ],
+  "screenshots": 4
+}
