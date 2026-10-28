@@ -51,6 +51,9 @@ class AiController
             $policies[$task] = $registry->policy(app(Access::class)->client($actor), $actor->environment, $task);
         }
         $providers = config('ai.providers');
+        if ($actor->environment === 'production') {
+            $providers = array_filter($providers, fn ($provider) => $provider['adapter'] !== 'mock');
+        }
         $ambiguous = AiRun::where('organisation_id', app(Access::class)->client($actor))->where('environment', $actor->environment)->where('status', 'ambiguous')->get(['id', 'spent', 'reserved']);
 
         return view('ai.settings', compact('policies', 'providers', 'ambiguous'));

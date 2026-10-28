@@ -4,6 +4,7 @@ namespace App\Services\Tenancy;
 
 use App\Models\Organisation;
 use App\Models\User;
+use App\Services\LocalAccounts;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -161,6 +162,7 @@ class PlatformAdministration
 
     public function clientRole(User $actor, string $client, string $user, string $action, int $expected, string $reason): void
     {
+        abort_if($action === 'join' && app(LocalAccounts::class)->enabled(), 409, 'Use an invitation so the account owner can accept access.');
         $this->reason($reason);
         DB::transaction(function () use ($actor, $client, $user, $action, $expected, $reason) {
             $this->lock();

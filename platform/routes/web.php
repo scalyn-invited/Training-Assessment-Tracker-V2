@@ -7,6 +7,7 @@ use App\Http\Controllers\ClientContextController;
 use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\DocumentExtractionController;
 use App\Http\Controllers\LearningController;
+use App\Http\Controllers\LocalAccountController;
 use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\PlatformController;
 use App\Http\Controllers\ProgressionController;
@@ -77,3 +78,15 @@ Route::middleware(TrainingSession::class)->group(function () {
 Route::get('/api/v1/me/training', [SandboxApiController::class, 'summary'])->middleware('throttle:60,1,theme-preferences:');
 Route::get('/api/v1/training/changes', [SandboxApiController::class, 'changes'])->middleware('throttle:60,1,theme-preferences:');
 Route::get('/api/v1/members/{memberId}/summary', [SandboxApiController::class, 'summary'])->middleware('throttle:60,1,theme-preferences:');
+
+// M2 local-only credential flows. TrainingSession:preclient never selects or grants a client.
+Route::get('/password/{purpose}/{token}', [LocalAccountController::class, 'passwordForm'])->where('purpose', 'setup|reset')->middleware('throttle:20,1')->name('local.password.form');
+Route::post('/password/{purpose}/{token}', [LocalAccountController::class, 'passwordSave'])->where('purpose', 'setup|reset')->middleware('throttle:10,1')->name('local.password.save');
+Route::middleware([TrainingSession::class.':preclient'])->group(function () {
+    Route::get('/account/password', [LocalAccountController::class, 'change'])->name('local.password.change');
+    Route::post('/account/password', [LocalAccountController::class, 'change'])->middleware('throttle:10,1');
+    Route::get('/accounts/links', [LocalAccountController::class, 'links'])->name('local.links');
+    Route::post('/accounts/actions', [LocalAccountController::class, 'actions'])->middleware('throttle:10,1')->name('local.actions');
+    Route::get('/invitations/{token}', [LocalAccountController::class, 'invitation'])->name('local.invitation');
+    Route::post('/invitations/{token}', [LocalAccountController::class, 'accept'])->middleware('throttle:10,1')->name('local.invitation.accept');
+});

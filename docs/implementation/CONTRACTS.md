@@ -19,3 +19,7 @@ Record schema/fixture file paths, version, producer commit, Bernie's technical s
 Use fixtures for allowed and denied client/team/member cases, missing/stale data, optimistic conflicts and dependency failure. APIs return scoped data, not broad records filtered by the browser/model. No concrete Cerebru endpoint, token claim or source-ID field is declared implemented by this register.
 
 For changes: propose → review → accept version → implement producer/consumer → integrate/test. Any safety-impacting change reruns affected foundation denial cases. Shared-file edits follow COORDINATION.md.
+
+## M2 local identity contract, 27 October 2026
+
+Task-specific [local account contract v1](handoffs/2026-10-27-M2-BERNIE-local-password/CONTRACT.md) defines the approved local-password starter. It consumes M1 client permissions and leaves external Cerebru payload/delegation contracts unverified. Technical verification and separate UX acceptance are recorded in the M2 handoff, not inferred from this entry.

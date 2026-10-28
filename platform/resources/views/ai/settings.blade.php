@@ -1,10 +1,11 @@
 @extends('layouts.app')
 @section('title', 'AI settings')
 @section('content')
+@if(config('training.environment') === 'production' && !config('ai.live_enabled'))<p role="status">AI generation is not configured.</p>@endif
 <h1>AI provider settings</h1>
 <p>Routing changes apply to new requests. Existing requests retain their exact configuration. Only curriculum generation is connected to a workflow; grading, adaptation and KPI routes are reserved for later milestones.</p>
 <section class="panel"><h2>Provider registry</h2><p>Models, data policies, limits, pricing and secret references are deployment-controlled in <code>config/ai.php</code>. No credentials are displayed.</p>
-<ul>@foreach($providers as $id=>$provider)<li><strong>{{ $id }}</strong> · {{ $provider['enabled'] ? 'Enabled' : 'Disabled pending qualification' }} · {{ $provider['model'] ?: 'Model not configured' }} · {{ $provider['context_bytes'] }} input bytes / {{ $provider['max_output_tokens'] }} output tokens</li>@endforeach</ul>
+<ul>@foreach($providers as $id=>$provider)<li><strong>{{ $id }}</strong> · {{ $provider['enabled'] ? 'Enabled' : 'Not configured' }} · {{ $provider['model'] ?: 'Model not configured' }} · {{ $provider['context_bytes'] }} input bytes / {{ $provider['max_output_tokens'] }} output tokens</li>@endforeach</ul>
 <p>Lifetime organisation cap: {{ config('ai.organisation_limit') }} micro-USD. Per-programme cap: {{ config('ai.programme_limit') }} micro-USD. Reservations and accounted usage both count. Mock charges are simulated.</p></section>
 @foreach($policies as $task=>$policy)
 <section class="panel"><h2>{{ ucfirst(str_replace('_',' ',$task)) }}</h2><form method="post" action="{{ route('ai.policy') }}">@csrf

@@ -1,0 +1,51 @@
+async page => {
+  page.setDefaultTimeout(90000); page.setDefaultNavigationTimeout(90000);
+  const password = 'Fifteen plus characters!';
+  const login = async email => {
+    await page.goto('http://127.0.0.1:8157/login');
+    await page.getByLabel('Email',{exact:true}).fill(email);
+    await page.getByLabel('Password',{exact:true}).fill(password);
+    await Promise.all([page.waitForURL(email === 'admin@example.invalid' ? '**/platform' : '**/clients'), page.getByRole('button',{name:'Sign in',exact:true}).click()]);
+  };
+  const create = async client => {
+    await page.goto('http://127.0.0.1:8157/platform');
+    await page.getByRole('combobox',{name:'Client',exact:true}).selectOption({label:client});
+    await page.getByLabel('Name',{exact:true}).fill('Browser member');
+    await page.getByLabel('Email',{exact:true}).fill('browser-member@example.invalid');
+    await page.getByLabel('Your current password',{exact:true}).fill(password);
+    await page.getByLabel('Reason',{exact:true}).fill('Browser qualification account flow');
+    await page.getByRole('button',{name:'Create account or invitation',exact:true}).click();
+    await page.getByRole('heading',{name:'Private account link',exact:true}).waitFor();
+    return page.getByLabel('Private link',{exact:true}).inputValue();
+  };
+  await login('admin@example.invalid');
+  const setup = await create('Training Sandbox');
+  await page.goto(setup);
+  await page.getByLabel('New password',{exact:true}).fill(password);
+  await page.getByLabel('Confirm new password',{exact:true}).fill(password);
+  await Promise.all([page.waitForURL('**/login'), page.getByRole('button',{name:'Save password',exact:true}).click()]);
+  await login('browser-member@example.invalid');
+  await page.goto('http://127.0.0.1:8157/dashboard');
+  if (page.url().endsWith('/login')) throw new Error('Member login failed');
+  await Promise.all([page.waitForURL('**/login'), page.getByRole('button',{name:'Sign out',exact:true}).click()]);
+  await login('admin@example.invalid');
+  const invite = await create('Browser second client');
+  await page.goto(invite);
+  await page.getByRole('heading',{name:'Account action unavailable',exact:true}).waitFor();
+  await Promise.all([page.waitForURL('**/login'), page.getByRole('button',{name:'Sign out',exact:true}).click()]);
+  await login('browser-member@example.invalid');
+  await page.goto(invite);
+  await page.getByRole('checkbox').check();
+  await page.getByRole('button',{name:'Accept invitation',exact:true}).click();
+  await page.getByRole('status').filter({hasText:'Invitation accepted'}).waitFor();
+  await login('browser-member@example.invalid');
+  await page.goto('http://127.0.0.1:8157/clients');
+  if (!(await page.locator('body').innerText()).includes('Browser second client')) throw new Error('Accepted client missing');
+  await page.setViewportSize({width:390,height:844});
+  await page.screenshot({path:'output/m2-clients-mobile.png',fullPage:true});
+  if (await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth)) throw new Error('Mobile horizontal overflow');
+  await page.goto('http://127.0.0.1:8157/password/setup/'+'0'.repeat(64));
+  await page.getByRole('heading',{name:'Link unavailable',exact:true}).waitFor();
+  await page.goto('http://127.0.0.1:8157/clients');
+  return {newAccountSetup:true,memberLogin:true,wrongRecipientDenied:true,invitationAccepted:true,twoClientChoices:true,expiredLink:true,mobileNoOverflow:true};
+}

@@ -9,6 +9,7 @@ use App\Services\Ai\Generation;
 use App\Services\DocumentExtractionService;
 use App\Services\FileScanning;
 use App\Services\LearningNotices;
+use App\Services\LocalAccounts;
 use App\Services\MockIdentity;
 use App\Services\Operations;
 use App\Services\Promotions;
@@ -97,3 +98,16 @@ Artisan::command('training:directory-import {file} {organisation}', function () 
 Artisan::command('training:mock-token {email}', function () {
     $this->line(app(MockIdentity::class)->issue(User::where('email', $this->argument('email'))->firstOrFail()));
 })->purpose('Issue a five-minute local-only mock delegated credential');
+
+Artisan::command('training:local-setup {user} {--operator=} {--reason=}', function () {
+    $user = User::findOrFail($this->argument('user'));
+    $result = app(LocalAccounts::class)->bootstrap($user, (string) $this->option('operator'), (string) $this->option('reason'));
+    $this->warn('Single-use setup link. Share privately; expires in one hour.');
+    $this->line($result['url']);
+})->purpose('Issue initial local setup for an existing synthetic Global Admin; grants no privileges');
+
+Artisan::command('training:initialize-local-production {--name=} {--email=} {--operator=} {--reason=} {--json}', function () {
+    $result = app(LocalAccounts::class)->initializeProduction((string) $this->option('name'), (string) $this->option('email'),
+        (string) $this->option('operator'), (string) $this->option('reason'));
+    $this->line($this->option('json') ? json_encode(['url' => $result['url']], JSON_THROW_ON_ERROR) : $result['url']);
+})->purpose('Initialize or reissue pending first-admin setup in the designated empty localhost production database');

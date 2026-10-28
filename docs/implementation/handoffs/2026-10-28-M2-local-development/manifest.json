@@ -1,0 +1,54 @@
+[
+  {
+    "path": "platform/app/Services/LocalAccounts.php",
+    "sha256": "04551D049F38975D07BAED2511BE4F2E21B39034E9D7DB667EFCE04FD588B385"
+  },
+  {
+    "path": "platform/app/Services/LocalAccountDelivery.php",
+    "sha256": "CC5F59AE2112D49C8D7A30A6CEA27BCC36CA7EACCDBF774F26C86F23844BC1AE"
+  },
+  {
+    "path": "platform/app/Http/Controllers/LocalAccountController.php",
+    "sha256": "2962401B7AEFC9B8F456AA0CA29DFAE0C54E4CBEA414F50FE3BC24DA40228865"
+  },
+  {
+    "path": "platform/config/training.php",
+    "sha256": "9F33ED6F76673E8F3F70BF9737EBA61F8EA53F809C520F7217ACFE658A4C2978"
+  },
+  {
+    "path": "platform/config/ai.php",
+    "sha256": "8696BBCDD39B5E7ED518A22996DAE9ED8D3FADC03A93FF74A48C84F08E408FCF"
+  },
+  {
+    "path": "platform/.env.example",
+    "sha256": "4604A049F87EC65C76CB54C7EAA92D7F3AEE311A51157E9659C91C6C2AB02819"
+  },
+  {
+    "path": "platform/scripts/serve-m2-demo.ps1",
+    "sha256": "17A36C8D8884794973EF5CE89FF180969FBBFB6EA1254B0255343D8269102D88"
+  },
+  {
+    "path": "platform/resources/views/local-accounts/admin-panel.blade.php",
+    "sha256": "1301B45634D2C210FF5D8028B206A1A8A7AA25EBEA690E5FEFF6E8A877D33C4B"
+  },
+  {
+    "path": "platform/resources/views/local-accounts/delivery-option.blade.php",
+    "sha256": "8321FF1F960BC3E4FFB6BF3AB1E5E0157B4722F46B566367F1D840FADA17EE1D"
+  },
+  {
+    "path": "platform/resources/views/local-accounts/manage.blade.php",
+    "sha256": "3FF8D5D9C76410308609E91C708F7F992182FE5550F09A72973945BBA580B21C"
+  },
+  {
+    "path": "platform/resources/views/local-accounts/result.blade.php",
+    "sha256": "BF7D891E61FF0DF0EE0D646B613D4F04C900929345DC139C6F9C93608536B8AF"
+  },
+  {
+    "path": "platform/resources/views/platform.blade.php",
+    "sha256": "C75909EC60AAE94E96EA1AC5FC4D836619A8A90E482A79CF8DF2EB628EAB2764"
+  },
+  {
+    "path": "platform/tests/Feature/LocalAccountsTest.php",
+    "sha256": "A9BCE63BE11100644922498C0903D20CBD6F8B709F1F1693453681CEA39D4C47"
+  }
+]

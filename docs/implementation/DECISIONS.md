@@ -33,3 +33,10 @@ Maintainer: Bernie. Saturnino may propose decisions through handoffs. A proposal
 For each resolved ID, append: decision; approver's actual name/role; date; reference to their instruction/approval; alternatives; affected requirements, contracts and tests; migration/compatibility implications; effective version; whether estimates change. Preserve the previous proposal/history. If no approver is known, record `owner_unconfirmed`; do not assign their authority to an AI.
 
 Pending choices block only dependent operations. Continue independent inspection, fixtures, UI sketches and tests. Ordinary reversible implementation choices within an accepted contract do not require new product approval.
+
+## 2026-10-27 — M2 starter scope approved in conversation
+
+The user approved implementation of the M2 starter plan: defer authentik implementation and hosting; implement local email/password access, administrator-issued 1h setup/reset links, 7-day explicit client invitations, Member-only initial access and all-session password-change invalidation. Global and Client Admins create accounts; Client Admin recovery covers other active members, including multi-client accounts, excluding self and Global Admins. No public registration, SMTP delivery or MFA in isolated local qualification. Minimum password length 15; existing idle/absolute session limits retained. Bernie-led implementation with separate Saturnino UX review. Cerebru discovery begins with an evidence checklist because documentation and sandbox access are unavailable. This supersedes the 26 October 'authentik now' sequencing only; it is not live/data/cost/release or milestone acceptance.
+
+### 2026-10-28 — Explicit localhost production exception
+User authorised APP_ENV and training environment production in a loopback-only profile, separate empty database, ordinary account UI and named first-admin setup. Existing demo databases remain unchanged. This supersedes the local/test-only password gate solely for the explicit localhost profile; it does not authorise hosted release, MFA deferral for hosted use, external email, live AI or Cerebru. See the localhost production handoff.

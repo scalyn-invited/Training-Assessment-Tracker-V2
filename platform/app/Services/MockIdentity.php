@@ -11,7 +11,7 @@ class MockIdentity
 {
     public function enabled(): bool
     {
-        return app()->environment(['local', 'testing']) && config('training.mock_identity') && config('training.environment') === 'test';
+        return config('training.authentication_mode') === 'mock' && app()->environment(['local', 'testing']) && config('training.mock_identity') && config('training.environment') === 'test';
     }
 
     public function assertEnabled(): void

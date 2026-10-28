@@ -44,6 +44,7 @@
         <a href="{{ route('ai.settings') }}" @if(request()->routeIs('ai.settings', 'ai.policy', 'ai.reconcile')) aria-current="page" @endif><x-icon name="spark"/><span>AI settings</span></a>
         @endif
         <a href="{{ route('appearance') }}" @if(request()->routeIs('appearance')) aria-current="page" @endif><x-icon name="settings"/><span>Appearance</span></a>
+        @if(app(\App\Services\LocalAccounts::class)->enabled())<a href="{{ route('local.password.change') }}"><x-icon name="settings"/><span>Change password</span></a>@endif
     </nav>
     <div class="sidebar-bottom">
         @if($branding['cerebru_url'])<a class="parent-link" href="{{ $branding['cerebru_url'] }}"><x-icon name="external"/>Back to Cerebru</a>@endif
@@ -64,7 +65,7 @@
 <option value="">Choose client</option>@foreach($clientChoices as $client)<option value="{{ $client->id }}" @selected($clientContext->id === $client->id)>{{ $client->name }}</option>@endforeach
 </select><button type="submit" class="secondary">Switch client</button></div></form><div class="profile"><span class="avatar" aria-hidden="true">{{ mb_strtoupper(mb_substr(auth()->user()->name, 0, 1)) }}</span><span class="profile-copy"><strong>{{ auth()->user()->name }}</strong><small>Current client access</small></span><form method="post" action="{{ route('logout') }}">@csrf<button class="icon-button" aria-label="Sign out" title="Sign out"><x-icon name="logout"/></button></form></div></header>
 @endauth
-@if(config('training.mock_identity') && config('training.environment') === 'test')<div class="sandbox"><span class="dot"></span><strong>LOCAL SANDBOX</strong><span>Synthetic people · Mock sign-in · No email delivery</span></div>@endif
+@if(config('training.mock_identity') && config('training.environment') === 'test')<div class="sandbox"><span class="dot"></span><strong>LOCAL SANDBOX</strong><span>Synthetic people · {{ app(\App\Services\LocalAccounts::class)->enabled() ? 'Local password sign-in' : 'Mock sign-in' }} · No email delivery</span></div>@endif
 <main id="main" class="container" tabindex="-1">
     @if(session('status'))<div class="notice" role="status">{{ session('status') }}</div>@endif
     @if($errors->any())<div class="notice error" role="alert"><strong>Please check your input.</strong><ul>@foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul></div>@endif
