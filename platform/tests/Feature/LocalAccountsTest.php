@@ -324,5 +324,11 @@ class LocalAccountsTest extends TestCase
             'current_password' => self::PASSWORD, 'reason' => 'Verify invalid input return',
         ])->assertSessionHasErrors('email')->assertRedirect('/platform');
         $this->assertArrayNotHasKey('current_password', session()->getOldInput());
+        $link = $this->create('return-setup@example.org');
+        $path = '/password/setup/'.$link['token'];
+        $this->withSession(['_previous' => ['url' => url('/platform-logo')]])->post($path, [
+            'password' => self::PASSWORD, 'password_confirmation' => 'mismatch',
+        ])->assertSessionHasErrors('password')->assertRedirect($path)->assertHeader('Referrer-Policy', 'no-referrer');
+        $this->assertArrayNotHasKey('password', session()->getOldInput());
     }
 }

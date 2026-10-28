@@ -24,7 +24,9 @@ $app = Application::configure(basePath: dirname(__DIR__))
         $exceptions->dontFlash(['current_password', 'password', 'password_confirmation', 'token']);
         $exceptions->render(function (ValidationException $exception, Request $request) {
             // Credential forms suppress referrers; never fall back to a logo URL in session history.
-            if ($request->routeIs('local.actions')) {
+            if ($request->routeIs('local.password.save', 'local.password.change', 'local.invitation.accept')) {
+                $exception->redirectTo($request->url());
+            } elseif ($request->routeIs('local.actions')) {
                 $route = $request->input('action') === 'create'
                     ? (app(ClientAccess::class)->globalAdmin($request->user()) ? 'platform.overview' : 'administration.show')
                     : 'local.links';
