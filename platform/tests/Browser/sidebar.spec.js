@@ -5,9 +5,9 @@ import { resetScenarioCache } from './isolated-cache.js';
 test.beforeEach(resetScenarioCache);
 
 for (const [name, expected] of [
-    [/Alex/, ['Overview', 'Learning plans', 'Updates', 'People', 'Administration', 'AI settings', 'Appearance']],
-    [/Morgan/, ['Overview', 'Learning plans', 'Review queue', 'Updates', 'Appearance']],
-    [/Sam/, ['Overview', 'Learning plans', 'Updates', 'Appearance']],
+    [/Alex/, ['Overview', 'Learning plans', 'Assessments', 'Updates', 'People', 'Administration', 'AI settings', 'Appearance']],
+    [/Morgan/, ['Overview', 'Learning plans', 'Review queue', 'Assessments', 'Updates', 'Appearance']],
+    [/Sam/, ['Overview', 'Learning plans', 'Assessments', 'Updates', 'Appearance']],
 ]) {
     test(`sidebar permissions and active state ${name}`, async ({ page }) => {
         await page.goto('/login');
