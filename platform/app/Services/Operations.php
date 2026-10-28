@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\AiRun;
+use App\Models\AssessmentFileConfirmation;
 use App\Models\DocumentExtraction;
 use App\Models\Enrolment;
 use App\Models\EvidenceFile;
@@ -89,6 +90,7 @@ class Operations
             }
             $file->update(['scan_status' => 'deleted', 'original_name' => '[removed under retention policy]', 'bytes' => 0]);
             DocumentExtraction::where('evidence_file_id', $file->id)->update(['status' => 'purged', 'extracted_text' => null, 'review_data' => null, 'warnings' => null]);
+            AssessmentFileConfirmation::where('evidence_file_id', $file->id)->update(['text' => null]);
         }
 
         return $count;

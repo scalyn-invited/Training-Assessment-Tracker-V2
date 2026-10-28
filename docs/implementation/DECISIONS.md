@@ -40,3 +40,7 @@ The user approved implementation of the M2 starter plan: defer authentik impleme
 
 ### 2026-10-28 — Explicit localhost production exception
 User authorised APP_ENV and training environment production in a loopback-only profile, separate empty database, ordinary account UI and named first-admin setup. Existing demo databases remain unchanged. This supersedes the local/test-only password gate solely for the explicit localhost profile; it does not authorise hosted release, MFA deferral for hosted use, external email, live AI or Cerebru. See the localhost production handoff.
+
+## 2026-10-28 — M3 scope approved in conversation
+
+Bernie explicitly requested implementation of the agreed M3 plan: backend plus minimal usable screens; reusable published assessment definitions; coordinator-configurable rubrics qualified with synthetic examples; rejection allowing immutable resubmission; evidence-linked manual scoring while live AI remains unapproved; and activation in the existing localhost production profile only after isolated checks and a verified restorable backup. Actual business rubric content, scoring calibration and success thresholds remain pending under D06. No paid provider, external email, hosted release, remote push, merge or human acceptance is approved by this scope.

@@ -78,7 +78,7 @@ class LearningNotices
                 return;
             }
             // Only a secure workspace link; never scores, submissions or assessment content.
-            Mail::raw('A training update is ready. Sign in to review: '.route('delivery.show', $enrolment->id), function ($message) use ($user) {
+            Mail::raw('A training update is ready. Sign in to review: '.(str_starts_with($notice->kind, 'assessment_') ? route('assessments.index') : route('delivery.show', $enrolment->id)), function ($message) use ($user) {
                 $message->to($user->email)->subject('Training review update');
             });
             $notice->update(['status' => 'relay_accepted']);

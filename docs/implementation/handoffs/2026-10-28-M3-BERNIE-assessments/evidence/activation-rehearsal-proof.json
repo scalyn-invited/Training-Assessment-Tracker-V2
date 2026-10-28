@@ -1,0 +1,14 @@
+{
+    "operation": "compare",
+    "integrity": "ok",
+    "preserved_tables": 61,
+    "new_empty_tables": [
+        "assessment_appeals",
+        "assessment_assignments",
+        "assessment_attempts",
+        "assessment_definitions",
+        "assessment_file_confirmations",
+        "assessment_reviews"
+    ],
+    "rows": 31
+}

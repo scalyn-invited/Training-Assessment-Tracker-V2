@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 
 class Registry
 {
-    public const TASKS = ['generate_programme', 'grade_submission', 'propose_adaptation', 'suggest_kpi_actions'];
+    public const TASKS = ['generate_programme', 'assess_initial', 'grade_submission', 'propose_adaptation', 'suggest_kpi_actions'];
 
     public function admin(User $actor): void
     {

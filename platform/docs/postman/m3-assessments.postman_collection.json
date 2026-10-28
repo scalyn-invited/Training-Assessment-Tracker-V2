@@ -1,0 +1,189 @@
+{
+  "info": {
+    "name": "M3 initial assessment session contract",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Use only a disposable synthetic preview and its authenticated member session cookie jar. Obtain a fresh CSRF token after signing in. This is a web-session contract, not a bearer-token integration API. Each request needs the indicated state; do not run blind against actual data."
+  },
+  "item": [
+    {
+      "name": "Read assigned assessment",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "X-CSRF-TOKEN",
+            "value": "{{csrfToken}}"
+          }
+        ],
+        "url": "{{baseUrl}}/assessments/{{assignmentId}}"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Expected status', () => pm.response.to.have.status(200));",
+              "pm.test('Approved projection excludes private reasons', () => { const value = pm.response.json(); pm.expect(value).not.to.have.property('reason'); pm.expect(value).not.to.have.property('analysis'); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Save draft",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "X-CSRF-TOKEN",
+            "value": "{{csrfToken}}"
+          }
+        ],
+        "url": "{{baseUrl}}/assessments/{{assignmentId}}",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"action\": \"save\",\n  \"expected_version\": \"{{expectedVersion}}\",\n  \"responses\": {\n    \"{{questionId}}\": \"Synthetic evidence response.\"\n  },\n  \"context\": \"Synthetic contract example\",\n  \"files\": []\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Expected status', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Submit saved version",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "X-CSRF-TOKEN",
+            "value": "{{csrfToken}}"
+          }
+        ],
+        "url": "{{baseUrl}}/assessments/{{assignmentId}}",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"action\": \"submit\",\n  \"expected_version\": \"{{expectedVersion}}\",\n  \"idempotency_key\": \"{{submissionKey}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Expected status', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Stale save conflicts",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "X-CSRF-TOKEN",
+            "value": "{{csrfToken}}"
+          }
+        ],
+        "url": "{{baseUrl}}/assessments/{{assignmentId}}",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"action\": \"save\",\n  \"expected_version\": 1,\n  \"responses\": {\n    \"{{questionId}}\": \"Stale copy\"\n  }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Expected conflict after a newer saved version', () => pm.response.to.have.status(409));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Inaccessible assignment",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "X-CSRF-TOKEN",
+            "value": "{{csrfToken}}"
+          }
+        ],
+        "url": "{{baseUrl}}/assessments/{{foreignAssignmentId}}"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Expected status', () => pm.response.to.have.status(404));"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

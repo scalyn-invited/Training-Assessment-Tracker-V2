@@ -7,14 +7,18 @@ use App\Models\AdaptationProposal;
 use App\Models\AiAttempt;
 use App\Models\AiBlock;
 use App\Models\AiRun;
+use App\Models\AssessmentAttempt;
+use App\Models\AssessmentReview;
 use App\Models\Enrolment;
 use App\Models\GradeAttempt;
 use App\Models\KpiSuggestion;
 use App\Models\Organisation;
 use App\Models\SubmissionAttempt;
 use App\Models\User;
+use App\Services\AssessmentAnalysis;
 use App\Services\Audit;
 use App\Services\Grading;
+use App\Services\InitialAssessments;
 use App\Services\Onboarding;
 use App\Services\Progression;
 use Illuminate\Support\Facades\DB;
@@ -23,7 +27,7 @@ use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
 class TaskGateway
 {
-    public function request(User $actor, Enrolment $enrolment, string $task, string $subject, string $programme, array $input, string $prompt): AiRun
+    public function request(User $actor, Enrolment $enrolment, string $task, string $subject, ?string $programme, array $input, string $prompt): AiRun
     {
         return DB::transaction(function () use ($actor, $enrolment, $task, $subject, $programme, $input, $prompt) {
             Organisation::whereKey($enrolment->organisation_id)->lockForUpdate()->firstOrFail();
@@ -55,7 +59,7 @@ class TaskGateway
                 'payload_hash' => hash('sha256', json_encode($input, JSON_THROW_ON_ERROR)), 'status' => 'queued', 'configuration' => $configuration,
                 'task_input' => $input, 'reserved' => $reserve, 'message' => 'Queued for provisional analysis.']);
             $block = AiBlock::create(['ai_run_id' => $run->id, 'block_index' => 0]);
-            GenerateBlock::dispatch($block->id, $task === 'grade_submission' ? 'ai_grading' : 'ai_generation')->afterCommit();
+            GenerateBlock::dispatch($block->id, in_array($task, ['grade_submission', 'assess_initial']) ? 'ai_grading' : 'ai_generation')->afterCommit();
             Audit::record($actor, 'ai.task_requested', $run->id, ['task' => $task, 'reserved' => $reserve]);
 
             return $run;
@@ -86,7 +90,9 @@ class TaskGateway
             $enrolment = Enrolment::findOrFail($run->enrolment_id);
             try {
                 $this->authorise(User::findOrFail($run->actor_id), $enrolment, $run->configuration['task'], $run->configuration['subject_id']);
-                $currentPrompt = $run->configuration['task'] === 'grade_submission' ? Grading::PROMPT : Progression::PROMPT;
+                $currentPrompt = match ($run->configuration['task']) {
+                    'assess_initial' => InitialAssessments::PROMPT, 'grade_submission' => Grading::PROMPT, default => Progression::PROMPT
+                };
                 abort_unless(hash_equals($run->configuration['prompt_hash'], hash('sha256', $currentPrompt)), 409);
                 $profile = $run->configuration['providers'][$block->provider_index];
                 app(Registry::class)->usable(app(Registry::class)->profile($profile['id'], $run->configuration['task']), $enrolment);
@@ -133,7 +139,7 @@ class TaskGateway
                 throw new ProviderFailure('invalid_output');
             }
             $this->validate($input['task'], $input, $output);
-        } catch (\JsonException|ValidationException) {
+        } catch (\JsonException|ValidationException|HttpExceptionInterface) {
             $error = 'invalid_output';
         } catch (ProviderFailure $failure) {
             $error = $failure->kind;
@@ -178,6 +184,8 @@ class TaskGateway
                 $this->authorise(User::findOrFail($run->actor_id), Enrolment::findOrFail($run->enrolment_id), $run->configuration['task'], $run->configuration['subject_id']);
                 if ($run->configuration['task'] === 'grade_submission') {
                     app(Grading::class)->provisional(GradeAttempt::findOrFail($run->configuration['subject_id']), $output);
+                } elseif ($run->configuration['task'] === 'assess_initial') {
+                    app(AssessmentAnalysis::class)->receive(AssessmentReview::findOrFail($run->configuration['subject_id']), $output);
                 } else {
                     app(Progression::class)->receive($run, $output);
                 }
@@ -191,7 +199,12 @@ class TaskGateway
 
     private function validate(string $task, array $input, array $output): void
     {
-        if ($task === 'grade_submission') {
+        if ($task === 'assess_initial') {
+            foreach ($output['criteria'] ?? [] as $criterion) {
+                abort_if(array_diff($criterion['evidence_ids'] ?? [], array_column($input['evidence'], 'id')), 422);
+            }
+            app(InitialAssessments::class)->score(AssessmentAttempt::findOrFail($input['attempt_id']), $output);
+        } elseif ($task === 'grade_submission') {
             foreach ($output['criteria'] ?? [] as $criterion) {
                 if (array_diff($criterion['evidence_ids'] ?? [], array_column($input['evidence'], 'id'))) {
                     throw ValidationException::withMessages(['evidence' => 'The model cited evidence content it was not supplied.']);
@@ -218,6 +231,8 @@ class TaskGateway
                     $submission->update(['status' => 'technical_failure', 'version' => $submission->version + 1]);
                 }
             }
+        } elseif ($run->configuration['task'] === 'assess_initial') {
+            app(AssessmentAnalysis::class)->fail($run->configuration['subject_id']);
         } elseif ($run->configuration['task'] === 'propose_adaptation') {
             AdaptationProposal::whereKey($run->configuration['subject_id'])->where('status', 'queued')->update(['status' => $state]);
         } elseif ($run->configuration['task'] === 'suggest_kpi_actions') {
@@ -228,7 +243,9 @@ class TaskGateway
 
     private function authorise(User $actor, Enrolment $enrolment, string $task, string $subject): void
     {
-        if ($task === 'grade_submission') {
+        if ($task === 'assess_initial') {
+            app(AssessmentAnalysis::class)->authorise($actor, AssessmentReview::findOrFail($subject));
+        } elseif ($task === 'grade_submission') {
             app(Grading::class)->reviewer($actor, GradeAttempt::findOrFail($subject)->submission);
         } else {
             app(Onboarding::class)->coordinator($actor, $enrolment);

@@ -1,0 +1,119 @@
+[
+  {
+    "id": "landmark-no-duplicate-banner",
+    "impact": "moderate",
+    "tags": [
+      "cat.semantics",
+      "best-practice"
+    ],
+    "description": "Ensure the document has at most one banner landmark",
+    "help": "Document should not have more than one banner landmark",
+    "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/landmark-no-duplicate-banner?application=playwright",
+    "nodes": [
+      {
+        "any": [
+          {
+            "id": "page-no-duplicate-banner",
+            "data": null,
+            "relatedNodes": [
+              {
+                "html": "<header class=\"workspace-header\">",
+                "target": [
+                  ".workspace-header"
+                ]
+              }
+            ],
+            "impact": "moderate",
+            "message": "Document has more than one banner landmark"
+          }
+        ],
+        "all": [],
+        "none": [],
+        "impact": "moderate",
+        "html": "<header class=\"mobile-bar\">",
+        "target": [
+          ".mobile-bar"
+        ],
+        "failureSummary": "Fix any of the following:\n  Document has more than one banner landmark"
+      }
+    ]
+  },
+  {
+    "id": "landmark-unique",
+    "impact": "moderate",
+    "tags": [
+      "cat.semantics",
+      "best-practice"
+    ],
+    "description": "Ensure landmarks are unique",
+    "help": "Landmarks should have a unique role or role/label/title (i.e. accessible name) combination",
+    "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/landmark-unique?application=playwright",
+    "nodes": [
+      {
+        "any": [
+          {
+            "id": "landmark-is-unique",
+            "data": {
+              "role": "banner",
+              "accessibleText": null
+            },
+            "relatedNodes": [
+              {
+                "html": "<header class=\"workspace-header\">",
+                "target": [
+                  ".workspace-header"
+                ]
+              }
+            ],
+            "impact": "moderate",
+            "message": "The landmark must have a unique aria-label, aria-labelledby, or title to make landmarks distinguishable"
+          }
+        ],
+        "all": [],
+        "none": [],
+        "impact": "moderate",
+        "html": "<header class=\"mobile-bar\">",
+        "target": [
+          ".mobile-bar"
+        ],
+        "failureSummary": "Fix any of the following:\n  The landmark must have a unique aria-label, aria-labelledby, or title to make landmarks distinguishable"
+      }
+    ]
+  },
+  {
+    "id": "region",
+    "impact": "moderate",
+    "tags": [
+      "cat.keyboard",
+      "best-practice",
+      "RGAAv4",
+      "RGAA-9.2.1"
+    ],
+    "description": "Ensure all page content is contained by landmarks",
+    "help": "All page content should be contained by landmarks",
+    "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/region?application=playwright",
+    "nodes": [
+      {
+        "any": [
+          {
+            "id": "region",
+            "data": {
+              "isIframe": false
+            },
+            "relatedNodes": [],
+            "impact": "moderate",
+            "message": "Some page content is not contained by landmarks"
+          }
+        ],
+        "all": [],
+        "none": [],
+        "impact": "moderate",
+        "html": "<div class=\"sandbox\"><span class=\"dot\"></span><strong>LOCAL SANDBOX</strong><span>Synthetic people · Mock sign-in · No email delivery</span></div>",
+        "target": [
+          ".sandbox"
+        ],
+        "failureSummary": "Fix any of the following:\n  Some page content is not contained by landmarks"
+      }
+    ]
+  }
+]

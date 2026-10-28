@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\AssessmentAttempt;
 use App\Models\Enrolment;
 use App\Models\EvidenceFile;
 use App\Models\Identity;
@@ -203,6 +204,13 @@ class Access
         if ($this->canDetails($user, $file->enrolment)) {
             return $user->id !== $file->enrolment->member_id || ! $file->sensitive
                 || ($file->purpose === 'evidence' && $file->uploaded_by === $user->id);
+        }
+
+        foreach (app(InitialAssessments::class)->appealQuery($user)->with('assignment')->get() as $appeal) {
+            if ($appeal->assignment->enrolment_id === $file->enrolment_id && app(InitialAssessments::class)->alternate($user, $appeal->assignment)
+                && AssessmentAttempt::where('assignment_id', $appeal->assignment_id)->get()->contains(fn ($t) => in_array($file->id, $t->snapshot['files']))) {
+                return true;
+            }
         }
 
         return SubmissionAttempt::whereIn('id', $this->appealCases($user, $file->organisation_id))

@@ -1,0 +1,143 @@
+{
+  "synthetic": true,
+  "definition": {
+    "id": "11111111-1111-4111-8111-111111111111",
+    "revision": 1,
+    "status": "published",
+    "title": "Synthetic assessment example",
+    "questions": [
+      {
+        "id": "q1",
+        "prompt": "Explain the steps and checks."
+      }
+    ],
+    "rubric": {
+      "threshold": null,
+      "criteria": [
+        {
+          "id": "clear_steps",
+          "category": "Clarity",
+          "label": "Clear steps",
+          "guidance": "Use evidence of reproducible steps.",
+          "weight": 1
+        }
+      ]
+    }
+  },
+  "assignment": {
+    "id": "22222222-2222-4222-8222-222222222222",
+    "definition_id": "11111111-1111-4111-8111-111111111111",
+    "status": "assigned",
+    "version": 1
+  },
+  "submission": {
+    "id": "33333333-3333-4333-8333-333333333333",
+    "assignment_id": "22222222-2222-4222-8222-222222222222",
+    "number": 1,
+    "draft_version": 2,
+    "responses": {
+      "q1": "Synthetic procedure with recorded checks."
+    }
+  },
+  "analysis": {
+    "kind": "analysis",
+    "status": "provisional",
+    "result": {
+      "rubric_id": "11111111-1111-4111-8111-111111111111",
+      "rubric_version": 1,
+      "criteria": [
+        {
+          "id": "clear_steps",
+          "score": 80,
+          "evidence_ids": [
+            "33333333-3333-4333-8333-333333333333:q1"
+          ],
+          "feedback": "Synthetic example: the written steps can be followed.",
+          "insufficient_evidence": false
+        }
+      ],
+      "categories": {
+        "Clarity": 80
+      },
+      "total": 80,
+      "threshold": null,
+      "success": null
+    }
+  },
+  "decision": {
+    "id": "44444444-4444-4444-8444-444444444444",
+    "attempt_id": "33333333-3333-4333-8333-333333333333",
+    "kind": "decision",
+    "status": "approved",
+    "reason": "Private human rationale, excluded from member projection.",
+    "result": {
+      "rubric_id": "11111111-1111-4111-8111-111111111111",
+      "rubric_version": 1,
+      "criteria": [
+        {
+          "id": "clear_steps",
+          "score": 80,
+          "evidence_ids": [
+            "33333333-3333-4333-8333-333333333333:q1"
+          ],
+          "feedback": "Synthetic example: the written steps can be followed.",
+          "insufficient_evidence": false
+        }
+      ],
+      "categories": {
+        "Clarity": 80
+      },
+      "total": 80,
+      "threshold": null,
+      "success": null
+    }
+  },
+  "approved": {
+    "contract": "C03-v1",
+    "assignment_id": "22222222-2222-4222-8222-222222222222",
+    "attempt_id": "33333333-3333-4333-8333-333333333333",
+    "decision_id": "44444444-4444-4444-8444-444444444444",
+    "definition_id": "11111111-1111-4111-8111-111111111111",
+    "revision": 1,
+    "approved_at": "2026-10-28T08:00:00Z",
+    "result": {
+      "rubric_id": "11111111-1111-4111-8111-111111111111",
+      "rubric_version": 1,
+      "criteria": [
+        {
+          "id": "clear_steps",
+          "score": 80,
+          "evidence_ids": [
+            "33333333-3333-4333-8333-333333333333:q1"
+          ],
+          "feedback": "Synthetic example: the written steps can be followed.",
+          "insufficient_evidence": false
+        }
+      ],
+      "categories": {
+        "Clarity": 80
+      },
+      "total": 80,
+      "threshold": null,
+      "success": null
+    },
+    "plan_creation_available": false
+  },
+  "errors": {
+    "stale": {
+      "status": 409,
+      "message": "The assessment changed. Reload before reviewing."
+    },
+    "inaccessible": {
+      "status": 404
+    },
+    "invalidEvidence": {
+      "status": 422
+    },
+    "missingEvidence": {
+      "score": null,
+      "total": null,
+      "success": null
+    }
+  }
+}

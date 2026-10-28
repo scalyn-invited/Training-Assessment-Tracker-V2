@@ -1,0 +1,4 @@
+
+   INFO  Running migrations.
+
+  2026_10_28_150000_create_initial_assessments ............................................................... 2s DONE

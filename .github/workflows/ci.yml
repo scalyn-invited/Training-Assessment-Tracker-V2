@@ -124,6 +124,14 @@ jobs:
         run: node scripts/global-admin-demo.mjs --name=realistic-demo-browser --upgrade
       - name: Verify realistic demo journeys
         run: npx playwright test --config=playwright.demo.config.js
+      - name: Verify assigned assessment journey
+        env:
+          TRAINING_BROWSER_PORT: '8127'
+        run: |
+          node --check public/assessment-draft.js
+          node --check scripts/m3-browser-check.mjs
+          node scripts/browser-prepare.mjs
+          node scripts/m3-browser-check.mjs
       - name: Diagnose browser server failures
         if: failure()
         run: |
@@ -143,6 +151,7 @@ jobs:
             platform/.runtime/ui-sidebar/*.png
             platform/.runtime/realistic-demo-evidence/browser.json
             platform/.runtime/realistic-demo-evidence/browser-results/
+            platform/.runtime/m3-browser/
           retention-days: 7
 
   documents:

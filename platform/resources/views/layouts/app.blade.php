@@ -36,6 +36,7 @@
         <a href="{{ route('dashboard') }}" @if(request()->routeIs('dashboard')) aria-current="page" @endif><x-icon name="home"/><span>Overview</span></a>
         <a href="{{ route('dashboard') }}#learning-plans" @if(request()->routeIs('enrolments.*', 'onboarding.*', 'plans.*', 'delivery.*', 'submission.*', 'progress.*', 'documents.*', 'files.*', 'jobs.*', 'ai.request', 'ai.show')) aria-current="page" @endif><x-icon name="book"/><span>Learning plans</span></a>
         @if(app(\App\Services\Access::class)->coordinator(auth()->user()))<a href="{{ route('reviews.show') }}" @if(request()->routeIs('reviews.*')) aria-current="page" @endif><x-icon name="check"/><span>Review queue</span></a>@endif
+        <a href="{{ route('assessments.index') }}" @if(request()->routeIs('assessments.*')) aria-current="page" @endif><x-icon name="check"/><span>Assessments</span></a>
         <a href="{{ route('notifications.show') }}" @if(request()->routeIs('notifications.*')) aria-current="page" @endif><x-icon name="bell"/><span>Updates</span></a>
         <span class="nav-section">Manage</span>
         @if(app(\App\Services\Access::class)->admin(auth()->user()))

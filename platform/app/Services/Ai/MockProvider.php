@@ -6,7 +6,7 @@ class MockProvider implements Provider
 {
     public function generate(array $configuration, array $input): ProviderResult
     {
-        if (($input['task'] ?? '') === 'grade_submission') {
+        if (in_array(($input['task'] ?? ''), ['grade_submission', 'assess_initial'])) {
             $hasText = strlen(trim($input['evidence'][0]['text'])) >= 30;
             $result = ['rubric_id' => $input['rubric']['id'], 'rubric_version' => $input['rubric']['version'],
                 'criteria' => array_map(fn ($criterion) => ['id' => $criterion['id'], 'score' => $hasText ? 70 : 0,
