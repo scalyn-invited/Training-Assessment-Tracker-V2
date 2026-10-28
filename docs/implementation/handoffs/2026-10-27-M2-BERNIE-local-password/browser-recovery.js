@@ -1,0 +1,44 @@
+async page => {
+  page.setDefaultTimeout(90000); page.setDefaultNavigationTimeout(90000);
+  const original='Fifteen plus characters!', recovered='Recovered synthetic password!';
+  const login=async(p,email,password)=>{
+    await p.goto('http://127.0.0.1:8157/login');
+    await p.getByLabel('Email',{exact:true}).fill(email);
+    await p.getByLabel('Email',{exact:true}).press('Tab');
+    if(await p.evaluate(()=>document.activeElement?.getAttribute('name'))!=='password')throw new Error('Keyboard focus order');
+    await p.getByLabel('Password',{exact:true}).fill(password);
+    await Promise.all([p.waitForURL(email==='admin@example.invalid'?'**/platform':'**/clients'),p.getByLabel('Password',{exact:true}).press('Enter')]);
+  };
+  const other=await page.context().browser().newContext();
+  const member=await other.newPage(); member.setDefaultTimeout(90000); member.setDefaultNavigationTimeout(90000);
+  await login(member,'browser-member@example.invalid',original);
+  await page.setViewportSize({width:1440,height:1000});
+  await Promise.all([page.waitForURL('**/login'),page.getByRole('button',{name:'Sign out',exact:true}).click()]);
+  await login(page,'admin@example.invalid',original);
+  await page.goto('http://127.0.0.1:8157/accounts/links');
+  const form=page.locator('form').filter({has:page.getByRole('button',{name:'Issue private link',exact:true})});
+  await form.getByRole('combobox',{name:'Account',exact:true}).selectOption({label:'Browser member — browser-member@example.invalid'});
+  await page.screenshot({path:'output/m2-recovery-desktop.png',fullPage:true});
+  await form.getByLabel('Your current password',{exact:true}).fill(original);
+  await form.getByLabel('Reason',{exact:true}).fill('Browser recovery qualification');
+  await form.getByRole('button',{name:'Issue private link',exact:true}).click();
+  const link=await page.getByLabel('Private link',{exact:true}).inputValue();
+  await page.goto(link);
+  await page.getByLabel('New password',{exact:true}).fill(recovered);
+  await page.getByLabel('Confirm new password',{exact:true}).fill(recovered);
+  await Promise.all([page.waitForURL('**/login'),page.getByRole('button',{name:'Save password',exact:true}).click()]);
+  await member.goto('http://127.0.0.1:8157/dashboard');
+  if(!member.url().endsWith('/login'))throw new Error('Old session survived reset');
+  await other.close();
+  await login(page,'browser-member@example.invalid',recovered);
+  await page.goto('http://127.0.0.1:8157/account/password');
+  await page.getByLabel('Current password',{exact:true}).fill(recovered);
+  await page.getByLabel('New password',{exact:true}).fill(original);
+  await page.getByLabel('Confirm new password',{exact:true}).fill(original);
+  await Promise.all([page.waitForURL('**/login'),page.getByRole('button',{name:'Save password',exact:true}).click()]);
+  await page.screenshot({path:'output/m2-login-desktop.png',fullPage:true});
+  await page.setViewportSize({width:390,height:844});
+  await page.screenshot({path:'output/m2-login-mobile.png',fullPage:true});
+  if(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth))throw new Error('Login overflow');
+  return {recovery:true,otherSessionRevoked:true,ownPasswordChange:true,keyboardLogin:true,loginMobileNoOverflow:true};
+}

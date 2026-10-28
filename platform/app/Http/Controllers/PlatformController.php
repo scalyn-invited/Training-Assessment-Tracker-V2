@@ -77,7 +77,8 @@ class PlatformController extends Controller
             $service->revoke($request->user(), $d['grant'], $d['reason']);
         }
 
-        return back()->with('status', 'Platform administration updated.');
+        return redirect()->route('platform.section', in_array($a, ['appoint', 'remove']) ? 'admins' : 'clients')
+            ->with('status', 'Platform administration updated.');
     }
 
     public function saveAppearance(Request $request, PlatformAdministration $service)
@@ -148,7 +149,7 @@ class PlatformController extends Controller
             }
         }
 
-        return back()->with('status', 'Platform appearance saved.');
+        return redirect()->route('platform.section', 'appearance')->with('status', 'Platform appearance saved.');
     }
 
     public function logo()

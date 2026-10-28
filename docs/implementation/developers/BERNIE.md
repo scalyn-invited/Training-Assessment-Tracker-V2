@@ -70,7 +70,7 @@ The task-log estimates below are retained from the superseded baseline; they are
 | --- | --- | --- | --- |
 | M0-BERNIE | 16h | ready_for_review | 2026-10-26 handoff; proposals/check evidence, four utility skips, MariaDB and human gates pending. |
 | M1-BERNIE | 56h | in_progress | Historical Cerebru UI slice remains ready for review; current C01/C02 fixture/design slice is recorded in the [2026-10-26 handoff](../handoffs/2026-10-26-M1-BERNIE-c01-c02.md). Client foundation acceptance pending. |
-| M2-BERNIE | 56h | not_started | None recorded |
+| M2-BERNIE | 56h | in_progress | Local-password starter ready_for_review; [2026-10-27 handoff](../handoffs/2026-10-27-M2-BERNIE-local-password.md). Full M2/live/human gates remain open. |
 | M3-BERNIE | 32h | not_started | None recorded |
 | M4-BERNIE | 32h | not_started | None recorded |
 | M5-BERNIE | 40h | not_started | None recorded |
@@ -249,3 +249,34 @@ Global Admin slice locally ready for review: dedicated platform UI, environment-
 ## 2026-10-27 — Global Admin publication and CI
 
 User now authorised PR publication and hosted CI. Previous PR #11 is merged at f1b38651cc57c418029a9894750caa85dee62e6d; the Global Admin branch fast-forwards to that identical-content base. CI now upgrades its isolated realistic-demo fixture and runs Global Admin desktop/mobile accessibility, navigation and Client Admin denial checks alongside the existing journeys. Hosted results will be recorded against the exact PR head in its description. No merge or deployment authorised; existing synthetic services/databases preserved.
+
+## 2026-10-27 — M2-BERNIE/local-password starter claim
+
+User explicitly requested the approved Bernie-led M2 starter plan. Branch `codex/m2-local-identity`, isolated checkout `.runtime/m2-starter`, base `6e2b9f5`. Status: in_progress. Scope: local synthetic password authentication, account setup/recovery, consent-based Member invitations, minimal presentation wiring, tests, and Cerebru discovery preparation. Authentik and live Cerebru are deferred. Existing database is untouched; disposable SQLite/MariaDB only. No counterpart acknowledgement or review is inferred; Saturnino's record is not edited. Shared integration is isolated; no push, merge, real data or deployment authorised.
+
+## 2026-10-27 — M2 starter local delivery
+
+Local-password starter is ready_for_review in the isolated `codex/m2-local-identity` checkout, base `6e2b9f5` plus uncommitted changes. Exact manifest, technical self-review, SQLite/MariaDB race results, browser evidence and remaining gates are in the dated M2 handoff. Existing application database unchanged. No real data, external integration, paid usage, push/merge or deployment. Saturnino review, project-owner acceptance, PR/hosted CI and full M2 remain pending. Authentik hosting and implementation deferred by explicit user instruction; Cerebru discovery inputs unavailable. Actual hours unknown.
+
+## 2026-10-27 — Main-checkout M2 activation
+
+Explicit user-approved transfer to `codex/m2-main-local` completed after verifying the 52-file source manifest. Fresh synthetic database prepared; original database and 29 unrelated files verified unchanged. Main-checkout targeted tests: 33 passed / 272 assertions. UI refinement by Saturnino is not a local-use gate per current user instruction. Runtime activation awaits the user's choice about an existing grouped preview launcher owning port 8000 and four other ports; do not treat the old preview as M2. See [activation handoff](../handoffs/2026-10-27-M2-BERNIE-main-activation.md). No remote push, real data, paid services or deployment.
+
+## 2026-10-28 — Main M2 preview active
+
+User authorised replacement of the old grouped previews. M2 now runs on port 8000 from codex/m2-main-local using the fresh synthetic database. Main browser flows, supplied demo credentials, client selection and protected-route denial passed. Original database and 29 unrelated files unchanged. See the activation handoff for evidence and rollback. Saturnino refinement and human milestone acceptance remain pending; local preview is available now.
+
+## 2026-10-28 — M2 local-development accounts
+
+User authorised implementation of the local-development restriction removal plan. Claim: codex/m2-local-development, base 6e2b9f5 with preserved uncommitted M2 work. Scope: local account classification and ordinary email addresses, bounded admin UI, disabled-by-default outbound configuration and account mail preparation, tests and handoff. Existing application database is excluded. No provider selection, paid calls, external emails, deployment or human review inferred.
+
+## 2026-10-28 — Local-development account delivery
+
+Ordinary email addresses and explicit Test account choice implemented on codex/m2-local-development. Non-test local account lifecycle works; existing accounts are not converted. SMTP and AI configuration prepared, disabled pending the user's unresolved provider/recipient/data/budget decisions. 59 tests / 418 assertions passed; browser setup/login/client selection/denied admin access and keyboard/mobile form checks passed. Original database and 29 unrelated files unchanged. Technical self-review and activation/rollback details: [handoff](../handoffs/2026-10-28-M2-BERNIE-local-development.md). No external email, paid AI, live Cerebru, deployment or human acceptance claimed.
+
+## 2026-10-28 — Localhost production profile claim
+User approved an empty production-partition database, ordinary account UI and Bernie Santos Cabase as first Global Admin. Branch codex/m2-local-production, base 6e2b9f5 with preserved prior work. Existing preview stopped after ownership verification; both databases frozen and hashed. No external services, workers, real-password selection or hosted release authorised. Tests use disposable databases; Saturnino review remains separate.
+
+## 2026-10-28 — Localhost production profile delivery
+
+Localhost production runtime delivered on codex/m2-local-production with a separate empty database and the explicitly named Global Admin awaiting private password setup. Existing databases and unrelated files preserved. 63 tests / 474 assertions passed, followed by 27 tests / 171 assertions after the final mock-AI guard; browser empty workspace/client creation/account setup/keyboard/mobile/access checks passed in a disposable rehearsal. Port 8000 left running. Technical self-review, private configuration, reissue and rollback instructions: [handoff](../handoffs/2026-10-28-M2-BERNIE-local-production.md). No hosted deployment, MFA completion, SMTP, live AI or Cerebru acceptance claimed; human review gates remain pending.

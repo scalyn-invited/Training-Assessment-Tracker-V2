@@ -1,0 +1,82 @@
+[
+  {
+    "path": "platform/app/Services/LocalAccounts.php",
+    "sha256": "7D27EF385B360B654FB023FA8E9D8CFFF330ACFE219E348040B1D1644AEABD3D"
+  },
+  {
+    "path": "platform/app/Http/Controllers/LocalAccountController.php",
+    "sha256": "30F05FC05A1D813C53D46897F18E79BCB54766D452099C61872F45BCE59EAE79"
+  },
+  {
+    "path": "platform/app/Http/Controllers/AiController.php",
+    "sha256": "DF36965AC95B9FC29974FD0691CF9AB9AB74EF851A0954235A58119846B12DF5"
+  },
+  {
+    "path": "platform/app/Services/Ai/Registry.php",
+    "sha256": "FAE6E3635C9047A9861A2DB720ECDAF406F82E95819DA982FF99D2F7A9757F24"
+  },
+  {
+    "path": "platform/app/Http/Middleware/LocalhostProduction.php",
+    "sha256": "02F9E0DACCB9E8391426D26C466525758149AC4E30B6E812238D5DEAEADBAB40"
+  },
+  {
+    "path": "platform/bootstrap/app.php",
+    "sha256": "855D3993C8795B16CE3616A317C9088D3A9B69E8B7EDCB8F1FCC06C028B589F4"
+  },
+  {
+    "path": "platform/config/training.php",
+    "sha256": "D5001E50426CB506531BE3E086A7DE05186DA6A6B2137DA5D5F6A7DDA83BB18D"
+  },
+  {
+    "path": "platform/routes/console.php",
+    "sha256": "467A9371829AB4600FBE79380625A7B1301CE35E465719472BAB7DF4BB4520A4"
+  },
+  {
+    "path": "platform/scripts/local-production.ps1",
+    "sha256": "A21F6BEBAC32AED74044C7E2E1E1BF6F11024E095E2FE7F45929DD8BD761422D"
+  },
+  {
+    "path": "platform/tests/Feature/LocalProductionTest.php",
+    "sha256": "26138D971466980654957ECCA7480A610DB680B0C863221E0A89FFEB0788F2C5"
+  },
+  {
+    "path": "platform/tests/Support/production-bootstrap-worker.php",
+    "sha256": "CB0A550111D9E04511FE2984A8DC1D80FC957EB8D42304D1B7A92533F07C1C26"
+  },
+  {
+    "path": "platform/resources/views/platform.blade.php",
+    "sha256": "571C4D6F2800BBA50C39CB35388D785C1665A59AD1E495F260E9FCE128AAED38"
+  },
+  {
+    "path": "platform/resources/views/administration.blade.php",
+    "sha256": "441DE9A9CFA7F7398ACDA5E56EF10656E408A0CED1703C1DA36968EE065B0A7A"
+  },
+  {
+    "path": "platform/resources/views/people.blade.php",
+    "sha256": "3EE0E0306353686A8BA3D80EF6828C0B5F0F937795DC72869D1EC3E0A931BB6F"
+  },
+  {
+    "path": "platform/resources/views/learning/plan.blade.php",
+    "sha256": "D4B403C637CF696BB368AC078590B88266D06A2E85E9477AE9D3EBCCF8C1090B"
+  },
+  {
+    "path": "platform/resources/views/ai/settings.blade.php",
+    "sha256": "3F08692AD9011BAD4F74DEE925654292BA7D4F48DFF0DBF6E3665C4A73D13D76"
+  },
+  {
+    "path": "platform/resources/views/local-accounts/admin-panel.blade.php",
+    "sha256": "2ADE3706B4C3D517EDE7DAF67471BFA5EF9694F8936FCA4759EF4FD585C5F8B5"
+  },
+  {
+    "path": "platform/resources/views/local-accounts/manage.blade.php",
+    "sha256": "9866F39E4DF164357045C5FE845388CA9AD86621F3865213E6B5AD16EDD46A02"
+  },
+  {
+    "path": "platform/resources/views/local-accounts/delivery-option.blade.php",
+    "sha256": "BF435A7A6C35B02B4B1D3E171C87F6851A924FBE4612F9D48B53B1B2410C41B0"
+  },
+  {
+    "path": "platform/.env.example",
+    "sha256": "5C6E448572ADEF2322AC2ED8BCF516EA2A4D8649506B014B1902F5A361150A44"
+  }
+]

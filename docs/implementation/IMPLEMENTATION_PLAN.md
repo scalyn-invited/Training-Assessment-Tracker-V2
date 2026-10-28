@@ -462,3 +462,7 @@ Record client membership and cross-client staff policy, source-of-truth ownershi
 ### Document status
 
 This is a proposed implementation baseline, not a production-readiness certificate or approval to incur costs. It reflects the supplied PDF and the reviewed local checkout on 9 October 2026. No application source, existing requirements PDF or historical architecture package is changed by producing this document. Implementation should update the project guidance and traceability map as each milestone is accepted.
+
+## M2 starter, 27 October 2026
+
+Local password access and user-approved client invitations are the first bounded M2 slice. Authentik implementation/hosting is deferred; Cerebru work is discovery preparation until actual documentation and sandbox access are supplied. See the dated M2 handoff for qualification evidence. The original integration charter remains the later live-acceptance target; there is no new committed deadline or full-milestone acceptance.

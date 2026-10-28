@@ -9,9 +9,12 @@
 <nav class="step-nav" aria-label="Learning blocks">@foreach($plan->content['blocks'] as $i=>$item)<a href="{{ route('plans.show', ['id'=>$enrolment->id,'version'=>$plan->version,'block'=>$i]) }}" @if($i === $blockIndex) aria-current="page" @endif>Block {{ $i+1 }} · {{ $item['start'] }}</a>@endforeach</nav>
 <section class="panel">
 @if($editable)
+@if(config('training.environment') === 'production' && !config('ai.live_enabled'))
+<p role="status">AI generation is not configured.</p>
+@else
 <details class="lesson"><summary>Generate or revise with AI</summary>
-<p>Generate all blocks as a new draft using the administrator-approved route. The local mock produces synthetic demonstration lessons; it does not tailor content or apply revision feedback. Every result still requires coordinator review.</p>
-<p>Data used: profile, confirmed findings, target competencies, KPI definitions, reviewed resource, scheduled dates, existing draft and your revision notes. Names, identity records and uploaded files are excluded. The local mock sends no network requests.</p>
+<p>Generate all blocks as a new draft using the administrator-approved route. Every result still requires coordinator review.</p>
+<p>Data used: profile, confirmed findings, target competencies, KPI definitions, reviewed resource, scheduled dates, existing draft and your revision notes. Names, identity records and uploaded files are excluded.</p>
 <form method="post" action="{{ route('ai.request', $enrolment->id) }}">@csrf
 <input type="hidden" name="expected_version" value="{{ $plan->version }}"><input type="hidden" name="idempotency_key" value="{{ Illuminate\Support\Str::uuid() }}">
 <label>Revision notes (optional)<textarea name="feedback" rows="3" maxlength="4000"></textarea></label>
@@ -19,6 +22,7 @@
 @php($recentRuns = \App\Models\AiRun::where('enrolment_id', $enrolment->id)->latest()->limit(5)->get())
 @if($recentRuns->isNotEmpty())<h3>Recent generation requests</h3><ul>@foreach($recentRuns as $recentRun)<li><a href="{{ route('ai.show', $recentRun->id) }}">{{ $recentRun->created_at }} · {{ $recentRun->status }}</a></li>@endforeach</ul>@endif
 </details>
+@endif
 @endif
 <h2>Block {{ $blockIndex+1 }} · {{ $block['start'] }}</h2>
 <p class="subtle">Future adaptation cutoff: {{ Carbon\CarbonImmutable::parse($block['freeze_at'])->setTimezone($plan->calendar->timezone)->format('d M Y, H:i T') }}. Calendar version {{ $plan->calendar->version }}. Baseline approval does not activate training.</p>

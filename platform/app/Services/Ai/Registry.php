@@ -48,6 +48,7 @@ class Registry
     public function profile(string $id, string $task): array
     {
         $profile = config('ai.providers.'.$id);
+        abort_if(config('training.environment') === 'production' && ($profile['adapter'] ?? null) === 'mock', 422, 'AI generation is not configured.');
         abort_unless(is_array($profile) && $profile['enabled'] && in_array($task, $profile['purposes']), 422, 'Provider is not enabled for this task.');
         abort_unless(in_array($profile['adapter'], ['mock', 'anthropic', 'gemini']) && ! empty($profile['model'])
             && is_numeric($profile['input_rate']) && $profile['input_rate'] >= 0 && is_numeric($profile['output_rate']) && $profile['output_rate'] >= 0

@@ -16,7 +16,7 @@ Ledger created: 2026-10-09. Maintainer: Bernie. Last shared implementation revis
 | --- | --- | --- | --- | --- | --- |
 | [M0](milestones/M0.md) | not_started | not_started | not_assessed | not_applicable; final qualification M7 | Scope/setup review |
 | [M1](milestones/M1.md) | in_progress | not_started | partial (UI slice verified; foundation pending) | not_applicable; final qualification M7 | M0 product decisions for affected schema work; fixtures and sketches may overlap M0 |
-| [M2](milestones/M2.md) | not_started | not_started | not_assessed | not_assessed | Stable M1 C01/C02 contracts for fixture/UI work; actual M1 gate for security acceptance |
+| [M2](milestones/M2.md) | in_progress (local-password starter) | not_started; UX review requested | partial; see 2026-10-27 handoff | blocked: authentik deferred; Cerebru documentation/sandbox unavailable | Local starter technical evidence is separate from full M1, UX and project-owner acceptance |
 | [M3](milestones/M3.md) | not_started | not_started | not_assessed | not_applicable; final qualification M7 | M1 foundation gate and stable M2 adapter contracts |
 | [M4](milestones/M4.md) | not_started | not_started | not_assessed | not_applicable; final qualification M7 | Stable M3 approved-assessment contract, M1 policies and recorded duration decision |
 | [M5](milestones/M5.md) | not_started | not_started | not_assessed | not_applicable; final qualification M7 | Stable M4 programme/calendar contract and M1 access services |
@@ -45,3 +45,8 @@ Cerebru UI execution evidence is recorded in the 2026-10-12 Bernie handoff; its 
 
 | 2026-10-13 | Bernie session | Scalyn logo/name/palette applied; full M1 remains partial. | [Handoff](handoffs/2026-10-13-M1-BERNIE-scalyn-branding.md); branding PHP and targeted browser checks passed. |
 | 2026-10-23 | User-directed planning update | Revised weekly allocation to Bernie 80% and Saturnino 20%; Bernie owns core implementation/checks/self-review, Saturnino owns UI/design and bounded UI work, and project owner accepts milestones. No feature status changed. | Updated planning package and AI-assisted resourcing memo; application code and historical evidence unchanged. |
+
+
+| 2026-10-27 | Bernie-led M2 starter | Implemented isolated local-password/account/invitation slice and Cerebru discovery preparation. Full M2 remains in progress; no live or human acceptance inferred. | [M2 handoff](handoffs/2026-10-27-M2-BERNIE-local-password.md). |
+| 2026-10-28 | Bernie-led main activation | Main M2 preview running on port 8000 with synthetic accounts; browser account flows verified. Full M2 remains in progress. | [Activation handoff](handoffs/2026-10-27-M2-BERNIE-main-activation.md); original database and unrelated files unchanged. |
+| 2026-10-28 | User-approved localhost production profile | Separate production-partition database and pending first Global Admin; normal account UI; loopback only. Full M2 and hosted release remain open. | [Handoff](handoffs/2026-10-28-M2-BERNIE-local-production.md). |

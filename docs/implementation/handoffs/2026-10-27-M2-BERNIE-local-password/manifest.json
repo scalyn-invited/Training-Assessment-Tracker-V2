@@ -1,0 +1,216 @@
+{
+  "base": "6e2b9f5",
+  "branch": "codex/m2-local-identity",
+  "state": "uncommitted",
+  "date": "2026-10-27",
+  "files": [
+    {
+      "path": "docs/implementation/CONTRACTS.md",
+      "sha256": "b76ada45917b36789711dd405e531786f4ed72797caa146149b4d251d157f7de"
+    },
+    {
+      "path": "docs/implementation/DECISIONS.md",
+      "sha256": "32cf70c4706fe8325235d3b8239e9263f0a5da62ddb0a6308f42c3c1af6ee21c"
+    },
+    {
+      "path": "docs/implementation/developers/BERNIE.md",
+      "sha256": "62843a0fd311096196a73d886bfedb3cd196311aa1457e3a75d473e835c0d55c"
+    },
+    {
+      "path": "docs/implementation/handoffs/2026-10-27-M2-BERNIE-local-password.md",
+      "sha256": "be69045a903be4ce9a06198bbe7834ce74919cc494e8e172ddda3f502cf3d3b4"
+    },
+    {
+      "path": "docs/implementation/handoffs/2026-10-27-M2-BERNIE-local-password/browser-flow.js",
+      "sha256": "b1b5d89f80a17e0b161a931f539f42a4646d817b2a75c2840980b207c78c9fed"
+    },
+    {
+      "path": "docs/implementation/handoffs/2026-10-27-M2-BERNIE-local-password/browser-recovery.js",
+      "sha256": "2da5488a62f633409187ddd63d8c1e33ac8e96f1de387d2a3882bc3fbcce1d8d"
+    },
+    {
+      "path": "docs/implementation/handoffs/2026-10-27-M2-BERNIE-local-password/CEREBRU-DISCOVERY.md",
+      "sha256": "369c57b9ad5c1a1d7d944076b86d50a761749e2754e2832527bcd8449875eed4"
+    },
+    {
+      "path": "docs/implementation/handoffs/2026-10-27-M2-BERNIE-local-password/CONTRACT.md",
+      "sha256": "88ae065e3fa1d4285f6d47d1adf67d7f9ab4dd0c820a3462adc5c946b6545fcc"
+    },
+    {
+      "path": "docs/implementation/handoffs/2026-10-27-M2-BERNIE-local-password/evidence/m2-clients-mobile.png",
+      "sha256": "310de09bce66369a7da8f8f6a79a08486552e634073c3aa67358f908cd114a03"
+    },
+    {
+      "path": "docs/implementation/handoffs/2026-10-27-M2-BERNIE-local-password/evidence/m2-login-desktop.png",
+      "sha256": "21196f0414df1c8c6866ec4cbb6f97e1faa59876723ad3e70d6c8cc42e2734d8"
+    },
+    {
+      "path": "docs/implementation/handoffs/2026-10-27-M2-BERNIE-local-password/evidence/m2-login-mobile.png",
+      "sha256": "207bcc555508624b378f48911de90752d985ac9d22f9b569495cf758c854ee56"
+    },
+    {
+      "path": "docs/implementation/handoffs/2026-10-27-M2-BERNIE-local-password/evidence/m2-recovery-desktop.png",
+      "sha256": "38ce4555888162e3df6d6368d2418864fb50c514ddb75986504647efdbd87afb"
+    },
+    {
+      "path": "docs/implementation/handoffs/2026-10-27-M2-BERNIE-local-password/evidence/mariadb-final.xml",
+      "sha256": "da409c1bd88f7360edfd7dd0150d486d0197eb5366e784c0df719eb5e3d589ab"
+    },
+    {
+      "path": "docs/implementation/handoffs/2026-10-27-M2-BERNIE-local-password/evidence/mariadb-regression.xml",
+      "sha256": "d0bffd0d8f4cc4c86b32c3a97e53f644f3ceef16773c3d9d8fe666bf37ac5b78"
+    },
+    {
+      "path": "docs/implementation/handoffs/2026-10-27-M2-BERNIE-local-password/evidence/RESULTS.md",
+      "sha256": "a85ac7196f1bb3d29895d55a67a95d959d80ac0ccd43f11866a2b4ce7ff966a5"
+    },
+    {
+      "path": "docs/implementation/handoffs/2026-10-27-M2-BERNIE-local-password/evidence/sqlite-final.xml",
+      "sha256": "b8a5546244716297524ef9531128f7988d5b466363eb6f1efef7a390a6e31804"
+    },
+    {
+      "path": "docs/implementation/handoffs/2026-10-27-M2-BERNIE-local-password/evidence/sqlite-focused.xml",
+      "sha256": "562da9652863b2388859bcdc670f97025a1b8a581418e47805834ab0cc4caaac"
+    },
+    {
+      "path": "docs/implementation/handoffs/2026-10-27-M2-BERNIE-local-password/evidence/sqlite-regression.xml",
+      "sha256": "de5682c0610635e41009ffe686ad332278bc21f9a6bd36a875f3c6c8a41ddf53"
+    },
+    {
+      "path": "docs/implementation/handoffs/2026-10-27-M2-BERNIE-local-password/OPERATIONS.md",
+      "sha256": "854bbcb705e7b65eae5644a36c28454d234ab0626bd9222c266f9c981c704861"
+    },
+    {
+      "path": "docs/implementation/handoffs/2026-10-27-M2-BERNIE-local-password/UX-REVIEW-REQUEST.md",
+      "sha256": "b454bc1e7bede0e6c81e9cba8dd81e36d02a0a49b66d529e26213c74d994831d"
+    },
+    {
+      "path": "docs/implementation/IMPLEMENTATION_PLAN.md",
+      "sha256": "e7e3012b156c5d36dae35c16a1982c4ef61808c0330e2060481b12873614f858"
+    },
+    {
+      "path": "docs/implementation/milestones/M2.md",
+      "sha256": "b9bb50b4032acf11f17a234c1c4f7e3948ffb1d180167bf9070acb49a7cc2fc2"
+    },
+    {
+      "path": "docs/implementation/STATUS.md",
+      "sha256": "4f28b097c92495e815af56df84758fa855d716430ab9387b630ce114904e0613"
+    },
+    {
+      "path": "platform/.env.example",
+      "sha256": "aed976e12cfabae2c744dc3441001633da81dac583685f86d7744e261e3ead27"
+    },
+    {
+      "path": "platform/app/Http/Controllers/LocalAccountController.php",
+      "sha256": "fce4758951d731d6e9ea62ea5c2954aaf33503e4ce487fe04cb660bb2c0ab348"
+    },
+    {
+      "path": "platform/app/Http/Controllers/SessionController.php",
+      "sha256": "b2b2459d082682c86608b76789ed55344fa0334d1e8e4f9e8718d16a406c571a"
+    },
+    {
+      "path": "platform/app/Http/Middleware/RequestContext.php",
+      "sha256": "0ff575f72abc40e3a1a7d75cc700d836194d6349ca81f6482ea962c92a33cd52"
+    },
+    {
+      "path": "platform/app/Http/Middleware/TrainingSession.php",
+      "sha256": "ab77b7047e14e4f35fa0e25a7ce5669c687a9cf3c3ba7a6529c9c08977141da1"
+    },
+    {
+      "path": "platform/app/Services/Administration.php",
+      "sha256": "c94cd4a71a3dfee6fa4e499f56614a969626892be192587ee5f34c8e2e251e10"
+    },
+    {
+      "path": "platform/app/Services/LocalAccounts.php",
+      "sha256": "9485206d0eaa6240e48597b03e17e4bcd5153b7afb9d30be85e629ff98b71677"
+    },
+    {
+      "path": "platform/app/Services/MockIdentity.php",
+      "sha256": "c429c02ed3c1d6b5f5cda8d74c5eea3894f9959131710d6a8397fec20cbbd2bd"
+    },
+    {
+      "path": "platform/app/Services/Tenancy/PlatformAdministration.php",
+      "sha256": "9d800e24be5831133af78fb2eb8a0d7794a400e6d6a0df5407fa61b685768476"
+    },
+    {
+      "path": "platform/bootstrap/app.php",
+      "sha256": "028b05b2e41e5467d85c658c6ec7208b665d12f330dc18fd4730f14a0cb4ee4d"
+    },
+    {
+      "path": "platform/config/training.php",
+      "sha256": "599f3f82a517b990da4d0aedd3c615d6f106576bcacd22245b0829e3049e69d9"
+    },
+    {
+      "path": "platform/database/migrations/2026_10_27_100000_create_local_account_links.php",
+      "sha256": "a6673831297b91d07a8d37b359d3d8d9dd5726949201fd83be1ab08a933ae785"
+    },
+    {
+      "path": "platform/resources/views/administration.blade.php",
+      "sha256": "618f2e7499d8f00467f1fa01c6fad5647702431990106141147a348c4d9f8019"
+    },
+    {
+      "path": "platform/resources/views/errors/410.blade.php",
+      "sha256": "a67a2865ba941a36fa637916526f986ce991b9a1c8997da85907b24243ccd4f7"
+    },
+    {
+      "path": "platform/resources/views/layouts/app.blade.php",
+      "sha256": "57a839dc2d2f8f105711a6e6045c15371b1c5c4d34129a3f74497c4caeb3d791"
+    },
+    {
+      "path": "platform/resources/views/local-accounts/admin-panel.blade.php",
+      "sha256": "360cfc824212fb413517317a664d7db491956786bad0439616203bfa6b2e2031"
+    },
+    {
+      "path": "platform/resources/views/local-accounts/error.blade.php",
+      "sha256": "ffde96c6ce1869632a7bf52cb7fe4a52f7dce6b04b6c53d3d8dda4c9095579c8"
+    },
+    {
+      "path": "platform/resources/views/local-accounts/invitation.blade.php",
+      "sha256": "9d0b6a1d327ab48bd26d1f6b66938722c0ce0508bba2653b3cede2b94322fc65"
+    },
+    {
+      "path": "platform/resources/views/local-accounts/manage.blade.php",
+      "sha256": "bda923463b299d35e7c177dd64be52720506351e7cbf9c4ba7280536038389a6"
+    },
+    {
+      "path": "platform/resources/views/local-accounts/password.blade.php",
+      "sha256": "bac2db73d72506b040d03f25fc7ac9fb0e1f7f40422d4b49a5fc755b128ed638"
+    },
+    {
+      "path": "platform/resources/views/local-accounts/result.blade.php",
+      "sha256": "aca68e4d0c2e32288e59326965d141edf70cb818dfa58b6f90d8f4a2ad0a4414"
+    },
+    {
+      "path": "platform/resources/views/login.blade.php",
+      "sha256": "87e22c63a25d0f71b24303a2e44042558347a6b5eda2797ba8981e34ae40b867"
+    },
+    {
+      "path": "platform/resources/views/platform.blade.php",
+      "sha256": "b0b6ba2d10ceacae80f498fbcb04cac828645e68d3c2aa1fa84cc8da4651915e"
+    },
+    {
+      "path": "platform/routes/console.php",
+      "sha256": "14af511e65d8cfea364368d7b009dd51751974043ef1418ac00a9773ace0e696"
+    },
+    {
+      "path": "platform/routes/web.php",
+      "sha256": "eb6551b4e50f457df958933ced2da54d4323c1399d4aaa75e570a56e5c46ce35"
+    },
+    {
+      "path": "platform/tests/Feature/LocalAccountsTest.php",
+      "sha256": "880f30418616c579ff87336cd26ef4f649acd863b5bb439ab7adaa0789833900"
+    },
+    {
+      "path": "platform/tests/Integration/LocalAccountConcurrencyTest.php",
+      "sha256": "aeb69f12a80e1427972ba174015cf4bb4ada31ae6330f532132b99a7d32b678d"
+    },
+    {
+      "path": "platform/tests/Support/local-account-worker.php",
+      "sha256": "2da72bc93748b12ece87cc4a0de047da93915ecbc2fe82137e503114e7909560"
+    },
+    {
+      "path": "platform/tests/Support/m2-browser-fixture.php",
+      "sha256": "c9ca0eb1027c3700163a0ad12bebed068c869bedf552244d3db72fa115eb4383"
+    }
+  ]
+}

@@ -26,6 +26,7 @@
         <env name="DB_PORT" value="3308"/>
         <env name="DB_USERNAME" value="root"/>
         <env name="DB_PASSWORD" value=""/>
+        <env name="TRAINING_AUTH_MODE" value="mock" force="true"/>
         <env name="MOCK_IDENTITY_ENABLED" value="true"/>
         <env name="TRAINING_ENVIRONMENT" value="test"/>
         <env name="MAIL_MAILER" value="array"/>

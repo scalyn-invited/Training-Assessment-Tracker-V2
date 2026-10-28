@@ -30,6 +30,8 @@ class Administration
 
     public function person(User $actor, array $input): User
     {
+        abort_if(app(LocalAccounts::class)->enabled(), 409, 'Use local account setup and invitations.');
+
         return $this->locked($actor, function ($actor) use ($input) {
             $data = Validator::make($input, ['name' => 'required|string|max:120', 'email' => 'required|email|max:200', 'role' => 'required|in:member,coordinator',
                 'synthetic' => 'required|boolean', 'reason' => 'required|string|min:8|max:2000'])->validate();
