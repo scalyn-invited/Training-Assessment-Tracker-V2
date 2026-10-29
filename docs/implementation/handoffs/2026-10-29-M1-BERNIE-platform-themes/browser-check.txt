@@ -1,0 +1,38 @@
+async (page) => {
+  const out='output/playwright/platform-theme';
+  const results=[];
+  const assert=(condition,message)=>{if(!condition)throw Error(message);results.push(message);};
+  await page.setViewportSize({width:1440,height:1000});
+  const colours=()=>page.evaluate(()=>{const r=document.documentElement,s=getComputedStyle(r);return {theme:r.dataset.theme,key:r.dataset.themeKey,primary:s.getPropertyValue('--primary').trim(),background:getComputedStyle(document.body).backgroundColor,card:getComputedStyle(document.querySelector('.panel')).backgroundColor,button:getComputedStyle(document.querySelector('#platform-appearance-form button')).backgroundColor,nav:getComputedStyle(document.querySelector('.sidebar-nav a[aria-current]')).backgroundColor};});
+  await page.reload(); const initialAccent=await page.getByLabel('Brand colour',{exact:true}).inputValue(); const before=await colours();
+  await page.getByLabel('Brand colour',{exact:true}).fill('#cc3300');
+  assert((await colours()).primary===before.primary,'Unsaved colour leaves page palette unchanged');
+  const preview=await page.locator('[data-platform-preview="light"]').evaluate(el=>getComputedStyle(el).getPropertyValue('--preview-primary').trim());
+  await page.reload();
+  assert(await page.getByLabel('Brand colour',{exact:true}).inputValue()===initialAccent,'Unsaved preview does not persist after reload');
+  async function save(accent,theme){await page.getByLabel('Brand colour',{exact:true}).fill(accent);await page.getByRole('combobox',{name:'Default theme',exact:true}).selectOption(theme);await page.getByLabel('Appearance change reason',{exact:true}).fill('Synthetic platform colour verification');await page.getByRole('button',{name:'Save platform appearance',exact:true}).click();await page.waitForLoadState();await page.mouse.move(0,0);}
+  await save('#cc3300','platform-light');
+  const orange=await colours();
+  assert(orange.theme==='platform-light'&&orange.primary===preview,'Saved Platform Light uses generated orange palette');
+  assert(orange.button===orange.nav,'Buttons and active navigation use the same platform colour');
+  await page.screenshot({path:out+'/orange-light-desktop.png',fullPage:true});
+  await page.reload();assert((await colours()).primary===orange.primary,'Saved palette survives reload');
+  await save('#0066cc','platform-light');
+  const blue=await colours();
+  assert(blue.primary!==orange.primary&&blue.background!==orange.background&&blue.card===orange.card,'Second colour updates controls and backgrounds while retaining accessible neutral cards');
+  await page.locator('.theme-picker summary').click();
+  await page.getByRole('button',{name:'Platform Dark',exact:true}).click();
+  const dark=await colours();assert(dark.theme==='platform-dark'&&dark.background!==blue.background,'Platform Dark renders its dark palette');
+  await page.reload();assert((await colours()).theme==='platform-dark','Personal platform theme survives reload');
+  await page.locator('.theme-picker summary').click();await page.getByRole('button',{name:'Use platform default',exact:true}).click();
+  assert((await colours()).theme==='platform-light','Use platform default restores administrator choice');
+  await save('#0066cc','platform-dark');
+  await page.screenshot({path:out+'/blue-dark-desktop.png',fullPage:true});
+  await page.setViewportSize({width:390,height:844});
+  assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'Mobile platform page has no horizontal overflow');
+  await page.screenshot({path:out+'/blue-dark-mobile.png',fullPage:true});
+  await page.setViewportSize({width:1440,height:1000});
+  await page.getByRole('button',{name:'Sign out',exact:true}).click();
+  assert(await page.locator('html').getAttribute('data-theme')==='platform-dark','Shared sign-in inherits platform default');
+  console.log(JSON.stringify({results,orange,blue,dark},null,2));
+}

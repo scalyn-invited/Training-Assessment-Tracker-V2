@@ -103,3 +103,22 @@ h1{font-size:31px;letter-spacing:-1px;font-weight:600}.eyebrow{font-size:9px;let
 :root:is([data-theme=client-light],[data-theme=client-dark]) :is(input,select,textarea,button,.secondary,.theme-tile){border-color:var(--client-line)}
 .auto-theme-preview,.auto-preview-card{border-color:var(--preview-decorative)}
 .auto-theme-preview{border-top-color:var(--preview-primary)}
+
+/* Platform palettes share the accessible generated-client treatment, with independent tokens. */
+:root:is([data-theme=platform-light],[data-theme=platform-dark]){color-scheme:var(--platform-scheme,light);--bg:var(--platform-background);--surface:var(--platform-card);--raised:var(--platform-card);--hover:var(--platform-background);--ink:var(--platform-text);--muted:var(--platform-text);--line:var(--platform-text);--primary:var(--platform-primary);--on-primary:var(--platform-on-primary);--focus:var(--platform-text);--soft:var(--platform-card);--brand:var(--platform-primary)}
+:root:is([data-theme=platform-light],[data-theme=platform-dark]) .primary:hover{filter:none;text-decoration:underline}
+:root:is([data-theme=platform-light],[data-theme=platform-dark]) .workspace-hero{background:var(--primary);color:var(--on-primary);border-color:var(--primary)}
+:root:is([data-theme=platform-light],[data-theme=platform-dark]) .workspace-hero .eyebrow,:root:is([data-theme=platform-light],[data-theme=platform-dark]) .workspace-hero p:not(.eyebrow),:root:is([data-theme=platform-light],[data-theme=platform-dark]) .growth-orbit span{color:var(--on-primary)}
+:root:is([data-theme=platform-light],[data-theme=platform-dark]) .growth-orbit{border-color:var(--on-primary);box-shadow:none}
+:root[data-theme=platform-light]{--platform-primary:var(--platform-light-primary);--platform-background:var(--platform-light-background);--platform-card:var(--platform-light-card);--platform-text:var(--platform-light-text);--platform-muted:var(--platform-light-muted);--platform-line:var(--platform-light-line);--platform-focus:var(--platform-light-focus);--platform-raised:var(--platform-light-raised);--platform-hover:var(--platform-light-hover);--platform-soft:var(--platform-light-soft);--platform-primary-hover:var(--platform-light-primary-hover);--platform-on-primary:var(--platform-light-on-primary);--platform-scheme:var(--platform-light-scheme)}
+.sample-platform-light{--sample-bg:var(--platform-light-background);--sample-surface:var(--platform-light-card);--sample-accent:var(--platform-light-primary)}
+.theme-dot-platform-light{background:var(--platform-light-primary)}
+:root[data-theme=platform-dark]{--platform-primary:var(--platform-dark-primary);--platform-background:var(--platform-dark-background);--platform-card:var(--platform-dark-card);--platform-text:var(--platform-dark-text);--platform-muted:var(--platform-dark-muted);--platform-line:var(--platform-dark-line);--platform-focus:var(--platform-dark-focus);--platform-raised:var(--platform-dark-raised);--platform-hover:var(--platform-dark-hover);--platform-soft:var(--platform-dark-soft);--platform-primary-hover:var(--platform-dark-primary-hover);--platform-on-primary:var(--platform-dark-on-primary);--platform-scheme:var(--platform-dark-scheme)}
+.sample-platform-dark{--sample-bg:var(--platform-dark-background);--sample-surface:var(--platform-dark-card);--sample-accent:var(--platform-dark-primary)}
+.theme-dot-platform-dark{background:var(--platform-dark-primary)}
+:root:is([data-theme=platform-light],[data-theme=platform-dark]){--muted:var(--platform-muted);--line:var(--platform-line);--focus:var(--platform-focus);--raised:var(--platform-raised);--hover:var(--platform-hover);--soft:var(--platform-soft)}
+:root:is([data-theme=platform-light],[data-theme=platform-dark]) .primary:hover{background:var(--platform-primary-hover);filter:none}
+:root[data-theme=platform-light]{--platform-decorative:var(--platform-light-decorative)}
+:root[data-theme=platform-dark]{--platform-decorative:var(--platform-dark-decorative)}
+:root:is([data-theme=platform-light],[data-theme=platform-dark]){--line:var(--platform-decorative)}
+:root:is([data-theme=platform-light],[data-theme=platform-dark]) :is(input,select,textarea,button,.secondary,.theme-tile){border-color:var(--platform-line)}

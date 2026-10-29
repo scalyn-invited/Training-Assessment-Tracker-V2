@@ -8,6 +8,7 @@ use App\Services\LocalAccounts;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 
 class PlatformAdministration
 {
@@ -175,7 +176,13 @@ class PlatformAdministration
                 $service->join($actor, $client, $user, $reason);
             } else {
                 $member = app(ClientAccess::class)->membership($person, $client);
-                abort_unless($member, 422, 'Explicitly join this account to the client first.');
+                if (! $member) {
+                    throw ValidationException::withMessages([
+                        'client' => app(LocalAccounts::class)->enabled()
+                            ? 'This account is not an active member of the selected client. Choose its current client, or invite the account and wait for acceptance before granting Client Admin.'
+                            : 'This account is not an active member of the selected client. Choose its current client, or explicitly join the account to that client first.',
+                    ]);
+                }
                 if ($action === 'grant') {
                     $service->grantRole($actor, $client, $member->id, 'admin', null, $reason);
                 } elseif ($action === 'revoke') {

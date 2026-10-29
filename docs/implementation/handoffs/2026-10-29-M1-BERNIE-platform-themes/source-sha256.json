@@ -1,0 +1,52 @@
+[
+  {
+    "path": "platform/app/Http/Controllers/PlatformController.php",
+    "before": "9a48ac5acc31b17e072231544861a33ab892c342bd1ae9097512bcddcbe473a9",
+    "after": "67a6b549640429b16da7f229c3194d4751f30da882ace8ad8922b65bace9f127"
+  },
+  {
+    "path": "platform/app/Providers/AppServiceProvider.php",
+    "before": "e1293f2ddb0f96ffc2fc7df7a21aea8fe1373d64fa2e143e1ca5b07ccde8592e",
+    "after": "31ffbb57fab08a29b8f334c1c86b73bf56ceb269702d935e279ac06500e03ac9"
+  },
+  {
+    "path": "platform/app/Services/Branding.php",
+    "before": "9acd281fb860fed946e371c3bcd597e6b3e8f1f6e83f01eaa6f8d5eeab0f660d",
+    "after": "d57a3d8c48d7d1f7fc478176bb536e12ed36d99a9a52f7ec60c72e51fac8b31d"
+  },
+  {
+    "path": "platform/public/app.css",
+    "before": "5ae1ff71f2260dde64c77421438eec664bff2d1f2c7502aa8671eeabad36129e",
+    "after": "340f3415965272962e8dee38a3ca7c3e56cbd7f22d04514fb19265b10b3ee4a7"
+  },
+  {
+    "path": "platform/public/appearance.js",
+    "before": "16dc7a9dc11cfa3b3af76efe562e64ac988749c962ed57e34bfd223aabc30b6a",
+    "after": "3d25f4bd46f36734386fe57e5241c27853aa2c5df02a349f83607602a06f76d7"
+  },
+  {
+    "path": "platform/resources/views/components/theme-picker.blade.php",
+    "before": "6379879b5a4243341ee56d1fd3fde39d76a3dbbe81fe1b9574bc8c71eb5e79a6",
+    "after": "ac3999d0728a580b0f6d0dd8718463385ad509ec238c55488f7936373ce813f5"
+  },
+  {
+    "path": "platform/resources/views/layouts/app.blade.php",
+    "before": "9c2c889c9119ac19cb92329f9342908f7d460423d27325de98e3e32a62a48a5d",
+    "after": "418c5cfb9bb9773906ad1fec83aa7cc4ced0f4f87d2a049e965c71e259daac98"
+  },
+  {
+    "path": "platform/resources/views/platform.blade.php",
+    "before": "77c87493b57fc4c856a2af1040ca2e37eca824ddcb947ebf9c70453e85bb50a4",
+    "after": "d64f6be8f4b418c0f04af74e79e547c572e0512647629f51b00f03a8f74958b6"
+  },
+  {
+    "path": "platform/tests/Feature/BrandingTest.php",
+    "before": "b65b071fe0ae5368779e1ef17f0f67657eb83e9ef6c684e80bcd3efa5a69a354",
+    "after": "a3bf6ee60e64cbaffb0f016441bdb3e8fefd20701ab84854a7deb2b185c38bc7"
+  },
+  {
+    "path": "platform/tests/Feature/PlatformAdministrationTest.php",
+    "before": "b7bfc02e291dba2d974fcf934d464fbc93d78b550051d5afb218f96b2037d6da",
+    "after": "6e9773b8c65b97803afb6988b17e7527a7f717ab6fa3cf7c28199cc5804feace"
+  }
+]

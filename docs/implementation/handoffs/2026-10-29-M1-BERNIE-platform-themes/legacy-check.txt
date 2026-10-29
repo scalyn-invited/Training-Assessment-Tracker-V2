@@ -1,0 +1,9 @@
+async (page) => {
+ await page.goto('http://127.0.0.1:8137/platform');
+ await page.evaluate(()=>{const r=document.documentElement; localStorage.setItem(r.dataset.legacyThemeKey,'light');localStorage.removeItem(r.dataset.themeKey);localStorage.removeItem(r.dataset.themeKey+'.migrated');});
+ await page.reload();
+ if(await page.locator('html').getAttribute('data-theme')!=='light')throw Error('Existing preference was not preserved');
+ await page.locator('.theme-picker summary').click();await page.getByRole('button',{name:'Use platform default',exact:true}).click();await page.reload();
+ if(await page.locator('html').getAttribute('data-theme')!=='platform-dark')throw Error('Reset incorrectly restored legacy preference');
+ return ['Existing browser preference migrates to independent platform scope','Reset remains effective after reload despite legacy preference'];
+}

@@ -1,0 +1,26 @@
+async (page) => {
+  await page.getByRole('textbox',{name:'Email',exact:true}).fill('admin@example.invalid');
+  await page.getByRole('textbox',{name:'Password',exact:true}).fill('Theme test password!');
+  await page.getByRole('button',{name:'Sign in',exact:true}).click();
+  const results=[];
+  for(const [theme,primary] of [['Light','#1d4668'],['Dark','#e5e5e5'],['Neon Cyan','#67e8f9']]) {
+    await page.locator('.theme-picker summary').click();await page.getByRole('button',{name:theme,exact:true}).click();
+    const value=await page.evaluate(()=>getComputedStyle(document.documentElement).getPropertyValue('--primary').trim());
+    if(value!==primary) throw Error(theme+' changed: '+value);results.push(theme+' retains original palette');
+  }
+  await page.locator('.theme-picker summary').click();await page.getByRole('button',{name:'Use platform default',exact:true}).click();
+  const platformKey=await page.locator('html').getAttribute('data-theme-key');
+  await page.goto('http://127.0.0.1:8137/dashboard');
+  if(await page.locator('html').getAttribute('data-theme')!=='platform-dark')throw Error('Client inheritance failed');
+  if(await page.locator('html').getAttribute('data-theme-key')===platformKey)throw Error('Preference keys overlap');
+  results.push('Unconfigured client inherits Platform Dark with independent preference key');
+  await page.locator('.theme-picker summary').click();await page.getByRole('button',{name:'Neon Emerald',exact:true}).click();
+  await page.waitForFunction(()=>document.documentElement.dataset.theme==='neon-emerald');
+  await page.goto('http://127.0.0.1:8137/platform');
+  if(await page.locator('html').getAttribute('data-theme')!=='platform-dark')throw Error('Client preference leaked');
+  results.push('Client personal preference does not affect platform');
+  await page.goto('http://127.0.0.1:8137/dashboard');
+  if(await page.locator('html').getAttribute('data-theme')!=='neon-emerald')throw Error('Client preference lost');
+  results.push('Client preference survives returning from platform');
+  return results;
+}

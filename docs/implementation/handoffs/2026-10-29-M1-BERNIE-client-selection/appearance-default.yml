@@ -1,0 +1,147 @@
+- generic [active] [ref=f6e1]:
+  - link "Skip to content" [ref=f6e2] [cursor=pointer]:
+    - /url: "#main"
+  - banner [ref=f6e3]:
+    - button "Open navigation" [ref=f6e4] [cursor=pointer]
+    - generic [ref=f6e7]: Assessment Training Tracker
+  - generic [ref=f6e8]:
+    - banner [ref=f6e9]:
+      - form "Active client" [ref=f6e10]:
+        - generic [ref=f6e12]:
+          - combobox "Active client" [ref=f6e13]:
+            - option "Choose client" [selected]
+            - option "A Other client"
+            - option "B Pagination 0"
+            - option "B Pagination 1"
+            - option "B Pagination 10"
+            - option "B Pagination 11"
+            - option "B Pagination 12"
+            - option "B Pagination 13"
+            - option "B Pagination 14"
+            - option "B Pagination 15"
+            - option "B Pagination 16"
+            - option "B Pagination 17"
+            - option "B Pagination 18"
+            - option "B Pagination 19"
+            - option "B Pagination 2"
+            - option "B Pagination 3"
+            - option "B Pagination 4"
+            - option "B Pagination 5"
+            - option "B Pagination 6"
+            - option "B Pagination 7"
+            - option "B Pagination 8"
+            - option "B Pagination 9"
+            - option "Z Current client"
+          - button "Switch client" [ref=f6e14] [cursor=pointer]
+      - generic [ref=f6e15]:
+        - generic [aria-hidden] [ref=f6e16]: A
+        - strong [ref=f6e18]: Alex · Administrator
+        - button "Sign out" [ref=f6e20] [cursor=pointer]
+    - generic [ref=f6e23]:
+      - strong [ref=f6e25]: LOCAL SANDBOX
+      - generic [ref=f6e26]: Synthetic people · Local password sign-in · No email delivery
+    - main [ref=f6e27]:
+      - generic [ref=f6e29]:
+        - paragraph [ref=f6e30]: Platform
+        - heading "Platform administration" [level=1] [ref=f6e31]
+        - paragraph [ref=f6e32]: Manage organisations and access. Training content requires its own permissions.
+      - navigation "Platform sections" [ref=f6e33]:
+        - link "Overview" [ref=f6e34] [cursor=pointer]:
+          - /url: http://127.0.0.1:8136/platform
+        - link "Clients" [ref=f6e35] [cursor=pointer]:
+          - /url: http://127.0.0.1:8136/platform/clients
+        - link "Global Admins" [ref=f6e36] [cursor=pointer]:
+          - /url: http://127.0.0.1:8136/platform/admins
+        - link "Platform appearance" [ref=f6e37] [cursor=pointer]:
+          - /url: http://127.0.0.1:8136/platform/appearance
+        - link "Administrative audit" [ref=f6e38] [cursor=pointer]:
+          - /url: http://127.0.0.1:8136/platform/audit
+      - generic [ref=f6e39]:
+        - heading "Accounts" [level=2] [ref=f6e40]
+        - paragraph [ref=f6e41]: Create an account or invite an existing account. Access starts after password setup or invitation acceptance. Initial access is Member only.
+        - generic [ref=f6e42]:
+          - generic [ref=f6e43]:
+            - text: Client
+            - combobox "Client" [ref=f6e44]:
+              - option "Choose client…" [selected]
+              - option "A Other client"
+              - option "B Pagination 0"
+              - option "B Pagination 1"
+              - option "B Pagination 10"
+              - option "B Pagination 11"
+              - option "B Pagination 12"
+              - option "B Pagination 13"
+              - option "B Pagination 14"
+              - option "B Pagination 15"
+              - option "B Pagination 16"
+              - option "B Pagination 17"
+              - option "B Pagination 18"
+              - option "B Pagination 19"
+              - option "B Pagination 2"
+              - option "B Pagination 3"
+              - option "B Pagination 4"
+              - option "B Pagination 5"
+              - option "B Pagination 6"
+              - option "B Pagination 7"
+              - option "B Pagination 8"
+              - option "B Pagination 9"
+              - option "Z Current client"
+          - generic [ref=f6e45]:
+            - text: Name
+            - textbox "Name" [ref=f6e46]
+          - generic [ref=f6e47]:
+            - text: Email
+            - textbox "Email" [ref=f6e48]
+          - generic [ref=f6e49]:
+            - checkbox "Test account" [checked] [ref=f6e50]
+            - text: Test account
+          - paragraph [ref=f6e51]: Ordinary email addresses are supported. Uncheck for a non-test local account. This choice applies only to new accounts; existing accounts keep their classification. Local development only.
+          - paragraph [ref=f6e52]: Email is not configured. A private link will be shown for manual sharing.
+          - generic [ref=f6e53]:
+            - text: Your current password
+            - textbox "Your current password" [ref=f6e54]
+          - generic [ref=f6e55]:
+            - text: Reason
+            - textbox "Reason" [ref=f6e56]
+          - button "Create account or invitation" [ref=f6e57] [cursor=pointer]
+        - paragraph [ref=f6e58]:
+          - link "Manage setup and recovery links" [ref=f6e59] [cursor=pointer]:
+            - /url: http://127.0.0.1:8136/accounts/links
+          - text: ·
+          - link "Change your password" [ref=f6e60] [cursor=pointer]:
+            - /url: http://127.0.0.1:8136/account/password
+      - generic [ref=f6e61]:
+        - heading "Platform appearance" [level=2] [ref=f6e62]
+        - paragraph [ref=f6e63]: Shared screens and unconfigured clients inherit these defaults. Client settings and personal themes take precedence.
+        - generic [ref=f6e64]:
+          - generic [ref=f6e65]:
+            - text: Platform display name
+            - textbox "Platform display name" [ref=f6e66]: Scalyn
+          - generic [ref=f6e67]:
+            - text: Application name
+            - textbox "Application name" [ref=f6e68]: Assessment Training Tracker
+          - generic [ref=f6e69]:
+            - text: Brand colour
+            - textbox "Brand colour" [ref=f6e70]: "#1d4668"
+          - generic [ref=f6e71]:
+            - text: Default theme
+            - combobox "Default theme" [ref=f6e72]:
+              - option "Light" [selected]
+              - option "Dark"
+              - option "Neon Cyan"
+              - option "Neon Emerald"
+              - option "Neon Amber"
+          - generic [ref=f6e73]:
+            - text: Platform logo
+            - button "Platform logo" [ref=f6e74]
+          - paragraph [ref=f6e75]: PNG, JPEG or WebP. Maximum 2 MB and 4096 × 4096 pixels. This platform logo is visible on shared sign-in screens.
+          - generic [ref=f6e76]:
+            - text: Appearance change reason
+            - textbox "Appearance change reason" [ref=f6e77]
+          - button "Save platform appearance" [ref=f6e78] [cursor=pointer]
+          - link "Discard changes" [ref=f6e79] [cursor=pointer]:
+            - /url: http://127.0.0.1:8136/platform/appearance
+    - contentinfo [ref=f6e80]:
+      - generic [ref=f6e81]: Assessment Training Tracker
+      - generic [ref=f6e82]: Learning with purpose. Progress with evidence.
+  - status [ref=f6e83]

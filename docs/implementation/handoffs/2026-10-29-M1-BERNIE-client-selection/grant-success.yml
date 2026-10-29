@@ -1,0 +1,383 @@
+- generic [active] [ref=f4e1]:
+  - link "Skip to content" [ref=f4e2] [cursor=pointer]:
+    - /url: "#main"
+  - complementary "Workspace menu" [ref=f4e3]:
+    - link "Scalyn Assessment Training Tracker home" [ref=f4e5] [cursor=pointer]:
+      - /url: http://127.0.0.1:8136/dashboard
+      - img "Scalyn" [ref=f4e7]
+      - generic [ref=f4e8]:
+        - strong [ref=f4e9]: Scalyn
+        - generic [ref=f4e10]: Assessment Training Tracker
+    - paragraph [ref=f4e11]: Your workspace
+    - navigation "Main navigation" [ref=f4e12]:
+      - link "Platform administration" [ref=f4e13] [cursor=pointer]:
+        - /url: http://127.0.0.1:8136/platform
+      - link "Overview" [ref=f4e20] [cursor=pointer]:
+        - /url: http://127.0.0.1:8136/dashboard
+      - link "Learning plans" [ref=f4e24] [cursor=pointer]:
+        - /url: http://127.0.0.1:8136/dashboard#learning-plans
+      - link "Assessments" [ref=f4e28] [cursor=pointer]:
+        - /url: http://127.0.0.1:8136/assessments
+      - link "Updates" [ref=f4e33] [cursor=pointer]:
+        - /url: http://127.0.0.1:8136/notifications
+      - generic [ref=f4e37]: Manage
+      - link "Appearance" [ref=f4e38] [cursor=pointer]:
+        - /url: http://127.0.0.1:8136/settings/appearance
+      - link "Change password" [ref=f4e43] [cursor=pointer]:
+        - /url: http://127.0.0.1:8136/account/password
+    - generic [ref=f4e48]:
+      - paragraph [ref=f4e49]:
+        - generic [ref=f4e50]: One step at a time
+        - text: Progress startswith showing up.
+      - group [ref=f4e51]:
+        - generic "Theme Light" [ref=f4e52] [cursor=pointer]:
+          - generic [ref=f4e55]: Theme
+          - generic [ref=f4e56]: Light
+  - generic [ref=f4e57]:
+    - banner [ref=f4e58]:
+      - form "Active client" [ref=f4e59]:
+        - generic [ref=f4e61]:
+          - combobox "Active client" [ref=f4e62]:
+            - option "Choose client" [selected]
+            - option "A Other client"
+            - option "B Pagination 0"
+            - option "B Pagination 1"
+            - option "B Pagination 10"
+            - option "B Pagination 11"
+            - option "B Pagination 12"
+            - option "B Pagination 13"
+            - option "B Pagination 14"
+            - option "B Pagination 15"
+            - option "B Pagination 16"
+            - option "B Pagination 17"
+            - option "B Pagination 18"
+            - option "B Pagination 19"
+            - option "B Pagination 2"
+            - option "B Pagination 3"
+            - option "B Pagination 4"
+            - option "B Pagination 5"
+            - option "B Pagination 6"
+            - option "B Pagination 7"
+            - option "B Pagination 8"
+            - option "B Pagination 9"
+            - option "Z Current client"
+          - button "Switch client" [ref=f4e63] [cursor=pointer]
+      - generic [ref=f4e64]:
+        - generic [aria-hidden] [ref=f4e65]: A
+        - strong [ref=f4e67]: Alex · Administrator
+        - button "Sign out" [ref=f4e69] [cursor=pointer]
+    - generic [ref=f4e72]:
+      - strong [ref=f4e74]: LOCAL SANDBOX
+      - generic [ref=f4e75]: Synthetic people · Local password sign-in · No email delivery
+    - main [ref=f4e76]:
+      - status [ref=f4e77]: Platform administration updated.
+      - generic [ref=f4e79]:
+        - paragraph [ref=f4e80]: Platform
+        - heading "Platform administration" [level=1] [ref=f4e81]
+        - paragraph [ref=f4e82]: Manage organisations and access. Training content requires its own permissions.
+      - navigation "Platform sections" [ref=f4e83]:
+        - link "Overview" [ref=f4e84] [cursor=pointer]:
+          - /url: http://127.0.0.1:8136/platform
+        - link "Clients" [ref=f4e85] [cursor=pointer]:
+          - /url: http://127.0.0.1:8136/platform/clients
+        - link "Global Admins" [ref=f4e86] [cursor=pointer]:
+          - /url: http://127.0.0.1:8136/platform/admins
+        - link "Platform appearance" [ref=f4e87] [cursor=pointer]:
+          - /url: http://127.0.0.1:8136/platform/appearance
+        - link "Administrative audit" [ref=f4e88] [cursor=pointer]:
+          - /url: http://127.0.0.1:8136/platform/audit
+      - generic [ref=f4e89]:
+        - heading "Accounts" [level=2] [ref=f4e90]
+        - paragraph [ref=f4e91]: Create an account or invite an existing account. Access starts after password setup or invitation acceptance. Initial access is Member only.
+        - generic [ref=f4e92]:
+          - generic [ref=f4e93]:
+            - text: Client
+            - combobox "Client" [ref=f4e94]:
+              - option "Choose client…" [selected]
+              - option "A Other client"
+              - option "B Pagination 0"
+              - option "B Pagination 1"
+              - option "B Pagination 10"
+              - option "B Pagination 11"
+              - option "B Pagination 12"
+              - option "B Pagination 13"
+              - option "B Pagination 14"
+              - option "B Pagination 15"
+              - option "B Pagination 16"
+              - option "B Pagination 17"
+              - option "B Pagination 18"
+              - option "B Pagination 19"
+              - option "B Pagination 2"
+              - option "B Pagination 3"
+              - option "B Pagination 4"
+              - option "B Pagination 5"
+              - option "B Pagination 6"
+              - option "B Pagination 7"
+              - option "B Pagination 8"
+              - option "B Pagination 9"
+              - option "Z Current client"
+          - generic [ref=f4e95]:
+            - text: Name
+            - textbox "Name" [ref=f4e96]
+          - generic [ref=f4e97]:
+            - text: Email
+            - textbox "Email" [ref=f4e98]
+          - generic [ref=f4e99]:
+            - checkbox "Test account" [checked] [ref=f4e100]
+            - text: Test account
+          - paragraph [ref=f4e101]: Ordinary email addresses are supported. Uncheck for a non-test local account. This choice applies only to new accounts; existing accounts keep their classification. Local development only.
+          - paragraph [ref=f4e102]: Email is not configured. A private link will be shown for manual sharing.
+          - generic [ref=f4e103]:
+            - text: Your current password
+            - textbox "Your current password" [ref=f4e104]
+          - generic [ref=f4e105]:
+            - text: Reason
+            - textbox "Reason" [ref=f4e106]
+          - button "Create account or invitation" [ref=f4e107] [cursor=pointer]
+        - paragraph [ref=f4e108]:
+          - link "Manage setup and recovery links" [ref=f4e109] [cursor=pointer]:
+            - /url: http://127.0.0.1:8136/accounts/links
+          - text: ·
+          - link "Change your password" [ref=f4e110] [cursor=pointer]:
+            - /url: http://127.0.0.1:8136/account/password
+      - generic [ref=f4e111]:
+        - heading "Create client" [level=2] [ref=f4e112]
+        - generic [ref=f4e113]:
+          - generic [ref=f4e114]:
+            - text: Directory name
+            - textbox "Directory name" [ref=f4e115]
+          - generic [ref=f4e116]:
+            - text: Creation reason
+            - textbox "Creation reason" [ref=f4e117]
+          - button "Create client" [ref=f4e118] [cursor=pointer]
+      - generic [ref=f4e119]:
+        - heading "Clients" [level=2] [ref=f4e120]
+        - group [ref=f4e121]:
+          - generic "A Other client · Active" [ref=f4e122] [cursor=pointer]
+        - group [ref=f4e123]:
+          - generic "B Pagination 0 · Active" [ref=f4e124] [cursor=pointer]
+        - group [ref=f4e125]:
+          - generic "B Pagination 1 · Active" [ref=f4e126] [cursor=pointer]
+        - group [ref=f4e127]:
+          - generic "B Pagination 10 · Active" [ref=f4e128] [cursor=pointer]
+        - group [ref=f4e129]:
+          - generic "B Pagination 11 · Active" [ref=f4e130] [cursor=pointer]
+        - group [ref=f4e131]:
+          - generic "B Pagination 12 · Active" [ref=f4e132] [cursor=pointer]
+        - group [ref=f4e133]:
+          - generic "B Pagination 13 · Active" [ref=f4e134] [cursor=pointer]
+        - group [ref=f4e135]:
+          - generic "B Pagination 14 · Active" [ref=f4e136] [cursor=pointer]
+        - group [ref=f4e137]:
+          - generic "B Pagination 15 · Active" [ref=f4e138] [cursor=pointer]
+        - group [ref=f4e139]:
+          - generic "B Pagination 16 · Active" [ref=f4e140] [cursor=pointer]
+        - group [ref=f4e141]:
+          - generic "B Pagination 17 · Active" [ref=f4e142] [cursor=pointer]
+        - group [ref=f4e143]:
+          - generic "B Pagination 18 · Active" [ref=f4e144] [cursor=pointer]
+        - group [ref=f4e145]:
+          - generic "B Pagination 19 · Active" [ref=f4e146] [cursor=pointer]
+        - group [ref=f4e147]:
+          - generic "B Pagination 2 · Active" [ref=f4e148] [cursor=pointer]
+        - group [ref=f4e149]:
+          - generic "B Pagination 3 · Active" [ref=f4e150] [cursor=pointer]
+        - group [ref=f4e151]:
+          - generic "B Pagination 4 · Active" [ref=f4e152] [cursor=pointer]
+        - group [ref=f4e153]:
+          - generic "B Pagination 5 · Active" [ref=f4e154] [cursor=pointer]
+        - group [ref=f4e155]:
+          - generic "B Pagination 6 · Active" [ref=f4e156] [cursor=pointer]
+        - group [ref=f4e157]:
+          - generic "B Pagination 7 · Active" [ref=f4e158] [cursor=pointer]
+        - group [ref=f4e159]:
+          - generic "B Pagination 8 · Active" [ref=f4e160] [cursor=pointer]
+        - navigation "Pagination" [ref=f4e161]:
+          - paragraph [ref=f4e162]: Showing 1–20 of 22
+          - generic [ref=f4e163]:
+            - generic [ref=f4e164]: Previous
+            - generic "Page 1" [ref=f4e165]: "1"
+            - link "Go to page 2" [ref=f4e166] [cursor=pointer]:
+              - /url: http://127.0.0.1:8136/platform/clients?page=2
+              - text: "2"
+            - link "Next" [ref=f4e167] [cursor=pointer]:
+              - /url: http://127.0.0.1:8136/platform/clients?page=2
+      - generic [ref=f4e168]:
+        - heading "Existing accounts" [level=2] [ref=f4e169]
+        - generic [ref=f4e170]:
+          - generic [ref=f4e171]:
+            - text: Search account name
+            - textbox "Search account name" [ref=f4e172]
+          - button "Search" [ref=f4e173] [cursor=pointer]
+        - group [ref=f4e174]:
+          - generic "Alex · Administrator · admin@example.invalid" [ref=f4e175] [cursor=pointer]
+          - option "Choose client…"
+          - option "A Other client"
+          - option "B Pagination 0"
+          - option "B Pagination 1"
+          - option "B Pagination 10"
+          - option "B Pagination 11"
+          - option "B Pagination 12"
+          - option "B Pagination 13"
+          - option "B Pagination 14"
+          - option "B Pagination 15"
+          - option "B Pagination 16"
+          - option "B Pagination 17"
+          - option "B Pagination 18"
+          - option "B Pagination 19"
+          - option "B Pagination 2"
+          - option "B Pagination 3"
+          - option "B Pagination 4"
+          - option "B Pagination 5"
+          - option "B Pagination 6"
+          - option "B Pagination 7"
+          - option "B Pagination 8"
+          - option "B Pagination 9"
+          - option "Z Current client" [selected]
+          - option "Choose action…" [selected]
+          - option "Grant Client Admin"
+          - option "Revoke Client Admin"
+        - group [ref=f4e176]:
+          - generic "Casey · Operations coordinator · coordinator-a@example.invalid" [ref=f4e177] [cursor=pointer]
+          - option "Choose client…" [selected]
+          - option "A Other client"
+          - option "B Pagination 0"
+          - option "B Pagination 1"
+          - option "B Pagination 10"
+          - option "B Pagination 11"
+          - option "B Pagination 12"
+          - option "B Pagination 13"
+          - option "B Pagination 14"
+          - option "B Pagination 15"
+          - option "B Pagination 16"
+          - option "B Pagination 17"
+          - option "B Pagination 18"
+          - option "B Pagination 19"
+          - option "B Pagination 2"
+          - option "B Pagination 3"
+          - option "B Pagination 4"
+          - option "B Pagination 5"
+          - option "B Pagination 6"
+          - option "B Pagination 7"
+          - option "B Pagination 8"
+          - option "B Pagination 9"
+          - option "Z Current client"
+          - option "Choose action…" [selected]
+          - option "Grant Client Admin"
+          - option "Revoke Client Admin"
+        - group [ref=f4e178]:
+          - generic "Jordan · Support learner · member-b@example.invalid" [ref=f4e179] [cursor=pointer]
+          - option "Choose client…"
+          - option "A Other client"
+          - option "B Pagination 0"
+          - option "B Pagination 1"
+          - option "B Pagination 10"
+          - option "B Pagination 11"
+          - option "B Pagination 12"
+          - option "B Pagination 13"
+          - option "B Pagination 14"
+          - option "B Pagination 15"
+          - option "B Pagination 16"
+          - option "B Pagination 17"
+          - option "B Pagination 18"
+          - option "B Pagination 19"
+          - option "B Pagination 2"
+          - option "B Pagination 3"
+          - option "B Pagination 4"
+          - option "B Pagination 5"
+          - option "B Pagination 6"
+          - option "B Pagination 7"
+          - option "B Pagination 8"
+          - option "B Pagination 9"
+          - option "Z Current client" [selected]
+          - option "Choose action…" [selected]
+          - option "Grant Client Admin"
+          - option "Revoke Client Admin"
+        - group [ref=f4e180]:
+          - generic "Morgan · Support coordinator · coordinator-b@example.invalid" [ref=f4e181] [cursor=pointer]
+          - option "Choose client…"
+          - option "A Other client"
+          - option "B Pagination 0"
+          - option "B Pagination 1"
+          - option "B Pagination 10"
+          - option "B Pagination 11"
+          - option "B Pagination 12"
+          - option "B Pagination 13"
+          - option "B Pagination 14"
+          - option "B Pagination 15"
+          - option "B Pagination 16"
+          - option "B Pagination 17"
+          - option "B Pagination 18"
+          - option "B Pagination 19"
+          - option "B Pagination 2"
+          - option "B Pagination 3"
+          - option "B Pagination 4"
+          - option "B Pagination 5"
+          - option "B Pagination 6"
+          - option "B Pagination 7"
+          - option "B Pagination 8"
+          - option "B Pagination 9"
+          - option "Z Current client" [selected]
+          - option "Choose action…" [selected]
+          - option "Grant Client Admin"
+          - option "Revoke Client Admin"
+        - group [ref=f4e182]:
+          - generic "Pending account · pending@example.invalid" [ref=f4e183] [cursor=pointer]
+          - option "Choose client…" [selected]
+          - option "A Other client"
+          - option "B Pagination 0"
+          - option "B Pagination 1"
+          - option "B Pagination 10"
+          - option "B Pagination 11"
+          - option "B Pagination 12"
+          - option "B Pagination 13"
+          - option "B Pagination 14"
+          - option "B Pagination 15"
+          - option "B Pagination 16"
+          - option "B Pagination 17"
+          - option "B Pagination 18"
+          - option "B Pagination 19"
+          - option "B Pagination 2"
+          - option "B Pagination 3"
+          - option "B Pagination 4"
+          - option "B Pagination 5"
+          - option "B Pagination 6"
+          - option "B Pagination 7"
+          - option "B Pagination 8"
+          - option "B Pagination 9"
+          - option "Z Current client"
+          - option "Choose action…" [selected]
+          - option "Grant Client Admin"
+          - option "Revoke Client Admin"
+        - group [ref=f4e184]:
+          - generic "Sam · Operations learner · member-a@example.invalid" [ref=f4e185] [cursor=pointer]
+          - option "Choose client…"
+          - option "A Other client"
+          - option "B Pagination 0"
+          - option "B Pagination 1"
+          - option "B Pagination 10"
+          - option "B Pagination 11"
+          - option "B Pagination 12"
+          - option "B Pagination 13"
+          - option "B Pagination 14"
+          - option "B Pagination 15"
+          - option "B Pagination 16"
+          - option "B Pagination 17"
+          - option "B Pagination 18"
+          - option "B Pagination 19"
+          - option "B Pagination 2"
+          - option "B Pagination 3"
+          - option "B Pagination 4"
+          - option "B Pagination 5"
+          - option "B Pagination 6"
+          - option "B Pagination 7"
+          - option "B Pagination 8"
+          - option "B Pagination 9"
+          - option "Z Current client" [selected]
+          - option "Choose action…" [selected]
+          - option "Grant Client Admin"
+          - option "Revoke Client Admin"
+    - contentinfo [ref=f4e186]:
+      - generic [ref=f4e187]: Assessment Training Tracker
+      - generic [ref=f4e188]: Learning with purpose. Progress with evidence.
+  - status [ref=f4e189]

@@ -1,7 +1,7 @@
 (() => {
     'use strict';
     const root = document.documentElement;
-    const themes = { light: 'Light', dark: 'Dark', 'neon-cyan': 'Neon Cyan', 'neon-emerald': 'Neon Emerald', 'neon-amber': 'Neon Amber' };
+    const themes = { 'platform-light': 'Platform Light', 'platform-dark': 'Platform Dark', light: 'Light', dark: 'Dark', 'neon-cyan': 'Neon Cyan', 'neon-emerald': 'Neon Emerald', 'neon-amber': 'Neon Amber' };
     if (root.dataset.clientTheme === 'legacy') themes.client = 'Client theme';
     if (root.dataset.clientTheme === 'generated') Object.assign(themes, {'client-light': 'Client Light', 'client-dark': 'Client Dark'});
     const resolveTheme = value => value === 'client' && Object.hasOwn(themes, 'client-light') ? 'client-light' : value;
@@ -9,7 +9,26 @@
     const fallback = Object.hasOwn(themes, root.dataset.defaultTheme) ? root.dataset.defaultTheme : 'dark';
     const account = !!root.dataset.preferenceClient;
     let theme = account ? root.dataset.theme : fallback;
-    if (!account) try { const saved = localStorage.getItem(key); const resolved = resolveTheme(saved); if (Object.hasOwn(themes, resolved)) { theme = resolved; if (saved !== resolved) localStorage.setItem(key, resolved); } } catch { /* Use server default when storage is unavailable. */ }
+    if (!account) try {
+        let saved = localStorage.getItem(key);
+        // Carry the former shared-browser preference into this scope once. A reset must stay reset.
+        const legacy = root.dataset.legacyThemeKey;
+        if (legacy && localStorage.getItem(key + '.migrated') !== '1') {
+            if (saved === null) {
+                const previous = resolveTheme(localStorage.getItem(legacy));
+                if (Object.hasOwn(themes, previous)) {
+                    saved = previous;
+                    localStorage.setItem(key, saved);
+                }
+            }
+            localStorage.setItem(key + '.migrated', '1');
+        }
+        const resolved = resolveTheme(saved);
+        if (Object.hasOwn(themes, resolved)) {
+            theme = resolved;
+            if (saved !== resolved) localStorage.setItem(key, resolved);
+        }
+    } catch { /* Use server default when storage is unavailable. */ }
     root.dataset.theme = theme;
     function refresh() {
         document.querySelectorAll('[data-theme-choice]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.themeChoice === root.dataset.theme)));
@@ -77,6 +96,22 @@
             const menu = document.querySelector('.theme-picker[open]');
             if (menu) { menu.open = false; menu.querySelector('summary').focus(); }
         });
+        const platformForm = document.getElementById('platform-appearance-form');
+        if (platformForm) {
+            const accent = platformForm.elements.namedItem('accent');
+            const renderPlatform = () => {
+                if (!/^#[0-9a-f]{6}$/i.test(accent.value)) return;
+                const palettes = ClientPalette.generate(accent.value);
+                platformForm.querySelectorAll('[data-platform-preview]').forEach(preview => {
+                    for (const [token, value] of Object.entries(palettes[preview.dataset.platformPreview])) {
+                        preview.style.setProperty('--preview-' + token, value);
+                    }
+                });
+            };
+            accent.addEventListener('input', renderPlatform);
+            accent.addEventListener('change', renderPlatform);
+            renderPlatform();
+        }
         const form = document.getElementById('brand-preview-form');
         if (form) {
             const previews = [...document.querySelectorAll('[data-palette-preview]')];

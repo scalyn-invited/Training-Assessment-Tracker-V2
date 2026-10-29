@@ -62,6 +62,7 @@ class BrandingTest extends TestCase
             'mode' => 'white-label', 'client_name' => 'Northstar', 'app_name' => 'Northstar Academy',
             'logo_light' => '/images/training-mark.svg', 'logo_dark' => null, 'favicon' => '/images/training-mark.svg',
         ]]]]);
+        $this->get('/dashboard')->assertOk();
         $this->assertSame('/images/training-mark.svg', app(Branding::class)->forUser($user)['logo_dark']);
         $this->get('/dashboard')->assertOk()->assertSee('Northstar Academy')->assertSee('/images/training-mark.svg')->assertDontSee('Cerebru')->assertDontSee('opsbrain-eosin');
         $this->get('/settings/appearance')->assertOk()->assertDontSee('Save client branding');

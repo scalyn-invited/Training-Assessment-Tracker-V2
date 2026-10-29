@@ -1,0 +1,34 @@
+[
+  {
+    "path": "platform/app/Http/Controllers/PlatformController.php",
+    "sha256": "9a48ac5acc31b17e072231544861a33ab892c342bd1ae9097512bcddcbe473a9"
+  },
+  {
+    "path": "platform/app/Http/Controllers/LocalAccountController.php",
+    "sha256": "521dd3432646d8411d8f1cd6579bc33aa0d24c90c65c015da6f5afc7d3444623"
+  },
+  {
+    "path": "platform/app/Services/Tenancy/PlatformAdministration.php",
+    "sha256": "634fdac89346f87619bab979c79d9b591927ebc6b8d6ef41f5a1d41358437a13"
+  },
+  {
+    "path": "platform/resources/views/platform.blade.php",
+    "sha256": "77c87493b57fc4c856a2af1040ca2e37eca824ddcb947ebf9c70453e85bb50a4"
+  },
+  {
+    "path": "platform/resources/views/local-accounts/admin-panel.blade.php",
+    "sha256": "907f2dcfce072017c0b3435315bc6d951a51f4f954c2f6ed6f017d721e949e15"
+  },
+  {
+    "path": "platform/resources/views/local-accounts/manage.blade.php",
+    "sha256": "66b411b688b79f464463b3a2cd6df74d807b6b4b241eafae80ef7e081564576c"
+  },
+  {
+    "path": "platform/tests/Feature/PlatformAdministrationTest.php",
+    "sha256": "b7bfc02e291dba2d974fcf934d464fbc93d78b550051d5afb218f96b2037d6da"
+  },
+  {
+    "path": "platform/tests/Feature/LocalAccountsTest.php",
+    "sha256": "9fac46b837e12f946b116c2712c2224d0e645b3e8f418bab18682882005b02de"
+  }
+]

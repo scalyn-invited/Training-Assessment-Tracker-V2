@@ -7,6 +7,7 @@ use App\Models\Identity;
 use App\Models\User;
 use App\Services\Access;
 use App\Services\Branding;
+use App\Services\ClientTheme;
 use App\Services\LearningNotices;
 use App\Services\MockIdentity;
 use App\Services\Tenancy\ClientAccess;
@@ -100,13 +101,74 @@ class PlatformAdministrationTest extends TestCase
         $user = User::where('email', 'member-a@example.invalid')->firstOrFail();
         $this->login($this->admin);
         $data = ['action' => 'grant', 'client' => $client, 'user' => $user->id, 'version' => $user->permission_version, 'reason' => 'Assign existing client admin'];
-        $this->post('/platform/actions', $data)->assertStatus(422);
+        $this->postJson('/platform/actions', $data)->assertStatus(422)->assertJsonValidationErrors('client');
         $this->post('/platform/actions', array_replace($data, ['action' => 'join']))->assertRedirect();
         $this->post('/platform/actions', $data)->assertStatus(409);
         $this->post('/platform/actions', array_replace($data, ['version' => $user->fresh()->permission_version]))->assertRedirect();
         $this->assertTrue(app(ClientAccess::class)->clientRole($user, $client, 'admin'));
         $this->post('/platform/actions', array_replace($data, ['action' => 'revoke', 'version' => $user->fresh()->permission_version]))->assertRedirect();
         $this->assertFalse(app(ClientAccess::class)->clientRole($user, $client, 'admin'));
+    }
+
+    private function selection(string $html, string $form, string $field): string
+    {
+        $dom = new \DOMDocument;
+        @$dom->loadHTML('<?xml encoding="UTF-8">'.$html);
+        $xpath = new \DOMXPath($dom);
+        $select = $xpath->query('//form[input[@name="_form" and @value="'.$form.'"]]/label/select[@name="'.$field.'"]')->item(0);
+        $this->assertNotNull($select);
+        $selected = $xpath->query('option[@selected]', $select)->item(0) ?? $xpath->query('option', $select)->item(0);
+
+        return $selected->getAttribute('value');
+    }
+
+    public function test_account_defaults_use_membership_independent_of_client_pagination(): void
+    {
+        $user = User::where('email', 'member-a@example.invalid')->firstOrFail();
+        DB::table('organisations')->where('id', $user->organisation_id)->update(['name' => 'Z Current client']);
+        for ($i = 0; $i < 21; $i++) {
+            $this->service->client($this->admin, null, 'A Other client '.$i, 0, 'Synthetic pagination client');
+        }
+        $this->login($this->admin);
+        $response = $this->get('/platform/clients')->assertOk();
+        $this->assertFalse($response->viewData('clients')->contains('id', $user->organisation_id));
+        $this->assertSame($user->organisation_id, $this->selection($response->getContent(), 'platform-account-'.$user->id, 'client'));
+        $this->assertSame('', $this->selection($response->getContent(), 'platform-account-'.$user->id, 'action'));
+        $this->post('/platform/actions', ['action' => 'grant', 'client' => $user->organisation_id,
+            'user' => $user->id, 'version' => $user->permission_version, 'reason' => 'Grant selected client admin'])->assertRedirect()->assertSessionHasNoErrors();
+        $this->assertTrue(app(ClientAccess::class)->clientRole($user->fresh(), $user->organisation_id, 'admin'));
+    }
+
+    public function test_ambiguous_and_absent_memberships_require_a_choice(): void
+    {
+        $user = User::where('email', 'member-a@example.invalid')->firstOrFail();
+        $other = $this->service->client($this->admin, null, 'Additional client', 0, 'Synthetic second membership');
+        $this->service->clientRole($this->admin, $other, $user->id, 'join', $user->permission_version, 'Explicit second client join');
+        $this->login($this->admin);
+        $html = $this->get('/platform/clients')->assertOk()->getContent();
+        $this->assertSame('', $this->selection($html, 'platform-account-'.$user->id, 'client'));
+        DB::table('client_memberships')->where('user_id', $user->id)->update(['ended_at' => now()]);
+        $html = $this->get('/platform/clients')->assertOk()->getContent();
+        $this->assertSame('', $this->selection($html, 'platform-account-'.$user->id, 'client'));
+    }
+
+    public function test_membership_error_returns_to_form_without_leaking_selections(): void
+    {
+        $user = User::where('email', 'member-a@example.invalid')->firstOrFail();
+        $neighbor = User::where('email', 'coordinator-a@example.invalid')->firstOrFail();
+        $other = $this->service->client($this->admin, null, 'Wrong client', 0, 'Synthetic wrong client');
+        $this->login($this->admin);
+        $before = DB::table('role_assignments')->count();
+        $this->post('/platform/actions', ['_form' => 'platform-account-'.$user->id, 'action' => 'grant',
+            'client' => $other, 'user' => $user->id, 'version' => $user->permission_version,
+            'reason' => 'Attempt wrong client grant'])->assertRedirect('/platform/clients')->assertSessionHasErrors('client');
+        $response = $this->get('/platform/clients')->assertOk()->assertSee('not an active member');
+        $this->assertSame($other, $this->selection($response->getContent(), 'platform-account-'.$user->id, 'client'));
+        $this->assertSame('grant', $this->selection($response->getContent(), 'platform-account-'.$user->id, 'action'));
+        $this->assertSame($neighbor->organisation_id, $this->selection($response->getContent(), 'platform-account-'.$neighbor->id, 'client'));
+        $this->assertSame('', $this->selection($response->getContent(), 'platform-account-'.$neighbor->id, 'action'));
+        $this->assertSame($before, DB::table('role_assignments')->count());
+        $this->assertFalse(app(ClientAccess::class)->clientRole($user, $other, 'admin'));
     }
 
     public function test_platform_branding_logo_conflicts_and_public_defaults(): void
@@ -178,6 +240,7 @@ class PlatformAdministrationTest extends TestCase
         $this->login($this->admin);
         $this->post('/platform/appearance', ['version' => 0, 'display_name' => 'Platform fallback', 'app_name' => 'Platform Academy', 'accent' => '#000000', 'default_theme' => 'dark', 'reason' => 'Platform default inheritance'])->assertSessionHasNoErrors();
         $client = $this->admin->organisation_id;
+        $this->withSession(['client_id' => $client])->get('/dashboard')->assertOk();
         app(ClientContext::class)->id = $client;
         $this->assertSame('dark', app(Branding::class)->forUser($this->admin)['selected_theme']);
         DB::table('client_brandings')->insert(['organisation_id' => $client, 'environment' => 'test', 'version' => 1, 'mode' => 'white-label', 'client_name' => 'Explicit Client', 'app_name' => 'Client Academy', 'accent' => '#112233', 'default_theme' => 'light', 'created_at' => now(), 'updated_at' => now()]);
@@ -186,6 +249,67 @@ class PlatformAdministrationTest extends TestCase
         $this->assertSame('Client Academy', $branding['app_name']);
         $this->assertSame('neon-cyan', $branding['selected_theme']);
         $this->assertSame('light', $branding['default_theme']);
+    }
+
+    public function test_platform_palettes_save_render_and_reject_stale_updates(): void
+    {
+        $this->login($this->admin);
+        $data = ['version' => 0, 'display_name' => 'Platform palette', 'app_name' => 'Platform Academy',
+            'accent' => '#cc3300', 'default_theme' => 'platform-light', 'reason' => 'Verify platform palette'];
+        $this->post('/platform/appearance', $data)->assertSessionHasNoErrors()->assertRedirect();
+        $first = app(Branding::class)->forUser(null);
+        $this->assertSame('platform-light', $first['selected_theme']);
+        $this->assertSame(app(ClientTheme::class)->generate('#cc3300'), $first['platform_previews']);
+        $this->get('/platform/appearance')->assertOk()->assertSee('data-theme="platform-light"', false)
+            ->assertSee('--platform-light-primary:', false)->assertSee('Use platform default')->assertSee('Preview only until you save.');
+        $this->post('/platform/appearance', array_replace($data, ['version' => 1, 'accent' => '#0066cc', 'default_theme' => 'platform-dark']))->assertSessionHasNoErrors();
+        $second = app(Branding::class)->forUser(null);
+        $this->assertNotSame($first['platform_previews'], $second['platform_previews']);
+        $this->assertSame('platform-dark', $second['selected_theme']);
+        $this->post('/platform/appearance', $data)->assertSessionHasErrors('version');
+        $this->assertDatabaseHas('platform_settings', ['accent' => '#0066cc', 'default_theme' => 'platform-dark', 'version' => 2]);
+        $this->assertSame(2, DB::table('platform_audit_events')->where('action', 'platform.appearance.saved')->count());
+        $this->post('/platform/appearance', array_replace($data, ['version' => 2, 'default_theme' => 'client-light']))->assertSessionHasErrors('default_theme');
+    }
+
+    public function test_shared_pages_ignore_single_or_selected_client_branding_and_preferences(): void
+    {
+        $this->login($this->admin);
+        $client = $this->admin->organisation_id;
+        DB::table('organisations')->where('id', '!=', $client)->update(['active' => false]);
+        DB::table('client_brandings')->insert(['organisation_id' => $client, 'environment' => 'test', 'version' => 1,
+            'mode' => 'white-label', 'client_name' => 'Client only', 'app_name' => 'Client Academy', 'accent' => '#112233',
+            'theme_colours' => json_encode(['generation' => 1, 'source' => '#112233']), 'default_theme' => 'client-dark', 'created_at' => now(), 'updated_at' => now()]);
+        DB::table('client_theme_preferences')->insert(['organisation_id' => $client, 'environment' => 'test', 'user_id' => $this->admin->id,
+            'theme' => 'neon-cyan', 'version' => 1, 'created_at' => now(), 'updated_at' => now()]);
+        $this->post('/platform/appearance', ['version' => 0, 'display_name' => 'Platform only', 'app_name' => 'Platform Academy',
+            'accent' => '#cc3300', 'default_theme' => 'platform-light', 'reason' => 'Verify shared page isolation'])->assertSessionHasNoErrors();
+        foreach (['/platform', '/platform/appearance', '/clients'] as $url) {
+            $this->withSession(['client_id' => $client])->get($url)->assertOk()->assertSee('data-theme="platform-light"', false)
+                ->assertSee('data-appearance-scope="platform"', false)->assertDontSee('Client Academy');
+        }
+        $platformKey = app(Branding::class)->forUser($this->admin)['theme_key'];
+        $this->withSession(['client_id' => $client])->get('/dashboard')->assertOk()->assertSee('data-theme="neon-cyan"', false)->assertSee('Client Academy');
+        $this->assertNotSame($platformKey, app(Branding::class)->forUser($this->admin)['theme_key']);
+        $this->service->client($this->admin, null, 'Second client', 0, 'Verify multiple client context');
+        $this->get('/platform')->assertOk()->assertSee('data-theme="platform-light"', false);
+        DB::table('organisations')->update(['active' => false]);
+        $this->get('/platform')->assertOk()->assertSee('data-theme="platform-light"', false);
+        $this->post('/logout');
+        $this->get('/login')->assertOk()->assertSee('data-theme="platform-light"', false);
+    }
+
+    public function test_unbranded_client_inherits_platform_and_can_keep_personal_theme(): void
+    {
+        $this->login($this->admin);
+        $client = $this->admin->organisation_id;
+        $this->post('/platform/appearance', ['version' => 0, 'display_name' => 'Platform only', 'app_name' => 'Platform Academy',
+            'accent' => '#0066cc', 'default_theme' => 'platform-dark', 'reason' => 'Verify client inheritance'])->assertSessionHasNoErrors();
+        $this->withSession(['client_id' => $client])->get('/dashboard')->assertOk()->assertSee('data-theme="platform-dark"', false);
+        $this->postJson('/settings/appearance/preference', ['client_id' => $client, 'version' => 0, 'theme' => 'platform-light'])->assertOk()->assertJsonPath('theme', 'platform-light');
+        $this->get('/dashboard')->assertOk()->assertSee('data-theme="platform-light"', false);
+        $this->postJson('/settings/appearance/preference', ['client_id' => $client, 'version' => 1, 'theme' => null])->assertOk()->assertJsonPath('theme', 'platform-dark');
+        $this->get('/dashboard')->assertOk()->assertSee('data-theme="platform-dark"', false);
     }
 
     public function test_failed_logo_write_preserves_previous_platform_settings(): void

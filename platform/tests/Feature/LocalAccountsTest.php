@@ -68,6 +68,34 @@ class LocalAccountsTest extends TestCase
         }
     }
 
+    public function test_platform_account_forms_require_choices_and_restore_only_the_submitted_form(): void
+    {
+        $user = $this->ready();
+        $this->login($this->admin);
+        $html = $this->get('/platform/clients')->assertOk()->getContent();
+        $this->assertStringContainsString('<option value="">Choose client…</option>', $html);
+        $wrong = app(PlatformAdministration::class)->client($this->admin, null, 'Wrong client', 0, 'Create wrong client fixture');
+        $this->post('/platform/actions', ['_form' => 'platform-account-'.$user->id, 'action' => 'grant',
+            'user' => $user->id, 'client' => $wrong, 'version' => $user->permission_version,
+            'reason' => 'Attempt wrong membership'])->assertRedirect('/platform/clients')->assertSessionHasErrors('client');
+        $this->get('/platform/clients')->assertOk()->assertSee('wait for acceptance');
+        $this->assertFalse(app(ClientAccess::class)->clientRole($user, $wrong, 'admin'));
+
+        $this->post('/accounts/actions', ['_form' => 'local-account-create', 'action' => 'create',
+            'client' => $user->organisation_id, 'email' => 'invalid', 'name' => 'Retained name',
+            'current_password' => self::PASSWORD, 'reason' => 'Create fixture account'])->assertSessionHasErrors('email');
+        $this->assertNull(session()->getOldInput('current_password'));
+        $this->get('/platform')->assertOk()->assertSee('value="Retained name"', false);
+        $this->post('/accounts/actions', ['_form' => 'local-account-recovery', 'action' => 'setup',
+            'target' => $user->id, 'client' => '', 'current_password' => self::PASSWORD,
+            'reason' => 'Reissue account setup'])->assertRedirect('/accounts/links')->assertSessionHasErrors('client');
+        $response = $this->get('/accounts/links')->assertOk();
+        $this->assertMatchesRegularExpression('/value="setup"\s+selected/', $response->getContent());
+        $this->assertMatchesRegularExpression('/value="'.preg_quote($user->id, '/').'"\s+selected/', $response->getContent());
+        $response->assertSee('Account-wide recovery');
+        $this->get('/accounts/links')->assertOk()->assertSee('Choose action…')->assertSee('Choose account…');
+    }
+
     public function test_pending_account_setup_login_and_member_only_access(): void
     {
         $link = $this->create();
