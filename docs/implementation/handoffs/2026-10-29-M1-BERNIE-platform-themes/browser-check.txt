@@ -36,6 +36,3 @@ async (page) => {
   assert(await page.locator('html').getAttribute('data-theme')==='platform-dark','Shared sign-in inherits platform default');
   console.log(JSON.stringify({results,orange,blue,dark},null,2));
 }
-
-
-

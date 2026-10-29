@@ -1,0 +1,62 @@
+{
+  "stats": {
+    "startTime": "2026-10-29T04:16:31.038Z",
+    "duration": 164809.9,
+    "expected": 5,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "tests": [
+    {
+      "title": "Global Admin workspace is accessible without client selection and denied to Client Admins",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 45387
+        }
+      ]
+    },
+    {
+      "title": "three client administrators see their own directory and branding",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 35259
+        }
+      ]
+    },
+    {
+      "title": "coordinator summary, sensitive restrictions and case-specific appeal access",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 12123
+        }
+      ]
+    },
+    {
+      "title": "member learning, completed progress, evidence, multi-client and departure",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 26797
+        }
+      ]
+    },
+    {
+      "title": "platform palettes persist, reset and remain isolated from client branding",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "duration": 39876
+        }
+      ]
+    }
+  ]
+}

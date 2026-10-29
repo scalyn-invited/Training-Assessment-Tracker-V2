@@ -308,3 +308,7 @@ Ready for review on codex/fix-platform-theme-colours (uncommitted). Platform Lig
 ## 2026-10-29 — Combined administration publication claim
 
 User explicitly authorised one draft PR containing all pending source, tests, assets and documentation. Isolated branch codex/platform-administration-publication starts from main 7d09283. Pending snapshot 4504fa1 reconciled against already-merged M3: preserve upstream formatted code and evidence, append independent client-selection/theme entries. Scope includes repeatable platform palette CI browser coverage. Main working folder and runtime remain untouched; no merge or deployment authorised.
+
+## 2026-10-29 — Combined draft PR publication
+
+Draft PR #15 combines pending platform themes, client/account selection fixes, assets and curated evidence on latest main; existing merged M3 code and CI fixes preserved. Original 97 pending files verified unchanged. Added repeatable platform palette checks to existing browser CI. Local formatting and 16 palette parity fixtures pass; full local SQLite: 220 tests / 4,377 assertions with four skips; five demo browser tests passed. First hosted run 40816607049 passed all four jobs. Final documentation revision is rechecked by CI. See [publication handoff](../handoffs/2026-10-29-M1-BERNIE-combined-publication.md) and PR checks for final tested head/results. No merge/deployment or human acceptance claimed.
