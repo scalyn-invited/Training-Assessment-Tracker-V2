@@ -1,0 +1,141 @@
+- generic [active] [ref=f5e1]:
+  - link "Skip to content" [ref=f5e2] [cursor=pointer]:
+    - /url: "#main"
+  - complementary "Workspace menu" [ref=f5e3]:
+    - link "Scalyn Assessment Training Tracker home" [ref=f5e5] [cursor=pointer]:
+      - /url: http://127.0.0.1:8136/dashboard
+      - img "Scalyn" [ref=f5e7]
+      - generic [ref=f5e8]:
+        - strong [ref=f5e9]: Scalyn
+        - generic [ref=f5e10]: Assessment Training Tracker
+    - paragraph [ref=f5e11]: Your workspace
+    - navigation "Main navigation" [ref=f5e12]:
+      - link "Platform administration" [ref=f5e13] [cursor=pointer]:
+        - /url: http://127.0.0.1:8136/platform
+      - link "Overview" [ref=f5e20] [cursor=pointer]:
+        - /url: http://127.0.0.1:8136/dashboard
+      - link "Learning plans" [ref=f5e24] [cursor=pointer]:
+        - /url: http://127.0.0.1:8136/dashboard#learning-plans
+      - link "Assessments" [ref=f5e28] [cursor=pointer]:
+        - /url: http://127.0.0.1:8136/assessments
+      - link "Updates" [ref=f5e33] [cursor=pointer]:
+        - /url: http://127.0.0.1:8136/notifications
+      - generic [ref=f5e37]: Manage
+      - link "Appearance" [ref=f5e38] [cursor=pointer]:
+        - /url: http://127.0.0.1:8136/settings/appearance
+      - link "Change password" [ref=f5e43] [cursor=pointer]:
+        - /url: http://127.0.0.1:8136/account/password
+    - generic [ref=f5e48]:
+      - paragraph [ref=f5e49]:
+        - generic [ref=f5e50]: One step at a time
+        - text: Progress startswith showing up.
+      - group [ref=f5e51]:
+        - generic "Theme Light" [ref=f5e52] [cursor=pointer]:
+          - generic [ref=f5e55]: Theme
+          - generic [ref=f5e56]: Light
+  - generic [ref=f5e57]:
+    - banner [ref=f5e58]:
+      - form "Active client" [ref=f5e59]:
+        - generic [ref=f5e61]:
+          - combobox "Active client" [ref=f5e62]:
+            - option "Choose client" [selected]
+            - option "A Other client"
+            - option "B Pagination 0"
+            - option "B Pagination 1"
+            - option "B Pagination 10"
+            - option "B Pagination 11"
+            - option "B Pagination 12"
+            - option "B Pagination 13"
+            - option "B Pagination 14"
+            - option "B Pagination 15"
+            - option "B Pagination 16"
+            - option "B Pagination 17"
+            - option "B Pagination 18"
+            - option "B Pagination 19"
+            - option "B Pagination 2"
+            - option "B Pagination 3"
+            - option "B Pagination 4"
+            - option "B Pagination 5"
+            - option "B Pagination 6"
+            - option "B Pagination 7"
+            - option "B Pagination 8"
+            - option "B Pagination 9"
+            - option "Z Current client"
+          - button "Switch client" [ref=f5e63] [cursor=pointer]
+      - generic [ref=f5e64]:
+        - generic [aria-hidden] [ref=f5e65]: A
+        - strong [ref=f5e67]: Alex · Administrator
+        - button "Sign out" [ref=f5e69] [cursor=pointer]
+    - generic [ref=f5e72]:
+      - strong [ref=f5e74]: LOCAL SANDBOX
+      - generic [ref=f5e75]: Synthetic people · Local password sign-in · No email delivery
+    - main [ref=f5e76]:
+      - generic [ref=f5e77]:
+        - heading "Account links" [level=1] [ref=f5e78]
+        - paragraph [ref=f5e79]: Recovery changes the shared login across every client and ends all sessions when completed. Client Admins cannot recover themselves or Global Admins.
+        - generic [ref=f5e80]:
+          - generic [ref=f5e81]:
+            - text: Action
+            - combobox "Action" [ref=f5e82]:
+              - option "Choose action…" [selected]
+              - option "Issue recovery link"
+              - option "Reissue initial setup"
+          - generic [ref=f5e83]:
+            - text: Account
+            - combobox "Account" [ref=f5e84]:
+              - option "Choose account…" [selected]
+              - option "Pending account — pending@example.invalid"
+          - paragraph [ref=f5e85]: Email is not configured. A private link will be shown for manual sharing.
+          - generic [ref=f5e86]:
+            - text: Client (required for initial setup)
+            - combobox "Client (required for initial setup)" [ref=f5e87]:
+              - option "Account-wide recovery" [selected]
+              - option "A Other client"
+              - option "B Pagination 0"
+              - option "B Pagination 1"
+              - option "B Pagination 10"
+              - option "B Pagination 11"
+              - option "B Pagination 12"
+              - option "B Pagination 13"
+              - option "B Pagination 14"
+              - option "B Pagination 15"
+              - option "B Pagination 16"
+              - option "B Pagination 17"
+              - option "B Pagination 18"
+              - option "B Pagination 19"
+              - option "B Pagination 2"
+              - option "B Pagination 3"
+              - option "B Pagination 4"
+              - option "B Pagination 5"
+              - option "B Pagination 6"
+              - option "B Pagination 7"
+              - option "B Pagination 8"
+              - option "B Pagination 9"
+              - option "Z Current client"
+          - generic [ref=f5e88]:
+            - text: Your current password
+            - textbox "Your current password" [ref=f5e89]
+          - generic [ref=f5e90]:
+            - text: Reason
+            - textbox "Reason" [ref=f5e91]
+          - button "Issue private link" [ref=f5e92] [cursor=pointer]
+      - generic [ref=f5e93]:
+        - heading "Issued links" [level=2] [ref=f5e94]
+        - article [ref=f5e95]:
+          - heading "Setup — Pending account" [level=3] [ref=f5e96]
+          - paragraph [ref=f5e97]: Pending · Expires 2026-10-29 01:50:02 UTC
+          - generic [ref=f5e98]:
+            - generic [ref=f5e99]:
+              - text: Your current password
+              - textbox "Your current password" [ref=f5e100]
+            - generic [ref=f5e101]:
+              - text: Cancellation reason
+              - textbox "Cancellation reason" [ref=f5e102]
+            - button "Cancel link" [ref=f5e103] [cursor=pointer]
+        - article [ref=f5e104]:
+          - heading "Setup — Alex · Administrator" [level=3] [ref=f5e105]
+          - paragraph [ref=f5e106]: Used · Expires 2026-10-29 01:50:00 UTC
+    - contentinfo [ref=f5e107]:
+      - generic [ref=f5e108]: Assessment Training Tracker
+      - generic [ref=f5e109]: Learning with purpose. Progress with evidence.
+  - status [ref=f5e110]

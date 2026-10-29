@@ -11,11 +11,16 @@ class Branding
 {
     public const THEMES = ['light' => 'Light', 'dark' => 'Dark', 'neon-cyan' => 'Neon Cyan', 'neon-emerald' => 'Neon Emerald', 'neon-amber' => 'Neon Amber'];
 
+    public const PLATFORM_THEMES = ['platform-light' => 'Platform Light', 'platform-dark' => 'Platform Dark'];
+
     public function forUser(?User $user): array
     {
-        $client = $user && $user->active ? app(ClientContext::class)->resolve($user) : null;
+        $shared = request()->routeIs('platform.*', 'login', 'login.store', 'clients.*', 'local.*');
+        $client = ! $shared && $user && $user->active ? app(ClientContext::class)->resolve($user) : null;
         $defaults = config('branding.defaults', []);
         $platform = Schema::hasTable('platform_settings') ? DB::table('platform_settings')->where('environment', config('training.environment'))->first() : null;
+        $platformSource = $this->colour($platform?->accent ?? $defaults['accent_light'] ?? null, '#1d4668');
+        $platformPalettes = app(ClientTheme::class)->generate($platformSource);
         if ($platform?->display_name !== null) {
             $palettes = app(ClientTheme::class)->generate($platform->accent);
             $defaults = array_replace($defaults, ['client_name' => $platform->display_name, 'app_name' => $platform->app_name,
@@ -33,7 +38,7 @@ class Branding
         $mode = in_array($raw['mode'] ?? '', ['cerebru', 'co-branded', 'white-label'], true) ? $raw['mode'] : 'cerebru';
         $clientName = $this->text($raw['client_name'] ?? '', '');
         $app = $this->text($raw['app_name'] ?? '', 'Assessment Training Tracker');
-        $theme = array_key_exists($raw['default_theme'] ?? '', self::THEMES) ? $raw['default_theme'] : 'dark';
+        $theme = array_key_exists($raw['default_theme'] ?? '', self::THEMES + self::PLATFORM_THEMES) ? $raw['default_theme'] : 'dark';
         $light = $this->asset($raw['logo_light'] ?? null);
         $dark = $this->asset($raw['logo_dark'] ?? null);
         if ($platform?->logo_path) {
@@ -54,6 +59,11 @@ class Branding
         $generated = isset($clientTheme['generation']);
         $source = $clientTheme['source'] ?? $clientTheme['primary'] ?? $this->colour($raw['accent_dark'] ?? null, '#1d4668');
         $themeTokens = [];
+        foreach ($platformPalettes as $variant => $tokens) {
+            foreach ($tokens as $key => $value) {
+                $themeTokens['platform-'.$variant.'-'.$key] = $value;
+            }
+        }
         if ($generated) {
             foreach (app(ClientTheme::class)->generate($source) as $variant => $tokens) {
                 foreach ($tokens as $key => $value) {
@@ -66,7 +76,7 @@ class Branding
             }
         }
 
-        $themes = self::THEMES + ($generated ? ['client-light' => 'Client Light', 'client-dark' => 'Client Dark'] : ($clientTheme ? ['client' => 'Client theme'] : []));
+        $themes = self::THEMES + self::PLATFORM_THEMES + ($generated ? ['client-light' => 'Client Light', 'client-dark' => 'Client Dark'] : ($clientTheme ? ['client' => 'Client theme'] : []));
         $resolve = fn ($value) => $value === 'client' && $generated ? 'client-light' : $value;
         $savedDefault = $resolve($saved->default_theme ?? null);
         if (isset($themes[$savedDefault ?? ''])) {
@@ -77,6 +87,9 @@ class Branding
         $personal = $resolve($preference?->theme);
 
         return [
+            'platform_previews' => $platformPalettes,
+            'appearance_scope' => $client === null ? 'platform' : 'client',
+            'legacy_theme_key' => $client === null ? 'training.appearance.'.hash('sha256', 'guest') : '',
             'selected_theme' => isset($themes[$personal ?? '']) ? $personal : $theme,
             'saved_default_theme' => $savedDefault,
             'preference_ready' => $preferencesReady,
@@ -103,8 +116,8 @@ class Branding
             'default_theme' => $theme,
             'footer' => $this->text($raw['footer'] ?? '', 'Learning with purpose. Progress with evidence.'),
             'cerebru_url' => $mode === 'white-label' ? null : $this->url($raw['cerebru_url'] ?? null),
-            'theme_key' => 'training.appearance.'.hash('sha256', $user && $user->active ? ($client ?? 'unselected').'|'.$user->environment.'|'.$user->id : 'guest'),
-            'themes' => self::THEMES + ($generated ? ['client-light' => 'Client Light', 'client-dark' => 'Client Dark'] : ($clientTheme ? ['client' => 'Client theme'] : [])),
+            'theme_key' => 'training.appearance.'.hash('sha256', $user && $user->active ? ($client ?? 'platform').'|'.$user->environment.'|'.$user->id : 'platform|guest|'.config('training.environment')),
+            'themes' => $themes,
         ];
     }
 

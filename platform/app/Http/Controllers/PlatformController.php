@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\Branding;
+use App\Services\Tenancy\ClientAccess;
 use App\Services\Tenancy\PlatformAdministration;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -19,8 +20,12 @@ class PlatformController extends Controller
         abort_unless(in_array($section, ['overview', 'clients', 'admins', 'appearance', 'audit']), 404);
         $env = $service->environment();
         $clients = $service->clients()->orderBy('name')->paginate(20);
+        $clientChoices = $service->clients()->where('active', true)->orderBy('name')->get()
+            ->filter(fn ($client) => app(ClientAccess::class)->available($client->id));
         $states = DB::table('platform_client_states')->where('environment', $env)->get()->keyBy('organisation_id');
         $accounts = $service->accounts()->when($request->filled('search'), fn ($q) => $q->where('name', 'like', '%'.mb_substr($request->string('search'), 0, 120).'%'))->orderBy('name')->paginate(20, ['id', 'name', 'email', 'permission_version'], 'accounts_page')->withQueryString();
+        $accountClients = app(ClientAccess::class)->activeMemberships()->whereIn('cm.user_id', $accounts->pluck('id'))
+            ->get(['cm.user_id', 'cm.organisation_id'])->groupBy('user_id');
         $admins = $service->admins()->join('users as u', 'u.id', '=', 'ra.user_id')->orderBy('u.name')->paginate(20, ['ra.id', 'u.name', 'u.email', 'u.active'], 'admins_page');
         $settings = DB::table('platform_settings')->where('environment', $env)->first();
         $clientAdmins = DB::table('role_assignments as ra')->join('roles as r', 'r.id', '=', 'ra.role_id')->join('users as u', 'u.id', '=', 'ra.user_id')
@@ -31,13 +36,28 @@ class PlatformController extends Controller
             ->when($request->filled('target'), fn ($q) => $q->where('e.target_id', mb_substr($request->string('target'), 0, 80)))
             ->orderByDesc('e.created_at')->orderByDesc('e.id')->paginate(25, ['e.created_at', 'e.action', 'e.target_id', 'e.reason', 'e.operator_reference', 'u.name'], 'events_page')->withQueryString();
 
-        return view('platform', compact('section', 'clients', 'states', 'accounts', 'admins', 'settings', 'events', 'env', 'clientAdmins'));
+        return view('platform', compact('section', 'clients', 'states', 'accounts', 'admins', 'settings', 'events', 'env', 'clientAdmins', 'clientChoices', 'accountClients'));
     }
 
     public function act(Request $request, PlatformAdministration $service)
     {
         try {
             return $this->perform($request, $service);
+        } catch (ValidationException $error) {
+            if ($request->expectsJson()) {
+                throw $error;
+            }
+
+            $parameters = ['section' => in_array($request->input('action'), ['appoint', 'remove']) ? 'admins' : 'clients'];
+            if ($request->filled('_accounts_page')) {
+                $parameters['accounts_page'] = max(1, $request->integer('_accounts_page'));
+            }
+            if ($request->filled('_search')) {
+                $parameters['search'] = mb_substr($request->string('_search')->toString(), 0, 120);
+            }
+
+            return redirect()->route('platform.section', $parameters)->withErrors($error->errors())
+                ->withInput($request->only(['_form', 'user', 'client', 'action', 'reason']));
         } catch (HttpExceptionInterface $error) {
             if ($error->getStatusCode() !== 409 || $request->expectsJson()) {
                 throw $error;
@@ -86,7 +106,7 @@ class PlatformController extends Controller
         $service->authorised($request->user());
         $d = $request->validate(['version' => 'required|integer|min:0', 'display_name' => 'required|string|max:120',
             'app_name' => 'required|string|max:120', 'accent' => ['required', 'regex:/^#[0-9a-fA-F]{6}$/D'],
-            'default_theme' => 'required|in:'.implode(',', array_keys(Branding::THEMES)), 'reason' => 'required|string|min:8|max:2000',
+            'default_theme' => 'required|in:'.implode(',', array_keys(Branding::THEMES + Branding::PLATFORM_THEMES)), 'reason' => 'required|string|min:8|max:2000',
             'logo' => 'nullable|file|mimes:png,jpg,jpeg,webp|max:2048|dimensions:max_width=4096,max_height=4096', 'remove_logo' => 'sometimes|boolean']);
         if ($request->hasFile('logo') && $request->boolean('remove_logo')) {
             throw ValidationException::withMessages(['logo' => 'Choose replacement or removal, not both.']);

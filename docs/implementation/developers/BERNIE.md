@@ -287,3 +287,24 @@ User explicitly approved Bernie backend plus minimal usable UI and backed-up loc
 ## 2026-10-28 — M3 bounded delivery and activation
 
 Status ready_for_review for Bernie's backend and requested minimal UI; full M3 remains pending human acceptance. Versioned reusable assessments, private evidence confirmation, manual/synthetic provisional review, rejection/resubmission, appeals/regrading and C03 v1 implemented. Existing localhost production profile activated after consistent backup, isolated restore/migration rehearsal and row/hash verification. Evidence: [M3 handoff](../handoffs/2026-10-28-M3-BERNIE-assessments.md). Technical self-review recorded there; Saturnino UX/accessibility review requested separately, not completed. No external messages, live AI, SMTP, paid calls, remote push/PR/merge or milestone acceptance. Actual hours unknown.
+
+
+## 2026-10-29 — Platform client-selection fix claim
+
+User approved bounded Platform/account dropdown repair under Bernie. Branch `codex/fix-platform-client-selection`, base `baaeaed757a2980271ba2991f2cbd2ee8f696c1b` with pre-existing M3 changes preserved. Scope: membership-derived defaults, independent client choices, form-local validation recovery and isolated checks. No schema or permission contract change, remote publication, merge or deployment. No counterpart review or milestone acceptance inferred.
+
+## 2026-10-29 — Platform client-selection fix delivery
+
+Ready for review on codex/fix-platform-client-selection (uncommitted). Membership-derived defaults, pagination-independent options, explicit action choices and form-specific validation recovery implemented. 56 tests / 450 assertions, scoped Pint and diff checks passed. Isolated Chrome checks covered wrong/correct client grants, invitation guidance, recovery/default settings and keyboard/mobile behavior. Existing application data and M3 work preserved by scope; no remote publication or human acceptance. [Evidence and technical self-review](../handoffs/2026-10-29-M1-BERNIE-client-selection.md).
+
+## 2026-10-29 — Platform theme colours claim
+
+M1-BERNIE/platform-theme-colours in progress on codex/fix-platform-theme-colours. User identified Bernie after approving the implementation plan and shared layout/CSS scope. Preserve existing M2/M3/client-selection changes; backups of overlapping source files are in platform/.runtime/platform-theme-backup. Scope: platform palette generation, context isolation, theme controls/previews and regression/browser checks. Disposable test data only; active branding unchanged. No counterpart review, owner acceptance or remote publication inferred.
+
+## 2026-10-29 — Platform theme colours delivery
+
+Ready for review on codex/fix-platform-theme-colours (uncommitted). Platform Light/Dark, generated palettes/previews, scoped browser preferences with legacy migration/reset, and branded platform buttons delivered. Final isolated regression suite: 76 tests / 3,545 assertions; scoped Pint, JS syntax and whitespace checks passed. Chrome desktop/mobile verified saves, previews, palettes, defaults, standard themes, client inheritance and preference isolation. Active saved branding unchanged. Temporary test browser/server stopped. See [handoff and evidence](../handoffs/2026-10-29-M1-BERNIE-platform-themes.md). Technical self-review recorded; counterpart review, owner acceptance, publication and hosted CI remain unclaimed.
+
+## 2026-10-29 — Combined administration publication claim
+
+User explicitly authorised one draft PR containing all pending source, tests, assets and documentation. Isolated branch codex/platform-administration-publication starts from main 7d09283. Pending snapshot 4504fa1 reconciled against already-merged M3: preserve upstream formatted code and evidence, append independent client-selection/theme entries. Scope includes repeatable platform palette CI browser coverage. Main working folder and runtime remain untouched; no merge or deployment authorised.

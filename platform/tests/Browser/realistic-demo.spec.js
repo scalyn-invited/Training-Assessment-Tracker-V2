@@ -73,3 +73,70 @@ test('member learning, completed progress, evidence, multi-client and departure'
  await logout(page);const departed=manifest.clients[2];await login(page,person(departed,departed.departed_member).name);
  const denied=await page.request.get('/enrolments/'+departed.scenarios.onboarding.enrolment,{maxRedirects:0});expect([302,403,404]).toContain(denied.status());
 });
+
+test('platform palettes persist, reset and remain isolated from client branding',async({page,browser})=>{
+ await page.goto('/login');
+ await page.getByRole('button',{name:'Alex Rowan — Fictional Global Admin',exact:true}).click();
+ await page.goto('/platform/appearance');
+ const form=page.locator('#platform-appearance-form');
+ const original={accent:await form.getByLabel('Brand colour',{exact:true}).inputValue(),theme:await form.getByRole('combobox',{name:'Default theme',exact:true}).inputValue()};
+ const clientBrandings=db.prepare('select * from client_brandings order by organisation_id').all();
+ const palette=()=>page.evaluate(()=>{
+  const root=document.documentElement,css=getComputedStyle(root);
+  return {theme:root.dataset.theme,key:root.dataset.themeKey,primary:css.getPropertyValue('--primary').trim(),
+   background:getComputedStyle(document.body).backgroundColor,
+   button:getComputedStyle(document.querySelector('#platform-appearance-form button')).backgroundColor,
+   nav:getComputedStyle(document.querySelector('.sidebar-nav a[aria-current]')).backgroundColor};
+ });
+ const save=async(accent,theme)=>{
+  await form.getByLabel('Brand colour',{exact:true}).fill(accent);
+  await form.getByRole('combobox',{name:'Default theme',exact:true}).selectOption(theme);
+  await form.getByLabel('Appearance change reason',{exact:true}).fill('Synthetic CI platform palette verification');
+  await form.getByRole('button',{name:'Save platform appearance',exact:true}).click();
+  await expect(page.locator('body')).toContainText('Platform appearance saved.');
+  await page.mouse.move(0,0);
+ };
+ const choose=async(name)=>{
+  await page.locator('.theme-picker summary').click();
+  await page.getByRole('button',{name,exact:true}).click();
+ };
+ try {
+  await page.setViewportSize({width:1440,height:1000});
+  const before=await palette();
+  await form.getByLabel('Brand colour',{exact:true}).fill('#cc3300');
+  await expect.poll(()=>page.locator('[data-platform-preview="light"]').evaluate(el=>el.style.getPropertyValue('--preview-primary'))).toBe('#cc3300');
+  expect((await palette()).primary).toBe(before.primary);
+  await page.reload();
+  await expect(form.getByLabel('Brand colour',{exact:true})).toHaveValue(original.accent);
+  await save('#cc3300','platform-light');
+  await expect(page.locator('html')).toHaveAttribute('data-theme','platform-light');
+  const orange=await palette();expect(orange.primary).toBe('#cc3300');expect(orange.button).toBe(orange.nav);
+  await page.reload();expect((await palette()).primary).toBe(orange.primary);
+  await save('#0066cc','platform-light');
+  const blue=await palette();expect(blue.primary).toBe('#0066cc');expect(blue.background).not.toBe(orange.background);
+  expect((await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze()).violations).toEqual([]);
+  await choose('Platform Dark');await page.reload();await expect(page.locator('html')).toHaveAttribute('data-theme','platform-dark');
+  expect((await palette()).background).not.toBe(blue.background);
+  await choose('Use platform default');await page.reload();await expect(page.locator('html')).toHaveAttribute('data-theme','platform-light');
+  for(const [name,primary] of [['Light','#1d4668'],['Dark','#e5e5e5'],['Neon Cyan','#67e8f9']]) {
+   await choose(name);expect((await palette()).primary).toBe(primary);
+  }
+  await choose('Use platform default');await save('#0066cc','platform-dark');
+  await page.screenshot({path:'test-results/platform-theme-dark-desktop.png',fullPage:true});
+  await page.setViewportSize({width:390,height:844});
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+  expect((await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze()).violations).toEqual([]);
+  await page.screenshot({path:'test-results/platform-theme-dark-mobile.png',fullPage:true});
+  const guest=await browser.newContext();
+  try {const login=await guest.newPage();await login.goto('http://127.0.0.1:8130/login');await expect(login.locator('html')).toHaveAttribute('data-theme','platform-dark');} finally {await guest.close();}
+  expect(db.prepare('select * from client_brandings order by organisation_id').all()).toEqual(clientBrandings);
+  await page.setViewportSize({width:1440,height:1000});
+  await page.evaluate(()=>{const r=document.documentElement;localStorage.setItem(r.dataset.legacyThemeKey,'light');localStorage.removeItem(r.dataset.themeKey);localStorage.removeItem(r.dataset.themeKey+'.migrated');});
+  await page.reload();await expect(page.locator('html')).toHaveAttribute('data-theme','light');
+  await choose('Use platform default');await page.reload();await expect(page.locator('html')).toHaveAttribute('data-theme','platform-dark');
+ } finally {
+  await page.setViewportSize({width:1440,height:1000});
+  await page.goto('/platform/appearance');
+  await save(original.accent,original.theme);
+ }
+});

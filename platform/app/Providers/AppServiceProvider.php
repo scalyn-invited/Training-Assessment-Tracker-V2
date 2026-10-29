@@ -26,8 +26,8 @@ class AppServiceProvider extends ServiceProvider
     {
         Livewire::addPersistentMiddleware([TrainingSession::class]);
 
-        View::composer(['layouts.app', 'appearance'], function ($view) {
-            $view->with('branding', app(Branding::class)->forUser(request()->routeIs('platform.*', 'clients.*', 'login', 'login.store') ? null : auth()->user()));
+        View::composer(['layouts.app', 'appearance', 'platform'], function ($view) {
+            $view->with('branding', app(Branding::class)->forUser(auth()->user()));
         });
     }
 }

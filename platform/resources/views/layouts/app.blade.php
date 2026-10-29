@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" data-client-theme="{{ $branding['theme_kind'] }}" data-brand-mode="{{ $branding['mode'] }}" data-theme="{{ $branding['selected_theme'] }}" data-preference-url="{{ $branding['preference_ready'] ? route('appearance.preference') : '' }}" data-preference-client="{{ $branding['preference_client'] }}" data-preference-version="{{ $branding['preference_version'] }}" data-preference-decided="{{ $branding['preference_decided'] ? '1' : '0' }}" data-theme-key="{{ $branding['theme_key'] }}" data-default-theme="{{ $branding['default_theme'] }}" style="--brand-light:{{ $branding['accent_light'] }};--brand-dark:{{ $branding['accent_dark'] }}@foreach($branding['theme_tokens'] as $token => $value);--{{ $token }}:{{ $value }}@endforeach">
+<html lang="en" data-appearance-scope="{{ $branding['appearance_scope'] }}" data-client-theme="{{ $branding['theme_kind'] }}" data-brand-mode="{{ $branding['mode'] }}" data-theme="{{ $branding['selected_theme'] }}" data-preference-url="{{ $branding['preference_ready'] ? route('appearance.preference') : '' }}" data-preference-client="{{ $branding['preference_client'] }}" data-preference-version="{{ $branding['preference_version'] }}" data-preference-decided="{{ $branding['preference_decided'] ? '1' : '0' }}" data-legacy-theme-key="{{ $branding['legacy_theme_key'] }}" data-theme-key="{{ $branding['theme_key'] }}" data-default-theme="{{ $branding['default_theme'] }}" style="--brand-light:{{ $branding['accent_light'] }};--brand-dark:{{ $branding['accent_dark'] }}@foreach($branding['theme_tokens'] as $token => $value);--{{ $token }}:{{ $value }}@endforeach">
 <head>
     <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Workspace') · {{ $branding['app_name'] }}</title>
     <link rel="icon" href="{{ $branding['favicon'] }}">
     <script src="{{ asset('client-palette.js') }}?v=2"></script>
-    <script src="{{ asset('appearance.js') }}?v=6"></script>
-    <link rel="stylesheet" href="{{ asset('app.css') }}?v=scalyn-7">
+    <script src="{{ asset('appearance.js') }}?v=7"></script>
+    <link rel="stylesheet" href="{{ asset('app.css') }}?v=scalyn-8">
     <script src="{{ asset('navigation.js') }}" defer></script>
     @livewireStyles
 </head>

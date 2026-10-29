@@ -8,6 +8,7 @@ use App\Services\LocalAccountDelivery;
 use App\Services\LocalAccounts;
 use App\Services\Tenancy\ClientAccess;
 use App\Services\Tenancy\ClientContext;
+use App\Services\Tenancy\PlatformAdministration;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -16,8 +17,8 @@ class LocalAccountController extends Controller
 {
     public function actions(Request $request, LocalAccounts $accounts)
     {
-        $data = $request->validate(['action' => 'required|in:create,setup,reset,cancel', 'client' => 'nullable|uuid',
-            'name' => 'nullable|string|max:120', 'email' => 'nullable|email|max:200', 'target' => 'nullable|uuid',
+        $data = $request->validate(['action' => 'required|in:create,setup,reset,cancel', 'client' => 'required_if:action,create,setup|nullable|uuid',
+            'name' => 'nullable|string|max:120', 'email' => 'nullable|email|max:200', 'target' => 'required_if:action,setup,reset|nullable|uuid',
             'link' => 'nullable|uuid', 'is_synthetic' => config('training.environment') === 'production' ? 'prohibited' : 'sometimes|boolean', 'send_email' => 'sometimes|boolean',
             'current_password' => 'required|string|max:128', 'reason' => 'required|string|min:8|max:2000']);
         $actor = $request->user();
@@ -56,7 +57,7 @@ class LocalAccountController extends Controller
             }))->orderBy('name')->get()->filter(fn ($user) => $accounts->identity($user)
                 && ($global || ! app(ClientAccess::class)->globalAdmin($user)));
 
-        $clientChoices = $global ? Organisation::where('active', true)->orderBy('name')->get()
+        $clientChoices = $global ? app(PlatformAdministration::class)->clients()->where('active', true)->orderBy('name')->get()
             ->filter(fn ($entry) => app(ClientAccess::class)->available($entry->id)) : collect();
 
         return view('local-accounts.manage', compact('links', 'client', 'global', 'targets', 'clientChoices'));
