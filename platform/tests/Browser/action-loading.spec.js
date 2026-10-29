@@ -36,7 +36,7 @@ test('nested mobile popup handles delayed response without cancelling or duplica
  await expect(page.locator('.loading-host')).not.toBeVisible();
  await expect(page.locator('#management')).toBeVisible();
  await expect(page.locator('#management button[name=action]')).toHaveAttribute('aria-disabled','true');
- await expect(page.getByRole('status')).toContainText('Slow request completed.',{timeout:20000});
+ await expect(page.locator('#results')).toContainText('Slow request completed.',{timeout:20000});
  await expect(page.locator('#management button[name=action]')).not.toHaveAttribute('aria-disabled');
  await expect(page.locator('#management button[name=action]')).toBeFocused();
 });
