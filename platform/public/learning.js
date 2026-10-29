@@ -4,7 +4,7 @@ document.querySelectorAll('form[data-autosave], form[data-preserve-input]').forE
     const status = form.querySelector('.save-status');
     let timer, pending = false, dirty = false, conflicted = false;
     let generation = 0;
-    async function save(submitter) {
+    async function save(submitter, explicit = false) {
         clearTimeout(timer);
         if (pending) {
             status.textContent = 'A save is already in progress. Please wait, then retry this action.';
@@ -12,6 +12,7 @@ document.querySelectorAll('form[data-autosave], form[data-preserve-input]').forE
         }
         if (conflicted) return;
         pending = true;
+        const loading = explicit ? window.ActionLoading?.begin(form, submitter) : null;
         const sentGeneration = generation;
         status.textContent = 'Saving…';
         const data = new FormData(form);
@@ -43,6 +44,7 @@ document.querySelectorAll('form[data-autosave], form[data-preserve-input]').forE
             status.textContent = error.message + ' Your input has not been discarded.';
             return;
         } finally {
+            window.ActionLoading?.end(loading);
             pending = false;
         }
         if (dirty && !conflicted && form.hasAttribute('data-autosave')) timer = setTimeout(() => save(), 800);
@@ -59,7 +61,7 @@ document.querySelectorAll('form[data-autosave], form[data-preserve-input]').forE
     });
     form.addEventListener('submit', event => {
         event.preventDefault();
-        save(event.submitter);
+        save(event.submitter, true);
     });
     window.addEventListener('beforeunload', event => {
         if (dirty || pending) { event.preventDefault(); event.returnValue = ''; }

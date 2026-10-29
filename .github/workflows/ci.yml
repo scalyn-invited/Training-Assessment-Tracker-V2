@@ -109,6 +109,10 @@ jobs:
       - run: npx playwright install --with-deps chrome
       - name: Check navigation and UI tooling syntax
         run: |
+          node --check public/action-loading.js
+          node --check public/directory.js
+          node --check public/workspace.js
+          node --check public/learning.js
           node --check public/navigation.js
           node --check public/client-palette.js
           node tests/Support/check-client-palettes.mjs

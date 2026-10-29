@@ -18,7 +18,7 @@ class LocalAccountController extends Controller
     public function actions(Request $request, LocalAccounts $accounts)
     {
         $data = $request->validate(['action' => 'required|in:create,setup,reset,cancel', 'client' => 'required_if:action,create,setup|nullable|uuid',
-            'name' => 'nullable|string|max:120', 'email' => 'nullable|email|max:200', 'target' => 'required_if:action,setup,reset|nullable|uuid',
+            'account_mode' => 'nullable|in:new,existing', 'name' => 'nullable|string|max:120', 'email' => 'nullable|email|max:200', 'target' => 'required_if:action,setup,reset|nullable|uuid',
             'link' => 'nullable|uuid', 'is_synthetic' => config('training.environment') === 'production' ? 'prohibited' : 'sometimes|boolean', 'send_email' => 'sometimes|boolean',
             'current_password' => 'required|string|max:128', 'reason' => 'required|string|min:8|max:2000']);
         $actor = $request->user();
@@ -27,7 +27,7 @@ class LocalAccountController extends Controller
             abort_unless($client && $request->session()->get('client_id') === $client, 403);
         }
         $result = match ($data['action']) {
-            'create' => $accounts->create($actor, $client ?? '', $data['name'] ?? '', $data['email'] ?? '', $data['current_password'], $data['reason'], isset($data['is_synthetic']) ? (bool) $data['is_synthetic'] : null),
+            'create' => $accounts->create($actor, $client ?? '', $data['name'] ?? '', $data['email'] ?? '', $data['current_password'], $data['reason'], isset($data['is_synthetic']) ? (bool) $data['is_synthetic'] : null, $data['account_mode'] ?? null),
             'setup', 'reset' => $accounts->recover($actor, $data['target'] ?? '', $client, $data['action'], $data['current_password'], $data['reason']),
             'cancel' => $accounts->cancel($actor, $data['link'] ?? '', $client, $data['current_password'], $data['reason']),
         };
@@ -60,7 +60,9 @@ class LocalAccountController extends Controller
         $clientChoices = $global ? app(PlatformAdministration::class)->clients()->where('active', true)->orderBy('name')->get()
             ->filter(fn ($entry) => app(ClientAccess::class)->available($entry->id)) : collect();
 
-        return view('local-accounts.manage', compact('links', 'client', 'global', 'targets', 'clientChoices'));
+        $linkNames = User::whereIn('id', $links->pluck('user_id'))->pluck('name', 'id');
+
+        return view('local-accounts.manage', compact('links', 'client', 'global', 'targets', 'clientChoices', 'linkNames'));
     }
 
     public function passwordForm(Request $request, LocalAccounts $accounts, string $purpose, string $token)

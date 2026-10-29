@@ -72,13 +72,13 @@ class LocalAccountsTest extends TestCase
     {
         $user = $this->ready();
         $this->login($this->admin);
-        $html = $this->get('/platform/clients')->assertOk()->getContent();
+        $html = $this->get('/platform/clients?view=accounts')->assertOk()->getContent();
         $this->assertStringContainsString('<option value="">Choose client…</option>', $html);
         $wrong = app(PlatformAdministration::class)->client($this->admin, null, 'Wrong client', 0, 'Create wrong client fixture');
         $this->post('/platform/actions', ['_form' => 'platform-account-'.$user->id, 'action' => 'grant',
             'user' => $user->id, 'client' => $wrong, 'version' => $user->permission_version,
             'reason' => 'Attempt wrong membership'])->assertRedirect('/platform/clients')->assertSessionHasErrors('client');
-        $this->get('/platform/clients')->assertOk()->assertSee('wait for acceptance');
+        $this->get('/platform/clients?view=accounts')->assertOk()->assertSee('wait for acceptance');
         $this->assertFalse(app(ClientAccess::class)->clientRole($user, $wrong, 'admin'));
 
         $this->post('/accounts/actions', ['_form' => 'local-account-create', 'action' => 'create',
@@ -114,6 +114,33 @@ class LocalAccountsTest extends TestCase
         $this->get('/dashboard')->assertOk();
         $this->get('/platform')->assertForbidden();
         $this->get('/password/setup/'.$link['token'])->assertStatus(410);
+    }
+
+    public function test_creation_denials_explain_password_and_client_checks_without_logging_credentials(): void
+    {
+        $this->login($this->admin);
+        $payload = ['action' => 'create', 'client' => $this->admin->organisation_id,
+            'name' => 'Diagnostic fixture', 'email' => 'diagnostic@example.invalid',
+            'current_password' => 'Incorrect secret for regression', 'reason' => 'Verify safe account diagnostics'];
+        $response = $this->post('/accounts/actions', $payload)->assertForbidden()
+            ->assertSee('Your current password could not be confirmed.')
+            ->assertSee('Return to account management')
+            ->assertDontSee($payload['current_password']);
+        $this->assertDatabaseMissing('users', ['email' => $payload['email']]);
+        $this->assertDatabaseHas('platform_audit_events', ['action' => 'local.authorisation.denied',
+            'reason' => 'Local account action denied: current_password_mismatch']);
+        $this->assertStringNotContainsString($payload['current_password'], DB::table('platform_audit_events')->get()->toJson());
+        $this->assertNull(session()->getOldInput('current_password'));
+
+        $payload['current_password'] = self::PASSWORD;
+        DB::table('organisations')->where('id', $payload['client'])->update(['active' => false]);
+        $this->post('/accounts/actions', $payload)->assertForbidden()->assertSee('The selected client is inactive or suspended.');
+        $this->assertDatabaseHas('platform_audit_events', ['reason' => 'Local account action denied: client_unavailable']);
+        $this->assertDatabaseMissing('users', ['email' => $payload['email']]);
+
+        DB::table('organisations')->where('id', $payload['client'])->update(['active' => true]);
+        $this->post('/accounts/actions', $payload)->assertOk();
+        $this->assertDatabaseHas('users', ['email' => $payload['email']]);
     }
 
     public function test_wrong_password_uninitialised_and_mock_selector_fail(): void
@@ -358,5 +385,19 @@ class LocalAccountsTest extends TestCase
             'password' => self::PASSWORD, 'password_confirmation' => 'mismatch',
         ])->assertSessionHasErrors('password')->assertRedirect($path)->assertHeader('Referrer-Policy', 'no-referrer');
         $this->assertArrayNotHasKey('password', session()->getOldInput());
+    }
+
+    public function test_explicit_account_mode_rejects_mismatch_and_invites_without_reentering_name(): void
+    {
+        $member = $this->ready();
+        $client = app(PlatformAdministration::class)->client($this->admin, null, 'Invitation destination', 0, 'Create isolated invitation destination');
+        $this->login($this->admin);
+        $base = ['action' => 'create', '_form' => 'local-account-create', 'client' => $client,
+            'current_password' => self::PASSWORD, 'reason' => 'Verify explicit account operation'];
+        $this->post('/accounts/actions', $base + ['account_mode' => 'new', 'name' => 'Existing member', 'email' => $member->email])->assertSessionHasErrors('email');
+        $this->post('/accounts/actions', $base + ['account_mode' => 'existing', 'email' => 'missing-mode@example.invalid'])->assertSessionHasErrors('email');
+        $this->assertDatabaseMissing('users', ['email' => 'missing-mode@example.invalid']);
+        $this->post('/accounts/actions', $base + ['account_mode' => 'existing', 'email' => $member->email])->assertOk();
+        $this->assertDatabaseHas('local_account_links', ['user_id' => $member->id, 'organisation_id' => $client, 'purpose' => 'invite']);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Livewire\ClientDirectory;
 use App\Models\Enrolment;
 use App\Models\Identity;
 use App\Models\User;
@@ -19,6 +20,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Storage;
+use Livewire\Livewire;
 use Tests\TestCase;
 
 class PlatformAdministrationTest extends TestCase
@@ -50,7 +52,7 @@ class PlatformAdministrationTest extends TestCase
     {
         $this->login($this->admin);
         foreach (['', '/clients', '/admins', '/appearance', '/audit'] as $part) {
-            $this->get('/platform'.$part)->assertOk()->assertSee('Platform administration');
+            $this->get('/platform'.$part)->assertOk()->assertSee('Platform-wide');
         }
         $id = $this->service->client($this->admin, null, 'New fictional client', 0, 'Create isolated organisation');
         $this->service->client($this->admin, $id, 'New fictional client', 1, 'Suspend unused organisation', true);
@@ -130,7 +132,7 @@ class PlatformAdministrationTest extends TestCase
             $this->service->client($this->admin, null, 'A Other client '.$i, 0, 'Synthetic pagination client');
         }
         $this->login($this->admin);
-        $response = $this->get('/platform/clients')->assertOk();
+        $response = $this->get('/platform/clients?view=accounts')->assertOk();
         $this->assertFalse($response->viewData('clients')->contains('id', $user->organisation_id));
         $this->assertSame($user->organisation_id, $this->selection($response->getContent(), 'platform-account-'.$user->id, 'client'));
         $this->assertSame('', $this->selection($response->getContent(), 'platform-account-'.$user->id, 'action'));
@@ -145,10 +147,10 @@ class PlatformAdministrationTest extends TestCase
         $other = $this->service->client($this->admin, null, 'Additional client', 0, 'Synthetic second membership');
         $this->service->clientRole($this->admin, $other, $user->id, 'join', $user->permission_version, 'Explicit second client join');
         $this->login($this->admin);
-        $html = $this->get('/platform/clients')->assertOk()->getContent();
+        $html = $this->get('/platform/clients?view=accounts')->assertOk()->getContent();
         $this->assertSame('', $this->selection($html, 'platform-account-'.$user->id, 'client'));
         DB::table('client_memberships')->where('user_id', $user->id)->update(['ended_at' => now()]);
-        $html = $this->get('/platform/clients')->assertOk()->getContent();
+        $html = $this->get('/platform/clients?view=accounts')->assertOk()->getContent();
         $this->assertSame('', $this->selection($html, 'platform-account-'.$user->id, 'client'));
     }
 
@@ -162,7 +164,7 @@ class PlatformAdministrationTest extends TestCase
         $this->post('/platform/actions', ['_form' => 'platform-account-'.$user->id, 'action' => 'grant',
             'client' => $other, 'user' => $user->id, 'version' => $user->permission_version,
             'reason' => 'Attempt wrong client grant'])->assertRedirect('/platform/clients')->assertSessionHasErrors('client');
-        $response = $this->get('/platform/clients')->assertOk()->assertSee('not an active member');
+        $response = $this->get('/platform/clients?view=accounts')->assertOk()->assertSee('not an active member');
         $this->assertSame($other, $this->selection($response->getContent(), 'platform-account-'.$user->id, 'client'));
         $this->assertSame('grant', $this->selection($response->getContent(), 'platform-account-'.$user->id, 'action'));
         $this->assertSame($neighbor->organisation_id, $this->selection($response->getContent(), 'platform-account-'.$neighbor->id, 'client'));
@@ -324,5 +326,53 @@ class PlatformAdministrationTest extends TestCase
         $this->post('/platform/appearance', array_replace($data, ['version' => 1, 'display_name' => 'Must not publish', 'logo' => UploadedFile::fake()->image('failure.png')]))->assertSessionHasErrors('logo');
         $this->assertDatabaseHas('platform_settings', ['environment' => 'test', 'version' => 1, 'display_name' => 'Preserved platform', 'logo_path' => null]);
         $this->assertSame(1, DB::table('platform_audit_events')->where('action', 'platform.appearance.saved')->count());
+    }
+
+    public function test_review_directory_search_and_safe_audit_details(): void
+    {
+        $this->login($this->admin);
+        $this->get('/platform/clients?view=accounts&search='.urlencode($this->admin->email))->assertOk()->assertSee($this->admin->email)->assertSee('Account access');
+        $this->get('/platform/clients?client_search=NoSuchClient987')->assertOk()->assertSee('No clients found');
+        $this->get('/platform/admins')->assertOk()->assertSee('Protected: this is the last active Global Admin.')->assertSee('Already a Global Admin');
+        $this->service->audit($this->admin, 'platform.client.updated', $this->admin->organisation_id, 'Review safe change fields', [
+            'before' => ['name' => 'Old review name', 'secret' => 'DO_NOT_DISPLAY'],
+            'after' => ['name' => 'New review name', 'secret' => 'DO_NOT_DISPLAY'],
+            'private_payload' => 'DO_NOT_DISPLAY',
+        ]);
+        $this->get('/platform/audit')->assertOk()->assertSee('Old review name')->assertSee('New review name')->assertDontSee('DO_NOT_DISPLAY')->assertSee('UTC');
+    }
+
+    public function test_live_directory_filters_and_suspended_effective_counts(): void
+    {
+        $this->login($this->admin);
+        $id = $this->admin->organisation_id;
+        $component = Livewire::test(ClientDirectory::class);
+        $this->assertGreaterThan(0, $component->viewData('memberCounts')->get($id, 0));
+        $component->set('search', 'Impossible client name')->assertSee('No clients found')->call('clearFilters')->assertSee('Manage client')->call('toggleSort')->assertSet('sort', 'desc');
+        $name = DB::table('organisations')->where('id', $id)->value('name');
+        $this->service->client($this->admin, $id, $name, 0, 'Suspend isolated directory fixture', true);
+        $component = Livewire::test(ClientDirectory::class)->set('status', 'suspended');
+        $this->assertSame(0, $component->viewData('memberCounts')->get($id, 0));
+        $this->assertSame(0, $component->viewData('adminCounts')->get($id, 0));
+        $component->assertSee('Access suspended');
+    }
+
+    public function test_directory_counts_match_effective_access_and_recheck_authority(): void
+    {
+        $this->login($this->admin);
+        $client = $this->admin->organisation_id;
+        $others = User::where('id', '!=', $this->admin->id)->where('organisation_id', $client)->get();
+        $this->assertGreaterThanOrEqual(2, $others->count());
+        Identity::where('user_id', $others[0]->id)->update(['active' => false]);
+        DB::table('client_memberships')->where('user_id', $others[1]->id)->update(['joined_at' => now()->addDay()]);
+        DB::table('role_assignments')->where('user_id', $this->admin->id)->where('scope_type', 'client')->update(['ends_at' => now()->subSecond()]);
+        $access = app(ClientAccess::class);
+        $members = User::all()->filter(fn ($user) => $access->membership($user, $client));
+        $admins = $members->filter(fn ($user) => $access->clientRole($user, $client, 'admin'));
+        $component = Livewire::test(ClientDirectory::class);
+        $this->assertSame($members->count(), $component->viewData('memberCounts')->get($client, 0));
+        $this->assertSame($admins->count(), $component->viewData('adminCounts')->get($client, 0));
+        DB::table('role_assignments')->where('user_id', $this->admin->id)->where('scope_type', 'platform')->update(['ends_at' => now()->subSecond()]);
+        $component->call('clearFilters')->assertForbidden();
     }
 }

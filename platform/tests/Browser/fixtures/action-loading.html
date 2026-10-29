@@ -1,0 +1,35 @@
+<!doctype html><html lang="en" data-theme="light"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Loading popup verification</title><link rel="stylesheet" href="/app.css"><link rel="stylesheet" href="/workspace.css"><link rel="stylesheet" href="/vendor/sweetalert2/sweetalert2.min.css"><link rel="stylesheet" href="/action-loading.css"><script src="/vendor/sweetalert2/sweetalert2.min.js" defer></script><script src="/action-loading.js" defer></script><main style="padding:24px"><h1>Loading popup verification</h1><p>Isolated UI fixtures. No application records are submitted.</p><button id="checks">Run lifecycle checks</button><button id="nested">Open management fixture</button><form id="login" action="/login" method="post"><label>Required value<input required name="value"></label><button>Sign in</button></form><pre id="results" role="status"></pre><dialog id="management"><h2>Management fixture</h2><form method="post" action="/platform/actions"><button name="action" value="suspend">Suspend client</button></form><button id="close">Close</button></dialog></main><script>
+addEventListener('DOMContentLoaded',()=>{
+ const results=document.querySelector('#results'),form=document.querySelector('#login'),button=form.querySelector('button');
+ const record=text=>{results.textContent+=text+'\n'};
+ document.querySelector('#checks').onclick=()=>{
+  results.textContent='';
+  let passed=0; const check=(condition,message)=>{if(!condition)throw Error(message); passed++};
+  try{
+   check(ActionLoading.message(form,button)==='Logging in...','login copy');
+   for(const [path,label] of [['/logout','Signing out...'],['/clients','Switching client...']]){
+    const test=document.createElement('form');test.action=path;check(ActionLoading.message(test,null)===label,path);
+   }
+   const token=ActionLoading.begin(form,button);
+   check(button.textContent==='Sign in','unchanged label');
+   check(document.querySelector('.loading-host').open,'open host');
+   check(ActionLoading.begin(form,button)===null,'duplicate lock');
+   const attempt=new Event('submit',{bubbles:true,cancelable:true});form.dispatchEvent(attempt);
+   check(attempt.defaultPrevented,'duplicate submission prevented');
+   ActionLoading.end(token);
+   check(!document.querySelector('.loading-host').open,'close on completion');
+   check(!form.hasAttribute('aria-busy')&&!button.hasAttribute('aria-disabled'),'restore controls');
+   ActionLoading.begin(form,button);
+   dispatchEvent(new Event('pageshow'));
+   check(!document.querySelector('.loading-host').open&&!form.hasAttribute('aria-busy'),'Back restoration');
+   check(!document.querySelector('main').hasAttribute('aria-hidden'),'restore accessibility tree');
+   record('PASS: '+passed+' lifecycle assertions');
+  }catch(error){record('FAIL: '+error.message)}
+ };
+ form.onsubmit=event=>{event.preventDefault();const token=ActionLoading.begin(form,event.submitter);setTimeout(()=>{ActionLoading.end(token);record('Simulated network failure: popup closed; input preserved.')},8000)};
+ const management=document.querySelector('#management');
+ document.querySelector('#nested').onclick=()=>management.showModal();
+ document.querySelector('#close').onclick=()=>management.close();
+ management.querySelector('form').onsubmit=event=>{event.preventDefault();const token=ActionLoading.begin(event.target,event.submitter);setTimeout(()=>{ActionLoading.end(token);record('Slow request completed. Controls restored.')},45000)};
+});
+</script></html>

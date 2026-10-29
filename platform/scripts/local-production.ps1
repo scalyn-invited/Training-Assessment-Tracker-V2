@@ -23,7 +23,13 @@ try {
         $probe.Server.ExclusiveAddressUse = $true
         try { $probe.Start() } catch { throw 'Port is occupied; verify ownership before replacing its service.' } finally { $probe.Stop() }
         # Do not persist request paths containing password setup tokens.
-        & php -S "127.0.0.1:$Port" -t public scripts/browser-router.php *> $null
+        # Windows PowerShell treats PHP's normal stderr startup banner as an error.
+        # Keep request paths private and use the process exit code for failure handling.
+        $previousNativeErrorAction = $ErrorActionPreference
+        try {
+            $ErrorActionPreference = 'Continue'
+            & php -S "127.0.0.1:$Port" -t public scripts/browser-router.php *> $null
+        } finally { $ErrorActionPreference = $previousNativeErrorAction }
     } else {
         if (!$ArtisanArgs.Count) { throw 'Supply an Artisan command or -Serve.' }
         & php artisan @ArtisanArgs

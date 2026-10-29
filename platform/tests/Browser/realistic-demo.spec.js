@@ -18,7 +18,8 @@ test('Global Admin workspace is accessible without client selection and denied t
   await page.setViewportSize({width,height:900});
   for(const section of ['','/clients','/admins','/appearance','/audit']) {
    await page.goto('/platform'+section);
-   await expect(page.getByRole('heading',{name:'Platform administration',exact:true})).toBeVisible();
+   const title={'':'Platform overview','/clients':'Clients','/admins':'Global admins','/appearance':'Platform appearance','/audit':'Administrative audit'}[section];
+   await expect(page.getByRole('heading',{name:title,exact:true})).toBeVisible();
    expect((await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze()).violations).toEqual([]);
    expect(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth)).toBe(false);
   }
