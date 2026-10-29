@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Exceptions\AccountActionDenied;
 use App\Models\Identity;
 use App\Models\Organisation;
 use App\Models\User;
@@ -35,8 +36,10 @@ class LocalAccounts
 
     private function eligible(User $user): void
     {
-        abort_unless($user->active && $user->environment === config('training.environment')
-            && ! ($user->environment === 'production' && $user->is_synthetic), 403);
+        if (! $user->active || $user->environment !== config('training.environment')
+            || ($user->environment === 'production' && $user->is_synthetic)) {
+            throw new AccountActionDenied('account_ineligible', 'An account involved in this action is inactive or is not eligible for this environment.');
+        }
     }
 
     public function identity(User $user): ?Identity
@@ -55,8 +58,12 @@ class LocalAccounts
 
     private function password(User $user, string $password): void
     {
-        abort_unless($user->local_password_enabled_at && $this->identity($user)
-            && Hash::check($password, $user->password), 403, 'Current password could not be confirmed.');
+        if (! $user->local_password_enabled_at || ! $this->identity($user)) {
+            throw new AccountActionDenied('local_identity_unavailable', 'Your local password identity is unavailable. Contact the platform administrator.');
+        }
+        if (! Hash::check($password, $user->password)) {
+            throw new AccountActionDenied('current_password_mismatch', 'Your current password could not be confirmed. Enter your own sign-in password in Your current password, then try again.');
+        }
     }
 
     private function audit(User $actor, string $action, string $target, string $reason): void
@@ -68,7 +75,12 @@ class LocalAccounts
     {
         $this->eligible($actor);
         $access = app(ClientAccess::class);
-        abort_unless($client ? $access->administer($actor, $client) : $access->globalAdmin($actor), 403);
+        if ($client && ! $access->available($client)) {
+            throw new AccountActionDenied('client_unavailable', 'The selected client is inactive or suspended. Return to administration and choose an active client.');
+        }
+        if (! ($client ? $access->administer($actor, $client) : $access->globalAdmin($actor))) {
+            throw new AccountActionDenied('administrator_authority_missing', 'Your account does not currently have administrator authority for this action.');
+        }
     }
 
     private function mutation(User $actor, ?string $client, string $password, string $reason, callable $operation): mixed
@@ -89,7 +101,7 @@ class LocalAccounts
             }, 3);
         } catch (HttpException $e) {
             if ($e->getStatusCode() === 403) {
-                $this->audit($actor, 'authorisation.denied', $actor->id, 'Local account action denied');
+                $this->audit($actor, 'authorisation.denied', $actor->id, 'Local account action denied: '.($e instanceof AccountActionDenied ? $e->reasonCode : 'account_operation_denied'));
             }
             throw $e;
         }
@@ -118,17 +130,20 @@ class LocalAccounts
             'url' => rtrim(config('app.url'), '/').($purpose === 'invite' ? '/invitations/' : '/password/'.$purpose.'/').$raw];
     }
 
-    public function create(User $actor, string $client, string $name, string $email, string $password, string $reason, ?bool $synthetic = null): array
+    public function create(User $actor, string $client, string $name, string $email, string $password, string $reason, ?bool $synthetic = null, ?string $mode = null): array
     {
         $synthetic ??= config('training.environment') !== 'production';
         abort_if(config('training.environment') === 'production' && $synthetic, 422, 'Account classification is not supported.');
         $email = Str::lower(trim($email));
-        Validator::make(compact('client', 'name', 'email'), ['client' => 'required|uuid', 'name' => 'required|string|max:120', 'email' => 'required|email|max:200'])->validate();
+        Validator::make(compact('client', 'name', 'email'), ['client' => 'required|uuid', 'name' => $mode === 'existing' ? 'nullable|string|max:120' : 'required|string|max:120', 'email' => 'required|email|max:200'])->validate();
 
-        return $this->mutation($actor, $client, $password, $reason, function ($actor) use ($client, $name, $email, $reason, $synthetic) {
+        return $this->mutation($actor, $client, $password, $reason, function ($actor) use ($client, $name, $email, $reason, $synthetic, $mode) {
             $matches = User::whereRaw('LOWER(email) = ?', [$email])->lockForUpdate()->get();
             abort_if($matches->count() > 1, 409, 'Account requires identity review.');
             $user = $matches->first();
+            if (($mode === 'new' && $user) || ($mode === 'existing' && ! $user)) {
+                throw ValidationException::withMessages(['email' => $mode === 'new' ? 'This account already exists. Choose Existing account.' : 'No account matches this email. Choose New account.']);
+            }
             if ($user) {
                 $this->eligible($user);
                 abort_unless($user->local_password_enabled_at && $this->identity($user), 409, 'Account requires setup or identity review.');

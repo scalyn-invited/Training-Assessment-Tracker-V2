@@ -1,0 +1,10 @@
+
+dialog.loading-host{padding:0;border:0;margin:0;width:100vw;max-width:none;height:100dvh;max-height:none;background:transparent;overflow:auto;color:var(--ink)}
+dialog.loading-host::backdrop{background:transparent}
+.loading-host .swal2-popup{background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:14px;font-family:inherit}
+.loading-host .swal2-title{color:var(--ink);font-size:1.4rem}
+.loading-host .swal2-html-container{color:var(--muted)}
+.loading-host .swal2-loader{border-color:var(--primary) transparent}
+.loading-host .swal2-confirm{background:var(--primary);color:var(--on-primary);min-height:44px}
+.loading-host .swal2-confirm:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){.loading-host .swal2-loader{animation:none}.loading-host .swal2-popup{animation:none!important}}

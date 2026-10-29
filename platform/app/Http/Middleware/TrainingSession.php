@@ -27,11 +27,12 @@ class TrainingSession
             || $request->session()->get('permission_version') !== $user->permission_version
             || time() - $request->session()->get('login_at', 0) >= config('training.session_absolute_seconds')
             || time() - $request->session()->get('last_seen', 0) >= config('training.session_idle_seconds')) {
+            $expired = $user && $identityActive && app(Access::class)->active($user) && $request->session()->get('permission_version') === $user->permission_version;
             Auth::logout();
             $request->session()->invalidate();
             $request->session()->regenerateToken();
 
-            return redirect()->route('login')->with('status', 'Please sign in with an active identity.');
+            return redirect()->route('login')->with('status', $expired ? 'Your session expired. Sign in again to continue.' : 'Your sign-in or access has changed. Sign in again with an active account.');
         }
         abort_unless(app(Access::class)->fresh($user), 503, 'Permissions are stale. Refresh directory access.');
         $request->session()->put('last_seen', time());

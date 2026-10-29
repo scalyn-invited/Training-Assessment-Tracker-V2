@@ -312,3 +312,8 @@ User explicitly authorised one draft PR containing all pending source, tests, as
 ## 2026-10-29 — Combined draft PR publication
 
 Draft PR #15 combines pending platform themes, client/account selection fixes, assets and curated evidence on latest main; existing merged M3 code and CI fixes preserved. Original 97 pending files verified unchanged. Added repeatable platform palette checks to existing browser CI. Local formatting and 16 palette parity fixtures pass; full local SQLite: 220 tests / 4,377 assertions with four skips; five demo browser tests passed. First hosted run 40816607049 passed all four jobs. Final documentation revision is rechecked by CI. See [publication handoff](../handoffs/2026-10-29-M1-BERNIE-combined-publication.md) and PR checks for final tested head/results. No merge/deployment or human acceptance claimed.
+
+## 2026-10-29 — Account-action error diagnosis claim
+M2-BERNIE/account-action-errors, branch codex/fix-account-action-errors, base baaeaed with pre-existing changes preserved. User confirmed Bernie and authorised bounded diagnostic fix. Scope: safe distinct denial reasons, preserved permission checks, isolated regression tests. No database mutation, remote publication or human acceptance inferred.
+
+Account-action diagnostics ready for local retry: 19 account tests / 200 assertions and 4 disposable production-mode tests / 57 assertions passed; targeted formatting passed. Original failure remains unconfirmed until a new retry supplies the fixed denial reason. Technical self-review and limitations: [handoff](../handoffs/2026-10-29-M2-BERNIE-account-action-errors.md). No real database mutation, remote publication, browser QA or human acceptance claimed.

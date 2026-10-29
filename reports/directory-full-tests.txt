@@ -1,0 +1,9 @@
+PHPUnit 11.5.56 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.2.12
+Configuration: <workspace>\platform\phpunit.xml
+
+Time: 05:26.890, Memory: 76.00 MB
+
+OK, but some tests were skipped!
+Tests: 225, Assertions: 4431, Skipped: 4.

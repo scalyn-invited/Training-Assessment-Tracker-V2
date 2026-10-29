@@ -2,6 +2,8 @@
 <html lang="en" data-appearance-scope="{{ $branding['appearance_scope'] }}" data-client-theme="{{ $branding['theme_kind'] }}" data-brand-mode="{{ $branding['mode'] }}" data-theme="{{ $branding['selected_theme'] }}" data-preference-url="{{ $branding['preference_ready'] ? route('appearance.preference') : '' }}" data-preference-client="{{ $branding['preference_client'] }}" data-preference-version="{{ $branding['preference_version'] }}" data-preference-decided="{{ $branding['preference_decided'] ? '1' : '0' }}" data-legacy-theme-key="{{ $branding['legacy_theme_key'] }}" data-theme-key="{{ $branding['theme_key'] }}" data-default-theme="{{ $branding['default_theme'] }}" style="--brand-light:{{ $branding['accent_light'] }};--brand-dark:{{ $branding['accent_dark'] }}@foreach($branding['theme_tokens'] as $token => $value);--{{ $token }}:{{ $value }}@endforeach">
 <head>
     <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+    @auth<meta name="workspace-account" content="{{ auth()->id() }}"><meta name="workspace-version" content="{{ auth()->user()->permission_version }}">@endauth
+    <meta name="failed-form" content="{{ old('_form') }}"><meta name="failed-grant" content="{{ old('grant') }}"><meta name="failed-client" content="{{ old('client') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Workspace') · {{ $branding['app_name'] }}</title>
     <link rel="icon" href="{{ $branding['favicon'] }}">
@@ -9,6 +11,13 @@
     <script src="{{ asset('appearance.js') }}?v=7"></script>
     <link rel="stylesheet" href="{{ asset('app.css') }}?v=scalyn-8">
     <script src="{{ asset('navigation.js') }}" defer></script>
+    <link rel="stylesheet" href="{{ asset('workspace.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('vendor/sweetalert2/sweetalert2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('action-loading.css') }}?v=1">
+    <script src="{{ asset('vendor/sweetalert2/sweetalert2.min.js') }}" defer></script>
+    <script src="{{ asset('action-loading.js') }}?v=1" defer></script>
+    <script src="{{ asset('workspace.js') }}?v=3" defer></script>
+    <link rel="stylesheet" href="{{ asset('directory.css') }}?v=1"><script src="{{ asset('directory.js') }}?v=1" defer></script>
     @livewireStyles
 </head>
 <body class="@auth app-layout @else guest-layout @endauth">
@@ -28,11 +37,20 @@
         <button type="button" class="icon-button nav-close menu-close" id="nav-close" aria-label="Close navigation"><x-icon name="close"/></button>
     </div>
     @if($branding['mode'] === 'co-branded')<p class="co-brand">Part of Cerebru</p>@endif
-    <p class="workspace-nav-label">Your workspace</p>
+    <p class="workspace-nav-label">{{ request()->routeIs('platform.*') ? 'Platform workspace' : 'Learning workspace' }}</p>
     <nav class="sidebar-nav" aria-label="Main navigation">
-        @if(app(\App\Services\Tenancy\ClientAccess::class)->globalAdmin(auth()->user()))
+        @if(!request()->routeIs('platform.*') && app(\App\Services\Tenancy\ClientAccess::class)->globalAdmin(auth()->user()))
         <a href="{{ route('platform.overview') }}" @if(request()->routeIs('platform.*')) aria-current="page" @endif><x-icon name="grid"/><span>Platform administration</span></a>
         @endif
+        @if(request()->routeIs('platform.*'))
+        @foreach(['overview'=>'Platform overview','clients'=>'Clients','admins'=>'Global admins','appearance'=>'Platform appearance','audit'=>'Administrative audit'] as $navKey=>$navLabel)
+        <a href="{{ $navKey==='overview' ? route('platform.overview') : route('platform.section',$navKey) }}" @if(($section ?? '')===$navKey) aria-current="page" @endif><x-icon :name="['overview'=>'grid','clients'=>'building','admins'=>'shield','appearance'=>'palette','audit'=>'clipboard'][$navKey]"/><span>{{ $navLabel }}</span></a>
+        @endforeach
+        <span class="nav-section">Learning workspace</span>
+        @endif
+        @if(request()->routeIs('platform.*'))
+        <a href="{{ route('dashboard') }}"><x-icon name="home"/><span>Learning workspace</span></a>
+        @else
         <a href="{{ route('dashboard') }}" @if(request()->routeIs('dashboard')) aria-current="page" @endif><x-icon name="home"/><span>Overview</span></a>
         <a href="{{ route('dashboard') }}#learning-plans" @if(request()->routeIs('enrolments.*', 'onboarding.*', 'plans.*', 'delivery.*', 'submission.*', 'progress.*', 'documents.*', 'files.*', 'jobs.*', 'ai.request', 'ai.show')) aria-current="page" @endif><x-icon name="book"/><span>Learning plans</span></a>
         @if(app(\App\Services\Access::class)->coordinator(auth()->user()))<a href="{{ route('reviews.show') }}" @if(request()->routeIs('reviews.*')) aria-current="page" @endif><x-icon name="check"/><span>Review queue</span></a>@endif
@@ -46,6 +64,7 @@
         @endif
         <a href="{{ route('appearance') }}" @if(request()->routeIs('appearance')) aria-current="page" @endif><x-icon name="settings"/><span>Appearance</span></a>
         @if(app(\App\Services\LocalAccounts::class)->enabled())<a href="{{ route('local.password.change') }}"><x-icon name="settings"/><span>Change password</span></a>@endif
+        @endif
     </nav>
     <div class="sidebar-bottom">
         @if($branding['cerebru_url'])<a class="parent-link" href="{{ $branding['cerebru_url'] }}"><x-icon name="external"/>Back to Cerebru</a>@endif
@@ -61,15 +80,16 @@
 <header class="workspace-header">
 @php($clientContext = app(\App\Services\Tenancy\ClientContext::class))
 @php($clientChoices = $clientContext->choices(auth()->user()))
+@if(request()->routeIs('platform.*'))<div><strong>Platform-wide</strong><br><span>All clients</span></div>@else
 <form class="client-switcher" method="post" action="{{ route('clients.select') }}" aria-label="Active client">@csrf
 <label for="active-client">Active client</label><div class="client-controls"><select id="active-client" name="client_id" required>
 <option value="">Choose client</option>@foreach($clientChoices as $client)<option value="{{ $client->id }}" @selected($clientContext->id === $client->id)>{{ $client->name }}</option>@endforeach
-</select><button type="submit" class="secondary">Switch client</button></div></form><div class="profile"><span class="avatar" aria-hidden="true">{{ mb_strtoupper(mb_substr(auth()->user()->name, 0, 1)) }}</span><span class="profile-copy"><strong>{{ auth()->user()->name }}</strong><small>Current client access</small></span><form method="post" action="{{ route('logout') }}">@csrf<button class="icon-button" aria-label="Sign out" title="Sign out"><x-icon name="logout"/></button></form></div></header>
+</select><button type="submit" class="secondary">Switch client</button></div></form>@endif<div class="profile"><span class="avatar" aria-hidden="true">{{ mb_strtoupper(mb_substr(auth()->user()->name, 0, 1)) }}</span><span class="profile-copy"><strong>{{ auth()->user()->name }}</strong><small>{{ request()->routeIs('platform.*') ? 'Global administration' : 'Current client access' }}</small></span><form method="post" action="{{ route('logout') }}">@csrf<button class="icon-button" aria-label="Sign out" title="Sign out"><x-icon name="logout"/></button></form></div></header>
 @endauth
 @if(config('training.mock_identity') && config('training.environment') === 'test')<div class="sandbox"><span class="dot"></span><strong>LOCAL SANDBOX</strong><span>Synthetic people · {{ app(\App\Services\LocalAccounts::class)->enabled() ? 'Local password sign-in' : 'Mock sign-in' }} · No email delivery</span></div>@endif
 <main id="main" class="container" tabindex="-1">
     @if(session('status'))<div class="notice" role="status">{{ session('status') }}</div>@endif
-    @if($errors->any())<div class="notice error" role="alert"><strong>Please check your input.</strong><ul>@foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul></div>@endif
+    @if($errors->any())<div class="notice error error-summary" tabindex="-1" role="alert"><strong>Please check your input.</strong><ul>@foreach($errors->messages() as $field=>$messages)@foreach($messages as $error)<li data-error-field="{{ $field }}">{{ $error }}</li>@endforeach@endforeach</ul></div>@endif
     @yield('content')
 </main>
 <footer><span>{{ $branding['app_name'] }}</span><span>{{ $branding['footer'] }}</span></footer>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Exceptions\AccountActionDenied;
 use App\Http\Middleware\LocalhostProduction;
 use App\Http\Middleware\RequestContext;
 use App\Services\Tenancy\ClientAccess;
@@ -42,7 +43,10 @@ $app = Application::configure(basePath: dirname(__DIR__))
         $exceptions->render(function (HttpException $exception, Request $request) {
             $status = $exception->getStatusCode();
             if ($request->routeIs('local.*') && ! $request->expectsJson() && in_array($status, [403, 409, 410], true)) {
-                return response()->view('local-accounts.error', compact('status'), $status);
+                $actionMessage = $request->routeIs('local.actions') && $exception instanceof AccountActionDenied
+                    ? $exception->getMessage() : null;
+
+                return response()->view('local-accounts.error', compact('status', 'actionMessage'), $status);
             }
         });
     })->create();

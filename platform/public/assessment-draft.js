@@ -3,9 +3,10 @@
     if (!form) return;
     const status = form.querySelector('[role="status"]');
     let timer, pending = false, changed = false, conflict = false;
-    async function save() {
+    async function save(submitter, explicit = false) {
         if (pending || conflict) return;
         pending = true; changed = false;
+        const loading = explicit ? window.ActionLoading?.begin(form, submitter) : null;
         status.textContent = 'Saving response…';
         try {
             const response = await fetch(form.getAttribute('action'), { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' }, credentials: 'same-origin' });
@@ -23,6 +24,7 @@
             const submit = document.querySelector('[data-submit-assessment]');
             if (submit) submit.disabled = true;
         } finally {
+            window.ActionLoading?.end(loading);
             pending = false;
             if (changed && !conflict) timer = setTimeout(save, 900);
         }
@@ -33,5 +35,5 @@
         if (submit) submit.disabled = true;
         timer = setTimeout(save, 900);
     });
-    form.addEventListener('submit', event => { event.preventDefault(); clearTimeout(timer); save(); });
+    form.addEventListener('submit', event => { event.preventDefault(); clearTimeout(timer); save(event.submitter, true); });
 })();
