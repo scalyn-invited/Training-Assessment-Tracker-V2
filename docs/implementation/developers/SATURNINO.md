@@ -17,6 +17,15 @@ Effective 23 October 2026, Saturnino has 2h 24m per week: 2h flexibly divided be
 - Blocker / owner / impact: assess at session start.
 - Next ready task: [M0 Saturnino prompt](../prompts/milestones/M0_SATURNINO.md), focused on journey inventory and implementation-ready UX flows.
 
+## 2026-10-29 — M0-SATURNINO claim
+
+- Task / slice: `M0-SATURNINO` (scope reconciliation and onboarding), UI-relevant lane only: isolated setup record, baseline checks, screen/route/UI-gap inventory, two-client fixture proposal. No feature code, schema, service, policy or contract change.
+- Branch: `m0-saturnino-onboarding`, created locally from `main` at `9dc6406`. `origin/main` has since advanced to `7d09283` (not yet merged locally); no push, no PR.
+- Work method: AI-assisted. Claude (Claude Code) performs the commands and drafts the files at Saturnino's request; Saturnino reviews every change before it is treated as his record.
+- Owned paths: this file and a unique M0 handoff under `docs/implementation/handoffs/`. No shared register is touched (STATUS, DECISIONS, CONTRACTS, COST_APPROVALS, AGENT are Bernie's).
+- Environment: `platform/.env` and `platform/database/database.sqlite` freshly created by `php scripts/setup.php` on this machine (synthetic data only, not shared). PHP 8.2.33, Composer 2.10.2, Node 22.16.0. `pdo_mysql` and MariaDB are not installed, so the MariaDB suite is blocked locally.
+- Status: claimed / in_progress. Actual hours: 2h, reported by Saturnino as of 2026-10-29 (his own figure, not measured by tooling). Counterpart acknowledgement: none; local claim is not a cross-machine lock.
+
 ## Milestone task log
 
 | Task | Estimate | Status | Evidence / reviewed revision |
