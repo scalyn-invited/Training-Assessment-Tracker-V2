@@ -53,7 +53,7 @@ class PlatformController extends Controller
             ->when($request->filled('to') && preg_match('/^\d{4}-\d{2}-\d{2}$/', $request->input('to')), fn ($q) => $q->whereDate('e.created_at', '<=', $request->input('to')))
             ->orderByDesc('e.created_at')->orderByDesc('e.id')->paginate(25, ['e.created_at', 'e.action', 'e.target_id', 'e.reason', 'e.operator_reference', 'e.changes', 'u.name'], 'events_page')->withQueryString();
 
-        $targetNames = DB::table('organisations')->where('environment', $env)->whereIn('id', $events->pluck('target_id'))->pluck('name', 'id')
+        $targetNames = $service->clients()->whereIn('id', $events->pluck('target_id'))->pluck('name', 'id')
             ->union(DB::table('users')->where('environment', $env)->whereIn('id', $events->pluck('target_id'))->pluck('name', 'id'));
         $auditActions = DB::table('platform_audit_events')->where('environment', $env)->distinct()->orderBy('action')->pluck('action');
         $events->getCollection()->transform(function ($event) use ($targetNames) {

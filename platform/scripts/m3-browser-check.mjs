@@ -25,9 +25,11 @@ try{
  await coordinator.getByRole('button',{name:'Save draft',exact:true}).click();await coordinator.getByRole('button',{name:'Publish assessment',exact:true}).waitFor();
  await coordinator.screenshot({path:out+'/definition-desktop.png'});
  await coordinator.getByRole('button',{name:'Publish assessment',exact:true}).click();console.log('Published');
- const article=coordinator.locator('article').filter({has:coordinator.getByRole('link',{name:title,exact:true})});
- await article.locator('select').selectOption({label:await article.locator('option').filter({hasText:'Sam'}).textContent()});
- await article.getByRole('button',{name:'Assign assessment',exact:true}).click();
+ const row=coordinator.getByRole('row').filter({has:coordinator.getByRole('cell',{name:title,exact:true})});
+ await row.getByRole('button',{name:'Assign to member',exact:true}).click();
+ const assignmentDialog=coordinator.getByRole('dialog',{name:'Assign assessment',exact:true});
+ await assignmentDialog.getByLabel('Assign to member',{exact:true}).selectOption({label:await assignmentDialog.locator('option').filter({hasText:'Sam'}).textContent()});
+ await assignmentDialog.getByRole('button',{name:'Assign assessment',exact:true}).click();
  await coordinator.waitForURL(/assessments\/[0-9a-f-]+$/,{timeout:60000});const assignmentUrl=coordinator.url();console.log('Assigned',assignmentUrl);assert.match(assignmentUrl,/assessments\/[\w-]+$/);
  await login(member,/Sam/);await member.goto(assignmentUrl);
  await member.getByLabel('Explain your evidence checks.',{exact:true}).fill('I listed the inputs, checked each measurement and recorded the evidence for every step.');

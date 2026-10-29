@@ -233,6 +233,11 @@ class PlatformAdministrationTest extends TestCase
         $this->assertCount(0, app(ClientContext::class)->choices($this->admin));
         $this->get('/platform')->assertOk();
         $this->get('/platform/audit?action=platform.admin.granted')->assertOk()->assertSee('Synthetic operator bootstrap')->assertDontSee('Suspend all synthetic clients');
+        $events = $this->get('/platform/audit?action=platform.client.updated')->assertOk()->viewData('events');
+        $this->assertNotEmpty($events->items());
+        foreach ($events as $event) {
+            $this->assertSame(DB::table('organisations')->where('id', $event->target_id)->value('name'), $event->target_name);
+        }
         DB::table('platform_audit_events')->update(['changes' => json_encode(['private_payload' => 'SHOULD_NEVER_RENDER'])]);
         $this->get('/platform/audit')->assertOk()->assertDontSee('SHOULD_NEVER_RENDER');
     }
