@@ -135,3 +135,15 @@ Remaining for this task: visual walk-through of the member and coordinator journ
 - Technical self-review status: not applicable to this lane's documentation (Bernie-owned).
 - UX/accessibility review status: **not done**.
 - Project-owner milestone acceptance: pending.
+
+## 9. Decisions from Bernie (email reply, received 2026-10-30)
+
+Source: Bernie Santos Cabase's emailed reply to Saturnino's first-week update. Recorded as reported by Saturnino; not independently verified and not a project-owner decision.
+
+| Question asked (section 8 / update email) | Bernie's answer | Effect on this task |
+|---|---|---|
+| Is the Development Planning work design only, or design plus implemented slices? | "It includes the design plus implemented slices." | Scope is design plus implemented slices. |
+| Which two clients should we use for the fixtures? | "It should apply to all clients." | No two-client pair named. Interpreted as the work and fixtures covering all clients (likely the three-client `RealisticDemoSeeder`); interpretation to be confirmed with Bernie. |
+| Should member access to draft plans be allowed? | "No, members cannot access draft plans." | Members must not open draft plans. The observation in 4a that a member can open the draft curriculum is a defect against this rule, not a design choice. |
+
+Still unanswered: whether `origin/main` (including M2 and M3) should be merged before further work, and Saturnino's reply to the pending UX review request in Bernie's M2 handoff.
