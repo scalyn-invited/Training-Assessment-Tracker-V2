@@ -317,3 +317,12 @@ Draft PR #15 combines pending platform themes, client/account selection fixes, a
 M2-BERNIE/account-action-errors, branch codex/fix-account-action-errors, base baaeaed with pre-existing changes preserved. User confirmed Bernie and authorised bounded diagnostic fix. Scope: safe distinct denial reasons, preserved permission checks, isolated regression tests. No database mutation, remote publication or human acceptance inferred.
 
 Account-action diagnostics ready for local retry: 19 account tests / 200 assertions and 4 disposable production-mode tests / 57 assertions passed; targeted formatting passed. Original failure remains unconfirmed until a new retry supplies the fixed denial reason. Technical self-review and limitations: [handoff](../handoffs/2026-10-29-M2-BERNIE-account-action-errors.md). No real database mutation, remote publication, browser QA or human acceptance claimed.
+
+## 2026-11-09 — Hosted password login claim
+
+Bernie explicitly authorised hosted email/password implementation with deployment separate and SSO/MFA deferred. Task M2-BERNIE/hosted-password-login, branch `codex/m2-hosted-password-login`, base `80ccf7e`. Bounded scope: opt-in hosted authentication, secure transport/session checks, existing login form states, isolated regression checks and deployment instructions. No deployment, remote push, external services or account/database changes authorised. Preserve the ignored local-production profile and unrelated files. Changes remain on this dedicated branch; counterpart acknowledgement and human reviews are not inferred.
+
+
+### 2026-11-09 - Requested main integration
+
+Bernie subsequently explicitly requested pulling/rebasing, committing and pushing to main. Rebased onto bce5271 without conflicts; local artifacts and recovery stash retained. SQLite run: 220 passed, four skipped, seven GD-related failures; all 32 tests in the affected branding classes passed when rerun with GD enabled for the command. Changed-PHP formatting and whitespace checks passed. [Integration handoff](../handoffs/2026-11-09-M2-BERNIE-hosted-password-login.md) records scope and verification limits. Deployment and human acceptance remain separate.

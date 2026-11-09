@@ -111,3 +111,10 @@ Artisan::command('training:initialize-local-production {--name=} {--email=} {--o
         (string) $this->option('operator'), (string) $this->option('reason'));
     $this->line($this->option('json') ? json_encode(['url' => $result['url']], JSON_THROW_ON_ERROR) : $result['url']);
 })->purpose('Initialize or reissue pending first-admin setup in the designated empty localhost production database');
+
+Artisan::command('training:initialize-production {--name=} {--email=} {--operator=} {--reason=} {--json}', function () {
+    abort_unless(app(LocalAccounts::class)->hostedEnabled(), 403, 'Hosted password login must be explicitly configured.');
+    $result = app(LocalAccounts::class)->initializeProduction((string) $this->option('name'), (string) $this->option('email'),
+        (string) $this->option('operator'), (string) $this->option('reason'));
+    $this->line($this->option('json') ? json_encode(['url' => $result['url']], JSON_THROW_ON_ERROR) : $result['url']);
+})->purpose('Initialize first-admin setup in an empty hosted production database; output is a private one-hour link');

@@ -2,6 +2,7 @@
 
 return [
     'authentication_mode' => env('TRAINING_AUTH_MODE', 'mock'),
+    'hosted_password_login' => (bool) env('TRAINING_HOSTED_PASSWORD_LOGIN', false),
     'localhost_production' => (bool) env('TRAINING_LOCALHOST_PRODUCTION', false),
     'localhost_database' => env('TRAINING_LOCALHOST_DATABASE', base_path('.runtime/local-production.sqlite')),
     'clamscan_binary' => env('TRAINING_CLAMSCAN_BINARY'),

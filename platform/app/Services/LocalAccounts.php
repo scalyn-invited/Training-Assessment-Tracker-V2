@@ -26,7 +26,17 @@ class LocalAccounts
         return config('training.authentication_mode') === 'local_password'
             && ((app()->environment(['local', 'testing']) && config('training.environment') === 'test')
                 || (app()->environment('production') && config('training.environment') === 'production'
-                    && config('training.localhost_production')));
+                    && (config('training.localhost_production') || $this->hostedEnabled())));
+    }
+
+    public function hostedEnabled(): bool
+    {
+        return app()->environment('production') && config('training.environment') === 'production'
+            && config('training.authentication_mode') === 'local_password'
+            && config('training.hosted_password_login') && ! config('training.localhost_production')
+            && ! config('app.debug') && parse_url(config('app.url'), PHP_URL_SCHEME) === 'https'
+            && config('session.secure') === true && config('session.http_only') === true
+            && in_array(config('session.same_site'), ['lax', 'strict'], true);
     }
 
     public function assertEnabled(): void
@@ -213,10 +223,10 @@ class LocalAccounts
     {
         $this->assertEnabled();
         abort_unless(app()->runningInConsole() && app()->environment('production')
-            && config('training.localhost_production') && config('training.environment') === 'production'
-            && config('database.default') === 'sqlite'
+            && config('training.environment') === 'production'
+            && ($this->hostedEnabled() || (config('training.localhost_production') && config('database.default') === 'sqlite'
             && realpath(config('database.connections.sqlite.database')) === realpath(config('training.localhost_database'))
-            && realpath(config('training.localhost_database')) !== false, 403);
+            && realpath(config('training.localhost_database')) !== false)), 403);
         $email = Str::lower(trim($email));
         Validator::make(compact('name', 'email', 'operator', 'reason'), ['name' => 'required|string|max:120',
             'email' => 'required|email|max:200', 'operator' => 'required|string|max:160', 'reason' => 'required|string|min:8|max:2000'])->validate();

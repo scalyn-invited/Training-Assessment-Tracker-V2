@@ -1,6 +1,7 @@
 <?php
 
 use App\Exceptions\AccountActionDenied;
+use App\Http\Middleware\HostedPasswordTransport;
 use App\Http\Middleware\LocalhostProduction;
 use App\Http\Middleware\RequestContext;
 use App\Services\Tenancy\ClientAccess;
@@ -19,6 +20,7 @@ $app = Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->prepend(LocalhostProduction::class);
+        $middleware->append(HostedPasswordTransport::class);
         $middleware->append(RequestContext::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {

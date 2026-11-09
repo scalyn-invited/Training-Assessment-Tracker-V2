@@ -27,3 +27,7 @@ Task-specific [local account contract v1](handoffs/2026-10-27-M2-BERNIE-local-pa
 ## M3 initial assessment contract, 28 October 2026
 
 [C03 v1](handoffs/2026-10-28-M3-BERNIE-assessments/CONTRACT.md) and [synthetic examples](handoffs/2026-10-28-M3-BERNIE-assessments/examples.json) define the locally implemented initial-assessment lifecycle, evidence confirmation, manual review and approved M4 output. This supersedes the proposed C03 description for this bounded implementation; technical evidence is in the M3 handoff. Consumer UX review and project-owner milestone acceptance remain separate. No live Cerebru or paid AI contract is inferred.
+
+## M2 hosted password contract, 9 November 2026
+
+The interim hosted mode uses `TRAINING_AUTH_MODE=local_password` plus explicit `TRAINING_HOSTED_PASSWORD_LOGIN=true`, production partitions and secure configuration. Existing local identity records, account recovery, client grants, generic authentication failures and session invalidation remain the contract. HTTPS is required for hosted requests; unknown proxy headers are not trusted. First-admin initialization remains console-only and empty-database/pending-setup-only. The login page shows password, mock or unavailable states according to the enabled mode; no SSO/MFA integration is implied. Deployment remains separately authorised. Operator instructions: [hosted password login](../../platform/docs/HOSTED_PASSWORD_LOGIN.md).

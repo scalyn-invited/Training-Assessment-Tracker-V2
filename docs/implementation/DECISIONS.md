@@ -44,3 +44,7 @@ User authorised APP_ENV and training environment production in a loopback-only p
 ## 2026-10-28 â€” M3 scope approved in conversation
 
 Bernie explicitly requested implementation of the agreed M3 plan: backend plus minimal usable screens; reusable published assessment definitions; coordinator-configurable rubrics qualified with synthetic examples; rejection allowing immutable resubmission; evidence-linked manual scoring while live AI remains unapproved; and activation in the existing localhost production profile only after isolated checks and a verified restorable backup. Actual business rubric content, scoring calibration and success thresholds remain pending under D06. No paid provider, external email, hosted release, remote push, merge or human acceptance is approved by this scope.
+
+### 2026-11-09 — Interim hosted password implementation
+
+Bernie explicitly approved implementing email/password login for hosted production, with deployment separate and SSO/MFA to be connected later. This expands the previous localhost-only implementation scope through an explicit hosted opt-in. It does not authorise hosting changes, deployment, email delivery, paid services or claim MFA/SSO integration. See `platform/docs/HOSTED_PASSWORD_LOGIN.md` and the dated M2 hosted-login handoff for configuration and evidence.
