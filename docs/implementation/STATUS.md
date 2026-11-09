@@ -1,4 +1,6 @@
-# Delivery status
+# Historical delivery status
+
+**Historical record:** The [feature checklist](FEATURE_CHECKLIST.md) is the primary tracker. Entries below may be stale and do not direct current work; verify their evidence before reusing any status. References to developer records and prompts below are historical, not current workflow instructions.
 
 Ledger created: 2026-10-09. Maintainer: Bernie. Last shared implementation revision assessed for planning: `bdc55df`; this is not proof of either developer's current branch. Verify HEAD and both developer records on every session.
 
