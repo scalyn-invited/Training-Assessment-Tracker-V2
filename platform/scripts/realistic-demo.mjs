@@ -4,7 +4,7 @@ import {spawn,spawnSync} from 'node:child_process';
 export function demoEnvironment(name='realistic-demo') {
  if(!/^realistic-demo(?:-[a-z0-9]+)?$/.test(name)) throw Error('Use a dedicated realistic-demo name');
  const root=path.resolve('.runtime',name);
- return {...process.env,APP_ENV:'local',APP_DEBUG:'false',DB_CONNECTION:'sqlite',DB_DATABASE:path.join(root,'demo.sqlite'),APP_CONFIG_CACHE:path.join(root,'config.php'),APP_URL:'http://127.0.0.1:8129',TRAINING_DEMO_ENABLED:'true',TRAINING_DEMO_DATABASE:path.join(root,'demo.sqlite'),TRAINING_DEMO_ROOT:root,TRAINING_PRIVATE_STORAGE:path.join(root,'private'),TRAINING_ENVIRONMENT:'test',MOCK_IDENTITY_ENABLED:'true',AI_LIVE_ENABLED:'false',TRAINING_SMTP_ENABLED:'false',MAIL_MAILER:'array',QUEUE_CONNECTION:'database',CACHE_STORE:'database',SESSION_DRIVER:'database',SESSION_COOKIE:'training_realistic_demo'};
+ return {...process.env,APP_ENV:'local',APP_DEBUG:'false',DB_CONNECTION:'sqlite',DB_DATABASE:path.join(root,'demo.sqlite'),APP_CONFIG_CACHE:path.join(root,'config.php'),APP_URL:'http://127.0.0.1:8129',TRAINING_DEMO_ENABLED:'true',TRAINING_DEMO_DATABASE:path.join(root,'demo.sqlite'),TRAINING_DEMO_ROOT:root,TRAINING_PRIVATE_STORAGE:path.join(root,'private'),TRAINING_ENVIRONMENT:'test',TRAINING_AUTH_MODE:'mock',MOCK_IDENTITY_ENABLED:'true',AI_LIVE_ENABLED:'false',TRAINING_SMTP_ENABLED:'false',MAIL_MAILER:'array',QUEUE_CONNECTION:'database',CACHE_STORE:'database',SESSION_DRIVER:'database',SESSION_COOKIE:'training_realistic_demo'};
 }
 if(process.argv[1] && path.resolve(process.argv[1])===path.resolve('scripts/realistic-demo.mjs')) {
  const name=process.argv.find(a=>a.startsWith('--name='))?.slice(7)||'realistic-demo'; const env=demoEnvironment(name);

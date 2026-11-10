@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'authentication_mode' => env('TRAINING_AUTH_MODE', 'mock'),
+    'authentication_mode' => env('TRAINING_AUTH_MODE', 'local_password'),
     'hosted_password_login' => (bool) env('TRAINING_HOSTED_PASSWORD_LOGIN', false),
     'localhost_production' => (bool) env('TRAINING_LOCALHOST_PRODUCTION', false),
     'localhost_database' => env('TRAINING_LOCALHOST_DATABASE', base_path('.runtime/local-production.sqlite')),

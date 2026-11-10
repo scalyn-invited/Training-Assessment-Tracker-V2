@@ -13,7 +13,7 @@ function fetch(url, options={}) {
 }
 const root = path.resolve('.');
 const env = {...process.env, APP_ENV:'local', APP_DEBUG:'false', DB_CONNECTION:'sqlite', DB_DATABASE:path.join(root,'.runtime/load.sqlite'),
-    TRAINING_ENVIRONMENT:'test', MOCK_IDENTITY_ENABLED:'true', TRAINING_SMTP_ENABLED:'false', AI_LIVE_ENABLED:'false',
+    TRAINING_ENVIRONMENT:'test', TRAINING_AUTH_MODE:'mock', MOCK_IDENTITY_ENABLED:'true', TRAINING_SMTP_ENABLED:'false', AI_LIVE_ENABLED:'false',
     SESSION_DRIVER:'database', CACHE_STORE:'array', QUEUE_CONNECTION:'database', MAIL_MAILER:'array', APP_URL:'http://127.0.0.1:8124'};
 const setup=spawnSync('php',['scripts/load-prepare.php'],{env,encoding:'utf8'});
 if(setup.status!==0) throw new Error(setup.stderr+setup.stdout);

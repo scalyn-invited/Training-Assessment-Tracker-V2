@@ -9,7 +9,7 @@ const browserUrl = 'http://127.0.0.1:' + browserPort;
 export const browserDatabase = path.resolve(uiRehearsal ? '.runtime/ui-sidebar/ui.sqlite' : '.runtime/browser.sqlite');
 export const browserEnv = {
     ...process.env, APP_ENV: 'local', APP_DEBUG: 'false', DB_CONNECTION: 'sqlite', DB_DATABASE: browserDatabase,
-    MOCK_IDENTITY_ENABLED: 'true', TRAINING_ENVIRONMENT: 'test', MAIL_MAILER: 'array', QUEUE_CONNECTION: 'database',
+    MOCK_IDENTITY_ENABLED: 'true', TRAINING_AUTH_MODE: 'mock', TRAINING_ENVIRONMENT: 'test', MAIL_MAILER: 'array', QUEUE_CONNECTION: 'database',
     SESSION_DRIVER: 'database', CACHE_STORE: 'database', APP_URL: browserUrl,
     APP_CONFIG_CACHE: path.resolve(uiRehearsal ? '.runtime/ui-sidebar/config.php' : '.runtime/browser-config.php'),
 };

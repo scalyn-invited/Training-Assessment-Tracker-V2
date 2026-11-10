@@ -4,14 +4,20 @@ use App\Services\MockIdentity;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Support\Facades\Artisan;
 
-// Local synthetic setup only. Does not overwrite .env, rotate an existing key, or reset data.
+// Explicit legacy demo only. The default installation is the browser wizard.
 $root = dirname(__DIR__);
+if (! in_array('--demo', $argv, true)) {
+    echo "Create an empty MariaDB database in phpMyAdmin. Run php artisan serve and open http://127.0.0.1:8000/setup.\n";
+    echo "Existing SQLite installs: stop workers/server, then run php artisan training:prepare-local-upgrade.\n";
+    exit(0);
+}
 if (! file_exists($root.'/vendor/autoload.php')) {
     fwrite(STDERR, "Run composer install first.\n");
     exit(1);
 }
 if (! file_exists($root.'/.env')) {
-    copy($root.'/.env.example', $root.'/.env');
+    fwrite(STDERR, "Legacy demo requires an explicitly configured local/test mock .env and isolated SQLite database. See README.\n");
+    exit(1);
 }
 if (! file_exists($root.'/database/database.sqlite')) {
     touch($root.'/database/database.sqlite');
