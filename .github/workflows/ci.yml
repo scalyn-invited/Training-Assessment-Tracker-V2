@@ -18,6 +18,54 @@ defaults:
     working-directory: platform
 
 jobs:
+  installer:
+    name: Installer (${{ matrix.profile }})
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - profile: mariadb-local
+            image: mariadb:11.4.13
+            mode: local
+          - profile: mariadb-hosted
+            image: mariadb:11.4.13
+            mode: hosted
+          - profile: mysql-hosted
+            image: mysql:8.4
+            mode: hosted
+    services:
+      database:
+        image: ${{ matrix.image }}
+        env:
+          MYSQL_ROOT_PASSWORD: installer-ci-only
+          MARIADB_ROOT_PASSWORD: installer-ci-only
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mariadb-admin ping -h127.0.0.1 -pinstaller-ci-only || mysqladmin ping -h127.0.0.1 -pinstaller-ci-only"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+    env:
+      INSTALLER_TEST_DATABASES: '1'
+      INSTALLER_TEST_MODE: ${{ matrix.mode }}
+      INSTALLER_TEST_HOST: 127.0.0.1
+      INSTALLER_TEST_PORT: '3306'
+      INSTALLER_TEST_USER: root
+      INSTALLER_TEST_PASSWORD: installer-ci-only
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: shivammathur/setup-php@b604ade2a87db23f8871b7182e69ec5e75effb45
+        with:
+          php-version: '8.2'
+          extensions: gd, mbstring, pdo_mysql, pdo_sqlite, dom, curl
+          coverage: none
+          tools: composer:v2
+      - run: composer install --no-interaction --prefer-dist --no-progress
+      - run: php vendor/bin/phpunit --filter=InstallationTest --testdox
+
   sqlite:
     name: PHP and SQLite
     runs-on: ubuntu-24.04

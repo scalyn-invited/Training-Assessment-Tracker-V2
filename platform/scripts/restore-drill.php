@@ -30,7 +30,7 @@ $app->detectEnvironment(fn () => 'testing');
 $source = $run.'/source.sqlite';
 touch($source);
 config(['database.default' => 'sqlite', 'database.connections.sqlite.database' => $source, 'database.connections.sqlite.url' => null,
-    'filesystems.disks.local.root' => $run.'/source-files', 'training.environment' => 'test', 'training.mock_identity' => true, 'training.smtp_enabled' => false,
+    'filesystems.disks.local.root' => $run.'/source-files', 'training.environment' => 'test', 'training.authentication_mode' => 'mock', 'training.mock_identity' => true, 'training.smtp_enabled' => false,
     'ai.live_enabled' => false, 'queue.default' => 'database', 'cache.default' => 'array', 'mail.default' => 'array', 'training.retention_approved' => true]);
 DB::purge();
 if (Artisan::call('migrate', ['--force' => true]) !== 0 || Artisan::call('db:seed', ['--force' => true]) !== 0) {

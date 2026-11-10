@@ -90,7 +90,7 @@ def main():
     env.update({'APP_ENV': 'testing', 'TRAINING_ENVIRONMENT': 'test', 'DB_CONNECTION': 'sqlite',
                 'DB_DATABASE': str(target), 'DB_URL': '', 'APP_CONFIG_CACHE': str(run / 'unused-config.php'),
                 'APP_KEY': 'base64:' + base64.b64encode(os.urandom(32)).decode(), 'CACHE_STORE': 'array',
-                'SESSION_DRIVER': 'array', 'QUEUE_CONNECTION': 'sync', 'MAIL_MAILER': 'array', 'MOCK_IDENTITY_ENABLED': 'true'})
+                'SESSION_DRIVER': 'array', 'QUEUE_CONNECTION': 'sync', 'MAIL_MAILER': 'array', 'TRAINING_AUTH_MODE': 'mock', 'MOCK_IDENTITY_ENABLED': 'true'})
     manifest_path = evidence / 'mapping-manifest.json'
 
     def command(script, arguments, database=target, success=True):
